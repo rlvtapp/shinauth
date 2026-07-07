@@ -1,4 +1,4 @@
-import type { BetterAuthOptions } from "@better-auth/core";
+import type { BetterAuthOptions } from "@shinauth/core";
 import type {
 	AdapterFactoryCustomizeAdapterCreator,
 	AdapterFactoryOptions,
@@ -6,10 +6,10 @@ import type {
 	DBAdapterDebugLogOption,
 	JoinConfig,
 	Where,
-} from "@better-auth/core/db/adapter";
-import { createAdapterFactory } from "@better-auth/core/db/adapter";
-import { logger } from "@better-auth/core/env";
-import { capitalizeFirstLetter } from "@better-auth/core/utils/string";
+} from "@shinauth/core/db/adapter";
+import { createAdapterFactory } from "@shinauth/core/db/adapter";
+import { logger } from "@shinauth/core/env";
+import { capitalizeFirstLetter } from "@shinauth/core/utils/string";
 import type {
 	InsertQueryBuilder,
 	Kysely,

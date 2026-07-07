@@ -12,7 +12,7 @@ import { getPackageInfo } from "../utils/get-package-info";
 import { installDependencies } from "../utils/install-dependencies";
 
 function isBetterAuthPackage(name: string): boolean {
-	return name === "better-auth" || name.startsWith("@better-auth/");
+	return name === "shinauth" || name.startsWith("@shinauth/");
 }
 
 interface UpgradeEntry {
@@ -67,7 +67,7 @@ async function upgradeAction(opts: unknown) {
 	}
 
 	if (candidates.length === 0) {
-		console.log("No better-auth packages found in this project.");
+		console.log("No shinauth packages found in this project.");
 		return;
 	}
 
@@ -95,7 +95,7 @@ async function upgradeAction(opts: unknown) {
 	spinner.stop();
 
 	if (upgrades.length === 0) {
-		console.log("All better-auth packages are up to date.");
+		console.log("All shinauth packages are up to date.");
 		return;
 	}
 
@@ -154,7 +154,7 @@ async function upgradeAction(opts: unknown) {
 			});
 		}
 		installSpinner.stop();
-		console.log(chalk.green("Successfully upgraded better-auth packages."));
+		console.log(chalk.green("Successfully upgraded shinauth packages."));
 	} catch (error) {
 		installSpinner.stop();
 		console.error("Failed to install updates:", error);
@@ -163,7 +163,7 @@ async function upgradeAction(opts: unknown) {
 }
 
 export const upgrade = new Command("upgrade")
-	.description("Upgrade better-auth packages to their latest versions")
+	.description("Upgrade shinauth packages to their latest versions")
 	.option(
 		"-c, --cwd <cwd>",
 		"the working directory. defaults to the current directory.",

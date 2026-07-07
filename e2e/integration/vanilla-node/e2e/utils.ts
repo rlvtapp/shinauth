@@ -1,9 +1,9 @@
 import type { ChildProcessWithoutNullStreams } from "node:child_process";
 import { spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
-import { terminate } from "@better-auth-test/test-utils/playwright";
 import type { Page } from "@playwright/test";
-import type { BetterAuthOptions } from "better-auth";
+import { terminate } from "@shinauth-test/test-utils/playwright";
+import type { BetterAuthOptions } from "shinauth";
 import { createAuthServer } from "./app";
 
 type ServerExtras = Parameters<typeof createAuthServer>[2];

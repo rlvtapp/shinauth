@@ -1,6 +1,6 @@
-import type { BetterAuthPlugin } from "@better-auth/core";
-import { betterAuth } from "better-auth";
+import type { BetterAuthPlugin } from "@shinauth/core";
 import Database from "better-sqlite3";
+import { betterAuth } from "shinauth";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { migrateAction } from "../src/commands/migrate";
 import * as config from "../src/utils/get-config";

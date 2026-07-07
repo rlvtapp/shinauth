@@ -22,7 +22,7 @@ importers:
 
   .:
     dependencies:
-      '@better-auth/expo':
+      '@shinauth/expo':
         specifier: link:../../packages/expo
         version: link:../../packages/expo
       '@expo/metro-runtime':
@@ -59,8 +59,8 @@ importers:
         specifier: ^2.3.3
         version: 2.3.3(@babel/core@7.29.0)
       better-auth:
-        specifier: link:../../packages/better-auth
-        version: link:../../packages/better-auth
+        specifier: link:../../packages/shinauth
+        version: link:../../packages/shinauth
       better-sqlite3:
         specifier: ^12.6.2
         version: 12.6.2

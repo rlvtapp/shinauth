@@ -1,15 +1,15 @@
-import type { AuthContext, GenericEndpointContext } from "@better-auth/core";
-import { BetterAuthError } from "@better-auth/core/error";
-import { base64, base64Url } from "@better-auth/utils/base64";
-import { createHash } from "@better-auth/utils/hash";
+import type { AuthContext, GenericEndpointContext } from "@shinauth/core";
+import { BetterAuthError } from "@shinauth/core/error";
+import { base64, base64Url } from "@shinauth/utils/base64";
+import { createHash } from "@shinauth/utils/hash";
+import { APIError } from "better-call";
 import {
 	constantTimeEqual,
 	makeSignature,
 	symmetricDecrypt,
 	symmetricEncrypt,
-} from "better-auth/crypto";
-import type { jwt } from "better-auth/plugins";
-import { APIError } from "better-call";
+} from "shinauth/crypto";
+import type { jwt } from "shinauth/plugins";
 import type { oauthProvider } from "../oauth";
 import { canonicalizeOAuthQueryParams } from "../signed-query";
 import type {

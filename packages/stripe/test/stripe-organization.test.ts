@@ -1,6 +1,6 @@
-import { organizationClient } from "better-auth/client/plugins";
-import { organization } from "better-auth/plugins/organization";
-import { getTestInstance } from "better-auth/test";
+import { organizationClient } from "shinauth/client/plugins";
+import { organization } from "shinauth/plugins/organization";
+import { getTestInstance } from "shinauth/test";
 import type Stripe from "stripe";
 import { describe, expect, vi } from "vitest";
 import { stripe } from "../src";

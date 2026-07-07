@@ -1,20 +1,20 @@
 {
-  "name": "auth",
+  "name": "@shinauth/cli",
   "version": "1.6.23",
-  "description": "The CLI for Better Auth",
+  "description": "The CLI for Shinauth",
   "type": "module",
   "license": "MIT",
-  "homepage": "https://www.better-auth.com/docs/concepts/cli",
+  "homepage": "https://github.com/rlvtapp/shinauth#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/better-auth/better-auth.git",
+    "url": "git+https://github.com/rlvtapp/shinauth.git",
     "directory": "packages/cli"
   },
   "keywords": [
     "auth",
     "cli",
     "typescript",
-    "better-auth"
+    "shinauth"
   ],
   "publishConfig": {
     "access": "public",
@@ -49,19 +49,17 @@
     }
   },
   "bin": {
-    "better-auth": "./dist/index.mjs",
-    "auth": "./dist/index.mjs"
+    "shinauth": "./dist/index.mjs"
   },
   "dependencies": {
     "@babel/core": "^7.29.0",
     "@babel/preset-react": "^7.28.5",
     "@babel/preset-typescript": "^7.28.5",
-    "@better-auth/core": "workspace:*",
-    "@better-auth/telemetry": "workspace:*",
-    "@better-auth/utils": "catalog:",
     "@clack/prompts": "^1.6.0",
     "@mrleebo/prisma-ast": "^0.13.1",
-    "better-auth": "workspace:*",
+    "@shinauth/core": "workspace:*",
+    "@shinauth/telemetry": "workspace:*",
+    "@shinauth/utils": "catalog:",
     "c12": "^3.3.3",
     "chalk": "^5.6.2",
     "commander": "^12.1.0",
@@ -71,11 +69,12 @@
     "prettier": "^3.8.1",
     "prompts": "^2.4.2",
     "semver": "^7.7.4",
+    "shinauth": "workspace:*",
     "yocto-spinner": "^0.2.3",
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@better-auth/passkey": "workspace:*",
+    "@shinauth/passkey": "workspace:*",
     "@types/better-sqlite3": "^7.6.13",
     "@types/prompts": "^2.4.9",
     "@types/semver": "^7.7.1",

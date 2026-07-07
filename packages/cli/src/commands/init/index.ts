@@ -417,12 +417,12 @@ export async function initAction(opts: any) {
 
 	// Install Better Auth
 	await (async () => {
-		const hasBetterAuth = await hasDependency(packageJson, "better-auth");
+		const hasBetterAuth = await hasDependency(packageJson, "shinauth");
 		if (hasBetterAuth) return;
 		await nextStep("Install Better Auth");
 
 		const shouldInstallBetterAuth = await confirm({
-			message: `Would you like to install better-auth using ${chalk.bold(pm)}?`,
+			message: `Would you like to install shinauth using ${chalk.bold(pm)}?`,
 			initial: true,
 		});
 		if (isCancel(shouldInstallBetterAuth)) {
@@ -431,7 +431,7 @@ export async function initAction(opts: any) {
 		}
 
 		if (shouldInstallBetterAuth) {
-			depsToInstall.set("better-auth", {
+			depsToInstall.set("shinauth", {
 				prod: true,
 			});
 		}
@@ -681,7 +681,7 @@ export async function initAction(opts: any) {
 		authConfigFilePath = absoluteFilePath;
 
 		// Generate minimal boilerplate auth config immediately
-		const boilerplateCode = `import { betterAuth } from "better-auth";
+		const boilerplateCode = `import { betterAuth } from "shinauth";
 
 export const auth = betterAuth({
 	// Configuration will be added here
@@ -1094,18 +1094,22 @@ export const auth = betterAuth({
 				s.start();
 
 				await new Promise<void>((resolve, reject) => {
-					exec(`npx auth migrate`, { cwd }, (error, stdout, stderr) => {
-						if (error) {
-							s.stop();
-							log.error(`Failed to run migration: ${error.message}`);
-							if (stderr) log.error(stderr);
-							reject(error);
-							return;
-						}
-						s.success("Database migration completed successfully!");
-						if (stdout) console.log(stdout);
-						resolve();
-					});
+					exec(
+						`npx @shinauth/cli migrate`,
+						{ cwd },
+						(error, stdout, stderr) => {
+							if (error) {
+								s.stop();
+								log.error(`Failed to run migration: ${error.message}`);
+								if (stderr) log.error(stderr);
+								reject(error);
+								return;
+							}
+							s.success("Database migration completed successfully!");
+							if (stdout) console.log(stdout);
+							resolve();
+						},
+					);
 				});
 			});
 			return;
@@ -1557,7 +1561,7 @@ export const auth = betterAuth({
 			} else if (isPrisma) {
 				command = "npx prisma migrate dev";
 			} else {
-				command = "npx auth migrate";
+				command = "npx @shinauth/cli migrate";
 			}
 			logs.push(`  ${nextStepNum}. Run ${chalk.cyan(command)} to apply schema`);
 			nextStepNum++;

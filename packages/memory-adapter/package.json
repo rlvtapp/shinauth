@@ -1,13 +1,13 @@
 {
-  "name": "@better-auth/memory-adapter",
+  "name": "@shinauth/memory-adapter",
   "version": "1.6.23",
-  "description": "Memory adapter for Better Auth",
+  "description": "Memory adapter for Shinauth",
   "type": "module",
   "license": "MIT",
-  "homepage": "https://www.better-auth.com",
+  "homepage": "https://github.com/rlvtapp/shinauth#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/better-auth/better-auth.git",
+    "url": "git+https://github.com/rlvtapp/shinauth.git",
     "directory": "packages/memory-adapter"
   },
   "keywords": [
@@ -15,7 +15,7 @@
     "memory",
     "adapter",
     "typescript",
-    "better-auth"
+    "shinauth"
   ],
   "publishConfig": {
     "access": "public"
@@ -44,12 +44,12 @@
     }
   },
   "peerDependencies": {
-    "@better-auth/core": "workspace:^",
-    "@better-auth/utils": "catalog:"
+    "@shinauth/core": "workspace:^",
+    "@shinauth/utils": "catalog:"
   },
   "devDependencies": {
-    "@better-auth/core": "workspace:*",
-    "@better-auth/utils": "catalog:",
+    "@shinauth/core": "workspace:*",
+    "@shinauth/utils": "catalog:",
     "tsdown": "catalog:",
     "typescript": "catalog:"
   }

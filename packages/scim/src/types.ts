@@ -1,5 +1,5 @@
-import type { User } from "better-auth";
-import type { Member } from "better-auth/plugins";
+import type { User } from "shinauth";
+import type { Member } from "shinauth/plugins";
 
 export interface SCIMProvider {
 	id: string;

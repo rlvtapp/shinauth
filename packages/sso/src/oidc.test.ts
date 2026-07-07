@@ -1,9 +1,9 @@
-import { APIError } from "@better-auth/core/error";
 import { betterFetch } from "@better-fetch/fetch";
-import { createAuthClient } from "better-auth/client";
-import { organization } from "better-auth/plugins";
-import { getTestInstance } from "better-auth/test";
+import { APIError } from "@shinauth/core/error";
 import { OAuth2Server } from "oauth2-mock-server";
+import { createAuthClient } from "shinauth/client";
+import { organization } from "shinauth/plugins";
+import { getTestInstance } from "shinauth/test";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { sso } from ".";
 import { ssoClient } from "./client";

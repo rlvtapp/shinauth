@@ -1,16 +1,16 @@
-import { createClientCredentialsTokenRequest } from "@better-auth/core/oauth2";
-import { createAuthClient } from "better-auth/client";
-import { jwtClient } from "better-auth/client/plugins";
-import { generateRandomString } from "better-auth/crypto";
-import type { ProviderOptions } from "better-auth/oauth2";
+import { createClientCredentialsTokenRequest } from "@shinauth/core/oauth2";
+import { createLocalJWKSet, decodeJwt, jwtVerify } from "jose";
+import { createAuthClient } from "shinauth/client";
+import { jwtClient } from "shinauth/client/plugins";
+import { generateRandomString } from "shinauth/crypto";
+import type { ProviderOptions } from "shinauth/oauth2";
 import {
 	createAuthorizationCodeRequest,
 	createAuthorizationURL,
 	createRefreshAccessTokenRequest,
-} from "better-auth/oauth2";
-import { jwt } from "better-auth/plugins/jwt";
-import { getTestInstance } from "better-auth/test";
-import { createLocalJWKSet, decodeJwt, jwtVerify } from "jose";
+} from "shinauth/oauth2";
+import { jwt } from "shinauth/plugins/jwt";
+import { getTestInstance } from "shinauth/test";
 import { beforeAll, describe, expect, it } from "vitest";
 import { oauthProviderClient } from "./client";
 import { oauthProvider } from "./oauth";

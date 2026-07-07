@@ -1,6 +1,6 @@
-import { base64Url } from "@better-auth/utils/base64";
-import { createAuthMiddleware } from "better-auth/api";
-import { constantTimeEqual } from "better-auth/crypto";
+import { base64Url } from "@shinauth/utils/base64";
+import { createAuthMiddleware } from "shinauth/api";
+import { constantTimeEqual } from "shinauth/crypto";
 import { SCIMAPIError } from "./scim-error";
 import { verifySCIMToken } from "./scim-tokens";
 import type { SCIMOptions, SCIMProvider } from "./types";

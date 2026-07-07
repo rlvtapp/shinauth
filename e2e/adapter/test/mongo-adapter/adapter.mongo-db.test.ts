@@ -1,7 +1,7 @@
-import { mongodbAdapter } from "@better-auth/mongo-adapter";
-import { createTestSuite, testAdapter } from "@better-auth/test-utils/adapter";
-import type { Session, User } from "better-auth";
+import { mongodbAdapter } from "@shinauth/mongo-adapter";
+import { createTestSuite, testAdapter } from "@shinauth/test-utils/adapter";
 import { MongoClient, ObjectId } from "mongodb";
+import type { Session, User } from "shinauth";
 import { expect } from "vitest";
 import {
 	authFlowTestSuite,
@@ -19,10 +19,7 @@ const dbClient = async (connectionString: string, dbName: string) => {
 	return { db, client };
 };
 
-const { db, client } = await dbClient(
-	"mongodb://127.0.0.1:27017",
-	"better-auth",
-);
+const { db, client } = await dbClient("mongodb://127.0.0.1:27017", "shinauth");
 
 const updateObjectIdTestSuite = createTestSuite(
 	"update-object-id",

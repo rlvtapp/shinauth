@@ -1,5 +1,5 @@
 {
-  "name": "@better-auth-test/prisma-adapter",
+  "name": "@shinauth-test/prisma-adapter",
   "private": true,
   "type": "module",
   "scripts": {
@@ -7,15 +7,15 @@
     "prepare": "prisma generate"
   },
   "devDependencies": {
-    "@better-auth/core": "workspace:*",
-    "@better-auth/prisma-adapter": "workspace:*",
-    "@better-auth/test-utils": "workspace:*",
     "@prisma/adapter-better-sqlite3": "^7.4.1",
     "@prisma/adapter-mariadb": "^7.4.1",
     "@prisma/adapter-pg": "^7.4.1",
     "@prisma/client": "^7.4.1",
-    "better-auth": "workspace:*",
+    "@shinauth/core": "workspace:*",
+    "@shinauth/prisma-adapter": "workspace:*",
+    "@shinauth/test-utils": "workspace:*",
     "better-sqlite3": "^12.6.2",
-    "prisma": "^7.4.1"
+    "prisma": "^7.4.1",
+    "shinauth": "workspace:*"
   }
 }

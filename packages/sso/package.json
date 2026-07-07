@@ -1,13 +1,13 @@
 {
-  "name": "@better-auth/sso",
+  "name": "@shinauth/sso",
   "version": "1.6.23",
-  "description": "SSO plugin for Better Auth",
+  "description": "SSO plugin for Shinauth",
   "type": "module",
   "license": "MIT",
-  "homepage": "https://www.better-auth.com/docs/plugins/sso",
+  "homepage": "https://github.com/rlvtapp/shinauth#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/better-auth/better-auth.git",
+    "url": "git+https://github.com/rlvtapp/shinauth.git",
     "directory": "packages/sso"
   },
   "author": "Bereket Engida",
@@ -21,7 +21,7 @@
     "openid connect",
     "single sign on",
     "typescript",
-    "better-auth"
+    "shinauth"
   ],
   "publishConfig": {
     "access": "public"
@@ -72,21 +72,21 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@better-auth/core": "workspace:*",
+    "@shinauth/core": "workspace:*",
     "@types/body-parser": "^1.19.6",
     "@types/express": "^5.0.6",
-    "better-auth": "workspace:*",
     "better-call": "catalog:",
     "body-parser": "^2.2.2",
     "express": "^5.2.1",
     "oauth2-mock-server": "^8.2.2",
+    "shinauth": "workspace:*",
     "tsdown": "catalog:"
   },
   "peerDependencies": {
-    "@better-auth/core": "workspace:^",
-    "@better-auth/utils": "catalog:",
     "@better-fetch/fetch": "catalog:",
-    "better-auth": "workspace:^",
-    "better-call": "catalog:"
+    "@shinauth/core": "workspace:^",
+    "@shinauth/utils": "catalog:",
+    "better-call": "catalog:",
+    "shinauth": "workspace:^"
   }
 }

@@ -3,13 +3,13 @@
 import type {
 	GenericEndpointContext,
 	HookEndpointContext,
-} from "@better-auth/core";
-import { createAuthMiddleware } from "@better-auth/core/api";
-import { APIError } from "@better-auth/core/error";
-import { base64Url } from "@better-auth/utils/base64";
-import type { BetterAuthPlugin } from "better-auth";
-import { safeJSONParse } from "better-auth";
-import { generateRandomString } from "better-auth/crypto";
+} from "@shinauth/core";
+import { createAuthMiddleware } from "@shinauth/core/api";
+import { APIError } from "@shinauth/core/error";
+import { base64Url } from "@shinauth/utils/base64";
+import type { BetterAuthPlugin } from "shinauth";
+import { safeJSONParse } from "shinauth";
+import { generateRandomString } from "shinauth/crypto";
 import * as z from "zod";
 import { ELECTRON_ERROR_CODES } from "./error-codes";
 import {
@@ -20,7 +20,7 @@ import {
 import type { ElectronOptions } from "./types";
 import { PACKAGE_VERSION } from "./version";
 
-declare module "@better-auth/core" {
+declare module "@shinauth/core" {
 	interface BetterAuthPluginRegistry<AuthOptions, Options> {
 		electron: {
 			creator: typeof electron;
@@ -32,7 +32,7 @@ export const electron = (options?: ElectronOptions | undefined) => {
 	const opts = {
 		codeExpiresIn: 300, // 5 minutes
 		redirectCookieExpiresIn: 120, // 2 minutes
-		cookiePrefix: "better-auth",
+		cookiePrefix: "shinauth",
 		clientID: "electron",
 		...(options || {}),
 	};

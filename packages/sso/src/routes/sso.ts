@@ -1,5 +1,9 @@
-import { isAPIError } from "@better-auth/core/utils/is-api-error";
 import { BetterFetchError, betterFetch } from "@better-fetch/fetch";
+import { isAPIError } from "@shinauth/core/utils/is-api-error";
+import { decodeJwt } from "jose";
+import type { BindingContext } from "samlify/types/src/entity";
+import type { IdentityProvider } from "samlify/types/src/entity-idp";
+import type { RequestInfo } from "samlify/types/src/types";
 import {
 	createAuthorizationURL,
 	generateState,
@@ -7,20 +11,16 @@ import {
 	parseState,
 	validateAuthorizationCode,
 	validateToken,
-} from "better-auth";
+} from "shinauth";
 import {
 	APIError,
 	createAuthEndpoint,
 	getSessionFromCtx,
 	sessionMiddleware,
-} from "better-auth/api";
-import { deleteSessionCookie, setSessionCookie } from "better-auth/cookies";
-import { generateRandomString } from "better-auth/crypto";
-import { handleOAuthUserInfo } from "better-auth/oauth2";
-import { decodeJwt } from "jose";
-import type { BindingContext } from "samlify/types/src/entity";
-import type { IdentityProvider } from "samlify/types/src/entity-idp";
-import type { RequestInfo } from "samlify/types/src/types";
+} from "shinauth/api";
+import { deleteSessionCookie, setSessionCookie } from "shinauth/cookies";
+import { generateRandomString } from "shinauth/crypto";
+import { handleOAuthUserInfo } from "shinauth/oauth2";
 import * as z from "zod";
 import * as constants from "../constants";
 import { assignOrganizationFromProvider } from "../linking";

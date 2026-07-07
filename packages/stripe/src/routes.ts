@@ -1,10 +1,10 @@
-import { createAuthEndpoint } from "@better-auth/core/api";
-import { APIError } from "@better-auth/core/error";
-import type { GenericEndpointContext, User } from "better-auth";
-import { HIDE_METADATA } from "better-auth";
-import { getSessionFromCtx, originCheck } from "better-auth/api";
-import type { Organization } from "better-auth/plugins/organization";
+import { createAuthEndpoint } from "@shinauth/core/api";
+import { APIError } from "@shinauth/core/error";
 import { defu } from "defu";
+import type { GenericEndpointContext, User } from "shinauth";
+import { HIDE_METADATA } from "shinauth";
+import { getSessionFromCtx, originCheck } from "shinauth/api";
+import type { Organization } from "shinauth/plugins/organization";
 import type Stripe from "stripe";
 import type { Stripe as StripeType } from "stripe";
 import * as z from "zod";
@@ -699,7 +699,7 @@ export const upgradeSubscription = (options: StripeOptions) => {
 					);
 					if (
 						existingSchedule &&
-						existingSchedule.metadata?.source === "@better-auth/stripe"
+						existingSchedule.metadata?.source === "@shinauth/stripe"
 					) {
 						await client.subscriptionSchedules.release(existingSchedule.id);
 						if (dbSubscription) {
@@ -844,7 +844,7 @@ export const upgradeSubscription = (options: StripeOptions) => {
 
 					await client.subscriptionSchedules
 						.update(schedule.id, {
-							metadata: { source: "@better-auth/stripe" },
+							metadata: { source: "@shinauth/stripe" },
 							end_behavior: "release",
 							phases: [
 								{

@@ -1,19 +1,19 @@
-# Better Auth Passkey Plugin
+# Shinauth Passkey Plugin
 
 ## Installation
 
 ```bash
 # Using npm
-npm install better-auth @better-auth/passkey
+npm install shinauth @shinauth/passkey
 
 # Using yarn
-yarn add better-auth @better-auth/passkey
+yarn add shinauth @shinauth/passkey
 
 # Using pnpm
-pnpm add better-auth @better-auth/passkey
+pnpm add shinauth @shinauth/passkey
 
 # Using bun
-bun add better-auth @better-auth/passkey
+bun add shinauth @shinauth/passkey
 ```
 
 ## Usage
@@ -21,8 +21,8 @@ bun add better-auth @better-auth/passkey
 ### Server
 
 ```typescript
-import { betterAuth } from 'better-auth';
-import { passkey } from '@better-auth/passkey';
+import { betterAuth } from 'shinauth';
+import { passkey } from '@shinauth/passkey';
 
 export const auth = betterAuth({
   plugins: [
@@ -37,8 +37,8 @@ export const auth = betterAuth({
 ### Client
 
 ```typescript
-import { createAuthClient } from 'better-auth/client';
-import { passkeyClient } from '@better-auth/passkey/client';
+import { createAuthClient } from 'shinauth/client';
+import { passkeyClient } from '@shinauth/passkey/client';
 
 export const authClient = createAuthClient({
   plugins: [passkeyClient()],
@@ -47,7 +47,7 @@ export const authClient = createAuthClient({
 
 ## Documentation
 
-For more information, visit the [Better Auth Passkey documentation](https://better-auth.com/docs/plugins/passkey).
+For more information, visit the [Shinauth Passkey documentation](https://better-auth.com/docs/plugins/passkey).
 
 ## License
 

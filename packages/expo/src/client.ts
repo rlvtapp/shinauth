@@ -2,17 +2,17 @@ import type {
 	BetterAuthClientPlugin,
 	ClientFetchOption,
 	ClientStore,
-} from "@better-auth/core";
-import type { Session, User } from "@better-auth/core/db";
-import { safeJSONParse } from "@better-auth/core/utils/json";
+} from "@shinauth/core";
+import type { Session, User } from "@shinauth/core/db";
+import { safeJSONParse } from "@shinauth/core/utils/json";
+import Constants from "expo-constants";
+import * as Linking from "expo-linking";
+import { Platform } from "react-native";
 import {
 	parseSetCookieHeader,
 	SECURE_COOKIE_PREFIX,
 	stripSecureCookiePrefix,
-} from "better-auth/cookies";
-import Constants from "expo-constants";
-import * as Linking from "expo-linking";
-import { Platform } from "react-native";
+} from "shinauth/cookies";
 import { setupExpoFocusManager } from "./focus-manager";
 import { setupExpoOnlineManager } from "./online-manager";
 import { PACKAGE_VERSION } from "./version";
@@ -30,7 +30,7 @@ interface ExpoClientOptions {
 	};
 	/**
 	 * Prefix for local storage keys (e.g., "my-app_cookie", "my-app_session_data")
-	 * @default "better-auth"
+	 * @default "shinauth"
 	 */
 	storagePrefix?: string | undefined;
 	/**
@@ -38,9 +38,9 @@ interface ExpoClientOptions {
 	 * This is used to identify which cookies belong to better-auth to prevent
 	 * infinite refetching when third-party cookies are set.
 	 * Can be a single string or an array of strings to match multiple prefixes.
-	 * @default "better-auth"
-	 * @example "better-auth"
-	 * @example ["better-auth", "my-app"]
+	 * @default "shinauth"
+	 * @example "shinauth"
+	 * @example ["shinauth", "my-app"]
 	 */
 	cookiePrefix?: string | string[] | undefined;
 	disableCache?: boolean | undefined;
@@ -201,7 +201,7 @@ function hasSessionCookieChanged(
  * - Custom prefix: "myapp.session_token", "myapp-passkey", "__Secure-myapp.session_token"
  * - Custom full names: "my_custom_session_token", "custom_session_data"
  * - No prefix (cookiePrefix=""): matches any cookie with known suffixes
- * - Multiple prefixes: ["better-auth", "my-app"] matches cookies starting with any of the prefixes
+ * - Multiple prefixes: ["shinauth", "my-app"] matches cookies starting with any of the prefixes
  *
  * @param setCookieHeader - The Set-Cookie header value
  * @param cookiePrefix - The cookie prefix(es) to check for. Can be a string, array of strings, or empty string.
@@ -341,12 +341,12 @@ export function storageAdapter(storage: {
 
 export const expoClient = (opts: ExpoClientOptions) => {
 	let store: ClientStore | null = null;
-	const storagePrefix = opts?.storagePrefix || "better-auth";
+	const storagePrefix = opts?.storagePrefix || "shinauth";
 	const cookieName = `${storagePrefix}_cookie`;
 	const localCacheName = `${storagePrefix}_session_data`;
 	const storage = storageAdapter(opts?.storage);
 	const isWeb = Platform.OS === "web";
-	const cookiePrefix = opts?.cookiePrefix || "better-auth";
+	const cookiePrefix = opts?.cookiePrefix || "shinauth";
 	const clearSessionCache = async () => {
 		await storage.setItem(cookieName, "{}");
 		store?.atoms.session?.set({
@@ -583,6 +583,6 @@ export const expoClient = (opts: ExpoClientOptions) => {
 	} satisfies BetterAuthClientPlugin;
 };
 
-export { parseSetCookieHeader } from "better-auth/cookies";
+export { parseSetCookieHeader } from "shinauth/cookies";
 export * from "./focus-manager";
 export * from "./online-manager";

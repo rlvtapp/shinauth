@@ -1,8 +1,8 @@
-import { sso } from "@better-auth/sso";
-import { betterAuth } from "better-auth";
-import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { jwt } from "better-auth/plugins/jwt";
+import { sso } from "@shinauth/sso";
 import { Hono } from "hono";
+import { betterAuth } from "shinauth";
+import { drizzleAdapter } from "shinauth/adapters/drizzle";
+import { jwt } from "shinauth/plugins/jwt";
 import { createDrizzle } from "./db";
 
 interface CloudflareBindings {

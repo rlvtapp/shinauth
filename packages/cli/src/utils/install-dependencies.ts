@@ -1,5 +1,5 @@
 import { exec } from "node:child_process";
-import type { LiteralString } from "@better-auth/core";
+import type { LiteralString } from "@shinauth/core";
 
 const flagsMap = {
 	npm: {

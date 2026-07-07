@@ -1,7 +1,7 @@
-import { APIError } from "@better-auth/core/error";
-import type { Verification } from "better-auth";
-import { createAuthClient } from "better-auth/client";
-import { getTestInstance } from "better-auth/test";
+import { APIError } from "@shinauth/core/error";
+import type { Verification } from "shinauth";
+import { createAuthClient } from "shinauth/client";
+import { getTestInstance } from "shinauth/test";
 import {
 	afterEach,
 	assert,

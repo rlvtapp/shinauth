@@ -1,4 +1,4 @@
-import type { SecondaryStorage } from "@better-auth/core/db";
+import type { SecondaryStorage } from "@shinauth/core/db";
 import type Redis from "ioredis";
 
 export interface RedisStorageConfig {
@@ -19,7 +19,7 @@ export interface RedisStorageConfig {
  * @example
  * ```ts
  * import { Redis } from "ioredis";
- * import { redisStorage } from "@better-auth/redis-storage";
+ * import { redisStorage } from "@shinauth/redis-storage";
  *
  * const redis = new Redis({
  *   host: "localhost",

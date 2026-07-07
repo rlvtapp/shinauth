@@ -1,6 +1,6 @@
-import type { BetterAuthOptions } from "@better-auth/core";
-import { ENV, getBooleanEnvVar, isTest, logger } from "@better-auth/core/env";
 import { betterFetch } from "@better-fetch/fetch";
+import type { BetterAuthOptions } from "@shinauth/core";
+import { ENV, getBooleanEnvVar, isTest, logger } from "@shinauth/core/env";
 import { getTelemetryAuthConfig } from "./detectors/detect-auth-config";
 import { detectDatabase } from "./detectors/detect-database";
 import { detectFramework } from "./detectors/detect-framework";

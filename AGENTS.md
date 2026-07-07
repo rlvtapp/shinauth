@@ -4,7 +4,7 @@ This is the Better Auth repository - a comprehensive authentication framework fo
 
 ## Project Structure
 
-- `packages/better-auth` - Main authentication library
+- `packages/shinauth` - Main authentication library
 - `packages/core` - Shared core types and utilities
 - `packages/cli` - CLI tool
 - `packages/*` - Database adapters, plugins, integrations

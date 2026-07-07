@@ -1,14 +1,14 @@
-import type { BetterAuthOptions } from "@better-auth/core";
+import type { BetterAuthOptions } from "@shinauth/core";
 import type {
 	AdapterFactoryCustomizeAdapterCreator,
 	AdapterFactoryOptions,
 	DBAdapter,
 	DBAdapterDebugLogOption,
 	Where,
-} from "@better-auth/core/db/adapter";
-import { createAdapterFactory } from "@better-auth/core/db/adapter";
-import { logger } from "@better-auth/core/env";
-import { BetterAuthError } from "@better-auth/core/error";
+} from "@shinauth/core/db/adapter";
+import { createAdapterFactory } from "@shinauth/core/db/adapter";
+import { logger } from "@shinauth/core/env";
+import { BetterAuthError } from "@shinauth/core/error";
 import type { SQL } from "drizzle-orm";
 import {
 	and,

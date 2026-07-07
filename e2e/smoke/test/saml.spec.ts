@@ -1,9 +1,9 @@
 import assert from "node:assert/strict";
 import { DatabaseSync } from "node:sqlite";
 import { describe, test } from "node:test";
-import { sso } from "@better-auth/sso";
-import { betterAuth } from "better-auth";
-import { getMigrations } from "better-auth/db/migration";
+import { sso } from "@shinauth/sso";
+import { betterAuth } from "shinauth";
+import { getMigrations } from "shinauth/db/migration";
 
 const TEST_CERT = `MIIDXTCCAkWgAwIBAgIJAOxEm08dOr3PMA0GCSqGSIb3DqEBCwUAMEUxCzAJBgNV
 BAYTAkFVMRMwEQYDVQQIDApTb21lLVN0YXRlMSEwHwYDVQQKDBhJbnRlcm5ldCBX
@@ -37,7 +37,7 @@ describe("SAML SSO", () => {
 	 * by using a native ESM import (not createRequire).
 	 */
 	test("should load @better-auth/sso via ESM without samlify import error", async () => {
-		const mod = await import("@better-auth/sso");
+		const mod = await import("@shinauth/sso");
 		assert.ok(mod.sso, "sso export should be defined");
 		assert.equal(typeof mod.sso, "function", "sso should be a function");
 	});

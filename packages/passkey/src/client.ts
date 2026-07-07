@@ -1,9 +1,9 @@
+import type { BetterFetch } from "@better-fetch/fetch";
 import type {
 	BetterAuthClientPlugin,
 	ClientFetchOption,
 	ClientStore,
-} from "@better-auth/core";
-import type { BetterFetch } from "@better-fetch/fetch";
+} from "@shinauth/core";
 import type {
 	PublicKeyCredentialCreationOptionsJSON,
 	PublicKeyCredentialRequestOptionsJSON,
@@ -19,9 +19,9 @@ import type {
 	AuthenticationResponseJSON,
 	RegistrationResponseJSON,
 } from "@simplewebauthn/server";
-import { useAuthQuery } from "better-auth/client";
-import type { Session, User } from "better-auth/types";
 import { atom } from "nanostores";
+import { useAuthQuery } from "shinauth/client";
+import type { Session, User } from "shinauth/types";
 import type { passkey } from ".";
 import { PASSKEY_ERROR_CODES } from "./error-codes";
 import type { Passkey } from "./types";

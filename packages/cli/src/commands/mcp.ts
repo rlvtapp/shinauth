@@ -2,7 +2,7 @@ import { execSync } from "node:child_process";
 import * as fs from "node:fs";
 import * as os from "node:os";
 import * as path from "node:path";
-import { base64 } from "@better-auth/utils/base64";
+import { base64 } from "@shinauth/utils/base64";
 import chalk from "chalk";
 import { Command } from "commander";
 
@@ -53,7 +53,7 @@ async function handleCursorAction() {
 	const encodedRemote = base64.encode(
 		new TextEncoder().encode(JSON.stringify(remoteConfig)),
 	);
-	const remoteDeeplink = `cursor://anysphere.cursor-deeplink/mcp/install?name=${encodeURIComponent("better-auth")}&config=${encodedRemote}`;
+	const remoteDeeplink = `cursor://anysphere.cursor-deeplink/mcp/install?name=${encodeURIComponent("shinauth")}&config=${encodedRemote}`;
 
 	try {
 		const cmd =
@@ -120,7 +120,7 @@ function handleOpenCodeAction() {
 	const openCodeConfig = {
 		$schema: "https://opencode.ai/config.json",
 		mcp: {
-			"better-auth": {
+			shinauth: {
 				type: "remote",
 				url: REMOTE_MCP_URL,
 				enabled: true,
@@ -174,7 +174,7 @@ function handleManualAction() {
 	console.log(chalk.bold.blue("📝 Better Auth MCP Configuration..."));
 
 	const manualConfig = {
-		"better-auth": {
+		shinauth: {
 			url: REMOTE_MCP_URL,
 		},
 	};
@@ -233,7 +233,7 @@ function showAllOptions() {
 	console.log(chalk.bold.white("Server:"));
 	console.log(
 		chalk.gray("  • ") +
-			chalk.white("better-auth") +
+			chalk.white("shinauth") +
 			chalk.gray(" - Search documentation, code examples, setup assistance"),
 	);
 	console.log();

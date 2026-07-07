@@ -1,20 +1,20 @@
 import { Buffer } from "node:buffer";
 import { timingSafeEqual } from "node:crypto";
-import type { GenericEndpointContext } from "@better-auth/core";
-import { APIError, BASE_ERROR_CODES } from "@better-auth/core/error";
-import { SocialProviderListEnum } from "@better-auth/core/social-providers";
-import { safeJSONParse } from "@better-auth/core/utils/json";
-import { base64Url } from "@better-auth/utils/base64";
-import { createHash } from "@better-auth/utils/hash";
 import { betterFetch } from "@better-fetch/fetch";
-import { createAuthEndpoint, sessionMiddleware } from "better-auth/api";
+import type { GenericEndpointContext } from "@shinauth/core";
+import { APIError, BASE_ERROR_CODES } from "@shinauth/core/error";
+import { SocialProviderListEnum } from "@shinauth/core/social-providers";
+import { safeJSONParse } from "@shinauth/core/utils/json";
+import { base64Url } from "@shinauth/utils/base64";
+import { createHash } from "@shinauth/utils/hash";
+import { createAuthEndpoint, sessionMiddleware } from "shinauth/api";
 import {
 	parseSetCookieHeader,
 	setSessionCookie,
 	toCookieOptions,
-} from "better-auth/cookies";
-import type { User } from "better-auth/db";
-import { parseUserOutput } from "better-auth/db";
+} from "shinauth/cookies";
+import type { User } from "shinauth/db";
+import { parseUserOutput } from "shinauth/db";
 import * as z from "zod";
 import { ELECTRON_ERROR_CODES } from "./error-codes";
 import type { ElectronOptions } from "./types";

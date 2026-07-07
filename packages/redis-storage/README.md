@@ -1,11 +1,11 @@
-# Better Auth Redis Storage
+# Shinauth Redis Storage
 
-Redis storage for [Better Auth](https://www.better-auth.com) secondary storage — use Redis for session caching and rate limiting.
+Redis storage for [Shinauth](https://www.better-auth.com) secondary storage — use Redis for session caching and rate limiting.
 
 ## Installation
 
 ```bash
-npm install @better-auth/redis-storage
+npm install @shinauth/redis-storage
 ```
 
 ## Documentation

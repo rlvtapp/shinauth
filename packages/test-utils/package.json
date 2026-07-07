@@ -1,20 +1,20 @@
 {
-  "name": "@better-auth/test-utils",
+  "name": "@shinauth/test-utils",
   "version": "1.6.23",
-  "description": "Testing utilities for Better Auth adapter development",
+  "description": "Testing utilities for Shinauth adapter development",
   "type": "module",
   "license": "MIT",
-  "homepage": "https://www.better-auth.com",
+  "homepage": "https://github.com/rlvtapp/shinauth#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/better-auth/better-auth.git",
+    "url": "git+https://github.com/rlvtapp/shinauth.git",
     "directory": "packages/test-utils"
   },
   "keywords": [
     "auth",
     "testing",
     "typescript",
-    "better-auth"
+    "shinauth"
   ],
   "publishConfig": {
     "access": "public"
@@ -35,14 +35,14 @@
     }
   },
   "devDependencies": {
-    "@better-auth/core": "workspace:*",
-    "better-auth": "workspace:*",
+    "@shinauth/core": "workspace:*",
+    "shinauth": "workspace:*",
     "tsdown": "catalog:",
     "vitest": "catalog:vitest"
   },
   "peerDependencies": {
-    "@better-auth/core": "workspace:^",
-    "better-auth": "workspace:^",
+    "@shinauth/core": "workspace:^",
+    "shinauth": "workspace:^",
     "vitest": "catalog:vitest"
   }
 }

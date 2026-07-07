@@ -1,4 +1,4 @@
-import { getTestInstance } from "better-auth/test";
+import { getTestInstance } from "shinauth/test";
 import type Stripe from "stripe";
 import { describe, expect, vi } from "vitest";
 import { stripe } from "../src";

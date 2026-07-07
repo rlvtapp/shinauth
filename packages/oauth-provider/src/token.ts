@@ -1,11 +1,11 @@
-import type { GenericEndpointContext } from "@better-auth/core";
-import { APIError } from "better-auth/api";
-import { generateRandomString } from "better-auth/crypto";
-import { generateCodeChallenge } from "better-auth/oauth2";
-import { signJWT, toExpJWT } from "better-auth/plugins";
-import type { Session, User } from "better-auth/types";
+import type { GenericEndpointContext } from "@shinauth/core";
 import type { JWTPayload } from "jose";
 import { SignJWT } from "jose";
+import { APIError } from "shinauth/api";
+import { generateRandomString } from "shinauth/crypto";
+import { generateCodeChallenge } from "shinauth/oauth2";
+import { signJWT, toExpJWT } from "shinauth/plugins";
+import type { Session, User } from "shinauth/types";
 import type {
 	OAuthOptions,
 	OAuthRefreshToken,

@@ -1,22 +1,22 @@
-import { createAuthMiddleware } from "better-auth/api";
-import { createAuthClient } from "better-auth/client";
-import {
-	genericOAuthClient,
-	multiSessionClient,
-	organizationClient,
-} from "better-auth/client/plugins";
-import { toNodeHandler } from "better-auth/node";
-import type { GenericOAuthConfig } from "better-auth/plugins/generic-oauth";
-import { genericOAuth } from "better-auth/plugins/generic-oauth";
-import { jwt } from "better-auth/plugins/jwt";
-import { multiSession } from "better-auth/plugins/multi-session";
-import type { Organization } from "better-auth/plugins/organization";
-import { organization } from "better-auth/plugins/organization";
-import { getTestInstance } from "better-auth/test";
 import { APIError } from "better-call";
 import { createLocalJWKSet, jwtVerify } from "jose";
 import type { Listener } from "listhen";
 import { listen } from "listhen";
+import { createAuthMiddleware } from "shinauth/api";
+import { createAuthClient } from "shinauth/client";
+import {
+	genericOAuthClient,
+	multiSessionClient,
+	organizationClient,
+} from "shinauth/client/plugins";
+import { toNodeHandler } from "shinauth/node";
+import type { GenericOAuthConfig } from "shinauth/plugins/generic-oauth";
+import { genericOAuth } from "shinauth/plugins/generic-oauth";
+import { jwt } from "shinauth/plugins/jwt";
+import { multiSession } from "shinauth/plugins/multi-session";
+import type { Organization } from "shinauth/plugins/organization";
+import { organization } from "shinauth/plugins/organization";
+import { getTestInstance } from "shinauth/test";
 import {
 	afterAll,
 	afterEach,
@@ -3698,5 +3698,5 @@ describe("oauth - rate limiting", () => {
 	});
 
 	// Note: Window expiry/reset behavior is tested in the core rate-limiter tests.
-	// See packages/better-auth/src/api/rate-limiter/rate-limiter.test.ts
+	// See packages/shinauth/src/api/rate-limiter/rate-limiter.test.ts
 });

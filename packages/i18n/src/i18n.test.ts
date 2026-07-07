@@ -1,4 +1,4 @@
-import { getTestInstance } from "better-auth/test";
+import { getTestInstance } from "shinauth/test";
 import { describe, expect, it } from "vitest";
 import { i18n } from ".";
 

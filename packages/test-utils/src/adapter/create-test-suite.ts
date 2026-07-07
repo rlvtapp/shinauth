@@ -1,21 +1,16 @@
-import type { BetterAuthOptions } from "@better-auth/core";
-import type {
-	Account,
-	Session,
-	User,
-	Verification,
-} from "@better-auth/core/db";
-import { getAuthTables } from "@better-auth/core/db";
-import type { DBAdapter } from "@better-auth/core/db/adapter";
+import type { BetterAuthOptions } from "@shinauth/core";
+import type { Account, Session, User, Verification } from "@shinauth/core/db";
+import { getAuthTables } from "@shinauth/core/db";
+import type { DBAdapter } from "@shinauth/core/db/adapter";
 import {
 	createAdapterFactory,
 	deepmerge,
 	initGetDefaultModelName,
-} from "@better-auth/core/db/adapter";
-import { TTY_COLORS } from "@better-auth/core/env";
-import { generateId } from "@better-auth/core/utils/id";
-import type { Auth } from "better-auth";
-import { betterAuth } from "better-auth";
+} from "@shinauth/core/db/adapter";
+import { TTY_COLORS } from "@shinauth/core/env";
+import { generateId } from "@shinauth/core/utils/id";
+import type { Auth } from "shinauth";
+import { betterAuth } from "shinauth";
 import { test } from "vitest";
 import type { Logger } from "./test-adapter";
 

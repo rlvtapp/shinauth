@@ -1,9 +1,9 @@
 import { DatabaseSync } from "node:sqlite";
-import { kyselyAdapter } from "@better-auth/kysely-adapter";
-import { NodeSqliteDialect } from "@better-auth/kysely-adapter/node-sqlite-dialect";
-import { testAdapter } from "@better-auth/test-utils/adapter";
-import { getMigrations } from "better-auth/db/migration";
+import { kyselyAdapter } from "@shinauth/kysely-adapter";
+import { NodeSqliteDialect } from "@shinauth/kysely-adapter/node-sqlite-dialect";
+import { testAdapter } from "@shinauth/test-utils/adapter";
 import { Kysely } from "kysely";
+import { getMigrations } from "shinauth/db/migration";
 import {
 	authFlowTestSuite,
 	joinsTestSuite,

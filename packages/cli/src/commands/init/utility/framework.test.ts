@@ -500,7 +500,7 @@ describe("Init CLI - framework utility", () => {
 				});
 
 				expect(result?.authClient).not.toBeNull();
-				expect(result?.authClient?.importPath).toBe("better-auth/react");
+				expect(result?.authClient?.importPath).toBe("shinauth/react");
 			},
 		);
 
@@ -514,7 +514,7 @@ describe("Init CLI - framework utility", () => {
 				});
 
 				expect(result?.authClient).not.toBeNull();
-				expect(result?.authClient?.importPath).toBe("better-auth/react");
+				expect(result?.authClient?.importPath).toBe("shinauth/react");
 			},
 		);
 
@@ -528,7 +528,7 @@ describe("Init CLI - framework utility", () => {
 				});
 
 				expect(result?.authClient).not.toBeNull();
-				expect(result?.authClient?.importPath).toBe("better-auth/vue");
+				expect(result?.authClient?.importPath).toBe("shinauth/vue");
 			},
 		);
 
@@ -542,7 +542,7 @@ describe("Init CLI - framework utility", () => {
 				});
 
 				expect(result?.authClient).not.toBeNull();
-				expect(result?.authClient?.importPath).toBe("better-auth/svelte");
+				expect(result?.authClient?.importPath).toBe("shinauth/svelte");
 			},
 		);
 
@@ -556,7 +556,7 @@ describe("Init CLI - framework utility", () => {
 				});
 
 				expect(result?.authClient).not.toBeNull();
-				expect(result?.authClient?.importPath).toBe("better-auth/solid");
+				expect(result?.authClient?.importPath).toBe("shinauth/solid");
 			},
 		);
 

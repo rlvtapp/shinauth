@@ -1,8 +1,8 @@
-import { passkey } from "@better-auth/passkey";
-import { sso } from "@better-auth/sso";
-import { stripe } from "@better-auth/stripe";
-import { betterAuth } from "better-auth";
-import { nextCookies } from "better-auth/next-js";
+import { passkey } from "@shinauth/passkey";
+import { sso } from "@shinauth/sso";
+import { stripe } from "@shinauth/stripe";
+import { betterAuth } from "shinauth";
+import { nextCookies } from "shinauth/next-js";
 import {
 	admin,
 	anonymous,
@@ -16,7 +16,7 @@ import {
 	openAPI,
 	organization,
 	twoFactor,
-} from "better-auth/plugins";
+} from "shinauth/plugins";
 import { Stripe } from "stripe";
 
 export const auth = betterAuth({

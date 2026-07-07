@@ -1,4 +1,4 @@
-import { base64 } from "@better-auth/utils/base64";
+import { base64 } from "@shinauth/utils/base64";
 import type { AwaitableFunction } from "../types";
 import type { OAuth2Tokens, ProviderOptions } from "./oauth-provider";
 import { fetchRefusingRedirects } from "./reject-redirects";

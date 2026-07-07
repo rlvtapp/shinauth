@@ -1,7 +1,7 @@
-import { isAPIError } from "better-auth/api";
-import { verifyAccessToken } from "better-auth/oauth2";
 import { APIError } from "better-call";
 import type { JWTPayload } from "jose";
+import { isAPIError } from "shinauth/api";
+import { verifyAccessToken } from "shinauth/oauth2";
 import type { Awaitable } from "./types/helpers";
 
 /**

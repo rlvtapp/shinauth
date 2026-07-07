@@ -1,5 +1,5 @@
-import type { Awaitable } from "@better-auth/core";
-import type { User } from "@better-auth/core/db";
+import type { Awaitable } from "@shinauth/core";
+import type { User } from "@shinauth/core/db";
 import type { ElectronSharedOptions } from "./options";
 
 export interface Storage {
@@ -48,7 +48,7 @@ export interface ElectronClientOptions extends ElectronSharedClientOptions {
 	 *
 	 * @example
 	 * ```ts
-	 * import { storage } from "@better-auth/electron/storage";
+	 * import { storage } from "@shinauth/electron/storage";
 	 * electronClient({
 	 *   storage: storage(),
 	 * });
@@ -57,7 +57,7 @@ export interface ElectronClientOptions extends ElectronSharedClientOptions {
 	storage: Storage;
 	/**
 	 * Prefix for local storage keys (e.g., "my-app_cookie", "my-app_session_data")
-	 * @default "better-auth"
+	 * @default "shinauth"
 	 */
 	storagePrefix?: string | undefined;
 	/**
@@ -118,15 +118,15 @@ export interface ElectronClientOptions extends ElectronSharedClientOptions {
 	 *
 	 * Can be a single string or an array of strings to match multiple prefixes.
 	 *
-	 * @default "better-auth"
-	 * @example "better-auth"
-	 * @example ["better-auth", "my-app"]
+	 * @default "shinauth"
+	 * @example "shinauth"
+	 * @example ["shinauth", "my-app"]
 	 */
 	cookiePrefix?: string | string[] | undefined;
 	/**
 	 * Channel prefix for IPC bridges (e.g., "better-auth:request-auth")
 	 *
-	 * @default "better-auth"
+	 * @default "shinauth"
 	 */
 	channelPrefix?: string | undefined;
 	/**
@@ -142,7 +142,7 @@ export interface ElectronProxyClientOptions
 	/**
 	 * The prefix to use for cookies set by the plugin.
 	 *
-	 * @default "better-auth"
+	 * @default "shinauth"
 	 */
 	cookiePrefix?: string | undefined;
 }

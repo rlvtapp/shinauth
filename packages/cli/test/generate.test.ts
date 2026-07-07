@@ -1,12 +1,12 @@
 import * as fs from "node:fs";
 import * as os from "node:os";
 import * as path from "node:path";
-import type { BetterAuthOptions, BetterAuthPlugin } from "@better-auth/core";
-import type { DBAdapter } from "@better-auth/core/db/adapter";
-import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { prismaAdapter } from "better-auth/adapters/prisma";
-import { organization, twoFactor, username } from "better-auth/plugins";
+import type { BetterAuthOptions, BetterAuthPlugin } from "@shinauth/core";
+import type { DBAdapter } from "@shinauth/core/db/adapter";
 import Database from "better-sqlite3";
+import { drizzleAdapter } from "shinauth/adapters/drizzle";
+import { prismaAdapter } from "shinauth/adapters/prisma";
+import { organization, twoFactor, username } from "shinauth/plugins";
 import { describe, expect, it } from "vitest";
 import { generateSchema } from "../src/generators";
 import { generateDrizzleSchema } from "../src/generators/drizzle";

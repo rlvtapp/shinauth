@@ -1,6 +1,6 @@
-import type { BetterAuthOptions } from "@better-auth/core";
-import type { Auth, User } from "better-auth";
-import type { AuthClient } from "better-auth/client";
+import type { BetterAuthOptions } from "@shinauth/core";
+import type { Auth, User } from "shinauth";
+import type { AuthClient } from "shinauth/client";
 import { expectTypeOf, test } from "vitest";
 
 test("expect imports", async () => {

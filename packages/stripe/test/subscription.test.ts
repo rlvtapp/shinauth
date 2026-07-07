@@ -1,4 +1,4 @@
-import { getTestInstance } from "better-auth/test";
+import { getTestInstance } from "shinauth/test";
 import type Stripe from "stripe";
 import { describe, expect, vi } from "vitest";
 import { stripe } from "../src";
@@ -2636,7 +2636,7 @@ describe("stripe subscription", () => {
 		expect(stripeMock.subscriptionSchedules.update).toHaveBeenCalledWith(
 			"sub_sched_mock",
 			expect.objectContaining({
-				metadata: { source: "@better-auth/stripe" },
+				metadata: { source: "@shinauth/stripe" },
 				end_behavior: "release",
 				phases: expect.arrayContaining([
 					expect.objectContaining({
@@ -2739,7 +2739,7 @@ describe("stripe subscription", () => {
 					id: "sub_sched_existing",
 					subscription: "sub_with_schedule",
 					status: "active",
-					metadata: { source: "@better-auth/stripe" },
+					metadata: { source: "@shinauth/stripe" },
 				},
 			],
 		});
@@ -2838,7 +2838,7 @@ describe("stripe subscription", () => {
 					id: "sub_schedule_old",
 					subscription: "sub_scheduled_then_upgrade",
 					status: "active",
-					metadata: { source: "@better-auth/stripe" },
+					metadata: { source: "@shinauth/stripe" },
 				},
 			],
 		});

@@ -1,4 +1,4 @@
-import type { Awaitable, BetterAuthOptions } from "@better-auth/core";
+import type { Awaitable, BetterAuthOptions } from "@shinauth/core";
 import type {
 	AdapterFactoryCustomizeAdapterCreator,
 	AdapterFactoryOptions,
@@ -6,9 +6,9 @@ import type {
 	DBAdapterDebugLogOption,
 	JoinConfig,
 	Where,
-} from "@better-auth/core/db/adapter";
-import { createAdapterFactory } from "@better-auth/core/db/adapter";
-import { BetterAuthError } from "@better-auth/core/error";
+} from "@shinauth/core/db/adapter";
+import { createAdapterFactory } from "@shinauth/core/db/adapter";
+import { BetterAuthError } from "@shinauth/core/error";
 
 export interface PrismaConfig {
 	/**

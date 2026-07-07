@@ -6,8 +6,8 @@
  * both an AND group and an OR group, the joins code path uses only
  * `clause[0]`, silently dropping the second group.
  */
-import type { User } from "@better-auth/core/db";
-import { drizzleAdapter } from "@better-auth/drizzle-adapter";
+import type { User } from "@shinauth/core/db";
+import { drizzleAdapter } from "@shinauth/drizzle-adapter";
 import Database from "better-sqlite3";
 import { relations } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/better-sqlite3";

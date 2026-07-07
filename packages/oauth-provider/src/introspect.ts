@@ -1,9 +1,9 @@
-import type { GenericEndpointContext } from "@better-auth/core";
-import { logger } from "@better-auth/core/env";
-import { verifyJwsAccessToken } from "better-auth/oauth2";
-import type { Session, User } from "better-auth/types";
+import type { GenericEndpointContext } from "@shinauth/core";
+import { logger } from "@shinauth/core/env";
 import { APIError } from "better-call";
 import type { JSONWebKeySet, JWTPayload } from "jose";
+import { verifyJwsAccessToken } from "shinauth/oauth2";
+import type { Session, User } from "shinauth/types";
 import { decodeRefreshToken } from "./token";
 import type {
 	OAuthOpaqueAccessToken,

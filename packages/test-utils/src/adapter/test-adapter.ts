@@ -1,8 +1,8 @@
-import type { Awaitable, BetterAuthOptions } from "@better-auth/core";
-import type { DBAdapter } from "@better-auth/core/db/adapter";
-import { deepmerge, initGetModelName } from "@better-auth/core/db/adapter";
-import { TTY_COLORS } from "@better-auth/core/env";
-import { getAuthTables } from "better-auth/db";
+import type { Awaitable, BetterAuthOptions } from "@shinauth/core";
+import type { DBAdapter } from "@shinauth/core/db/adapter";
+import { deepmerge, initGetModelName } from "@shinauth/core/db/adapter";
+import { TTY_COLORS } from "@shinauth/core/env";
+import { getAuthTables } from "shinauth/db";
 import { afterAll, beforeAll, describe } from "vitest";
 import type { createTestSuite, TestSuiteStats } from "./create-test-suite";
 

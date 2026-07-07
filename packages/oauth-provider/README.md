@@ -1,11 +1,11 @@
-# Better Auth OAuth Provider Plugin
+# Shinauth OAuth Provider Plugin
 
-OAuth provider plugin for [Better Auth](https://www.better-auth.com) — turn your application into an OAuth 2.0 provider.
+OAuth provider plugin for [Shinauth](https://www.better-auth.com) — turn your application into an OAuth 2.0 provider.
 
 ## Installation
 
 ```bash
-npm install @better-auth/oauth-provider
+npm install @shinauth/oauth-provider
 ```
 
 ## Documentation

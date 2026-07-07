@@ -1,5 +1,5 @@
-import { createAuthClient } from "better-auth/client";
-import { getTestInstance } from "better-auth/test";
+import { createAuthClient } from "shinauth/client";
+import { getTestInstance } from "shinauth/test";
 import { describe, expect, it } from "vitest";
 import type { LastLoginMethodClientConfig } from "../src/plugins/last-login-method";
 import { lastLoginMethodClient } from "../src/plugins/last-login-method";

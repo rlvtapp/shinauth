@@ -1,6 +1,6 @@
-import type { Status } from "better-auth";
-import { APIError } from "better-auth";
 import { statusCodes } from "better-call";
+import type { Status } from "shinauth";
+import { APIError } from "shinauth";
 
 /**
  * SCIM compliant error

@@ -1,9 +1,9 @@
-import type { BetterAuthClientPlugin } from "better-auth/client";
-import { adminClient, inferAdditionalFields } from "better-auth/client/plugins";
-import { createAccessControl } from "better-auth/plugins/access";
-import { defaultStatements } from "better-auth/plugins/admin/access";
-import { createAuthClient } from "better-auth/react";
 import { atom } from "nanostores";
+import type { BetterAuthClientPlugin } from "shinauth/client";
+import { adminClient, inferAdditionalFields } from "shinauth/client/plugins";
+import { createAccessControl } from "shinauth/plugins/access";
+import { defaultStatements } from "shinauth/plugins/admin/access";
+import { createAuthClient } from "shinauth/react";
 
 const statement = {
 	...defaultStatements,

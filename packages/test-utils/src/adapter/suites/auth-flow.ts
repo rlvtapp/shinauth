@@ -1,5 +1,5 @@
-import type { Session, User } from "@better-auth/core/db";
-import { setCookieToHeader } from "better-auth/cookies";
+import type { Session, User } from "@shinauth/core/db";
+import { setCookieToHeader } from "shinauth/cookies";
 import { expect } from "vitest";
 import { createTestSuite } from "../create-test-suite";
 

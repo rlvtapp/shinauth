@@ -1,4 +1,4 @@
-import type { BetterAuthOptions } from "@better-auth/core";
+import type { BetterAuthOptions } from "@shinauth/core";
 import { describe, expect, it, vi } from "vitest";
 import { prismaAdapter } from "./prisma-adapter";
 

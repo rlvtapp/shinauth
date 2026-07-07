@@ -1,4 +1,4 @@
-import type { GenericEndpointContext } from "@better-auth/core";
+import type { GenericEndpointContext } from "@shinauth/core";
 import type {
 	AuthenticationExtensionsClientInputs,
 	AuthenticationResponseJSON,
@@ -7,7 +7,7 @@ import type {
 	VerifiedAuthenticationResponse,
 	VerifiedRegistrationResponse,
 } from "@simplewebauthn/server";
-import type { InferOptionSchema } from "better-auth/types";
+import type { InferOptionSchema } from "shinauth/types";
 import type { schema } from "./schema";
 
 /**

@@ -1,7 +1,7 @@
-import type { AuthContext } from "@better-auth/core";
-import { createAuthEndpoint } from "@better-auth/core/api";
-import { safeJSONParse } from "@better-auth/core/utils/json";
-import { sessionMiddleware } from "better-auth/api";
+import type { AuthContext } from "@shinauth/core";
+import { createAuthEndpoint } from "@shinauth/core/api";
+import { safeJSONParse } from "@shinauth/core/utils/json";
+import { sessionMiddleware } from "shinauth/api";
 import * as z from "zod";
 import {
 	batchMigrateLegacyMetadata,

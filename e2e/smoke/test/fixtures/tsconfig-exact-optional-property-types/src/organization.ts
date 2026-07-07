@@ -1,5 +1,5 @@
-import { betterAuth } from "better-auth";
-import { organization } from "better-auth/plugins";
+import { betterAuth } from "shinauth";
+import { organization } from "shinauth/plugins";
 
 export const auth = betterAuth({
 	plugins: [

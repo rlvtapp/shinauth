@@ -1,5 +1,5 @@
 import { DatabaseSync } from "node:sqlite";
-import type { BetterAuthOptions } from "@better-auth/core";
+import type { BetterAuthOptions } from "@shinauth/core";
 import { Kysely } from "kysely";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { kyselyAdapter } from "./kysely-adapter";

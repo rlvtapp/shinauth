@@ -1,19 +1,19 @@
 {
-  "name": "@better-auth/electron",
+  "name": "@shinauth/electron",
   "version": "1.6.23",
-  "description": "Better Auth integration for Electron applications.",
+  "description": "Shinauth integration for Electron applications.",
   "type": "module",
   "license": "MIT",
-  "homepage": "https://www.better-auth.com/docs/integrations/electron",
+  "homepage": "https://github.com/rlvtapp/shinauth#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/better-auth/better-auth.git",
+    "url": "git+https://github.com/rlvtapp/shinauth.git",
     "directory": "packages/electron"
   },
   "keywords": [
     "electron",
     "auth",
-    "better-auth",
+    "shinauth",
     "typescript"
   ],
   "publishConfig": {
@@ -85,21 +85,21 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@better-auth/core": "workspace:*",
+    "@shinauth/core": "workspace:*",
     "@types/better-sqlite3": "^7.6.13",
-    "better-auth": "workspace:*",
     "better-sqlite3": "^12.6.2",
     "electron": "^41.2.2",
+    "shinauth": "workspace:*",
     "tsdown": "catalog:"
   },
   "peerDependencies": {
-    "@better-auth/core": "workspace:^",
-    "@better-auth/utils": "catalog:",
     "@better-fetch/fetch": "catalog:",
-    "better-auth": "workspace:^",
+    "@shinauth/core": "workspace:^",
+    "@shinauth/utils": "catalog:",
     "better-call": "catalog:",
     "conf": "^15.0.2",
-    "electron": ">=36.0.0"
+    "electron": ">=36.0.0",
+    "shinauth": "workspace:^"
   },
   "peerDependenciesMeta": {
     "electron": {

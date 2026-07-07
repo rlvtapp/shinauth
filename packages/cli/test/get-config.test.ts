@@ -57,9 +57,8 @@ describe("getConfig", async () => {
 		//create dummy auth.ts
 		await fs.writeFile(
 			path.join(authPath, "auth.ts"),
-			`import {betterAuth} from "better-auth";
-			 import {prismaAdapter} from "better-auth/adapters/prisma";			
-			 import {db} from "@server/db/db";
+			`import {betterAuth} from "shinauth";
+			 import {prismaAdapter} from "shinauth/adapters/prisma";import {db} from "@server/db/db";
 
 			 export const auth = betterAuth({
 					database: prismaAdapter(db, {
@@ -111,9 +110,8 @@ describe("getConfig", async () => {
 		//create dummy auth.ts
 		await fs.writeFile(
 			path.join(authPath, "auth.ts"),
-			`import {betterAuth} from "better-auth";
-			 import {prismaAdapter} from "better-auth/adapters/prisma";			
-			 import {db} from "prismaDbClient";
+			`import {betterAuth} from "shinauth";
+			 import {prismaAdapter} from "shinauth/adapters/prisma";import {db} from "prismaDbClient";
 
 			 export const auth = betterAuth({
 					database: prismaAdapter(db, {
@@ -166,9 +164,8 @@ describe("getConfig", async () => {
 		//create dummy auth.ts
 		await fs.writeFile(
 			path.join(authPath, "auth.ts"),
-			`import {betterAuth} from "better-auth";
-			 import {prismaAdapter} from "better-auth/adapters/prisma";			
-			 import {db} from "@server/db/db";
+			`import {betterAuth} from "shinauth";
+			 import {prismaAdapter} from "shinauth/adapters/prisma";import {db} from "@server/db/db";
 
 			 export const auth = betterAuth({
 					database: prismaAdapter(db, {
@@ -221,9 +218,8 @@ describe("getConfig", async () => {
 		//create dummy auth.ts
 		await fs.writeFile(
 			path.join(authPath, "auth.ts"),
-			`import {betterAuth} from "better-auth";
-			 import {prismaAdapter} from "better-auth/adapters/prisma";			
-			 import {db} from "prismaDbClient";
+			`import {betterAuth} from "shinauth";
+			 import {prismaAdapter} from "shinauth/adapters/prisma";import {db} from "prismaDbClient";
 
 			 export const auth = betterAuth({
 					database: prismaAdapter(db, {
@@ -276,9 +272,8 @@ describe("getConfig", async () => {
 		//create dummy auth.ts
 		await fs.writeFile(
 			path.join(authPath, "auth.ts"),
-			`import {betterAuth} from "better-auth";
-			 import {prismaAdapter} from "better-auth/adapters/prisma";			
-			 import {db} from "../db/db";
+			`import {betterAuth} from "shinauth";
+			 import {prismaAdapter} from "shinauth/adapters/prisma";import {db} from "../db/db";
 
 			 export const auth = betterAuth({
 					database: prismaAdapter(db, {
@@ -330,9 +325,8 @@ describe("getConfig", async () => {
 		//create dummy auth.ts
 		await fs.writeFile(
 			path.join(authPath, "auth.ts"),
-			`import {betterAuth} from "better-auth";
-			 import {prismaAdapter} from "better-auth/adapters/prisma";			
-			 import {db} from "@server/db/db";
+			`import {betterAuth} from "shinauth";
+			 import {prismaAdapter} from "shinauth/adapters/prisma";import {db} from "@server/db/db";
 
 			 export const auth = betterAuth({
 					database: prismaAdapter(db, {
@@ -379,7 +373,7 @@ describe("getConfig", async () => {
 		//create dummy auth.ts
 		await fs.writeFile(
 			path.join(authPath, "auth.js"),
-			`import  { betterAuth } from "better-auth";
+			`import  { betterAuth } from "shinauth";
 
 			 export const auth = betterAuth({
 					emailAndPassword: {
@@ -440,9 +434,8 @@ describe("getConfig", async () => {
 		// Create dummy auth.ts using both aliases
 		await fs.writeFile(
 			path.join(authPath, "auth.ts"),
-			`import {betterAuth} from "better-auth";
-			 import {prismaAdapter} from "better-auth/adapters/prisma";			
-			 import {db} from "@shared/db";
+			`import {betterAuth} from "shinauth";
+			 import {prismaAdapter} from "shinauth/adapters/prisma";import {db} from "@shared/db";
 
 			 export const auth = betterAuth({
 					database: prismaAdapter(db, {
@@ -499,7 +492,7 @@ describe("getConfig", async () => {
 		// Create dummy auth.ts
 		await fs.writeFile(
 			path.join(authPath, "auth.ts"),
-			`import {betterAuth} from "better-auth";
+			`import {betterAuth} from "shinauth";
 
 			 export const auth = betterAuth({
 					emailAndPassword: {
@@ -555,7 +548,7 @@ describe("getConfig", async () => {
 		// Create dummy auth.ts
 		await fs.writeFile(
 			path.join(authPath, "auth.ts"),
-			`import {betterAuth} from "better-auth";
+			`import {betterAuth} from "shinauth";
 
 			 export const auth = betterAuth({
 					emailAndPassword: {
@@ -616,9 +609,8 @@ describe("getConfig", async () => {
 		// Create dummy auth.ts using both aliases
 		await fs.writeFile(
 			path.join(authPath, "auth.ts"),
-			`import {betterAuth} from "better-auth";
-			 import {prismaAdapter} from "better-auth/adapters/prisma";			
-			 import {db} from "@shared/db/db";
+			`import {betterAuth} from "shinauth";
+			 import {prismaAdapter} from "shinauth/adapters/prisma";import {db} from "@shared/db/db";
 
 			 export const auth = betterAuth({
 					database: prismaAdapter(db, {
@@ -692,7 +684,7 @@ describe("getConfig", async () => {
 		// Create dummy auth.ts
 		await fs.writeFile(
 			path.join(authPath, "auth.ts"),
-			`import {betterAuth} from "better-auth";
+			`import {betterAuth} from "shinauth";
 
 			 export const auth = betterAuth({
 					emailAndPassword: {
@@ -760,7 +752,7 @@ describe("getConfig", async () => {
 
 		await fs.writeFile(
 			path.join(authPath, "auth.ts"),
-			`import { betterAuth } from "better-auth";
+			`import { betterAuth } from "shinauth";
 			 import { db } from "$lib/server/database";
 
 			 export const auth = betterAuth({
@@ -787,7 +779,7 @@ describe("getConfig", async () => {
 
 		await fs.writeFile(
 			path.join(authPath, "auth.ts"),
-			`import { betterAuth } from "better-auth";
+			`import { betterAuth } from "shinauth";
 
 			 const auth = betterAuth({
 					emailAndPassword: {
@@ -827,7 +819,7 @@ describe("getConfig", async () => {
 
 		await fs.writeFile(
 			path.join(authPath, "auth.ts"),
-			`import { betterAuth } from "better-auth";
+			`import { betterAuth } from "shinauth";
 
 			 const auth = betterAuth({
 					emailAndPassword: {
@@ -869,7 +861,7 @@ describe("getConfig", async () => {
 
 		await fs.writeFile(
 			path.join(authPath, "auth.ts"),
-			`import { betterAuth } from "better-auth";
+			`import { betterAuth } from "shinauth";
 
 			 export default betterAuth({
 					emailAndPassword: {
@@ -900,7 +892,7 @@ describe("getConfig", async () => {
 
 		await fs.writeFile(
 			path.join(tmpDir, "auth.ts"),
-			`import { betterAuth } from "better-auth";
+			`import { betterAuth } from "shinauth";
 			 import { env } from "cloudflare:workers";
 
 			 export const auth = betterAuth({
@@ -929,7 +921,7 @@ describe("getConfig", async () => {
 
 		await fs.writeFile(
 			path.join(tmpDir, "auth.ts"),
-			`import { betterAuth } from "better-auth";
+			`import { betterAuth } from "shinauth";
 			 import {
 				 WorkerEntrypoint,
 				 WorkflowEntrypoint,
@@ -1003,9 +995,8 @@ describe("getConfig", async () => {
 		// Create auth.ts using the alias from extended config
 		await fs.writeFile(
 			path.join(authPath, "auth.ts"),
-			`import {betterAuth} from "better-auth";
-			 import {prismaAdapter} from "better-auth/adapters/prisma";
-			 import {db} from "@src/db/db";
+			`import {betterAuth} from "shinauth";
+			 import {prismaAdapter} from "shinauth/adapters/prisma";import {db} from "@src/db/db";
 
 			 export const auth = betterAuth({
 					database: prismaAdapter(db, {
@@ -1077,9 +1068,8 @@ describe("getConfig", async () => {
 		// Create auth.ts using the alias from grandparent
 		await fs.writeFile(
 			path.join(authPath, "auth.ts"),
-			`import {betterAuth} from "better-auth";
-			 import {prismaAdapter} from "better-auth/adapters/prisma";
-			 import {db} from "@server/db/db";
+			`import {betterAuth} from "shinauth";
+			 import {prismaAdapter} from "shinauth/adapters/prisma";import {db} from "@server/db/db";
 
 			 export const auth = betterAuth({
 					database: prismaAdapter(db, {
@@ -1157,7 +1147,7 @@ describe("getConfig", async () => {
 
 		await fs.writeFile(
 			path.join(authPath, "auth.ts"),
-			`import { betterAuth } from "better-auth";
+			`import { betterAuth } from "shinauth";
 			 import { db } from "$lib/server/database";
 
 			 export const auth = betterAuth({
@@ -1229,9 +1219,8 @@ describe("getConfig", async () => {
 		// Create auth.ts
 		await fs.writeFile(
 			path.join(authPath, "auth.ts"),
-			`import {betterAuth} from "better-auth";
-			 import {prismaAdapter} from "better-auth/adapters/prisma";
-			 import {db} from "@server/db/db";
+			`import {betterAuth} from "shinauth";
+			 import {prismaAdapter} from "shinauth/adapters/prisma";import {db} from "@server/db/db";
 
 			 export const auth = betterAuth({
 					database: prismaAdapter(db, {
@@ -1520,7 +1509,7 @@ describe("tsconfig paths resolution (user-reported scenarios)", () => {
 				"my-app/src/lib/server/db.ts": `export const db = "my-app-db";`,
 				"my-app/src/lib/server/db/schema.ts": `export const usersTable = "my-app-users";`,
 				"my-app/src/auth.ts": `
-					import { betterAuth } from "better-auth";
+					import { betterAuth } from "shinauth";
 					import { db } from "$lib/server/db";
 					import * as schema from "$lib/server/db/schema";
 					const [version] = Object.values(schema);
@@ -1569,7 +1558,7 @@ describe("tsconfig paths resolution (user-reported scenarios)", () => {
 				}`,
 				"mc-id/website/src/lib/server/email-service.ts": `export const service = "website-email-service";`,
 				"mc-id/website/src/lib/server/auth.ts": `
-					import { betterAuth } from "better-auth";
+					import { betterAuth } from "shinauth";
 					import { service } from "$lib/server/email-service";
 					export const auth = betterAuth({
 						appName: service,
@@ -1613,7 +1602,7 @@ describe("tsconfig paths resolution (user-reported scenarios)", () => {
 				// Sibling without src/index.ts — must not resolve to a candidate.
 				"libs/web/legacy/README.md": `not a package`,
 				"apps/web/src/auth.ts": `
-					import { betterAuth } from "better-auth";
+					import { betterAuth } from "shinauth";
 					import { name as uiKit } from "@web/ui-kit";
 					import { name as dataSdk } from "@web/data-sdk";
 					import { name as authSdk } from "@web/auth-sdk";
@@ -1654,7 +1643,7 @@ describe("tsconfig paths resolution (user-reported scenarios)", () => {
 				}`,
 				"packages/feature/nested/src/index.ts": `export const name = "nested-feature";`,
 				"src/auth.ts": `
-					import { betterAuth } from "better-auth";
+					import { betterAuth } from "shinauth";
 					import { name } from "@scope/feature/nested";
 					export const auth = betterAuth({
 						appName: name,
@@ -1697,7 +1686,7 @@ describe("tsconfig paths resolution (user-reported scenarios)", () => {
 				"primary/db.ts": `export const db = "primary";`,
 				"secondary/db.ts": `export const db = "secondary";`,
 				"src/auth.ts": `
-					import { betterAuth } from "better-auth";
+					import { betterAuth } from "shinauth";
 					import { db } from "@db";
 					export const auth = betterAuth({
 						appName: db,
@@ -1736,7 +1725,7 @@ describe("tsconfig paths resolution (user-reported scenarios)", () => {
 				}`,
 				"fallback/secondary/db.ts": `export const db = "secondary-fallback";`,
 				"src/auth.ts": `
-					import { betterAuth } from "better-auth";
+					import { betterAuth } from "shinauth";
 					import { db } from "@db";
 					export const auth = betterAuth({
 						appName: db,
@@ -1777,7 +1766,7 @@ describe("tsconfig paths resolution (user-reported scenarios)", () => {
 				"packages/secondary/src/index.ts": `export const secondary = "secondary-value";`,
 				"packages/barrel/src/index.ts": `export * from "@pkg/primary";`,
 				"src/auth.ts": `
-					import { betterAuth } from "better-auth";
+					import { betterAuth } from "shinauth";
 					import { primary } from "@pkg/barrel";
 					const mod = await import("@pkg/secondary");
 					export const auth = betterAuth({
@@ -1823,7 +1812,7 @@ describe("tsconfig paths resolution (user-reported scenarios)", () => {
 				}`,
 				[`src/lib${ext}`]: body,
 				"src/auth.ts": `
-					import { betterAuth } from "better-auth";
+					import { betterAuth } from "shinauth";
 					import { value } from "@lib";
 					export const auth = betterAuth({
 						appName: value,
@@ -1878,7 +1867,7 @@ describe("SvelteKit virtual modules and Vite asset imports (user-reported scenar
 			await writeTree(tmpdir, {
 				"package.json": sveltekitPackageJson,
 				"src/lib/server/auth.ts": `
-					import { betterAuth } from "better-auth";
+					import { betterAuth } from "shinauth";
 					import { building, dev } from "$app/environment";
 					import { getRequestEvent } from "$app/server";
 					export const auth = betterAuth({
@@ -1912,7 +1901,7 @@ describe("SvelteKit virtual modules and Vite asset imports (user-reported scenar
 			await writeTree(tmpdir, {
 				"package.json": sveltekitPackageJson,
 				"src/lib/server/auth.ts": `
-					import { betterAuth } from "better-auth";
+					import { betterAuth } from "shinauth";
 					import { browser, building, dev, version } from "$app/env";
 					export const auth = betterAuth({
 						appName:
@@ -1950,7 +1939,7 @@ describe("SvelteKit virtual modules and Vite asset imports (user-reported scenar
 			await writeTree(tmpdir, {
 				"package.json": sveltekitPackageJson,
 				"src/lib/server/auth.ts": `
-					import { betterAuth } from "better-auth";
+					import { betterAuth } from "shinauth";
 					import { resolve, asset, match } from "$app/paths";
 					import { read, getRequestEvent } from "$app/server";
 					export const auth = betterAuth({
@@ -1987,7 +1976,7 @@ describe("SvelteKit virtual modules and Vite asset imports (user-reported scenar
 			await writeTree(tmpdir, {
 				"package.json": sveltekitPackageJson,
 				"src/lib/server/auth.ts": `
-					import { betterAuth } from "better-auth";
+					import { betterAuth } from "shinauth";
 					import { getStores, page, updated } from "$app/stores";
 					export const auth = betterAuth({
 						appName:
@@ -2028,7 +2017,7 @@ describe("SvelteKit virtual modules and Vite asset imports (user-reported scenar
 				"svelte.config.js": `export default { kit: { alias: { $src: "src" } } };`,
 				"src/app.css": `body { color: red; }`,
 				"src/lib/server/auth.ts": `
-					import { betterAuth } from "better-auth";
+					import { betterAuth } from "shinauth";
 					import styles from "$src/app.css?inline";
 					export const auth = betterAuth({
 						appName: typeof styles,
@@ -2061,7 +2050,7 @@ describe("SvelteKit virtual modules and Vite asset imports (user-reported scenar
 				"package.json": sveltekitPackageJson,
 				"src/lib/server/email.html": `<p>hello</p>`,
 				"src/lib/server/auth.ts": `
-					import { betterAuth } from "better-auth";
+					import { betterAuth } from "shinauth";
 					import template from "./email.html?raw";
 					export const auth = betterAuth({
 						appName: typeof template,
@@ -2096,7 +2085,7 @@ describe("SvelteKit virtual modules and Vite asset imports (user-reported scenar
 				"src/logo.svg": `<svg></svg>`,
 				"src/app.css": `body { color: red; }`,
 				"src/lib/server/auth.ts": `
-					import { betterAuth } from "better-auth";
+					import { betterAuth } from "shinauth";
 					import logoUrl from "../../logo.svg";
 					import "../../app.css";
 					export const auth = betterAuth({
@@ -2133,7 +2122,7 @@ describe("SvelteKit virtual modules and Vite asset imports (user-reported scenar
 			await writeTree(tmpdir, {
 				"package.json": sveltekitPackageJson,
 				"src/lib/server/auth.ts": `
-					import { betterAuth } from "better-auth";
+					import { betterAuth } from "shinauth";
 					import { env as pub } from "$env/dynamic/public";
 					import { env as priv } from "$env/dynamic/private";
 					export const auth = betterAuth({
@@ -2215,7 +2204,7 @@ describe("SvelteKit virtual modules and Vite asset imports (user-reported scenar
 				"package.json": sveltekitPackageJson,
 				"src/lib/server/worker.ts": `export {};`,
 				"src/lib/server/auth.ts": `
-					import { betterAuth } from "better-auth";
+					import { betterAuth } from "shinauth";
 					import MyWorker from "./worker.ts?worker";
 					import initWasm from "./module.wasm?init";
 					export const auth = betterAuth({

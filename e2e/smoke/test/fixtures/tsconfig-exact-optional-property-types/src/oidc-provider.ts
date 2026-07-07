@@ -1,5 +1,5 @@
-import { betterAuth } from "better-auth";
-import { oidcProvider } from "better-auth/plugins";
+import { betterAuth } from "shinauth";
+import { oidcProvider } from "shinauth/plugins";
 
 export const auth = betterAuth({
 	plugins: [

@@ -1,12 +1,9 @@
-import { logger } from "@better-auth/core/env";
-import { BetterAuthError } from "@better-auth/core/error";
-import { verifyAccessToken } from "better-auth/oauth2";
-import type {
-	BetterAuthClientPlugin,
-	BetterAuthOptions,
-} from "better-auth/types";
+import { logger } from "@shinauth/core/env";
+import { BetterAuthError } from "@shinauth/core/error";
 import { APIError } from "better-call";
 import type { JWTPayload, JWTVerifyOptions } from "jose";
+import { verifyAccessToken } from "shinauth/oauth2";
+import type { BetterAuthClientPlugin, BetterAuthOptions } from "shinauth/types";
 import { handleMcpErrors } from "./mcp";
 import type { ResourceServerMetadata } from "./types/oauth";
 import { getJwtPlugin, getOAuthProviderPlugin } from "./utils";

@@ -3,7 +3,7 @@ import type {
 	GrantType,
 	OAuthOptions,
 	TokenEndpointAuthMethod,
-} from "@better-auth/oauth-provider";
+} from "@shinauth/oauth-provider";
 import { describe, expectTypeOf, it } from "vitest";
 
 describe("public oauth-provider types", () => {

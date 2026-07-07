@@ -1,5 +1,5 @@
-import type { GenericEndpointContext } from "@better-auth/core";
-import type { JWSAlgorithms, JwtOptions } from "better-auth/plugins";
+import type { GenericEndpointContext } from "@shinauth/core";
+import type { JWSAlgorithms, JwtOptions } from "shinauth/plugins";
 import { validateIssuerUrl } from "./authorize";
 import type { OAuthOptions, Scope } from "./types";
 import type {

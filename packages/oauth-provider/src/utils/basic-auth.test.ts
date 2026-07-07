@@ -1,4 +1,4 @@
-import { base64 } from "@better-auth/utils/base64";
+import { base64 } from "@shinauth/utils/base64";
 import { describe, expect, it } from "vitest";
 
 import { basicToClientCredentials } from "./index";

@@ -45,4 +45,4 @@ export const verificationValueSchema = z
  * Re-exported from `@better-auth/core` so every OAuth provider plugin shares one
  * redirect-URI scheme policy. See `@better-auth/core/utils/redirect-uri`.
  */
-export { SafeUrlSchema } from "@better-auth/core/utils/redirect-uri";
+export { SafeUrlSchema } from "@shinauth/core/utils/redirect-uri";

@@ -1,7 +1,7 @@
-import { APIError } from "better-auth/api";
-import { createAuthClient } from "better-auth/client";
-import { jwt } from "better-auth/plugins/jwt";
-import { getTestInstance } from "better-auth/test";
+import { APIError } from "shinauth/api";
+import { createAuthClient } from "shinauth/client";
+import { jwt } from "shinauth/plugins/jwt";
+import { getTestInstance } from "shinauth/test";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { oauthProviderClient } from "../client";
 import { oauthProvider } from "../oauth";

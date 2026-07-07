@@ -1,11 +1,11 @@
-# Better Auth Kysely Adapter
+# Shinauth Kysely Adapter
 
-Kysely adapter for [Better Auth](https://www.better-auth.com).
+Kysely adapter for [Shinauth](https://www.better-auth.com).
 
 ## Installation
 
 ```bash
-npm install @better-auth/kysely-adapter
+npm install @shinauth/kysely-adapter
 ```
 
 ## Documentation

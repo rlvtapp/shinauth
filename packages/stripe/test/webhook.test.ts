@@ -1,5 +1,5 @@
-import type { User } from "better-auth";
-import { getTestInstance } from "better-auth/test";
+import type { User } from "shinauth";
+import { getTestInstance } from "shinauth/test";
 import type Stripe from "stripe";
 import { assert, describe, expect, vi } from "vitest";
 import { stripe } from "../src";

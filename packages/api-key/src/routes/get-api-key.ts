@@ -1,8 +1,8 @@
-import type { AuthContext } from "@better-auth/core";
-import { createAuthEndpoint } from "@better-auth/core/api";
-import { APIError } from "@better-auth/core/error";
-import { safeJSONParse } from "@better-auth/core/utils/json";
-import { sessionMiddleware } from "better-auth/api";
+import type { AuthContext } from "@shinauth/core";
+import { createAuthEndpoint } from "@shinauth/core/api";
+import { APIError } from "@shinauth/core/error";
+import { safeJSONParse } from "@shinauth/core/utils/json";
+import { sessionMiddleware } from "shinauth/api";
 import * as z from "zod";
 import { API_KEY_ERROR_CODES as ERROR_CODES } from "..";
 import { getApiKeyById, migrateDoubleStringifiedMetadata } from "../adapter";

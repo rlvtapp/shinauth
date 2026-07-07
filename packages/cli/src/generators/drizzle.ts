@@ -1,10 +1,10 @@
 import { existsSync } from "node:fs";
-import { toSnakeCase } from "@better-auth/core/utils/string";
-import { initGetFieldName, initGetModelName } from "better-auth/adapters";
-import type { BetterAuthDBSchema, DBFieldAttribute } from "better-auth/db";
-import { getAuthTables } from "better-auth/db";
-import type { BetterAuthOptions } from "better-auth/types";
+import { toSnakeCase } from "@shinauth/core/utils/string";
 import prettier from "prettier";
+import { initGetFieldName, initGetModelName } from "shinauth/adapters";
+import type { BetterAuthDBSchema, DBFieldAttribute } from "shinauth/db";
+import { getAuthTables } from "shinauth/db";
+import type { BetterAuthOptions } from "shinauth/types";
 import type { SchemaGenerator } from "./types";
 
 function convertToSnakeCase(str: string, camelCase?: boolean) {

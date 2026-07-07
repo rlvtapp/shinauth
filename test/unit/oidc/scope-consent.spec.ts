@@ -2,11 +2,11 @@ import fs from "node:fs/promises";
 import https from "node:https";
 import path from "node:path";
 import { betterFetch } from "@better-fetch/fetch";
-import type { Auth } from "better-auth";
-import { betterAuth } from "better-auth";
-import { toNodeHandler } from "better-auth/node";
-import { jwt, oidcProvider } from "better-auth/plugins";
 import * as client from "openid-client";
+import type { Auth } from "shinauth";
+import { betterAuth } from "shinauth";
+import { toNodeHandler } from "shinauth/node";
+import { jwt, oidcProvider } from "shinauth/plugins";
 import {
 	afterAll,
 	afterEach,

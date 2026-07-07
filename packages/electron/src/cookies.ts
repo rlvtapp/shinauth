@@ -1,4 +1,4 @@
-import { cookieNameRegex, parseSetCookieHeader } from "better-auth/cookies";
+import { cookieNameRegex, parseSetCookieHeader } from "shinauth/cookies";
 
 interface StoredCookie {
 	value: string;
@@ -105,7 +105,7 @@ export function hasSessionCookieChanged(
  * - Custom prefix: "myapp.session_token", "myapp-passkey", "__Secure-myapp.session_token"
  * - Custom full names: "my_custom_session_token", "custom_session_data"
  * - No prefix (cookiePrefix=""): matches any cookie with known suffixes
- * - Multiple prefixes: ["better-auth", "my-app"] matches cookies starting with any of the prefixes
+ * - Multiple prefixes: ["shinauth", "my-app"] matches cookies starting with any of the prefixes
  *
  * @param setCookieHeader - The Set-Cookie header value
  * @param cookiePrefix - The cookie prefix(es) to check for. Can be a string, array of strings, or empty string.

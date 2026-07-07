@@ -1,5 +1,5 @@
-import type { BetterAuthOptions } from "@better-auth/core";
-import type { DBAdapter } from "@better-auth/core/db/adapter";
+import type { BetterAuthOptions } from "@shinauth/core";
+import type { DBAdapter } from "@shinauth/core/db/adapter";
 import { describe, expect, it } from "vitest";
 import type { MemoryDB } from "./memory-adapter";
 import { memoryAdapter } from "./memory-adapter";

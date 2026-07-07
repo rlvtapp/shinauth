@@ -1,14 +1,14 @@
-import { createAuthClient } from "better-auth/client";
-import { organizationClient } from "better-auth/client/plugins";
-import { generateRandomString } from "better-auth/crypto";
+import { createAuthClient } from "shinauth/client";
+import { organizationClient } from "shinauth/client/plugins";
+import { generateRandomString } from "shinauth/crypto";
 import {
 	createAuthorizationCodeRequest,
 	createAuthorizationURL,
-} from "better-auth/oauth2";
-import { jwt } from "better-auth/plugins/jwt";
-import type { Organization } from "better-auth/plugins/organization";
-import { organization } from "better-auth/plugins/organization";
-import { getTestInstance } from "better-auth/test";
+} from "shinauth/oauth2";
+import { jwt } from "shinauth/plugins/jwt";
+import type { Organization } from "shinauth/plugins/organization";
+import { organization } from "shinauth/plugins/organization";
+import { getTestInstance } from "shinauth/test";
 import { beforeAll, describe, expect, it, onTestFinished, vi } from "vitest";
 import { oauthProviderClient } from "./client";
 import { oauthProvider } from "./oauth";

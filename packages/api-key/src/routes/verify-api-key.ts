@@ -1,8 +1,8 @@
-import type { AuthContext, GenericEndpointContext } from "@better-auth/core";
-import { createAuthEndpoint } from "@better-auth/core/api";
-import { APIError } from "@better-auth/core/error";
-import { safeJSONParse } from "@better-auth/core/utils/json";
-import { role } from "better-auth/plugins/access";
+import type { AuthContext, GenericEndpointContext } from "@shinauth/core";
+import { createAuthEndpoint } from "@shinauth/core/api";
+import { APIError } from "@shinauth/core/error";
+import { safeJSONParse } from "@shinauth/core/utils/json";
+import { role } from "shinauth/plugins/access";
 import * as z from "zod";
 import { API_KEY_TABLE_NAME, API_KEY_ERROR_CODES as ERROR_CODES } from "..";
 import { defaultKeyHasher } from "../";

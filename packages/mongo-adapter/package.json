@@ -1,13 +1,13 @@
 {
-  "name": "@better-auth/mongo-adapter",
+  "name": "@shinauth/mongo-adapter",
   "version": "1.6.23",
-  "description": "Mongo adapter for Better Auth",
+  "description": "Mongo adapter for Shinauth",
   "type": "module",
   "license": "MIT",
-  "homepage": "https://www.better-auth.com/docs/adapters/mongodb",
+  "homepage": "https://github.com/rlvtapp/shinauth#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/better-auth/better-auth.git",
+    "url": "git+https://github.com/rlvtapp/shinauth.git",
     "directory": "packages/mongo-adapter"
   },
   "keywords": [
@@ -15,7 +15,7 @@
     "mongodb",
     "adapter",
     "typescript",
-    "better-auth"
+    "shinauth"
   ],
   "publishConfig": {
     "access": "public"
@@ -44,8 +44,8 @@
     }
   },
   "peerDependencies": {
-    "@better-auth/core": "workspace:^",
-    "@better-auth/utils": "catalog:",
+    "@shinauth/core": "workspace:^",
+    "@shinauth/utils": "catalog:",
     "mongodb": "^6.0.0 || ^7.0.0"
   },
   "peerDependenciesMeta": {
@@ -54,8 +54,8 @@
     }
   },
   "devDependencies": {
-    "@better-auth/core": "workspace:*",
-    "@better-auth/utils": "catalog:",
+    "@shinauth/core": "workspace:*",
+    "@shinauth/utils": "catalog:",
     "mongodb": "^7.1.0",
     "tsdown": "catalog:",
     "typescript": "catalog:"

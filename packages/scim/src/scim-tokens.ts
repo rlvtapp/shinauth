@@ -1,11 +1,11 @@
-import { base64Url } from "@better-auth/utils/base64";
-import { createHash } from "@better-auth/utils/hash";
-import type { GenericEndpointContext } from "better-auth";
+import { base64Url } from "@shinauth/utils/base64";
+import { createHash } from "@shinauth/utils/hash";
+import type { GenericEndpointContext } from "shinauth";
 import {
 	constantTimeEqual,
 	symmetricDecrypt,
 	symmetricEncrypt,
-} from "better-auth/crypto";
+} from "shinauth/crypto";
 import type { SCIMOptions } from "./types";
 
 const defaultKeyHasher = async (token: string) => {

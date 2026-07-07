@@ -9,9 +9,9 @@ import yoctoSpinner from "yocto-spinner";
 
 const PROTOCOL_URL = "https://agent-auth-protocol.com";
 const AGENT_CLI_PKG = "@auth/agent-cli";
-const AGENT_PLUGIN_PKG = "@better-auth/agent-auth";
+const AGENT_PLUGIN_PKG = "@shinauth/agent-auth";
 const DEFAULT_REGISTRY = "https://agent-auth.directory";
-const SKILLS_REPO = "better-auth/agent-auth";
+const SKILLS_REPO = "shinauth/agent-auth";
 
 interface McpEntry {
 	command: string;
@@ -108,7 +108,7 @@ async function setupServerSelection() {
 		choices: [
 			{
 				title: "Better Auth + Agent Auth",
-				value: "better-auth",
+				value: "shinauth",
 				description: "TypeScript",
 			},
 		],
@@ -539,7 +539,7 @@ function generateServerCode(
 		: "";
 
 	if (source === "openapi" && sourceUrl) {
-		return `import { betterAuth } from "better-auth";
+		return `import { betterAuth } from "shinauth";
 import { agentAuth } from "${AGENT_PLUGIN_PKG}";
 import { createFromOpenAPI } from "${AGENT_PLUGIN_PKG}/openapi";
 
@@ -561,7 +561,7 @@ export const auth = betterAuth({
 	}
 
 	if (source === "mcp" && sourceUrl) {
-		return `import { betterAuth } from "better-auth";
+		return `import { betterAuth } from "shinauth";
 import { agentAuth } from "${AGENT_PLUGIN_PKG}";
 
 export const auth = betterAuth({
@@ -575,7 +575,7 @@ export const auth = betterAuth({
 `;
 	}
 
-	return `import { betterAuth } from "better-auth";
+	return `import { betterAuth } from "shinauth";
 import { agentAuth } from "${AGENT_PLUGIN_PKG}";
 
 export const auth = betterAuth({
@@ -611,7 +611,7 @@ export const auth = betterAuth({
 function showServerOutro() {
 	console.log(chalk.bold.white("\nNext steps:\n"));
 	console.log(chalk.white("  1. Install dependencies:"));
-	console.log(chalk.cyan(`     npm install better-auth ${AGENT_PLUGIN_PKG}\n`));
+	console.log(chalk.cyan(`     npm install shinauth ${AGENT_PLUGIN_PKG}\n`));
 	console.log(chalk.white("  2. Configure your database:"));
 	console.log(
 		chalk.gray(
@@ -622,7 +622,7 @@ function showServerOutro() {
 		chalk.cyan("     https://www.better-auth.com/docs/concepts/database\n"),
 	);
 	console.log(chalk.white("  3. Run database migrations:"));
-	console.log(chalk.cyan("     npx auth migrate\n"));
+	console.log(chalk.cyan("     npx @shinauth/cli migrate\n"));
 	console.log(
 		chalk.white("  4. Expose the discovery endpoint at your app root:"),
 	);

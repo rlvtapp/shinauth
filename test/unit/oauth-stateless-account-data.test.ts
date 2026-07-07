@@ -16,11 +16,11 @@
  * decodes to the freshly created account.
  */
 
-import { genericOAuthClient } from "better-auth/client/plugins";
-import { parseSetCookieHeader } from "better-auth/cookies";
-import { symmetricDecodeJWT } from "better-auth/crypto";
-import { genericOAuth } from "better-auth/plugins";
-import { getTestInstance } from "better-auth/test";
+import { genericOAuthClient } from "shinauth/client/plugins";
+import { parseSetCookieHeader } from "shinauth/cookies";
+import { symmetricDecodeJWT } from "shinauth/crypto";
+import { genericOAuth } from "shinauth/plugins";
+import { getTestInstance } from "shinauth/test";
 import type { Dispatcher } from "undici";
 import { getGlobalDispatcher, MockAgent, setGlobalDispatcher } from "undici";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";

@@ -1,14 +1,14 @@
 import { DatabaseSync } from "node:sqlite";
 import type { TestContext } from "node:test";
 import { test } from "node:test";
-import type { GoogleProfile } from "@better-auth/core/social-providers";
-import { redisStorage } from "@better-auth/redis-storage";
-import { betterAuth } from "better-auth";
-import { signJWT } from "better-auth/crypto";
-import { getMigrations } from "better-auth/db/migration";
+import type { GoogleProfile } from "@shinauth/core/social-providers";
+import { redisStorage } from "@shinauth/redis-storage";
 import { Redis } from "ioredis";
 import { HttpResponse, http } from "msw";
 import { setupServer } from "msw/node";
+import { betterAuth } from "shinauth";
+import { signJWT } from "shinauth/crypto";
+import { getMigrations } from "shinauth/db/migration";
 
 const DEFAULT_SECRET = "better-auth-secret-123456789";
 

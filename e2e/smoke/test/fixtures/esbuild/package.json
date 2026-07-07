@@ -1,8 +1,8 @@
 {
-  "name": "@better-auth-test/fixtures-esbuild",
+  "name": "@shinauth-test/fixtures-esbuild",
   "private": true,
   "dependencies": {
-    "better-auth": "workspace:*"
+    "shinauth": "workspace:*"
   },
   "devDependencies": {
     "esbuild": "^0.28.1"

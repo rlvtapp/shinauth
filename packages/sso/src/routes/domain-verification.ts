@@ -1,9 +1,5 @@
-import {
-	APIError,
-	createAuthEndpoint,
-	sessionMiddleware,
-} from "better-auth/api";
-import { generateRandomString } from "better-auth/crypto";
+import { APIError, createAuthEndpoint, sessionMiddleware } from "shinauth/api";
+import { generateRandomString } from "shinauth/crypto";
 import * as z from "zod";
 import type { SSOOptions, SSOProvider } from "../types";
 import { parseProviderDomains } from "../utils";

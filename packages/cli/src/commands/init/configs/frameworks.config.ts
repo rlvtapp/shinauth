@@ -4,7 +4,7 @@ export const FRAMEWORKS = [
 		id: "astro",
 		dependency: "astro",
 		authClient: {
-			importPath: "better-auth/react", // assume react is used for astro
+			importPath: "shinauth/react", // assume react is used for astro
 		},
 		routeHandler: {
 			path: "pages/api/auth/[...all].ts",
@@ -30,11 +30,11 @@ export const ALL: APIRoute = async (ctx) => {
 		id: "remix",
 		dependency: "@remix-run/server-runtime",
 		authClient: {
-			importPath: "better-auth/react",
+			importPath: "shinauth/react",
 		},
 		routeHandler: {
 			path: "app/lib/auth.server.ts",
-			code: `import { betterAuth } from "better-auth"
+			code: `import { betterAuth } from "shinauth"
 
 export const auth = betterAuth({
     database: {
@@ -50,11 +50,11 @@ export const auth = betterAuth({
 		id: "react-router-v7",
 		dependency: "react-router",
 		authClient: {
-			importPath: "better-auth/react",
+			importPath: "shinauth/react",
 		},
 		routeHandler: {
 			path: "app/lib/auth.server.ts",
-			code: `import { betterAuth } from "better-auth"
+			code: `import { betterAuth } from "shinauth"
 
 export const auth = betterAuth({
     database: {
@@ -70,12 +70,12 @@ export const auth = betterAuth({
 		id: "next",
 		dependency: "next",
 		authClient: {
-			importPath: "better-auth/react",
+			importPath: "shinauth/react",
 		},
 		routeHandler: {
 			path: "api/auth/[...all]/route.ts",
 			code: `import { auth } from "@/lib/auth";
-import { toNextJsHandler } from "better-auth/next-js";
+import { toNextJsHandler } from "shinauth/next-js";
 export const { GET, POST } = toNextJsHandler(auth.handler);`,
 		},
 		configPaths: [
@@ -92,7 +92,7 @@ export const { GET, POST } = toNextJsHandler(auth.handler);`,
 		id: "nuxt",
 		dependency: "nuxt",
 		authClient: {
-			importPath: "better-auth/vue",
+			importPath: "shinauth/vue",
 		},
 		routeHandler: {
 			path: "server/api/auth/[...all].ts",
@@ -114,12 +114,12 @@ export default defineEventHandler((event) => {
 		id: "sveltekit",
 		dependency: "@sveltejs/kit",
 		authClient: {
-			importPath: "better-auth/svelte",
+			importPath: "shinauth/svelte",
 		},
 		routeHandler: {
 			path: `hooks.server.ts`,
 			code: `import { auth } from "$lib/auth";
-import { svelteKitHandler } from "better-auth/svelte-kit";
+import { svelteKitHandler } from "shinauth/svelte-kit";
 import { building } from "$app/environment";
 
 export async function handle({ event, resolve }) {
@@ -138,12 +138,12 @@ export async function handle({ event, resolve }) {
 		id: "solid-start",
 		dependency: "solid-start",
 		authClient: {
-			importPath: "better-auth/solid",
+			importPath: "shinauth/solid",
 		},
 		routeHandler: {
 			path: `routes/api/auth/*auth.ts`,
 			code: `import { auth } from "~/lib/auth";
-import { toSolidStartHandler } from "better-auth/solid-start";
+import { toSolidStartHandler } from "shinauth/solid-start";
 
 export const { GET, POST } = toSolidStartHandler(auth);`,
 		},
@@ -154,7 +154,7 @@ export const { GET, POST } = toSolidStartHandler(auth);`,
 		id: "tanstack-start",
 		dependency: "tanstack-start",
 		authClient: {
-			importPath: "better-auth/react", // assume react is used for tanstack start
+			importPath: "shinauth/react", // assume react is used for tanstack start
 		},
 		routeHandler: {
 			path: `src/routes/api/auth/$.ts`,

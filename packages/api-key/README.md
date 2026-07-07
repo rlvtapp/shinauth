@@ -1,11 +1,11 @@
-# Better Auth API Key Plugin
+# Shinauth API Key Plugin
 
-API Key plugin for [Better Auth](https://www.better-auth.com) — manage API keys for your users.
+API Key plugin for [Shinauth](https://www.better-auth.com) — manage API keys for your users.
 
 ## Installation
 
 ```bash
-npm install @better-auth/api-key
+npm install @shinauth/api-key
 ```
 
 ## Documentation

@@ -21,7 +21,7 @@ process.on("SIGTERM", () => process.exit(0));
 export let cliVersion = "1.1.2";
 
 async function main() {
-	const program = new Command("better-auth");
+	const program = new Command("shinauth");
 
 	let packageInfo: Record<string, any> = {};
 	try {

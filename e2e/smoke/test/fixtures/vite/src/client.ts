@@ -1,9 +1,9 @@
 /// <reference types="vite/client" />
-export * from "better-auth/client/plugins";
+export * from "shinauth/client/plugins";
 
-import { createAuthClient } from "better-auth/client";
+import { createAuthClient } from "shinauth/client";
 
-export * from "better-auth/client/plugins";
+export * from "shinauth/client/plugins";
 
 export const authClient = createAuthClient({
 	baseURL: import.meta.env.VITE_BASE_URL || "http://localhost:3000",

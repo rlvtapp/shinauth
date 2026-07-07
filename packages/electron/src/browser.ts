@@ -1,8 +1,8 @@
 import { resolve } from "node:path";
-import type { BetterAuthClientOptions, ClientStore } from "@better-auth/core";
-import type { User } from "@better-auth/core/db";
-import { BetterAuthError } from "@better-auth/core/error";
 import type { BetterFetch } from "@better-fetch/fetch";
+import type { BetterAuthClientOptions, ClientStore } from "@shinauth/core";
+import type { User } from "@shinauth/core/db";
+import { BetterAuthError } from "@shinauth/core/error";
 import electron from "electron";
 import { authenticate, requestAuth } from "./authenticate";
 import type {

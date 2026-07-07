@@ -1,4 +1,4 @@
-import { base64Url } from "@better-auth/utils/base64";
+import { base64Url } from "@shinauth/utils/base64";
 import type { OAuth2Tokens } from "./oauth-provider";
 
 export function getOAuth2Tokens(data: Record<string, any>): OAuth2Tokens {

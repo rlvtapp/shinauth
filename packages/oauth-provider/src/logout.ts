@@ -1,9 +1,9 @@
-import type { GenericEndpointContext } from "@better-auth/core";
-import { getJwks } from "better-auth/oauth2";
-import type { Session } from "better-auth/types";
+import type { GenericEndpointContext } from "@shinauth/core";
 import { APIError } from "better-call";
 import type { JWTPayload } from "jose";
 import { compactVerify, createLocalJWKSet, decodeJwt } from "jose";
+import { getJwks } from "shinauth/oauth2";
+import type { Session } from "shinauth/types";
 import { handleRedirect } from "./authorize";
 import type { OAuthOptions, Scope } from "./types";
 import { decryptStoredClientSecret, getClient, getJwtPlugin } from "./utils";

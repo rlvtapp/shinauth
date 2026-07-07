@@ -5,7 +5,7 @@
  * Used at the boundary between the discovery pipeline and HTTP handlers.
  */
 
-import { APIError } from "better-auth/api";
+import { APIError } from "shinauth/api";
 import type { DiscoveryError } from "./types";
 
 /**

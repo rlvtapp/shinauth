@@ -1,8 +1,8 @@
-import type { GenericEndpointContext } from "@better-auth/core";
-import { defineRequestState } from "@better-auth/core/context";
-import { logger } from "@better-auth/core/env";
-import { BetterAuthError } from "@better-auth/core/error";
-import type { DispatchContext } from "better-auth/api";
+import type { GenericEndpointContext } from "@shinauth/core";
+import { defineRequestState } from "@shinauth/core/context";
+import { logger } from "@shinauth/core/env";
+import { BetterAuthError } from "@shinauth/core/error";
+import type { DispatchContext } from "shinauth/api";
 import {
 	APIError,
 	createAuthEndpoint,
@@ -10,10 +10,10 @@ import {
 	dispatchAuthEndpoint,
 	getOAuthState,
 	sessionMiddleware,
-} from "better-auth/api";
-import { parseSetCookieHeader } from "better-auth/cookies";
-import { mergeSchema } from "better-auth/db";
-import type { BetterAuthPlugin } from "better-auth/types";
+} from "shinauth/api";
+import { parseSetCookieHeader } from "shinauth/cookies";
+import { mergeSchema } from "shinauth/db";
+import type { BetterAuthPlugin } from "shinauth/types";
 import * as z from "zod";
 import type { AuthorizeEndpointSettings } from "./authorize";
 import { authorizeEndpoint } from "./authorize";
@@ -46,7 +46,7 @@ import {
 } from "./utils";
 import { PACKAGE_VERSION } from "./version";
 
-declare module "@better-auth/core" {
+declare module "@shinauth/core" {
 	interface BetterAuthPluginRegistry<AuthOptions, Options> {
 		"oauth-provider": {
 			creator: typeof oauthProvider;

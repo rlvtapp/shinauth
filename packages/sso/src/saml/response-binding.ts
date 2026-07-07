@@ -1,4 +1,4 @@
-import { APIError } from "better-auth/api";
+import { APIError } from "shinauth/api";
 import { countAllNodes, findNode, xmlParser } from "./parser";
 
 export const SAML_HTTP_POST_BINDING =

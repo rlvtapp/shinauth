@@ -4,8 +4,8 @@ import path from "node:path";
 import babelPresetReact from "@babel/preset-react";
 // @ts-expect-error
 import babelPresetTypeScript from "@babel/preset-typescript";
-import type { BetterAuthOptions } from "@better-auth/core";
-import { BetterAuthError } from "@better-auth/core/error";
+import type { BetterAuthOptions } from "@shinauth/core";
+import { BetterAuthError } from "@shinauth/core/error";
 import { loadConfig } from "c12";
 import type { TsConfigResult } from "get-tsconfig";
 import { createPathsMatcher, getTsconfig, parseTsconfig } from "get-tsconfig";

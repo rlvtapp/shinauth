@@ -1,7 +1,7 @@
-import type { GenericEndpointContext } from "@better-auth/core";
-import { createAuthEndpoint } from "@better-auth/core/api";
-import { APIError } from "@better-auth/core/error";
-import { base64 } from "@better-auth/utils/base64";
+import type { GenericEndpointContext } from "@shinauth/core";
+import { createAuthEndpoint } from "@shinauth/core/api";
+import { APIError } from "@shinauth/core/error";
+import { base64 } from "@shinauth/utils/base64";
 import type {
 	AuthenticationExtensionsClientInputs,
 	AuthenticationResponseJSON,
@@ -18,9 +18,9 @@ import {
 	getSessionFromCtx,
 	requireResourceOwnership,
 	sessionMiddleware,
-} from "better-auth/api";
-import { setSessionCookie } from "better-auth/cookies";
-import { generateRandomString } from "better-auth/crypto";
+} from "shinauth/api";
+import { setSessionCookie } from "shinauth/cookies";
+import { generateRandomString } from "shinauth/crypto";
 import * as z from "zod";
 import { PASSKEY_ERROR_CODES } from "./error-codes";
 import type {

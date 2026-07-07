@@ -1,5 +1,5 @@
-import { HIDE_METADATA } from "better-auth";
-import { APIError, createAuthEndpoint } from "better-auth/api";
+import { HIDE_METADATA } from "shinauth";
+import { APIError, createAuthEndpoint } from "shinauth/api";
 import * as z from "zod";
 
 export const expoAuthorizationProxy = createAuthEndpoint(

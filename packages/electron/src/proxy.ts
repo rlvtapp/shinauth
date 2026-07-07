@@ -1,5 +1,5 @@
-import type { BetterAuthClientPlugin } from "@better-auth/core";
-import { parseCookies } from "better-auth/cookies";
+import type { BetterAuthClientPlugin } from "@shinauth/core";
+import { parseCookies } from "shinauth/cookies";
 import type { electron } from "./index";
 import type { ElectronProxyClientOptions } from "./types/client";
 import { parseProtocolScheme } from "./utils";
@@ -8,7 +8,7 @@ import { PACKAGE_VERSION } from "./version";
 export const electronProxyClient = (options: ElectronProxyClientOptions) => {
 	const opts = {
 		clientID: "electron",
-		cookiePrefix: "better-auth",
+		cookiePrefix: "shinauth",
 		callbackPath: "/auth/callback",
 		...options,
 	};

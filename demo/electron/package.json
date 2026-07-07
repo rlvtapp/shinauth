@@ -1,5 +1,5 @@
 {
-  "name": "@better-auth/electron-demo",
+  "name": "@shinauth/electron-demo",
   "productName": "Better Auth + Electron",
   "private": true,
   "version": "1.0.0",
@@ -19,15 +19,15 @@
     "build:linux": "electron-vite build && electron-builder --linux"
   },
   "dependencies": {
-    "@better-auth/electron": "link:../../packages/electron",
     "@electron-toolkit/utils": "^4.0.0",
     "@radix-ui/react-avatar": "^1.1.11",
     "@radix-ui/react-slot": "^1.2.4",
-    "better-auth": "link:../../packages/better-auth",
+    "@shinauth/electron": "link:../../packages/electron",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "conf": "^15.1.0",
     "electron-store": "^11.0.2",
+    "shinauth": "link:../../packages/shinauth",
     "tailwind-merge": "^3.5.0",
     "tailwindcss-animate": "^1.0.7"
   },

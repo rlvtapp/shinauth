@@ -1,12 +1,12 @@
-import type { BetterAuthPlugin, HookEndpointContext } from "@better-auth/core";
-import { createAuthMiddleware } from "@better-auth/core/api";
-import { getIp } from "@better-auth/core/utils/ip";
-import { base64Url } from "@better-auth/utils/base64";
-import { createHash } from "@better-auth/utils/hash";
-import { BetterAuthError } from "better-auth";
-import { APIError } from "better-auth/api";
-import { generateRandomString } from "better-auth/crypto";
-import { mergeSchema } from "better-auth/db";
+import type { BetterAuthPlugin, HookEndpointContext } from "@shinauth/core";
+import { createAuthMiddleware } from "@shinauth/core/api";
+import { getIp } from "@shinauth/core/utils/ip";
+import { base64Url } from "@shinauth/utils/base64";
+import { createHash } from "@shinauth/utils/hash";
+import { BetterAuthError } from "shinauth";
+import { APIError } from "shinauth/api";
+import { generateRandomString } from "shinauth/crypto";
+import { mergeSchema } from "shinauth/db";
 import { API_KEY_ERROR_CODES } from "./error-codes";
 import type { PredefinedApiKeyOptions } from "./routes";
 import { createApiKeyRoutes, deleteAllExpiredApiKeys } from "./routes";
@@ -16,7 +16,7 @@ import type { ApiKeyConfigurationOptions, ApiKeyOptions } from "./types";
 import { getDate } from "./utils";
 import { PACKAGE_VERSION } from "./version";
 
-declare module "@better-auth/core" {
+declare module "@shinauth/core" {
 	interface BetterAuthPluginRegistry<AuthOptions, Options> {
 		"api-key": {
 			creator: typeof apiKey;

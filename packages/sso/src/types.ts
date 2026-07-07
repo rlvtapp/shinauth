@@ -1,4 +1,4 @@
-import type { Awaitable, OAuth2Tokens, User } from "better-auth";
+import type { Awaitable, OAuth2Tokens, User } from "shinauth";
 import type { AlgorithmValidationOptions } from "./saml/algorithms";
 
 export interface OIDCMapping {

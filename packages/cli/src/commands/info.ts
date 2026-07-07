@@ -336,10 +336,10 @@ async function getBetterAuthInfo(
 			});
 			const packageInfo = await getPackageInfo();
 			const betterAuthVersion =
-				packageInfo.dependencies?.["better-auth"] ||
-				packageInfo.devDependencies?.["better-auth"] ||
-				packageInfo.peerDependencies?.["better-auth"] ||
-				packageInfo.optionalDependencies?.["better-auth"] ||
+				packageInfo.dependencies?.["shinauth"] ||
+				packageInfo.devDependencies?.["shinauth"] ||
+				packageInfo.peerDependencies?.["shinauth"] ||
+				packageInfo.optionalDependencies?.["shinauth"] ||
 				"Unknown";
 
 			return {

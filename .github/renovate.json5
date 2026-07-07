@@ -31,7 +31,7 @@
         'npm',
       ],
       matchFileNames: [
-        'packages/better-auth/**',
+        'packages/shinauth/**',
       ],
     },
   ],

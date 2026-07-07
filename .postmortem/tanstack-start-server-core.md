@@ -91,11 +91,11 @@ When integrating with TanStack Start:
 
 ## Files Changed in Fix
 
-* `packages/better-auth/src/integrations/tanstack-start.ts` -
+* `packages/shinauth/src/integrations/tanstack-start.ts` -
   Changed import to `@tanstack/react-start/server`
-* `packages/better-auth/src/integrations/tanstack-start-solid.ts` -
+* `packages/shinauth/src/integrations/tanstack-start-solid.ts` -
   Changed import to `@tanstack/solid-start/server`
-* `packages/better-auth/package.json` -
+* `packages/shinauth/package.json` -
   Updated peer dependencies from `@tanstack/*-start-server` to
   `@tanstack/*-start`
 

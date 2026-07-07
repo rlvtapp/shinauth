@@ -1,4 +1,4 @@
-import type { BetterAuthClientPlugin } from "better-auth/client";
+import type { BetterAuthClientPlugin } from "shinauth/client";
 import type { SSOPlugin } from "./index";
 import { PACKAGE_VERSION } from "./version";
 

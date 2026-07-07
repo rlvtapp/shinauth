@@ -1,13 +1,13 @@
 {
-  "name": "@better-auth/stripe",
+  "name": "@shinauth/stripe",
   "version": "1.6.23",
-  "description": "Stripe plugin for Better Auth",
+  "description": "Stripe plugin for Shinauth",
   "type": "module",
   "license": "MIT",
-  "homepage": "https://www.better-auth.com/docs/plugins/stripe",
+  "homepage": "https://github.com/rlvtapp/shinauth#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/better-auth/better-auth.git",
+    "url": "git+https://github.com/rlvtapp/shinauth.git",
     "directory": "packages/stripe"
   },
   "author": "Bereket Engida",
@@ -16,7 +16,7 @@
     "auth",
     "payments",
     "typescript",
-    "better-auth"
+    "shinauth"
   ],
   "publishConfig": {
     "access": "public"
@@ -64,16 +64,16 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@better-auth/core": "workspace:*",
-    "better-auth": "workspace:*",
+    "@shinauth/core": "workspace:*",
     "better-call": "catalog:",
+    "shinauth": "workspace:*",
     "stripe": "^22.0.1",
     "tsdown": "catalog:"
   },
   "peerDependencies": {
-    "@better-auth/core": "workspace:^",
-    "better-auth": "workspace:^",
+    "@shinauth/core": "workspace:^",
     "better-call": "catalog:",
+    "shinauth": "workspace:^",
     "stripe": "^18 || ^19 || ^20 || ^21 || ^22"
   }
 }

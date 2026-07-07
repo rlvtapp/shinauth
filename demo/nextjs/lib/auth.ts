@@ -1,15 +1,17 @@
-import { electron } from "@better-auth/electron";
-import { dash, sendEmail, sentinel } from "@better-auth/infra";
-import { oauthProvider } from "@better-auth/oauth-provider";
-import { passkey } from "@better-auth/passkey";
-import { scim } from "@better-auth/scim";
-import { sso } from "@better-auth/sso";
-import { stripe } from "@better-auth/stripe";
 import { LibsqlDialect } from "@libsql/kysely-libsql";
-import type { BetterAuthOptions } from "better-auth";
-import { APIError, betterAuth } from "better-auth";
-import { nextCookies } from "better-auth/next-js";
-import type { Organization } from "better-auth/plugins";
+import { electron } from "@shinauth/electron";
+import { dash, sendEmail, sentinel } from "@shinauth/infra";
+import { oauthProvider } from "@shinauth/oauth-provider";
+import { passkey } from "@shinauth/passkey";
+import { scim } from "@shinauth/scim";
+import { sso } from "@shinauth/sso";
+import { stripe } from "@shinauth/stripe";
+import { MysqlDialect } from "kysely";
+import { createPool } from "mysql2/promise";
+import type { BetterAuthOptions } from "shinauth";
+import { APIError, betterAuth } from "shinauth";
+import { nextCookies } from "shinauth/next-js";
+import type { Organization } from "shinauth/plugins";
 import {
 	admin,
 	bearer,
@@ -23,9 +25,7 @@ import {
 	openAPI,
 	organization,
 	twoFactor,
-} from "better-auth/plugins";
-import { MysqlDialect } from "kysely";
-import { createPool } from "mysql2/promise";
+} from "shinauth/plugins";
 import { Stripe } from "stripe";
 
 const dialect = (() => {

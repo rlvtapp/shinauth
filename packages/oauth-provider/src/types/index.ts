@@ -1,6 +1,6 @@
-import type { GenericEndpointContext, LiteralString } from "@better-auth/core";
-import type { InferOptionSchema, Session, User } from "better-auth/types";
+import type { GenericEndpointContext, LiteralString } from "@shinauth/core";
 import type { JWTPayload } from "jose";
+import type { InferOptionSchema, Session, User } from "shinauth/types";
 import type { schema } from "../schema";
 import type { Awaitable } from "./helpers";
 import type { GrantType } from "./oauth";

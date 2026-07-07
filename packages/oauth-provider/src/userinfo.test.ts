@@ -1,12 +1,12 @@
-import { createAuthClient } from "better-auth/client";
-import { generateRandomString } from "better-auth/crypto";
+import type { APIError } from "better-call";
+import { createAuthClient } from "shinauth/client";
+import { generateRandomString } from "shinauth/crypto";
 import {
 	createAuthorizationCodeRequest,
 	createAuthorizationURL,
-} from "better-auth/oauth2";
-import { jwt } from "better-auth/plugins/jwt";
-import { getTestInstance } from "better-auth/test";
-import type { APIError } from "better-call";
+} from "shinauth/oauth2";
+import { jwt } from "shinauth/plugins/jwt";
+import { getTestInstance } from "shinauth/test";
 import { beforeAll, describe, expect, it } from "vitest";
 import { oauthProviderClient } from "./client";
 import { oauthProvider } from "./oauth";

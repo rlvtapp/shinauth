@@ -20,7 +20,7 @@ jobs:
   smoke:
     name: Smoke test (${{ matrix.node-version }})
     timeout-minutes: 30
-    runs-on: ${{ (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'better-auth/better-auth' || github.event_name != 'pull_request' && github.repository == 'better-auth/better-auth') && 'starsling-ubuntu-24.04' || 'ubuntu-24.04' }}
+    runs-on: ${{ (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'rlvtapp/shinauth' || github.event_name != 'pull_request' && github.repository == 'rlvtapp/shinauth') && 'starsling-ubuntu-24.04' || 'ubuntu-24.04' }}
     strategy:
       fail-fast: false
       matrix:
@@ -90,7 +90,7 @@ jobs:
   integration:
     name: Integration test
     timeout-minutes: 60
-    runs-on: ${{ (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'better-auth/better-auth' || github.event_name != 'pull_request' && github.repository == 'better-auth/better-auth') && 'starsling-ubuntu-24.04' || 'ubuntu-24.04' }}
+    runs-on: ${{ (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'rlvtapp/shinauth' || github.event_name != 'pull_request' && github.repository == 'rlvtapp/shinauth') && 'starsling-ubuntu-24.04' || 'ubuntu-24.04' }}
     permissions:
       contents: read
     env:
@@ -146,7 +146,7 @@ jobs:
         run: docker compose down --volumes --remove-orphans
   adapter-integration:
     name: ${{ matrix.packages }} Integration Test
-    runs-on: ${{ (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'better-auth/better-auth' || github.event_name != 'pull_request' && github.repository == 'better-auth/better-auth') && 'starsling-ubuntu-24.04' || 'ubuntu-24.04' }}
+    runs-on: ${{ (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'rlvtapp/shinauth' || github.event_name != 'pull_request' && github.repository == 'rlvtapp/shinauth') && 'starsling-ubuntu-24.04' || 'ubuntu-24.04' }}
     timeout-minutes: 30
     permissions:
       contents: read
@@ -154,17 +154,17 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - packages: "@better-auth-test/adapter-factory"
+          - packages: "@shinauth-test/adapter-factory"
             compose_services: ""
-          - packages: "@better-auth-test/drizzle-adapter"
+          - packages: "@shinauth-test/drizzle-adapter"
             compose_services: "postgres mysql"
-          - packages: "@better-auth-test/kysely-prisma-adapter"
+          - packages: "@shinauth-test/kysely-prisma-adapter"
             compose_services: "postgres-kysely mysql-kysely postgres-kysely2 mssql"
-          - packages: "@better-auth-test/memory-adapter"
+          - packages: "@shinauth-test/memory-adapter"
             compose_services: ""
-          - packages: "@better-auth-test/mongo-adapter"
+          - packages: "@shinauth-test/mongo-adapter"
             compose_services: "mongodb"
-          - packages: "@better-auth-test/prisma-adapter"
+          - packages: "@shinauth-test/prisma-adapter"
             compose_services: "postgres-prisma mysql-prisma"
     env:
       COMPOSE_SERVICES: ${{ matrix.compose_services }}

@@ -1,7 +1,7 @@
-import { safeJSONParse } from "@better-auth/core/utils/json";
-import { magicLinkClient } from "better-auth/client/plugins";
-import { magicLink } from "better-auth/plugins";
-import { getTestInstance } from "better-auth/test";
+import { safeJSONParse } from "@shinauth/core/utils/json";
+import { magicLinkClient } from "shinauth/client/plugins";
+import { magicLink } from "shinauth/plugins";
+import { getTestInstance } from "shinauth/test";
 import { describe, expect, it } from "vitest";
 
 interface VerificationEmail {

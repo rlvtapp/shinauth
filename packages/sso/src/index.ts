@@ -1,6 +1,6 @@
-import type { BetterAuthPlugin } from "better-auth";
-import { createAuthMiddleware, getSessionFromCtx } from "better-auth/api";
 import { XMLValidator } from "fast-xml-parser";
+import type { BetterAuthPlugin } from "shinauth";
+import { createAuthMiddleware, getSessionFromCtx } from "shinauth/api";
 import { SAML_SESSION_BY_ID_PREFIX } from "./constants";
 import { assignOrganizationByDomain } from "./linking";
 import {
@@ -52,7 +52,7 @@ import { PACKAGE_VERSION } from "./version";
 
 export type { SAMLConfig, OIDCConfig, SSOOptions, SSOProvider };
 
-declare module "@better-auth/core" {
+declare module "@shinauth/core" {
 	interface BetterAuthPluginRegistry<AuthOptions, Options> {
 		sso: {
 			creator: typeof sso;

@@ -1,15 +1,15 @@
 import {
 	createAuthorizationCodeRequest,
 	createAuthorizationURL,
-} from "@better-auth/core/oauth2";
-import { createAuthClient } from "better-auth/client";
-import { generateRandomString } from "better-auth/crypto";
-import { toNodeHandler } from "better-auth/node";
-import { jwt } from "better-auth/plugins/jwt";
-import { getTestInstance } from "better-auth/test";
+} from "@shinauth/core/oauth2";
 import { decodeJwt } from "jose";
 import type { Listener } from "listhen";
 import { listen } from "listhen";
+import { createAuthClient } from "shinauth/client";
+import { generateRandomString } from "shinauth/crypto";
+import { toNodeHandler } from "shinauth/node";
+import { jwt } from "shinauth/plugins/jwt";
+import { getTestInstance } from "shinauth/test";
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { oauthProviderClient } from "./client";
 import { oauthProvider } from "./oauth";

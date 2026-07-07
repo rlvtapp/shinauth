@@ -1,8 +1,8 @@
 import { Buffer } from "node:buffer";
-import { base64 } from "@better-auth/utils/base64";
-import type { BetterAuthClientPlugin, ClientStore } from "better-auth";
-import { isDevelopment, isTest } from "better-auth";
+import { base64 } from "@shinauth/utils/base64";
 import electron from "electron";
+import type { BetterAuthClientPlugin, ClientStore } from "shinauth";
+import { isDevelopment, isTest } from "shinauth";
 import type {
 	ElectronAuthenticateOptions,
 	ElectronRequestAuthOptions,
@@ -63,9 +63,9 @@ const storageAdapter = (storage: Storage, sessionKeys: Set<string>) => {
 
 export const electronClient = <O extends ElectronClientOptions>(options: O) => {
 	const opts = {
-		storagePrefix: "better-auth",
-		cookiePrefix: "better-auth",
-		channelPrefix: "better-auth",
+		storagePrefix: "shinauth",
+		cookiePrefix: "shinauth",
+		channelPrefix: "shinauth",
 		callbackPath: "/auth/callback",
 		...options,
 	};

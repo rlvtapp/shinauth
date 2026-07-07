@@ -1,4 +1,4 @@
-import type { BetterAuthClientPlugin } from "@better-auth/core";
+import type { BetterAuthClientPlugin } from "@shinauth/core";
 import type { i18n } from ".";
 import { PACKAGE_VERSION } from "./version";
 
@@ -11,8 +11,8 @@ import { PACKAGE_VERSION } from "./version";
  *
  * @example
  * ```ts
- * import { createAuthClient } from "better-auth/client";
- * import { i18nClient } from "@better-auth/i18n/client";
+ * import { createAuthClient } from "shinauth/client";
+ * import { i18nClient } from "@shinauth/i18n/client";
  *
  * export const client = createAuthClient({
  *   plugins: [i18nClient()],

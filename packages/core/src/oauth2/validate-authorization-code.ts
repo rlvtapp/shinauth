@@ -1,4 +1,4 @@
-import { base64 } from "@better-auth/utils/base64";
+import { base64 } from "@shinauth/utils/base64";
 import { createRemoteJWKSet, customFetch, jwtVerify } from "jose";
 import type { AwaitableFunction } from "../types";
 import type { ProviderOptions } from "./index";

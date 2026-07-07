@@ -1,7 +1,7 @@
 "use client";
 
-import type { Organization } from "better-auth/plugins";
 import { useRouter } from "next/navigation";
+import type { Organization } from "shinauth/plugins";
 import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";

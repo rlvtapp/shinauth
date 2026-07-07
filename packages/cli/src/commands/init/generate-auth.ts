@@ -1,4 +1,4 @@
-import type { Awaitable } from "@better-auth/core";
+import type { Awaitable } from "@shinauth/core";
 import type { ZodSchema } from "zod";
 import type { DatabaseAdapter } from "./configs/databases.config";
 import type { Framework } from "./configs/frameworks.config";
@@ -133,7 +133,7 @@ export const generateAuthConfigCode = async ({
 	const imports: ImportGroup[] = [
 		{
 			imports: [createImport({ name: "betterAuth" })],
-			path: "better-auth",
+			path: "shinauth",
 			isNamedImport: false,
 		},
 		...Object.values(plugins)

@@ -97,35 +97,35 @@ const SCOPE_TO_DOMAIN: Record<string, string> = {
 
 const PATH_TO_DOMAIN: [string, string][] = [
 	["packages/oauth-provider/", "identity"],
-	["packages/better-auth/src/plugins/oidc-provider/", "identity"],
-	["packages/better-auth/src/plugins/mcp/", "identity"],
-	["packages/better-auth/src/plugins/device-authorization/", "identity"],
-	["packages/better-auth/src/plugins/magic-link/", "credentials"],
-	["packages/better-auth/src/plugins/email-otp/", "credentials"],
-	["packages/better-auth/src/plugins/phone-number/", "credentials"],
-	["packages/better-auth/src/plugins/username/", "credentials"],
-	["packages/better-auth/src/plugins/anonymous/", "credentials"],
-	["packages/better-auth/src/plugins/siwe/", "credentials"],
+	["packages/shinauth/src/plugins/oidc-provider/", "identity"],
+	["packages/shinauth/src/plugins/mcp/", "identity"],
+	["packages/shinauth/src/plugins/device-authorization/", "identity"],
+	["packages/shinauth/src/plugins/magic-link/", "credentials"],
+	["packages/shinauth/src/plugins/email-otp/", "credentials"],
+	["packages/shinauth/src/plugins/phone-number/", "credentials"],
+	["packages/shinauth/src/plugins/username/", "credentials"],
+	["packages/shinauth/src/plugins/anonymous/", "credentials"],
+	["packages/shinauth/src/plugins/siwe/", "credentials"],
 	["packages/passkey/", "credentials"],
-	["packages/better-auth/src/plugins/two-factor/", "security"],
-	["packages/better-auth/src/api/rate-limiter/", "security"],
-	["packages/better-auth/src/plugins/captcha/", "security"],
-	["packages/better-auth/src/plugins/haveibeenpwned/", "security"],
-	["packages/better-auth/src/plugins/organization/", "organization"],
-	["packages/better-auth/src/plugins/admin/", "organization"],
-	["packages/better-auth/src/plugins/access/", "organization"],
-	["packages/better-auth/src/plugins/generic-oauth/", "oauth"],
-	["packages/better-auth/src/plugins/oauth-proxy/", "oauth"],
-	["packages/better-auth/src/plugins/one-tap/", "oauth"],
-	["packages/better-auth/src/oauth2/", "oauth"],
+	["packages/shinauth/src/plugins/two-factor/", "security"],
+	["packages/shinauth/src/api/rate-limiter/", "security"],
+	["packages/shinauth/src/plugins/captcha/", "security"],
+	["packages/shinauth/src/plugins/haveibeenpwned/", "security"],
+	["packages/shinauth/src/plugins/organization/", "organization"],
+	["packages/shinauth/src/plugins/admin/", "organization"],
+	["packages/shinauth/src/plugins/access/", "organization"],
+	["packages/shinauth/src/plugins/generic-oauth/", "oauth"],
+	["packages/shinauth/src/plugins/oauth-proxy/", "oauth"],
+	["packages/shinauth/src/plugins/one-tap/", "oauth"],
+	["packages/shinauth/src/oauth2/", "oauth"],
 	["packages/core/src/social-providers/", "oauth"],
 	["packages/core/src/oauth2/", "oauth"],
 	["packages/sso/", "enterprise"],
 	["packages/scim/", "enterprise"],
 	["packages/stripe/", "payments"],
 	["packages/api-key/", "payments"],
-	["packages/better-auth/src/db/", "database"],
-	["packages/better-auth/src/adapters/", "database"],
+	["packages/shinauth/src/db/", "database"],
+	["packages/shinauth/src/adapters/", "database"],
 	["packages/drizzle-adapter/", "database"],
 	["packages/prisma-adapter/", "database"],
 	["packages/mongo-adapter/", "database"],
@@ -133,20 +133,20 @@ const PATH_TO_DOMAIN: [string, string][] = [
 	["packages/memory-adapter/", "database"],
 	["packages/expo/", "platform"],
 	["packages/electron/", "platform"],
-	["packages/better-auth/src/integrations/", "platform"],
+	["packages/shinauth/src/integrations/", "platform"],
 	["packages/cli/", "devtools"],
-	["packages/better-auth/src/plugins/open-api/", "devtools"],
+	["packages/shinauth/src/plugins/open-api/", "devtools"],
 	["packages/telemetry/", "devtools"],
 	["packages/i18n/", "devtools"],
 	["packages/test-utils/", "devtools"],
 	// Session-related plugins → core
-	["packages/better-auth/src/plugins/jwt/", "core"],
-	["packages/better-auth/src/plugins/bearer/", "core"],
-	["packages/better-auth/src/plugins/multi-session/", "core"],
-	["packages/better-auth/src/plugins/custom-session/", "core"],
+	["packages/shinauth/src/plugins/jwt/", "core"],
+	["packages/shinauth/src/plugins/bearer/", "core"],
+	["packages/shinauth/src/plugins/multi-session/", "core"],
+	["packages/shinauth/src/plugins/custom-session/", "core"],
 	["packages/redis-storage/", "core"],
 	// Catch-all for better-auth and core packages
-	["packages/better-auth/", "core"],
+	["packages/shinauth/", "core"],
 	["packages/core/", "core"],
 	// Non-user-facing
 	["docs/", "docs"],
@@ -252,23 +252,23 @@ export const FILTERED_DOMAINS = new Set(["docs", "devops"]);
  * Used by release-notes.ts to group entries by the package users install.
  */
 const SCOPE_TO_PACKAGE: Record<string, string> = {
-	sso: "@better-auth/sso",
-	scim: "@better-auth/scim",
-	passkey: "@better-auth/passkey",
-	"oauth-provider": "@better-auth/oauth-provider",
-	stripe: "@better-auth/stripe",
-	"api-key": "@better-auth/api-key",
-	expo: "@better-auth/expo",
-	electron: "@better-auth/electron",
-	i18n: "@better-auth/i18n",
-	"test-utils": "@better-auth/test-utils",
-	"drizzle-adapter": "@better-auth/drizzle-adapter",
-	"prisma-adapter": "@better-auth/prisma-adapter",
-	"kysely-adapter": "@better-auth/kysely-adapter",
-	"mongo-adapter": "@better-auth/mongo-adapter",
-	"memory-adapter": "@better-auth/memory-adapter",
-	"redis-storage": "@better-auth/redis-storage",
-	cli: "auth",
+	sso: "@shinauth/sso",
+	scim: "@shinauth/scim",
+	passkey: "@shinauth/passkey",
+	"oauth-provider": "@shinauth/oauth-provider",
+	stripe: "@shinauth/stripe",
+	"api-key": "@shinauth/api-key",
+	expo: "@shinauth/expo",
+	electron: "@shinauth/electron",
+	i18n: "@shinauth/i18n",
+	"test-utils": "@shinauth/test-utils",
+	"drizzle-adapter": "@shinauth/drizzle-adapter",
+	"prisma-adapter": "@shinauth/prisma-adapter",
+	"kysely-adapter": "@shinauth/kysely-adapter",
+	"mongo-adapter": "@shinauth/mongo-adapter",
+	"memory-adapter": "@shinauth/memory-adapter",
+	"redis-storage": "@shinauth/redis-storage",
+	cli: "@shinauth/cli",
 };
 
 /**
@@ -276,32 +276,32 @@ const SCOPE_TO_PACKAGE: Record<string, string> = {
  * Order matters: more specific paths must come before catch-alls.
  */
 const PATH_TO_PACKAGE: [string, string][] = [
-	["packages/sso/", "@better-auth/sso"],
-	["packages/scim/", "@better-auth/scim"],
-	["packages/passkey/", "@better-auth/passkey"],
-	["packages/oauth-provider/", "@better-auth/oauth-provider"],
-	["packages/stripe/", "@better-auth/stripe"],
-	["packages/api-key/", "@better-auth/api-key"],
-	["packages/expo/", "@better-auth/expo"],
-	["packages/electron/", "@better-auth/electron"],
-	["packages/i18n/", "@better-auth/i18n"],
-	["packages/redis-storage/", "@better-auth/redis-storage"],
-	["packages/test-utils/", "@better-auth/test-utils"],
-	["packages/telemetry/", "@better-auth/telemetry"],
-	["packages/drizzle-adapter/", "@better-auth/drizzle-adapter"],
-	["packages/prisma-adapter/", "@better-auth/prisma-adapter"],
-	["packages/kysely-adapter/", "@better-auth/kysely-adapter"],
-	["packages/mongo-adapter/", "@better-auth/mongo-adapter"],
-	["packages/memory-adapter/", "@better-auth/memory-adapter"],
+	["packages/sso/", "@shinauth/sso"],
+	["packages/scim/", "@shinauth/scim"],
+	["packages/passkey/", "@shinauth/passkey"],
+	["packages/oauth-provider/", "@shinauth/oauth-provider"],
+	["packages/stripe/", "@shinauth/stripe"],
+	["packages/api-key/", "@shinauth/api-key"],
+	["packages/expo/", "@shinauth/expo"],
+	["packages/electron/", "@shinauth/electron"],
+	["packages/i18n/", "@shinauth/i18n"],
+	["packages/redis-storage/", "@shinauth/redis-storage"],
+	["packages/test-utils/", "@shinauth/test-utils"],
+	["packages/telemetry/", "@shinauth/telemetry"],
+	["packages/drizzle-adapter/", "@shinauth/drizzle-adapter"],
+	["packages/prisma-adapter/", "@shinauth/prisma-adapter"],
+	["packages/kysely-adapter/", "@shinauth/kysely-adapter"],
+	["packages/mongo-adapter/", "@shinauth/mongo-adapter"],
+	["packages/memory-adapter/", "@shinauth/memory-adapter"],
 	// Catch-all: everything in better-auth or core maps to the main package
-	["packages/better-auth/", "better-auth"],
-	["packages/core/", "better-auth"],
-	["packages/cli/", "auth"],
+	["packages/shinauth/", "shinauth"],
+	["packages/core/", "shinauth"],
+	["packages/cli/", "@shinauth/cli"],
 ];
 
 /**
  * Resolves the npm package name for release notes grouping.
- * Priority: scope match > file path match > "better-auth" fallback.
+ * Priority: scope match > file path match > "shinauth" fallback.
  */
 export function resolvePackage(
 	scope: string | undefined,
@@ -323,14 +323,14 @@ export function resolvePackage(
 	}
 
 	const packages = Object.keys(counts);
-	if (packages.length === 0) return "better-auth";
+	if (packages.length === 0) return "shinauth";
 
 	// If files span multiple external packages, return the one with the most hits.
 	// If all files are in better-auth, return better-auth.
 	return packages.sort((a, b) => {
 		// Prefer non-better-auth packages (they're more specific)
-		const aIsCore = a === "better-auth" ? 1 : 0;
-		const bIsCore = b === "better-auth" ? 1 : 0;
+		const aIsCore = a === "shinauth" ? 1 : 0;
+		const bIsCore = b === "shinauth" ? 1 : 0;
 		if (aIsCore !== bIsCore) return aIsCore - bIsCore;
 		return (counts[b] ?? 0) - (counts[a] ?? 0);
 	})[0]!;

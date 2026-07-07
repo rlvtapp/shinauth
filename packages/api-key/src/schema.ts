@@ -1,5 +1,5 @@
-import type { BetterAuthPluginDBSchema } from "@better-auth/core/db";
-import { parseJSON } from "better-auth/client";
+import type { BetterAuthPluginDBSchema } from "@shinauth/core/db";
+import { parseJSON } from "shinauth/client";
 
 export const apiKeySchema = ({
 	defaultRateLimitMax,

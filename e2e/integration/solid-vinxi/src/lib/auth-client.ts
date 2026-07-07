@@ -1,4 +1,4 @@
-import { createAuthClient } from "better-auth/solid";
+import { createAuthClient } from "shinauth/solid";
 
 const search =
 	typeof window !== "undefined"

@@ -17,12 +17,12 @@ export default defineConfig([
 		format: ["esm"],
 		entry: ["./src/preload.ts"],
 		deps: {
-			// Bundle Better Auth runtime dependencies into the preload output.
-			alwaysBundle: [/^@better-auth\/core(?:\/|$)/, /^better-call(?:\/|$)/],
+			// Bundle Shinauth runtime dependencies into the preload output.
+			alwaysBundle: [/^@shinauth\/core(?:\/|$)/, /^better-call(?:\/|$)/],
 			onlyBundle: ["better-call"],
 			dts: {
 				// Keep peer dependency types external instead of inlining them.
-				neverBundle: [/^@better-auth\/core(?:\/|$)/, /^better-call(?:\/|$)/],
+				neverBundle: [/^@shinauth\/core(?:\/|$)/, /^better-call(?:\/|$)/],
 			},
 		},
 		treeshake: true,

@@ -1,6 +1,6 @@
-import { expo } from "@better-auth/expo";
-import { betterAuth } from "better-auth";
+import { expo } from "@shinauth/expo";
 import { Pool } from "pg";
+import { betterAuth } from "shinauth";
 
 export const auth = betterAuth({
 	database: new Pool({

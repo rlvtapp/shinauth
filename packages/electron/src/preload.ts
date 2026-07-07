@@ -1,7 +1,7 @@
-import type { Awaitable } from "@better-auth/core";
-import type { User } from "@better-auth/core/db";
-import { BetterAuthError } from "@better-auth/core/error";
 import type { BetterFetchError } from "@better-fetch/fetch";
+import type { Awaitable } from "@shinauth/core";
+import type { User } from "@shinauth/core/db";
+import { BetterAuthError } from "@shinauth/core/error";
 import electron, { contextBridge } from "electron";
 import type { ElectronRequestAuthOptions } from "./authenticate";
 import type { ElectronClientOptions } from "./types/client";

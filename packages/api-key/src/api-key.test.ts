@@ -1,6 +1,6 @@
-import type { SecondaryStorage } from "@better-auth/core/db";
-import type { APIError } from "@better-auth/core/error";
-import { getTestInstance } from "better-auth/test";
+import type { SecondaryStorage } from "@shinauth/core/db";
+import type { APIError } from "@shinauth/core/error";
+import { getTestInstance } from "shinauth/test";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { apiKey, API_KEY_ERROR_CODES as ERROR_CODES } from ".";
 import { apiKeyClient } from "./client";
@@ -4389,10 +4389,10 @@ describe("api-key", async () => {
 
 	describe("organization-owned API keys", async () => {
 		const { organization } = await import(
-			"../../better-auth/src/plugins/organization"
+			"../../shinauth/src/plugins/organization"
 		);
 		const { organizationClient } = await import(
-			"../../better-auth/src/plugins/organization/client"
+			"../../shinauth/src/plugins/organization/client"
 		);
 
 		const { auth, signInWithTestUser, client } = await getTestInstance(

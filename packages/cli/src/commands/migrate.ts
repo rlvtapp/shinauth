@@ -1,14 +1,11 @@
 import { existsSync } from "node:fs";
 import path from "node:path";
-import {
-	createTelemetry,
-	getTelemetryAuthConfig,
-} from "@better-auth/telemetry";
-import { getAdapter } from "better-auth/db/adapter";
-import { getMigrations } from "better-auth/db/migration";
+import { createTelemetry, getTelemetryAuthConfig } from "@shinauth/telemetry";
 import chalk from "chalk";
 import { Command } from "commander";
 import prompts from "prompts";
+import { getAdapter } from "shinauth/db/adapter";
+import { getMigrations } from "shinauth/db/migration";
 import yoctoSpinner from "yocto-spinner";
 import * as z from "zod";
 import { getConfig } from "../utils/get-config";
@@ -53,7 +50,7 @@ export async function migrateAction(opts: any) {
 	if (db.id !== "kysely") {
 		if (db.id === "prisma") {
 			console.error(
-				"The migrate command only works with the built-in Kysely adapter. For Prisma, run `npx auth generate` to create the schema, then use Prisma's migrate or push to apply it.",
+				"The migrate command only works with the built-in Kysely adapter. For Prisma, run `npx @shinauth/cli generate` to create the schema, then use Prisma's migrate or push to apply it.",
 			);
 			try {
 				const telemetry = await createTelemetry(config);
@@ -70,7 +67,7 @@ export async function migrateAction(opts: any) {
 		}
 		if (db.id === "drizzle") {
 			console.error(
-				"The migrate command only works with the built-in Kysely adapter. For Drizzle, run `npx auth generate` to create the schema, then use Drizzle's migrate or push to apply it.",
+				"The migrate command only works with the built-in Kysely adapter. For Drizzle, run `npx @shinauth/cli generate` to create the schema, then use Drizzle's migrate or push to apply it.",
 			);
 			try {
 				const telemetry = await createTelemetry(config);

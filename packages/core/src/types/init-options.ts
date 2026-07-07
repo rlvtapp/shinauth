@@ -342,7 +342,7 @@ export type BetterAuthAdvancedOptions = {
 	 *
 	 * @default
 	 * ```txt
-	 * "appName" -> which defaults to "better-auth"
+	 * "appName" -> which defaults to "shinauth"
 	 * ```
 	 */
 	cookiePrefix?: string | undefined;

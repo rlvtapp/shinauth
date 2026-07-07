@@ -1,7 +1,7 @@
-import { runWithEndpointContext } from "@better-auth/core/context";
-import type { User } from "better-auth";
-import { organization } from "better-auth/plugins/organization";
-import { getTestInstance } from "better-auth/test";
+import { runWithEndpointContext } from "@shinauth/core/context";
+import type { User } from "shinauth";
+import { organization } from "shinauth/plugins/organization";
+import { getTestInstance } from "shinauth/test";
 import type Stripe from "stripe";
 import { describe, expect, vi } from "vitest";
 import { stripe } from "../src";

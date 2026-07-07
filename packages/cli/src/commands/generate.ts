@@ -1,15 +1,12 @@
 import { existsSync } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
-import type { DBAdapter } from "@better-auth/core/db/adapter";
-import {
-	createTelemetry,
-	getTelemetryAuthConfig,
-} from "@better-auth/telemetry";
-import { getAdapter } from "better-auth/db/adapter";
+import type { DBAdapter } from "@shinauth/core/db/adapter";
+import { createTelemetry, getTelemetryAuthConfig } from "@shinauth/telemetry";
 import chalk from "chalk";
 import { Command } from "commander";
 import prompts from "prompts";
+import { getAdapter } from "shinauth/db/adapter";
 import yoctoSpinner from "yocto-spinner";
 import * as z from "zod";
 import { generateSchema } from "../generators";

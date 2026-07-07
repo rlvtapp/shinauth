@@ -4,7 +4,7 @@ import { spawnCommand } from "../utils/helper";
 
 async function loginAction() {
 	try {
-		await spawnCommand("npx auth@latest login");
+		await spawnCommand("npx @shinauth/cli@latest login");
 	} catch (error: any) {
 		log.error(error.message || "An unknown error occurred");
 		process.exit(1);
@@ -19,7 +19,7 @@ export const login = new Command("login")
 
 async function logoutAction() {
 	try {
-		await spawnCommand("npx auth@latest logout");
+		await spawnCommand("npx @shinauth/cli@latest logout");
 	} catch (error: any) {
 		log.error(error.message || "An unknown error occurred");
 		process.exit(1);

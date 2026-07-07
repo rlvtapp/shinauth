@@ -6,13 +6,6 @@ import {
 } from "node:crypto";
 import type { createServer } from "node:http";
 import { betterFetch } from "@better-fetch/fetch";
-import { betterAuth } from "better-auth";
-import { memoryAdapter } from "better-auth/adapters/memory";
-import { APIError } from "better-auth/api";
-import { createAuthClient } from "better-auth/client";
-import { parseSetCookieHeader, setCookieToHeader } from "better-auth/cookies";
-import { bearer } from "better-auth/plugins";
-import { getTestInstance } from "better-auth/test";
 import bodyParser from "body-parser";
 import type {
 	Application as ExpressApp,
@@ -21,6 +14,13 @@ import type {
 } from "express";
 import express from "express";
 import type { RequestInfo } from "samlify/types/src/types";
+import { betterAuth } from "shinauth";
+import { memoryAdapter } from "shinauth/adapters/memory";
+import { APIError } from "shinauth/api";
+import { createAuthClient } from "shinauth/client";
+import { parseSetCookieHeader, setCookieToHeader } from "shinauth/cookies";
+import { bearer } from "shinauth/plugins";
+import { getTestInstance } from "shinauth/test";
 import {
 	afterAll,
 	afterEach,

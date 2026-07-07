@@ -1,13 +1,13 @@
 {
-  "name": "@better-auth/scim",
+  "name": "@shinauth/scim",
   "version": "1.6.23",
-  "description": "SCIM plugin for Better Auth",
+  "description": "SCIM plugin for Shinauth",
   "type": "module",
   "license": "MIT",
-  "homepage": "https://www.better-auth.com/docs/plugins/scim",
+  "homepage": "https://github.com/rlvtapp/shinauth#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/better-auth/better-auth.git",
+    "url": "git+https://github.com/rlvtapp/shinauth.git",
     "directory": "packages/scim"
   },
   "author": "Jonathan Samines",
@@ -15,7 +15,7 @@
     "auth",
     "scim",
     "typescript",
-    "better-auth"
+    "shinauth"
   ],
   "publishConfig": {
     "access": "public"
@@ -62,14 +62,14 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@better-auth/core": "workspace:*",
-    "@better-auth/sso": "workspace:*",
+    "@shinauth/core": "workspace:*",
+    "@shinauth/sso": "workspace:*",
     "tsdown": "catalog:"
   },
   "peerDependencies": {
-    "@better-auth/core": "workspace:^",
-    "@better-auth/utils": "catalog:",
-    "better-auth": "workspace:^",
-    "better-call": "catalog:"
+    "@shinauth/core": "workspace:^",
+    "@shinauth/utils": "catalog:",
+    "better-call": "catalog:",
+    "shinauth": "workspace:^"
   }
 }

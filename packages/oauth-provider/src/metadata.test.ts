@@ -1,9 +1,9 @@
-import type { BetterAuthOptions } from "@better-auth/core";
-import { APIError, BetterAuthError } from "@better-auth/core/error";
-import { createAuthClient } from "better-auth/client";
-import type { JwtOptions } from "better-auth/plugins/jwt";
-import { jwt } from "better-auth/plugins/jwt";
-import { getTestInstance } from "better-auth/test";
+import type { BetterAuthOptions } from "@shinauth/core";
+import { APIError, BetterAuthError } from "@shinauth/core/error";
+import { createAuthClient } from "shinauth/client";
+import type { JwtOptions } from "shinauth/plugins/jwt";
+import { jwt } from "shinauth/plugins/jwt";
+import { getTestInstance } from "shinauth/test";
 import { describe, expect, it } from "vitest";
 import { oauthProviderClient } from "./client";
 import { oauthProviderResourceClient } from "./client-resource";

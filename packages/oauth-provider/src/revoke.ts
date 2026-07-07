@@ -1,8 +1,8 @@
-import type { GenericEndpointContext } from "@better-auth/core";
-import { logger } from "@better-auth/core/env";
-import { verifyJwsAccessToken } from "better-auth/oauth2";
+import type { GenericEndpointContext } from "@shinauth/core";
+import { logger } from "@shinauth/core/env";
 import { APIError } from "better-call";
 import type { JSONWebKeySet } from "jose";
+import { verifyJwsAccessToken } from "shinauth/oauth2";
 import { decodeRefreshToken, invalidateRefreshFamily } from "./token";
 import type {
 	OAuthOpaqueAccessToken,

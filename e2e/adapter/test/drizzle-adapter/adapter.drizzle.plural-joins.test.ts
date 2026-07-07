@@ -15,8 +15,8 @@
  * config.schema, but the join code path does db.query["user"] directly,
  * which fails because db.query keys are "users", "sessions", etc.
  */
-import type { Session, User } from "@better-auth/core/db";
-import { drizzleAdapter } from "@better-auth/drizzle-adapter";
+import type { Session, User } from "@shinauth/core/db";
+import { drizzleAdapter } from "@shinauth/drizzle-adapter";
 import Database from "better-sqlite3";
 import { relations } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/better-sqlite3";

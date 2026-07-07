@@ -1,8 +1,8 @@
 import type { ChildProcessWithoutNullStreams } from "node:child_process";
 import { spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
-import { terminate } from "@better-auth-test/test-utils/playwright";
 import type { Page } from "@playwright/test";
+import { terminate } from "@shinauth-test/test-utils/playwright";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 

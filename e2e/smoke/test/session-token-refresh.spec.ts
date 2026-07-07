@@ -1,10 +1,10 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import type { GoogleProfile } from "@better-auth/core/social-providers";
-import { betterAuth } from "better-auth";
-import { signJWT } from "better-auth/crypto";
+import type { GoogleProfile } from "@shinauth/core/social-providers";
 import { HttpResponse, http } from "msw";
 import { setupServer } from "msw/node";
+import { betterAuth } from "shinauth";
+import { signJWT } from "shinauth/crypto";
 
 const DEFAULT_SECRET = "better-auth-secret-123456789";
 

@@ -1,3 +1,3 @@
-import { betterAuth } from "better-auth/minimal";
+import { betterAuth } from "shinauth/minimal";
 
 export const auth = betterAuth({});

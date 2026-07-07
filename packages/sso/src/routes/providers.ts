@@ -1,13 +1,6 @@
-import {
-	getCurrentAdapter,
-	runWithTransaction,
-} from "@better-auth/core/context";
-import type { AuthContext } from "better-auth";
-import {
-	APIError,
-	createAuthEndpoint,
-	sessionMiddleware,
-} from "better-auth/api";
+import { getCurrentAdapter, runWithTransaction } from "@shinauth/core/context";
+import type { AuthContext } from "shinauth";
+import { APIError, createAuthEndpoint, sessionMiddleware } from "shinauth/api";
 import * as z from "zod";
 import { DEFAULT_MAX_SAML_METADATA_SIZE } from "../constants";
 import {

@@ -1,4 +1,4 @@
-import type { BetterAuthPlugin } from "better-auth";
+import type { BetterAuthPlugin } from "shinauth";
 import { authMiddlewareFactory } from "./middlewares";
 import {
 	createSCIMUser,
@@ -20,7 +20,7 @@ import {
 import type { SCIMOptions } from "./types";
 import { PACKAGE_VERSION } from "./version";
 
-declare module "@better-auth/core" {
+declare module "@shinauth/core" {
 	interface BetterAuthPluginRegistry<AuthOptions, Options> {
 		scim: {
 			creator: typeof scim;

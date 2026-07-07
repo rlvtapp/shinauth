@@ -1,5 +1,5 @@
-import { safeJSONParse } from "@better-auth/core/utils/json";
-import type { BetterAuthClientPlugin } from "better-auth/types";
+import { safeJSONParse } from "@shinauth/core/utils/json";
+import type { BetterAuthClientPlugin } from "shinauth/types";
 import type { oauthProvider } from "./oauth";
 import { buildSignedOAuthQuery } from "./signed-query";
 import { PACKAGE_VERSION } from "./version";

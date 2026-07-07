@@ -1,5 +1,5 @@
-import type { AsyncLocalStorage } from "@better-auth/core/async_hooks";
-import { getAsyncLocalStorage } from "@better-auth/core/async_hooks";
+import type { AsyncLocalStorage } from "@shinauth/core/async_hooks";
+import { getAsyncLocalStorage } from "@shinauth/core/async_hooks";
 import type { EndpointContext, InputContext } from "better-call";
 import type { AuthContext } from "../types";
 import { __getBetterAuthGlobal } from "./global";

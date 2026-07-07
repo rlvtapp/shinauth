@@ -1,11 +1,11 @@
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 import {
 	inferAdditionalFields,
 	organizationClient,
-} from "better-auth/client/plugins";
-import { nextCookies } from "better-auth/next-js";
-import { organization } from "better-auth/plugins";
-import { createAuthClient } from "better-auth/react";
+} from "shinauth/client/plugins";
+import { nextCookies } from "shinauth/next-js";
+import { organization } from "shinauth/plugins";
+import { createAuthClient } from "shinauth/react";
 
 const auth = betterAuth({
 	trustedOrigins: [],

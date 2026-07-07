@@ -1,4 +1,4 @@
-import type { JWSAlgorithms } from "better-auth/plugins";
+import type { JWSAlgorithms } from "shinauth/plugins";
 import type { Prompt } from ".";
 
 /**

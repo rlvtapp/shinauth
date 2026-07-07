@@ -1,10 +1,10 @@
-import { isAPIError } from "@better-auth/core/utils/is-api-error";
-import type { User } from "better-auth";
-import { APIError } from "better-auth/api";
-import { setSessionCookie } from "better-auth/cookies";
-import { handleOAuthUserInfo } from "better-auth/oauth2";
+import { isAPIError } from "@shinauth/core/utils/is-api-error";
 import { XMLParser } from "fast-xml-parser";
 import type { FlowResult } from "samlify/types/src/flow";
+import type { User } from "shinauth";
+import { APIError } from "shinauth/api";
+import { setSessionCookie } from "shinauth/cookies";
+import { handleOAuthUserInfo } from "shinauth/oauth2";
 
 import * as constants from "../constants";
 import { assignOrganizationFromProvider } from "../linking";

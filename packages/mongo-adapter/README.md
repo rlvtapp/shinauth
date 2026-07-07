@@ -1,11 +1,11 @@
-# Better Auth MongoDB Adapter
+# Shinauth MongoDB Adapter
 
-MongoDB adapter for [Better Auth](https://www.better-auth.com).
+MongoDB adapter for [Shinauth](https://www.better-auth.com).
 
 ## Installation
 
 ```bash
-npm install @better-auth/mongo-adapter
+npm install @shinauth/mongo-adapter
 ```
 
 ## Documentation

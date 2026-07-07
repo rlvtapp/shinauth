@@ -1,5 +1,5 @@
-import { openAPI } from "better-auth/plugins";
-import { getTestInstance } from "better-auth/test";
+import { openAPI } from "shinauth/plugins";
+import { getTestInstance } from "shinauth/test";
 import { describe, expect, it } from "vitest";
 import { passkey } from ".";
 

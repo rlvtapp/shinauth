@@ -29,7 +29,7 @@ describe("installDependencies", () => {
 		"should run npm install with single dependency",
 		async ({ tmp }) => {
 			const result = await installDependencies({
-				dependencies: "better-auth",
+				dependencies: "shinauth",
 				packageManager: "npm",
 				cwd: tmp,
 			});
@@ -47,7 +47,7 @@ describe("installDependencies", () => {
 		"should run npm install with multiple dependencies",
 		async ({ tmp }) => {
 			await installDependencies({
-				dependencies: ["better-auth", "drizzle-orm"],
+				dependencies: ["shinauth", "drizzle-orm"],
 				packageManager: "npm",
 				cwd: tmp,
 			});
@@ -64,7 +64,7 @@ describe("installDependencies", () => {
 		"should run npm install with --save-dev for dev dependencies",
 		async ({ tmp }) => {
 			await installDependencies({
-				dependencies: "better-auth",
+				dependencies: "shinauth",
 				packageManager: "npm",
 				cwd: tmp,
 				type: "dev",
@@ -82,7 +82,7 @@ describe("installDependencies", () => {
 		"should run npm install with --save-optional for optional dependencies",
 		async ({ tmp }) => {
 			await installDependencies({
-				dependencies: "better-auth",
+				dependencies: "shinauth",
 				packageManager: "npm",
 				cwd: tmp,
 				type: "optional",
@@ -100,13 +100,13 @@ describe("installDependencies", () => {
 		"should run pnpm add with single dependency",
 		async ({ tmp }) => {
 			await installDependencies({
-				dependencies: "better-auth",
+				dependencies: "shinauth",
 				packageManager: "pnpm",
 				cwd: tmp,
 			});
 
 			expect(mockExec).toHaveBeenCalledWith(
-				"pnpm add better-auth",
+				"pnpm add shinauth",
 				{ cwd: tmp },
 				expect.any(Function),
 			);
@@ -186,13 +186,13 @@ describe("installDependencies", () => {
 		"should run bun install with single dependency",
 		async ({ tmp }) => {
 			await installDependencies({
-				dependencies: "better-auth",
+				dependencies: "shinauth",
 				packageManager: "bun",
 				cwd: tmp,
 			});
 
 			expect(mockExec).toHaveBeenCalledWith(
-				"bun install better-auth",
+				"bun install shinauth",
 				{ cwd: tmp },
 				expect.any(Function),
 			);
@@ -257,13 +257,13 @@ describe("installDependencies", () => {
 		"should run yarn install with single dependency",
 		async ({ tmp }) => {
 			await installDependencies({
-				dependencies: "better-auth",
+				dependencies: "shinauth",
 				packageManager: "yarn",
 				cwd: tmp,
 			});
 
 			expect(mockExec).toHaveBeenCalledWith(
-				"yarn install better-auth",
+				"yarn install shinauth",
 				{ cwd: tmp },
 				expect.any(Function),
 			);
@@ -273,7 +273,7 @@ describe("installDependencies", () => {
 	testWithTmpDir("should throw for invalid package manager", ({ tmp }) => {
 		expect(() =>
 			installDependencies({
-				dependencies: "better-auth",
+				dependencies: "shinauth",
 				packageManager: "invalid" as "npm",
 				cwd: tmp,
 			}),
@@ -287,7 +287,7 @@ describe("installDependencies", () => {
 		});
 
 		const result = await installDependencies({
-			dependencies: "better-auth",
+			dependencies: "shinauth",
 			packageManager: "npm",
 			cwd: tmp,
 		});
@@ -317,7 +317,7 @@ describe("installDependencies", () => {
 
 	testWithTmpDir("should pass cwd to exec", async ({ tmp }) => {
 		await installDependencies({
-			dependencies: "better-auth",
+			dependencies: "shinauth",
 			packageManager: "npm",
 			cwd: tmp,
 		});

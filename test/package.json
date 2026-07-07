@@ -1,5 +1,5 @@
 {
-  "name": "@better-auth-test/test",
+  "name": "@shinauth-test/test",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,10 +9,10 @@
     "lint:types": "attw --profile esm-only --pack ."
   },
   "devDependencies": {
-    "@better-auth/core": "workspace:*",
     "@better-fetch/fetch": "catalog:",
-    "better-auth": "workspace:*",
+    "@shinauth/core": "workspace:*",
     "openid-client": "^6.8.2",
+    "shinauth": "workspace:*",
     "undici": "^7.24.0",
     "vitest": "catalog:vitest"
   }

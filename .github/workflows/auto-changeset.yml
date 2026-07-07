@@ -20,7 +20,7 @@ jobs:
       github.event.action == 'created' &&
       github.event.issue.pull_request &&
       startsWith(github.event.comment.body, '/changeset') &&
-      github.repository_owner == 'better-auth' &&
+      github.repository_owner == 'rlvtapp' &&
       contains(fromJSON('["MEMBER", "OWNER", "COLLABORATOR"]'), github.event.comment.author_association)
     runs-on: ubuntu-latest
     permissions:
@@ -204,7 +204,7 @@ jobs:
       contains(github.event.comment.body, '<!-- auto-changeset -->') &&
       contains(github.event.comment.body, '- [x] **Commit this changeset**') &&
       (github.event.comment.user.login == 'better-release[bot]' || github.event.comment.user.login == 'github-actions[bot]') &&
-      github.repository_owner == 'better-auth'
+      github.repository_owner == 'rlvtapp'
     runs-on: ubuntu-latest
     permissions:
       contents: write

@@ -1,11 +1,11 @@
-import type { BetterAuthOptions } from "@better-auth/core";
+import type { BetterAuthOptions } from "@shinauth/core";
 import type {
 	CleanedWhere,
 	DBAdapterDebugLogOption,
 	JoinConfig,
-} from "@better-auth/core/db/adapter";
-import { createAdapterFactory } from "@better-auth/core/db/adapter";
-import { logger } from "@better-auth/core/env";
+} from "@shinauth/core/db/adapter";
+import { createAdapterFactory } from "@shinauth/core/db/adapter";
+import { logger } from "@shinauth/core/env";
 import {
 	insensitiveCompare,
 	insensitiveContains,

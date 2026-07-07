@@ -1,11 +1,11 @@
-# Better Auth Prisma Adapter
+# Shinauth Prisma Adapter
 
-Prisma adapter for [Better Auth](https://www.better-auth.com).
+Prisma adapter for [Shinauth](https://www.better-auth.com).
 
 ## Installation
 
 ```bash
-npm install @better-auth/prisma-adapter
+npm install @shinauth/prisma-adapter
 ```
 
 ## Documentation

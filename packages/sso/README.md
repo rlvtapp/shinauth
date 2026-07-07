@@ -1,11 +1,11 @@
-# Better Auth SSO Plugin
+# Shinauth SSO Plugin
 
-Single Sign-On plugin for [Better Auth](https://www.better-auth.com) — add SAML and OIDC enterprise SSO to your application.
+Single Sign-On plugin for [Shinauth](https://www.better-auth.com) — add SAML and OIDC enterprise SSO to your application.
 
 ## Installation
 
 ```bash
-npm install @better-auth/sso
+npm install @shinauth/sso
 ```
 
 ## Documentation

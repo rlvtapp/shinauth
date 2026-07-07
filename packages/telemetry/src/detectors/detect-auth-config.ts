@@ -1,4 +1,4 @@
-import type { BetterAuthOptions } from "@better-auth/core";
+import type { BetterAuthOptions } from "@shinauth/core";
 import type { TelemetryContext } from "../types";
 
 export async function getTelemetryAuthConfig(

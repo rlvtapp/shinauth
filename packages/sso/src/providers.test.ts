@@ -1,8 +1,8 @@
-import { betterAuth } from "better-auth";
-import { memoryAdapter } from "better-auth/adapters/memory";
-import { createAuthClient } from "better-auth/client";
-import { setCookieToHeader } from "better-auth/cookies";
-import { organization } from "better-auth/plugins";
+import { betterAuth } from "shinauth";
+import { memoryAdapter } from "shinauth/adapters/memory";
+import { createAuthClient } from "shinauth/client";
+import { setCookieToHeader } from "shinauth/cookies";
+import { organization } from "shinauth/plugins";
 import { describe, expect, it } from "vitest";
 import { sso } from ".";
 import { ssoClient } from "./client";

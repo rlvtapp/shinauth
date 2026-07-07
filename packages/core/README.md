@@ -1,11 +1,11 @@
-# Better Auth Core
+# Shinauth Core
 
-Core utilities and types for [Better Auth](https://www.better-auth.com) — the most comprehensive authentication framework for TypeScript.
+Core utilities and types for [Shinauth](https://www.better-auth.com) — the most comprehensive authentication framework for TypeScript.
 
 ## Installation
 
 ```bash
-npm install @better-auth/core
+npm install @shinauth/core
 ```
 
 ## Documentation

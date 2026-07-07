@@ -1,11 +1,11 @@
 {
-  "name": "@better-auth-test/fixtures-cloudflare",
+  "name": "@shinauth-test/fixtures-cloudflare",
   "private": true,
   "dependencies": {
-    "@better-auth/sso": "workspace:*",
-    "better-auth": "workspace:*",
+    "@shinauth/sso": "workspace:*",
     "drizzle-orm": "^0.45.2",
-    "hono": "^4.12.25"
+    "hono": "^4.12.25",
+    "shinauth": "workspace:*"
   },
   "devDependencies": {
     "@cloudflare/vitest-pool-workers": "^0.12.18",

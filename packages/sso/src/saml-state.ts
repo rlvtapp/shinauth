@@ -1,7 +1,7 @@
-import type { GenericEndpointContext, StateData } from "better-auth";
-import { generateGenericState, parseGenericState } from "better-auth";
-import { APIError } from "better-auth/api";
-import { generateRandomString } from "better-auth/crypto";
+import type { GenericEndpointContext, StateData } from "shinauth";
+import { generateGenericState, parseGenericState } from "shinauth";
+import { APIError } from "shinauth/api";
+import { generateRandomString } from "shinauth/crypto";
 
 export async function generateRelayState(
 	c: GenericEndpointContext,

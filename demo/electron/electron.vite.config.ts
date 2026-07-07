@@ -10,7 +10,7 @@ export default defineConfig({
 			externalizeDeps: {
 				// Bundle @better-auth/electron instead of externalizing it.
 				// Make sure to import only from @better-auth/electron/preload in your preload script.
-				exclude: ["@better-auth/electron"],
+				exclude: ["@shinauth/electron"],
 			},
 		},
 	},

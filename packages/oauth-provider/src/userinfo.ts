@@ -1,6 +1,6 @@
-import type { GenericEndpointContext } from "@better-auth/core";
-import { APIError } from "better-auth/api";
-import type { User } from "better-auth/types";
+import type { GenericEndpointContext } from "@shinauth/core";
+import { APIError } from "shinauth/api";
+import type { User } from "shinauth/types";
 import { validateAccessToken } from "./introspect";
 import type { OAuthOptions, Scope } from "./types";
 import { getClient, resolveSubjectIdentifier } from "./utils";

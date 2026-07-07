@@ -8,7 +8,7 @@ import { execFileSync } from "node:child_process";
 import { randomBytes } from "node:crypto";
 import { appendFileSync } from "node:fs";
 
-export const REPO = process.env.GITHUB_REPOSITORY ?? "better-auth/better-auth";
+export const REPO = process.env.GITHUB_REPOSITORY ?? "rlvtapp/shinauth";
 
 export function gh(args: string[]): string {
 	return execFileSync("gh", args, {

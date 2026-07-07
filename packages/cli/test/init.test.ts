@@ -139,7 +139,7 @@ describe("initAction", () => {
 				const question = Array.isArray(questions) ? questions[0] : questions;
 
 				// Install Better Auth
-				if (question.message?.includes("install better-auth")) {
+				if (question.message?.includes("install shinauth")) {
 					return { value: true };
 				}
 
@@ -230,14 +230,11 @@ describe("initAction", () => {
 			});
 
 			// Assertions
-			expect(mockHasDependency).toHaveBeenCalledWith(
-				packageJson,
-				"better-auth",
-			);
+			expect(mockHasDependency).toHaveBeenCalledWith(packageJson, "shinauth");
 			expect(mockInstallDependencies).toHaveBeenCalledWith(
 				expect.objectContaining({
 					cwd: path.resolve(tmp),
-					dependencies: expect.arrayContaining(["better-auth"]),
+					dependencies: expect.arrayContaining(["shinauth"]),
 				}),
 			);
 
@@ -300,7 +297,7 @@ describe("initAction", () => {
 			mockPrompts.mockImplementation(async (questions: any) => {
 				const question = Array.isArray(questions) ? questions[0] : questions;
 
-				if (question.message?.includes("install better-auth")) {
+				if (question.message?.includes("install shinauth")) {
 					return { value: true };
 				}
 				if (question.message?.includes("set environment variables")) {
@@ -392,7 +389,7 @@ describe("initAction", () => {
 			mockPrompts.mockImplementation(async (questions: any) => {
 				const question = Array.isArray(questions) ? questions[0] : questions;
 
-				if (question.message?.includes("install better-auth")) {
+				if (question.message?.includes("install shinauth")) {
 					return { value: true };
 				}
 				if (question.name === "providedSecret") {
@@ -449,7 +446,7 @@ describe("initAction", () => {
 			const question = Array.isArray(questions) ? questions[0] : questions;
 
 			// Handle other prompts that might be called
-			if (question.message?.includes("install better-auth")) {
+			if (question.message?.includes("install shinauth")) {
 				return { value: true };
 			}
 			if (
@@ -516,7 +513,7 @@ describe("initAction", () => {
 		mockPrompts.mockImplementation(async (questions: any) => {
 			const question = Array.isArray(questions) ? questions[0] : questions;
 
-			if (question.message?.includes("install better-auth")) {
+			if (question.message?.includes("install shinauth")) {
 				return { value: true };
 			}
 			if (
@@ -590,7 +587,7 @@ describe("initAction", () => {
 		mockPrompts.mockImplementation(async (questions: any) => {
 			const question = Array.isArray(questions) ? questions[0] : questions;
 
-			if (question.message?.includes("install better-auth")) {
+			if (question.message?.includes("install shinauth")) {
 				return { value: true };
 			}
 			if (
@@ -660,7 +657,7 @@ describe("initAction", () => {
 		mockPrompts.mockImplementation(async (questions: any) => {
 			const question = Array.isArray(questions) ? questions[0] : questions;
 
-			if (question.message?.includes("install better-auth")) {
+			if (question.message?.includes("install shinauth")) {
 				return { value: true };
 			}
 			if (
@@ -737,7 +734,7 @@ describe("initAction", () => {
 				mockPrompts.mockImplementation(async (questions: any) => {
 					const question = Array.isArray(questions) ? questions[0] : questions;
 
-					if (question.message?.includes("install better-auth")) {
+					if (question.message?.includes("install shinauth")) {
 						return { value: false };
 					}
 					if (question.message?.includes("set environment variables")) {
@@ -814,7 +811,7 @@ describe("initAction", () => {
 			mockPrompts.mockImplementation(async (questions: any) => {
 				const question = Array.isArray(questions) ? questions[0] : questions;
 
-				if (question.message?.includes("install better-auth")) {
+				if (question.message?.includes("install shinauth")) {
 					return { value: true };
 				}
 				if (
@@ -883,7 +880,7 @@ describe("initAction", () => {
 			mockPrompts.mockImplementation(async (questions: any) => {
 				const question = Array.isArray(questions) ? questions[0] : questions;
 
-				if (question.message?.includes("install better-auth")) {
+				if (question.message?.includes("install shinauth")) {
 					return { value: true };
 				}
 				if (
@@ -954,7 +951,7 @@ describe("initAction", () => {
 			mockPrompts.mockImplementation(async (questions: any) => {
 				const question = Array.isArray(questions) ? questions[0] : questions;
 
-				if (question.message?.includes("install better-auth")) {
+				if (question.message?.includes("install shinauth")) {
 					return { value: true };
 				}
 				if (
@@ -1024,7 +1021,7 @@ describe("initAction", () => {
 			mockPrompts.mockImplementation(async (questions: any) => {
 				const question = Array.isArray(questions) ? questions[0] : questions;
 
-				if (question.message?.includes("install better-auth")) {
+				if (question.message?.includes("install shinauth")) {
 					return { value: true };
 				}
 				if (
@@ -1113,7 +1110,7 @@ describe("initAction", () => {
 			mockPrompts.mockImplementation(async (questions: any) => {
 				const question = Array.isArray(questions) ? questions[0] : questions;
 
-				if (question.message?.includes("install better-auth")) {
+				if (question.message?.includes("install shinauth")) {
 					return { value: true };
 				}
 				if (
@@ -1179,7 +1176,7 @@ describe("initAction", () => {
 			mockPrompts.mockImplementation(async (questions: any) => {
 				const question = Array.isArray(questions) ? questions[0] : questions;
 
-				if (question.message?.includes("install better-auth")) {
+				if (question.message?.includes("install shinauth")) {
 					return { value: true };
 				}
 				if (
@@ -1242,7 +1239,7 @@ describe("initAction", () => {
 		mockPrompts.mockImplementation(async (questions: any) => {
 			const question = Array.isArray(questions) ? questions[0] : questions;
 
-			if (question.message?.includes("install better-auth")) {
+			if (question.message?.includes("install shinauth")) {
 				return { value: true };
 			}
 			if (
@@ -1297,7 +1294,7 @@ describe("initAction", () => {
 		mockPrompts.mockImplementation(async (questions: any) => {
 			const question = Array.isArray(questions) ? questions[0] : questions;
 
-			if (question.message?.includes("install better-auth")) {
+			if (question.message?.includes("install shinauth")) {
 				return { value: true };
 			}
 			if (
@@ -1346,7 +1343,7 @@ describe("initAction", () => {
 			mockPrompts.mockImplementation(async (questions: any) => {
 				const question = Array.isArray(questions) ? questions[0] : questions;
 
-				if (question.message?.includes("install better-auth")) {
+				if (question.message?.includes("install shinauth")) {
 					return { value: true };
 				}
 				if (

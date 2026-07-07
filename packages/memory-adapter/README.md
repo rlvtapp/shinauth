@@ -1,11 +1,11 @@
-# Better Auth Memory Adapter
+# Shinauth Memory Adapter
 
-In-memory adapter for [Better Auth](https://www.better-auth.com) — useful for development and testing.
+In-memory adapter for [Shinauth](https://www.better-auth.com) — useful for development and testing.
 
 ## Installation
 
 ```bash
-npm install @better-auth/memory-adapter
+npm install @shinauth/memory-adapter
 ```
 
 ## Documentation

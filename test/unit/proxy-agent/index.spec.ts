@@ -9,9 +9,9 @@
  * Reference: https://github.com/nodejs/undici/blob/main/docs/docs/api/ProxyAgent.md
  * Related issue: https://github.com/better-auth/better-auth/issues/7396
  */
-import type { GoogleProfile } from "@better-auth/core/social-providers";
-import { signJWT } from "better-auth/crypto";
-import { getTestInstance } from "better-auth/test";
+import type { GoogleProfile } from "@shinauth/core/social-providers";
+import { signJWT } from "shinauth/crypto";
+import { getTestInstance } from "shinauth/test";
 import type { Dispatcher } from "undici";
 import { getGlobalDispatcher, MockAgent, setGlobalDispatcher } from "undici";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
