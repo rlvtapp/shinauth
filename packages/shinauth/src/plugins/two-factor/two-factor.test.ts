@@ -157,20 +157,18 @@ describe("two factor", async () => {
 					const parsed = parseSetCookieHeader(
 						context.response.headers.get("Set-Cookie") || "",
 					);
-					expect(parsed.get("better-auth.session_token")?.value).toBe("");
-					expect(parsed.get("better-auth.session_data")?.value).toBe("");
-					expect(parsed.get("better-auth.two_factor")?.value).toBeDefined();
-					expect(parsed.get("better-auth.dont_remember")?.value).toBeDefined();
+					expect(parsed.get("shinauth.session_token")?.value).toBe("");
+					expect(parsed.get("shinauth.session_data")?.value).toBe("");
+					expect(parsed.get("shinauth.two_factor")?.value).toBeDefined();
+					expect(parsed.get("shinauth.dont_remember")?.value).toBeDefined();
 					headers.append(
 						"cookie",
-						`better-auth.two_factor=${
-							parsed.get("better-auth.two_factor")?.value
-						}`,
+						`shinauth.two_factor=${parsed.get("shinauth.two_factor")?.value}`,
 					);
 					headers.append(
 						"cookie",
-						`better-auth.dont_remember=${
-							parsed.get("better-auth.dont_remember")?.value
+						`shinauth.dont_remember=${
+							parsed.get("shinauth.dont_remember")?.value
 						}`,
 					);
 				},
@@ -192,10 +190,10 @@ describe("two factor", async () => {
 					const parsed = parseSetCookieHeader(
 						context.response.headers.get("Set-Cookie") || "",
 					);
-					expect(parsed.get("better-auth.session_token")?.value).toBeDefined();
+					expect(parsed.get("shinauth.session_token")?.value).toBeDefined();
 					// max age should be undefined because we are not using remember me
 					expect(
-						parsed.get("better-auth.session_token")?.["max-age"],
+						parsed.get("shinauth.session_token")?.["max-age"],
 					).not.toBeDefined();
 				},
 			},
@@ -214,14 +212,14 @@ describe("two factor", async () => {
 					const parsed = parseSetCookieHeader(
 						context.response.headers.get("Set-Cookie") || "",
 					);
-					expect(parsed.get("better-auth.session_token")?.value).toBe("");
+					expect(parsed.get("shinauth.session_token")?.value).toBe("");
 					// 2FA Cookie is in response, but we are not setting it in headers
-					expect(parsed.get("better-auth.two_factor")?.value).toBeDefined();
-					expect(parsed.get("better-auth.dont_remember")?.value).toBeDefined();
+					expect(parsed.get("shinauth.two_factor")?.value).toBeDefined();
+					expect(parsed.get("shinauth.dont_remember")?.value).toBeDefined();
 					headers.append(
 						"cookie",
-						`better-auth.dont_remember=${
-							parsed.get("better-auth.dont_remember")?.value
+						`shinauth.dont_remember=${
+							parsed.get("shinauth.dont_remember")?.value
 						}`,
 					);
 				},
@@ -243,9 +241,7 @@ describe("two factor", async () => {
 						context.response.headers.get("Set-Cookie") || "",
 					);
 					// Session should not be defined when two factor cookie is missing
-					expect(
-						parsed.get("better-auth.session_token")?.value,
-					).not.toBeDefined();
+					expect(parsed.get("shinauth.session_token")?.value).not.toBeDefined();
 				},
 			},
 		});
@@ -288,13 +284,11 @@ describe("two factor", async () => {
 					const parsed = parseSetCookieHeader(
 						context.response.headers.get("Set-Cookie") || "",
 					);
-					const token = parsed.get("better-auth.session_token")?.value;
+					const token = parsed.get("shinauth.session_token")?.value;
 					expect(token).toBe("");
 					headers.append(
 						"cookie",
-						`better-auth.two_factor=${
-							parsed.get("better-auth.two_factor")?.value
-						}`,
+						`shinauth.two_factor=${parsed.get("shinauth.two_factor")?.value}`,
 					);
 				},
 			},
@@ -313,7 +307,7 @@ describe("two factor", async () => {
 				},
 			},
 		});
-		const token = parsedCookies.get("better-auth.session_token")?.value;
+		const token = parsedCookies.get("shinauth.session_token")?.value;
 		expect(token?.length).toBeGreaterThan(0);
 		const currentBackupCodes = await auth.api.viewBackupCodes({
 			body: {
@@ -335,9 +329,7 @@ describe("two factor", async () => {
 					);
 					headers2.append(
 						"cookie",
-						`better-auth.two_factor=${
-							parsed.get("better-auth.two_factor")?.value
-						}`,
+						`shinauth.two_factor=${parsed.get("shinauth.two_factor")?.value}`,
 					);
 				},
 			},
@@ -351,7 +343,7 @@ describe("two factor", async () => {
 					const parsed = parseSetCookieHeader(
 						context.response.headers.get("Set-Cookie") || "",
 					);
-					const token = parsed.get("better-auth.session_token")?.value;
+					const token = parsed.get("shinauth.session_token")?.value;
 					expect(token?.length).toBeGreaterThan(0);
 				},
 			},
@@ -371,9 +363,7 @@ describe("two factor", async () => {
 					);
 					headers.append(
 						"cookie",
-						`better-auth.two_factor=${
-							parsed.get("better-auth.two_factor")?.value
-						}`,
+						`shinauth.two_factor=${parsed.get("shinauth.two_factor")?.value}`,
 					);
 				},
 			},
@@ -388,9 +378,7 @@ describe("two factor", async () => {
 					);
 					headers.append(
 						"cookie",
-						`better-auth.otp.counter=${
-							parsed.get("better-auth.otp_counter")?.value
-						}`,
+						`shinauth.otp.counter=${parsed.get("shinauth.otp_counter")?.value}`,
 					);
 				},
 			},
@@ -405,11 +393,11 @@ describe("two factor", async () => {
 					const parsed = parseSetCookieHeader(
 						context.response.headers.get("Set-Cookie") || "",
 					);
-					expect(parsed.get("better-auth.trust_device")?.value).toBeDefined();
+					expect(parsed.get("shinauth.trust_device")?.value).toBeDefined();
 					newHeaders.set(
 						"cookie",
-						`better-auth.trust_device=${
-							parsed.get("better-auth.trust_device")?.value
+						`shinauth.trust_device=${
+							parsed.get("shinauth.trust_device")?.value
 						}`,
 					);
 				},
@@ -426,11 +414,11 @@ describe("two factor", async () => {
 					const parsed = parseSetCookieHeader(
 						context.response.headers.get("Set-Cookie") || "",
 					);
-					expect(parsed.get("better-auth.trust_device")?.value).toBeDefined();
+					expect(parsed.get("shinauth.trust_device")?.value).toBeDefined();
 					updatedHeaders.set(
 						"cookie",
-						`better-auth.trust_device=${
-							parsed.get("better-auth.trust_device")?.value
+						`shinauth.trust_device=${
+							parsed.get("shinauth.trust_device")?.value
 						}`,
 					);
 				},
@@ -473,9 +461,7 @@ describe("two factor", async () => {
 					);
 					headers.append(
 						"cookie",
-						`better-auth.two_factor=${
-							parsed.get("better-auth.two_factor")?.value
-						}`,
+						`shinauth.two_factor=${parsed.get("shinauth.two_factor")?.value}`,
 					);
 				},
 			},
@@ -603,9 +589,9 @@ describe("two factor auth API", async () => {
 		const parsed = parseSetCookieHeader(
 			signInRes.headers.get("Set-Cookie") || "",
 		);
-		const twoFactorCookie = parsed.get("better-auth.two_factor");
+		const twoFactorCookie = parsed.get("shinauth.two_factor");
 		expect(twoFactorCookie).toBeDefined();
-		const sessionToken = parsed.get("better-auth.session_token");
+		const sessionToken = parsed.get("shinauth.session_token");
 		expect(sessionToken?.value).toBeFalsy();
 	});
 
@@ -793,9 +779,7 @@ describe("view backup codes", async () => {
 					);
 					verifyHeaders.append(
 						"cookie",
-						`better-auth.two_factor=${
-							parsed.get("better-auth.two_factor")?.value
-						}`,
+						`shinauth.two_factor=${parsed.get("shinauth.two_factor")?.value}`,
 					);
 				},
 			},
@@ -812,7 +796,7 @@ describe("view backup codes", async () => {
 					const parsed = parseSetCookieHeader(
 						context.response.headers.get("Set-Cookie") || "",
 					);
-					sessionToken = parsed.get("better-auth.session_token")?.value || "";
+					sessionToken = parsed.get("shinauth.session_token")?.value || "";
 				},
 			},
 		});
@@ -907,9 +891,7 @@ describe("trust device server-side validation", async () => {
 		const parsed = parseSetCookieHeader(
 			verifyRes.headers.get("Set-Cookie") || "",
 		);
-		const trustDeviceCookieValue = parsed.get(
-			"better-auth.trust_device",
-		)?.value;
+		const trustDeviceCookieValue = parsed.get("shinauth.trust_device")?.value;
 		expect(trustDeviceCookieValue).toBeDefined();
 
 		// The cookie value is signed: "value.signature" where value is "token!trustIdentifier"
@@ -943,7 +925,7 @@ describe("trust device server-side validation", async () => {
 		const trustHeaders = new Headers();
 		trustHeaders.set(
 			"cookie",
-			`better-auth.trust_device=${trustDeviceCookieValue}`,
+			`shinauth.trust_device=${trustDeviceCookieValue}`,
 		);
 
 		const signIn2Res = await auth.api.signInEmail({
@@ -964,7 +946,7 @@ describe("trust device server-side validation", async () => {
 		const signIn2Parsed = parseSetCookieHeader(
 			signIn2Res.headers.get("Set-Cookie") || "",
 		);
-		const clearedTrustCookie = signIn2Parsed.get("better-auth.trust_device");
+		const clearedTrustCookie = signIn2Parsed.get("shinauth.trust_device");
 		expect(clearedTrustCookie?.value).toBe("");
 	});
 
@@ -1000,9 +982,7 @@ describe("trust device server-side validation", async () => {
 		const parsed = parseSetCookieHeader(
 			verifyRes.headers.get("Set-Cookie") || "",
 		);
-		const trustDeviceCookieValue = parsed.get(
-			"better-auth.trust_device",
-		)?.value;
+		const trustDeviceCookieValue = parsed.get("shinauth.trust_device")?.value;
 		expect(trustDeviceCookieValue).toBeDefined();
 
 		// Extract trust identifier (cookie is signed: "value.signature")
@@ -1033,9 +1013,7 @@ describe("trust device server-side validation", async () => {
 		const signOutParsed = parseSetCookieHeader(
 			signOutRes.headers.get("Set-Cookie") || "",
 		);
-		const trustCookieAfterSignOut = signOutParsed.get(
-			"better-auth.trust_device",
-		);
+		const trustCookieAfterSignOut = signOutParsed.get("shinauth.trust_device");
 		// Cookie should either not be set (unchanged) or still have its value
 		expect(trustCookieAfterSignOut?.value || "preserved").not.toBe("");
 
@@ -1055,7 +1033,7 @@ describe("trust device server-side validation", async () => {
 		const trustHeaders = new Headers();
 		trustHeaders.set(
 			"cookie",
-			`better-auth.trust_device=${trustDeviceCookieValue}`,
+			`shinauth.trust_device=${trustDeviceCookieValue}`,
 		);
 
 		const signIn2Res = await auth.api.signInEmail({
@@ -1106,9 +1084,7 @@ describe("trust device server-side validation", async () => {
 		const parsed = parseSetCookieHeader(
 			verifyRes.headers.get("Set-Cookie") || "",
 		);
-		const trustDeviceCookieValue = parsed.get(
-			"better-auth.trust_device",
-		)?.value;
+		const trustDeviceCookieValue = parsed.get("shinauth.trust_device")?.value;
 		expect(trustDeviceCookieValue).toBeDefined();
 
 		// Extract trust identifier (cookie is signed: "value.signature")
@@ -1142,7 +1118,7 @@ describe("trust device server-side validation", async () => {
 		const disableParsed = parseSetCookieHeader(
 			disableRes.headers.get("Set-Cookie") || "",
 		);
-		const clearedCookie = disableParsed.get("better-auth.trust_device");
+		const clearedCookie = disableParsed.get("shinauth.trust_device");
 		expect(clearedCookie?.value).toBe("");
 
 		// Verify the DB record was deleted
@@ -1219,7 +1195,7 @@ describe("trustDeviceMaxAge", async () => {
 		const parsed = parseSetCookieHeader(
 			verifyRes.headers.get("Set-Cookie") || "",
 		);
-		const trustDeviceCookie = parsed.get("better-auth.trust_device");
+		const trustDeviceCookie = parsed.get("shinauth.trust_device");
 		expect(trustDeviceCookie).toBeDefined();
 		expect(Number(trustDeviceCookie?.["max-age"])).toBe(customMaxAge);
 
@@ -1305,7 +1281,7 @@ describe("trustDeviceMaxAge", async () => {
 		const parsed = parseSetCookieHeader(
 			verifyRes.headers.get("Set-Cookie") || "",
 		);
-		const trustDeviceCookie = parsed.get("better-auth.trust_device");
+		const trustDeviceCookie = parsed.get("shinauth.trust_device");
 		expect(trustDeviceCookie).toBeDefined();
 		// Default is 30 days = 30 * 24 * 60 * 60 = 2592000 seconds
 		expect(Number(trustDeviceCookie?.["max-age"])).toBe(30 * 24 * 60 * 60);
@@ -1348,7 +1324,7 @@ describe("twoFactorCookieMaxAge", async () => {
 		const parsed = parseSetCookieHeader(
 			signInRes.headers.get("Set-Cookie") || "",
 		);
-		const twoFactorCookie = parsed.get("better-auth.two_factor");
+		const twoFactorCookie = parsed.get("shinauth.two_factor");
 		expect(twoFactorCookie).toBeDefined();
 		expect(Number(twoFactorCookie?.["max-age"])).toBe(customMaxAge);
 	});
@@ -1386,7 +1362,7 @@ describe("twoFactorCookieMaxAge", async () => {
 		const parsed = parseSetCookieHeader(
 			signInRes.headers.get("Set-Cookie") || "",
 		);
-		const twoFactorCookie = parsed.get("better-auth.two_factor");
+		const twoFactorCookie = parsed.get("shinauth.two_factor");
 		expect(twoFactorCookie).toBeDefined();
 		// Default is 10 minutes = 600 seconds
 		expect(Number(twoFactorCookie?.["max-age"])).toBe(600);
@@ -2507,7 +2483,7 @@ describe("backup codes storage configurations", () => {
 						);
 						signInHeaders.append(
 							"cookie",
-							`better-auth.two_factor=${parsed.get("better-auth.two_factor")?.value}`,
+							`shinauth.two_factor=${parsed.get("shinauth.two_factor")?.value}`,
 						);
 					},
 				},

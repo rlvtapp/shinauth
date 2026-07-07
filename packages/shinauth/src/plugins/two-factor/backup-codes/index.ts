@@ -204,7 +204,7 @@ export const backupCode2fa = (opts: BackupCodeOptions) => {
 			 * **client:**
 			 * `authClient.twoFactor.verifyBackupCode`
 			 *
-			 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/2fa#api-method-two-factor-verify-backup-code)
+			 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 			 */
 			verifyBackupCode: createAuthEndpoint(
 				"/two-factor/verify-backup-code",
@@ -429,7 +429,7 @@ export const backupCode2fa = (opts: BackupCodeOptions) => {
 			 * **client:**
 			 * `authClient.twoFactor.generateBackupCodes`
 			 *
-			 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/2fa#api-method-two-factor-generate-backup-codes)
+			 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 			 */
 			generateBackupCodes: createAuthEndpoint(
 				"/two-factor/generate-backup-codes",
@@ -547,7 +547,7 @@ export const backupCode2fa = (opts: BackupCodeOptions) => {
 			 * **server:**
 			 * `auth.api.viewBackupCodes`
 			 *
-			 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/2fa#api-method-two-factor-view-backup-codes)
+			 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 			 */
 			viewBackupCodes: createAuthEndpoint.serverOnly(
 				{

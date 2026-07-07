@@ -9,7 +9,7 @@ createRoot(document.getElementById("root")!).render(
 	<StrictMode>
 		<ThemeProvider
 			defaultTheme="system"
-			storageKey="better-auth-demo-electron-theme"
+			storageKey="shinauth-demo-electron-theme"
 		>
 			<UserProvider>
 				<App />

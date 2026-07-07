@@ -129,7 +129,7 @@ describe("session_token cookie refresh in stateless mode", () => {
 			mergeCookies(cookies, h);
 		}
 		assert.ok(
-			cookies.has("better-auth.session_token"),
+			cookies.has("shinauth.session_token"),
 			"callback should set session_token cookie",
 		);
 
@@ -168,7 +168,7 @@ describe("session_token cookie refresh in stateless mode", () => {
 			.getSetCookie()
 			.flatMap(parseSetCookieEntries);
 		const sessionTokenEntry = refreshedCookies.find(
-			(c) => c.name === "better-auth.session_token",
+			(c) => c.name === "shinauth.session_token",
 		);
 
 		assert.ok(

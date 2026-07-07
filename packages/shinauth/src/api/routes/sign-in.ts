@@ -473,7 +473,7 @@ export const signInEmail = <O extends BetterAuthOptions>() =>
 		}> => {
 			if (!ctx.context.options?.emailAndPassword?.enabled) {
 				ctx.context.logger.error(
-					"Email and password is not enabled. Make sure to enable it in the options on you `auth.ts` file. Check `https://better-auth.com/docs/authentication/email-password` for more!",
+					"Email and password is not enabled. Make sure to enable it in the options on you `auth.ts` file. Check `https://github.com/rlvtapp/shinauth` for more!",
 				);
 				throw APIError.from("BAD_REQUEST", {
 					code: "EMAIL_PASSWORD_DISABLED",

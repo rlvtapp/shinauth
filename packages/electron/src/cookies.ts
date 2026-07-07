@@ -101,7 +101,7 @@ export function hasSessionCookieChanged(
  * This prevents infinite refetching when non-better-auth cookies (like third-party cookies) change.
  *
  * Supports multiple cookie naming patterns:
- * - Default: "better-auth.session_token", "better-auth-passkey", "__Secure-better-auth.session_token"
+ * - Default: "shinauth.session_token", "shinauth-passkey", "__Secure-shinauth.session_token"
  * - Custom prefix: "myapp.session_token", "myapp-passkey", "__Secure-myapp.session_token"
  * - Custom full names: "my_custom_session_token", "custom_session_data"
  * - No prefix (cookiePrefix=""): matches any cookie with known suffixes

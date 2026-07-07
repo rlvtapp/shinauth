@@ -9,11 +9,11 @@ import { createMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = createMetadata({
 	title: {
-		template: "%s | Better Auth",
-		default: "Better Auth",
+		template: "%s | Shinauth",
+		default: "Shinauth",
 	},
 	description: "The most comprehensive authentication framework for TypeScript",
-	metadataBase: new URL("https://demo.better-auth.com"),
+	metadataBase: new URL("http://localhost:3000"),
 });
 
 export default function RootLayout({

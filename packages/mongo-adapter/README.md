@@ -1,6 +1,6 @@
 # Shinauth MongoDB Adapter
 
-MongoDB adapter for [Shinauth](https://www.better-auth.com).
+MongoDB adapter for [Shinauth](https://github.com/rlvtapp/shinauth).
 
 ## Installation
 
@@ -10,7 +10,7 @@ npm install @shinauth/mongo-adapter
 
 ## Documentation
 
-For full documentation, visit [better-auth.com/docs/adapters/mongodb](https://www.better-auth.com/docs/adapters/mongodb).
+For full documentation, visit [github.com/rlvtapp/shinauth](https://github.com/rlvtapp/shinauth).
 
 ## License
 

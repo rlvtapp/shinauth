@@ -1295,7 +1295,7 @@ export const deleteSCIMUser = (authMiddleware: AuthMiddleware) =>
 				});
 			}
 
-			// Organization-scoped SCIM must not delete the *global* Better Auth
+			// Organization-scoped SCIM must not delete the *global* Shinauth
 			// user — that would remove the person's access to every other
 			// organization and identity, well outside this token's boundary.
 			// Deprovision instead: drop their membership in this organization and

@@ -73,7 +73,7 @@ describe("email-otp", async () => {
 			{
 				onSuccess: (ctx) => {
 					const header = ctx.response.headers.get("set-cookie");
-					expect(header).toContain("better-auth.session_token");
+					expect(header).toContain("shinauth.session_token");
 				},
 			},
 		);
@@ -160,7 +160,7 @@ describe("email-otp", async () => {
 			{
 				onSuccess: (ctx) => {
 					const header = ctx.response.headers.get("set-cookie");
-					expect(header).toContain("better-auth.session_token");
+					expect(header).toContain("shinauth.session_token");
 				},
 			},
 		);
@@ -325,7 +325,7 @@ describe("email-otp", async () => {
 			{
 				onSuccess: (ctx) => {
 					const header = ctx.response.headers.get("set-cookie");
-					expect(header).toContain("better-auth.session_token");
+					expect(header).toContain("shinauth.session_token");
 				},
 			},
 		);
@@ -2416,11 +2416,11 @@ describe("email-otp verify-email cookie cache isolation", async () => {
 					const cookies = parseSetCookieHeader(
 						ctx.response.headers.get("set-cookie") || "",
 					);
-					const token = cookies.get("better-auth.session_token")?.value;
-					const data = cookies.get("better-auth.session_data")?.value;
+					const token = cookies.get("shinauth.session_token")?.value;
+					const data = cookies.get("shinauth.session_data")?.value;
 					currentUserHeaders.set(
 						"cookie",
-						`better-auth.session_token=${token}; better-auth.session_data=${data}`,
+						`shinauth.session_token=${token}; shinauth.session_data=${data}`,
 					);
 				},
 			},
@@ -2451,7 +2451,7 @@ describe("email-otp verify-email cookie cache isolation", async () => {
 					const cookies = parseSetCookieHeader(
 						ctx.response.headers.get("set-cookie") || "",
 					);
-					refreshedSessionData = cookies.get("better-auth.session_data")?.value;
+					refreshedSessionData = cookies.get("shinauth.session_data")?.value;
 				},
 			},
 		);
@@ -2465,7 +2465,7 @@ describe("email-otp verify-email cookie cache isolation", async () => {
 				?.match(/better-auth\.session_token=([^;]+)/)?.[1];
 			currentUserHeaders.set(
 				"cookie",
-				`better-auth.session_token=${token}; better-auth.session_data=${refreshedSessionData}`,
+				`shinauth.session_token=${token}; shinauth.session_data=${refreshedSessionData}`,
 			);
 		}
 

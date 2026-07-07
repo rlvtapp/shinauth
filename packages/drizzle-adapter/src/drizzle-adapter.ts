@@ -82,7 +82,7 @@ function getAffectedRowCount(
 	}
 	if (typeof count !== "number") {
 		logger.error(
-			`[Drizzle Adapter] The result of the ${operation} operation is not a number. This is likely a bug in the adapter. Please report this issue to the Better Auth team.`,
+			`[Drizzle Adapter] The result of the ${operation} operation is not a number. This is likely a bug in the adapter. Please report this issue to the Shinauth team.`,
 			{ result, ...context },
 		);
 		return 0;
@@ -172,7 +172,7 @@ export const drizzleAdapter = (db: DB, config: DrizzleAdapterConfig) => {
 					"[Drizzle Adapter] MySQL does not support INSERT...RETURNING. " +
 						"With generateId set to false, the adapter uses best-effort fallback " +
 						"strategies (unique columns, full-field match) to retrieve inserted rows. " +
-						'For reliable behavior, use Better Auth\'s default ID generation, a custom generateId function, or generateId: "serial" for auto-increment.',
+						'For reliable behavior, use Shinauth\'s default ID generation, a custom generateId function, or generateId: "serial" for auto-increment.',
 				);
 			}
 
@@ -266,7 +266,7 @@ export const drizzleAdapter = (db: DB, config: DrizzleAdapterConfig) => {
 						}
 					}
 
-					// 4. Unique column lookup via Better Auth schema
+					// 4. Unique column lookup via Shinauth schema
 					const modelSchema = baSchema[getDefaultModelName(model)]?.fields;
 					if (modelSchema) {
 						for (const [fieldKey, fieldAttr] of Object.entries(modelSchema)) {
@@ -313,7 +313,7 @@ export const drizzleAdapter = (db: DB, config: DrizzleAdapterConfig) => {
 
 					logger.warn(
 						`[Drizzle Adapter] Unable to safely identify the inserted "${model}" row on MySQL. ` +
-							'Enable Better Auth ID generation or use generateId: "serial" for reliable behavior.',
+							'Enable Shinauth ID generation or use generateId: "serial" for reliable behavior.',
 					);
 					return null;
 				};
@@ -693,7 +693,7 @@ export const drizzleAdapter = (db: DB, config: DrizzleAdapterConfig) => {
 			/**
 			 * Resolve the db.query key for a model.
 			 *
-			 * When `usePlural` is false (default), Better Auth uses singular model
+			 * When `usePlural` is false (default), Shinauth uses singular model
 			 * names like "user", but Drizzle's db.query is keyed by the schema
 			 * export names (often plural like "users"). This function:
 			 *

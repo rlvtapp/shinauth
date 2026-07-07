@@ -138,7 +138,7 @@ describe("oauth2", async () => {
 		);
 
 		const cookies = parseSetCookieHeader(setCookieHeader);
-		const stateCookie = cookies.get("better-auth.state");
+		const stateCookie = cookies.get("shinauth.state");
 
 		expect(stateCookie?.["max-age"]).toBe(0);
 		expect(stateCookie?.path).toBe("/");
@@ -692,10 +692,10 @@ describe("oauth2", async () => {
 					);
 					headers.set(
 						"cookie",
-						`better-auth.state=${
-							parsedSetCookie.get("better-auth.state")?.value
-						}; better-auth.pk_code_verifier=${
-							parsedSetCookie.get("better-auth.pk_code_verifier")?.value
+						`shinauth.state=${
+							parsedSetCookie.get("shinauth.state")?.value
+						}; shinauth.pk_code_verifier=${
+							parsedSetCookie.get("shinauth.pk_code_verifier")?.value
 						}`,
 					);
 				},

@@ -28,7 +28,7 @@ interface MicrosoftEntraIdProfile {
  * ```ts
  * import { genericOAuth, microsoftEntraId } from "shinauth/plugins/generic-oauth";
  *
- * export const auth = betterAuth({
+ * export const auth = shinAuth({
  *   plugins: [
  *     genericOAuth({
  *       config: [

@@ -49,7 +49,7 @@ export type GenerateIdFn = (options: {
 
 /**
  * Configuration for dynamic base URL resolution.
- * Allows Better Auth to work with multiple domains (e.g., Vercel preview deployments).
+ * Allows Shinauth to work with multiple domains (e.g., Vercel preview deployments).
  */
 export type DynamicBaseURLConfig = {
 	/**
@@ -71,7 +71,7 @@ export type DynamicBaseURLConfig = {
 
 	/**
 	 * Fallback URL to use if the derived host doesn't match any allowed host.
-	 * If not set, Better Auth will throw an error when the host doesn't match.
+	 * If not set, Shinauth will throw an error when the host doesn't match.
 	 *
 	 * @example "https://myapp.com"
 	 */
@@ -434,11 +434,11 @@ export type BetterAuthOptions = {
 	 *
 	 * Can also be set via the `APP_NAME` environment variable.
 	 *
-	 * @default "Better Auth"
+	 * @default "Shinauth"
 	 */
 	appName?: string | undefined;
 	/**
-	 * Base URL for the Better Auth. This is typically the
+	 * Base URL for the Shinauth. This is typically the
 	 * root URL where your application server is hosted.
 	 *
 	 * Can be configured as:
@@ -462,9 +462,9 @@ export type BetterAuthOptions = {
 	 */
 	baseURL?: BaseURLConfig | undefined;
 	/**
-	 * Base path for the Better Auth. This is typically
+	 * Base path for the Shinauth. This is typically
 	 * the path where the
-	 * Better Auth routes are mounted.
+	 * Shinauth routes are mounted.
 	 *
 	 * @default "/api/auth"
 	 */
@@ -473,7 +473,7 @@ export type BetterAuthOptions = {
 	 * The secret to use for encryption,
 	 * signing and hashing.
 	 *
-	 * By default Better Auth will look for
+	 * By default Shinauth will look for
 	 * the following environment variables:
 	 * process.env.BETTER_AUTH_SECRET,
 	 * process.env.AUTH_SECRET
@@ -810,7 +810,7 @@ export type BetterAuthOptions = {
 	 */
 	socialProviders?: SocialProviders | undefined;
 	/**
-	 * List of Better Auth plugins
+	 * List of Shinauth plugins
 	 */
 	plugins?: ([] | BetterAuthPlugin[]) | undefined;
 	/**
@@ -1180,7 +1180,7 @@ export type BetterAuthOptions = {
 				 * refresh tokens, ID tokens, scopes, and token expiry.
 				 *
 				 * This is useful for database-less flows, but large provider tokens can
-				 * still hit browser or proxy cookie/header limits even though Better Auth
+				 * still hit browser or proxy cookie/header limits even though Shinauth
 				 * chunks oversized account cookies.
 				 *
 				 * @default false
@@ -1218,7 +1218,7 @@ export type BetterAuthOptions = {
 		  })
 		| undefined;
 	/**
-	 * Additional trusted origins. By default, Better Auth trusts your
+	 * Additional trusted origins. By default, Shinauth trusts your
 	 * app's {@link baseURL}. Use this option to allow additional origins
 	 * (e.g. a separate frontend domain).
 	 *
@@ -1237,8 +1237,8 @@ export type BetterAuthOptions = {
 	 * ```ts
 	 * trustedOrigins: async (request) => {
 	 *   return [
-	 *    "https://better-auth.com",
-	 *    "https://*.better-auth.com",
+	 *    "https://github.com/rlvtapp/shinauth",
+	 *    "http://localhost:3000",
 	 *    request.headers.get("x-custom-origin")
 	 *   ];
 	 * }

@@ -894,7 +894,7 @@ describe("base context creation", () => {
 	describe("app name", () => {
 		it("should use default app name", async () => {
 			const res = await initBase({});
-			expect(res.appName).toBe("Better Auth");
+			expect(res.appName).toBe("Shinauth");
 		});
 
 		it("should allow custom app name", async () => {

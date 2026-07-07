@@ -2,7 +2,7 @@ import type { ConfigContext, ExpoConfig } from "expo/config";
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
 	...config,
-	name: "Better Auth",
+	name: "Shinauth",
 	slug: "shinauth",
 	scheme: "shinauth",
 	version: "0.1.0",

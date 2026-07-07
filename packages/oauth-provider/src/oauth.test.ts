@@ -1570,7 +1570,7 @@ describe("oauth - prompt", async () => {
 			},
 		});
 		expect(callbackURL).toContain("/success");
-		expect(headers.get("cookie")).toContain("better-auth.session_token=");
+		expect(headers.get("cookie")).toContain("shinauth.session_token=");
 	});
 
 	it("consent - should sign in given previous consent (see previous test)", async ({

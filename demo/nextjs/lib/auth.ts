@@ -9,7 +9,7 @@ import { stripe } from "@shinauth/stripe";
 import { MysqlDialect } from "kysely";
 import { createPool } from "mysql2/promise";
 import type { BetterAuthOptions } from "shinauth";
-import { APIError, betterAuth } from "shinauth";
+import { APIError, shinAuth } from "shinauth";
 import { nextCookies } from "shinauth/next-js";
 import type { Organization } from "shinauth/plugins";
 import {
@@ -52,7 +52,7 @@ if (!dialect) {
 }
 
 const authOptions = {
-	appName: "Better Auth Demo",
+	appName: "Shinauth Demo",
 	database: {
 		dialect,
 		type: "sqlite",
@@ -67,7 +67,7 @@ const authOptions = {
 					verificationUrl: url,
 					userEmail: user.email,
 					userName: user.name,
-					appName: "Better Auth Demo",
+					appName: "Shinauth Demo",
 					expirationMinutes: "10",
 					verificationCode: "",
 				},
@@ -158,7 +158,7 @@ const authOptions = {
 						inviteLink:
 							process.env.NODE_ENV === "development"
 								? `http://localhost:3000/accept-invitation/${data.id}`
-								: `${process.env.BETTER_AUTH_URL || "https://demo.better-auth.com"}/accept-invitation/${data.id}`,
+								: `${process.env.BETTER_AUTH_URL || "http://localhost:3000"}/accept-invitation/${data.id}`,
 					},
 				});
 			},
@@ -174,7 +174,7 @@ const authOptions = {
 							otpCode: otp,
 							userEmail: user.email,
 							userName: user.name,
-							appName: "Better Auth Demo",
+							appName: "Shinauth Demo",
 						},
 					});
 				},
@@ -186,8 +186,7 @@ const authOptions = {
 		admin(),
 		multiSession(),
 		oAuthProxy({
-			productionURL:
-				process.env.BETTER_AUTH_URL || "https://demo.better-auth.com",
+			productionURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
 		}),
 		nextCookies(),
 		oneTap(),
@@ -365,9 +364,8 @@ const authOptions = {
 				"read:organization",
 			],
 			validAudiences: [
-				process.env.BETTER_AUTH_URL || "https://demo.better-auth.com",
-				(process.env.BETTER_AUTH_URL || "https://demo.better-auth.com") +
-					"/api/mcp",
+				process.env.BETTER_AUTH_URL || "http://localhost:3000",
+				(process.env.BETTER_AUTH_URL || "http://localhost:3000") + "/api/mcp",
 			],
 			selectAccount: {
 				page: "/oauth/select-account",
@@ -379,7 +377,7 @@ const authOptions = {
 			customAccessTokenClaims({ referenceId, scopes }) {
 				if (referenceId && scopes.includes("read:organization")) {
 					const baseUrl =
-						process.env.BETTER_AUTH_URL || "https://demo.better-auth.com";
+						process.env.BETTER_AUTH_URL || "http://localhost:3000";
 					return {
 						[`${baseUrl}/org`]: referenceId,
 					};
@@ -438,15 +436,15 @@ const authOptions = {
 		electron(),
 	],
 	trustedOrigins: [
-		"https://*.better-auth.com",
-		"https://better-auth-demo-*-better-auth.vercel.app",
-		"better-auth://",
-		"com.better-auth.demo:/",
+		"http://localhost:3000",
+		"https://shinauth-demo-*-rlvtapp.vercel.app",
+		"shinauth://",
+		"com.shinauth.demo:/",
 		"https://appleid.apple.com",
 	],
 } satisfies BetterAuthOptions;
 
-export const auth = betterAuth({
+export const auth = shinAuth({
 	...authOptions,
 	plugins: [
 		...(authOptions.plugins ?? []),

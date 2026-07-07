@@ -10,7 +10,7 @@ export * from "@shinauth/core/utils/error-codes";
 export * from "@shinauth/core/utils/id";
 export * from "@shinauth/core/utils/json";
 //#endregion
-export { betterAuth } from "./auth/full";
+export { betterAuth, shinAuth } from "./auth/full";
 // @ts-expect-error
 export * from "./types";
 export * from "./utils";

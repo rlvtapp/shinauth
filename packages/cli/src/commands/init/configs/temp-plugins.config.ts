@@ -1113,7 +1113,7 @@ export const tempPluginsConfig = {
 					flag: "last-login-method-cookie-name",
 					question: "What is the cookie name for last login method?",
 					description: "Name of the cookie to store the last login method.",
-					defaultValue: "better-auth.last_used_login_method",
+					defaultValue: "shinauth.last_used_login_method",
 					skip: "prompt",
 					argument: {
 						index: 0,

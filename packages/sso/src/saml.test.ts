@@ -4230,7 +4230,7 @@ describe("SAML ACS Origin Check Bypass", () => {
 					headers: {
 						"Content-Type": "application/json",
 						Origin: "http://attacker.com",
-						Cookie: "better-auth.session_token=fake-session",
+						Cookie: "shinauth.session_token=fake-session",
 					},
 					body: JSON.stringify({
 						email: "victim@example.com",
@@ -5275,15 +5275,13 @@ describe("SAML SSO - Single Assertion Validation", () => {
 		const firstCookies = parseSetCookieHeader(
 			firstCallbackResponse.headers.get("set-cookie") ?? "",
 		);
-		const firstSessionToken = firstCookies.get(
-			"better-auth.session_token",
-		)?.value;
+		const firstSessionToken = firstCookies.get("shinauth.session_token")?.value;
 		expect(firstSessionToken).toBeDefined();
 
 		const firstSession = await client.getSession({
 			fetchOptions: {
 				headers: {
-					Cookie: `better-auth.session_token=${firstSessionToken}`,
+					Cookie: `shinauth.session_token=${firstSessionToken}`,
 				},
 			},
 		});
@@ -5330,14 +5328,14 @@ describe("SAML SSO - Single Assertion Validation", () => {
 			secondCallbackResponse.headers.get("set-cookie") ?? "",
 		);
 		const secondSessionToken = secondCookies.get(
-			"better-auth.session_token",
+			"shinauth.session_token",
 		)?.value;
 		expect(secondSessionToken).toBeDefined();
 
 		const secondSession = await client.getSession({
 			fetchOptions: {
 				headers: {
-					Cookie: `better-auth.session_token=${secondSessionToken}`,
+					Cookie: `shinauth.session_token=${secondSessionToken}`,
 				},
 			},
 		});
@@ -5854,7 +5852,7 @@ describe("SAML Single Logout (SLO)", () => {
 			expect(location).toBe(callbackUrl);
 
 			const setCookie = sloRes.headers.get("set-cookie");
-			expect(setCookie).toContain("better-auth.session_token=;");
+			expect(setCookie).toContain("shinauth.session_token=;");
 		});
 
 		it("should redirect to baseURL when relayState is missing", async () => {

@@ -69,7 +69,7 @@ describe("bearer", async () => {
 			fetchOptions: {
 				headers: {
 					Authorization: `Bearer invalid.token`,
-					cookie: `better-auth.session_token=${token}`,
+					cookie: `shinauth.session_token=${token}`,
 				},
 			},
 		});

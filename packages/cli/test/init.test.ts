@@ -138,7 +138,7 @@ describe("initAction", () => {
 			mockPrompts.mockImplementation(async (questions: any) => {
 				const question = Array.isArray(questions) ? questions[0] : questions;
 
-				// Install Better Auth
+				// Install Shinauth
 				if (question.message?.includes("install shinauth")) {
 					return { value: true };
 				}

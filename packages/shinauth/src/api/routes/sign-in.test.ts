@@ -19,7 +19,7 @@ describe("sign-in", async () => {
 		});
 		const setCookie = signInRes.headers.get("set-cookie");
 		const parsed = parseSetCookieHeader(setCookie || "");
-		expect(parsed.get("better-auth.session_token")).toBeDefined();
+		expect(parsed.get("shinauth.session_token")).toBeDefined();
 	});
 
 	it("should read the ip address and user agent from the headers", async () => {

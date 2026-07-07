@@ -742,16 +742,6 @@ function formatReleaseBody(opts: FormatOptions): string {
 	const { version, commitRef, entries, previousTag } = opts;
 	const lines: string[] = [];
 
-	// Blog post link for minor releases (x.y.0) only
-	const minorMatch = version.match(/^(\d+)\.(\d+)\.0$/);
-	if (minorMatch) {
-		const blogSlug = `${minorMatch[1]}-${minorMatch[2]}`;
-		lines.push(
-			`**Blog post:** [Better Auth ${minorMatch[1]}.${minorMatch[2]}](https://better-auth.com/blog/${blogSlug})`,
-		);
-		lines.push("");
-	}
-
 	// Group entries by package
 	const grouped = new Map<string, ReleaseEntry[]>();
 	const contributors = new Set<string>();

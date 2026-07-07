@@ -5,7 +5,7 @@
  *
  * @example
  * ```ts
- * import { betterAuth } from 'shinauth';
+ * import { shinAuth } from 'shinauth';
  * import {
  *  genericOAuth,
  *  auth0,
@@ -20,7 +20,7 @@
  *  yandex,
  * } from 'shinauth/plugins';
  *
- * export const auth = betterAuth({
+ * export const auth = shinAuth({
  *   plugins: [
  *     genericOAuth({
  *       config: [

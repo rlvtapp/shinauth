@@ -76,8 +76,8 @@ describe("Custom Session Plugin Tests", async () => {
 					// to ensure browsers correctly parse individual cookie attributes
 					expect(setCookies.length).toBeGreaterThanOrEqual(2);
 					const joined = setCookies.join("; ");
-					expect(joined).toContain("better-auth.session_token");
-					expect(joined).toContain("better-auth.session_data");
+					expect(joined).toContain("shinauth.session_token");
+					expect(joined).toContain("shinauth.session_data");
 				},
 			},
 		});
@@ -99,7 +99,7 @@ describe("Custom Session Plugin Tests", async () => {
 					const setCookies = context.response.headers.getSetCookie();
 					for (const cookieStr of setCookies) {
 						const parsed = parseSetCookieHeader(cookieStr);
-						const token = parsed.get("better-auth.session_token")?.value;
+						const token = parsed.get("shinauth.session_token")?.value;
 						if (token) {
 							refreshedSessionToken = token;
 							break;
@@ -182,10 +182,10 @@ describe("Custom Session Plugin Tests", async () => {
 					// and the session_token could inherit the short Max-Age from
 					// session_data, causing premature session expiry.
 					const tokenCookie = setCookies.find((c) =>
-						c.includes("better-auth.session_token"),
+						c.includes("shinauth.session_token"),
 					);
 					const dataCookie = setCookies.find((c) =>
-						c.includes("better-auth.session_data"),
+						c.includes("shinauth.session_data"),
 					);
 					expect(tokenCookie).toBeDefined();
 					expect(dataCookie).toBeDefined();
@@ -243,9 +243,9 @@ describe("Custom Session Plugin Tests", async () => {
 							.map((p) => p.trim().split("=")[0]!.toLowerCase());
 						// Only the first segment is the cookie name=value; the rest are
 						// attributes (max-age, path, httponly, samesite, etc.)
-						// None of those attributes should be another "better-auth." cookie
+						// None of those attributes should be another "shinauth." cookie
 						const betterAuthEntries = cookieNames.filter((n) =>
-							n.startsWith("better-auth."),
+							n.startsWith("shinauth."),
 						);
 						expect(betterAuthEntries).toHaveLength(1);
 					}
@@ -300,7 +300,7 @@ describe("Custom Session Plugin Tests", async () => {
 						Array.from(parseSetCookieHeader(cookieString).entries()),
 					);
 					const betterAuthCookies = parsedCookies.filter(([name]) =>
-						name.startsWith("better-auth."),
+						name.startsWith("shinauth."),
 					);
 
 					expect(betterAuthCookies.length).toBeGreaterThan(0);

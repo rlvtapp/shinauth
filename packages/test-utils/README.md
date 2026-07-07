@@ -1,6 +1,6 @@
 # Shinauth Test Utils
 
-Testing utilities for [Shinauth](https://www.better-auth.com) adapter development and integration testing.
+Testing utilities for [Shinauth](https://github.com/rlvtapp/shinauth) adapter development and integration testing.
 
 ## Installation
 
@@ -10,7 +10,7 @@ npm install @shinauth/test-utils
 
 ## Documentation
 
-For full documentation, visit [better-auth.com](https://www.better-auth.com).
+For full documentation, visit [github.com/rlvtapp/shinauth](https://github.com/rlvtapp/shinauth).
 
 ## License
 

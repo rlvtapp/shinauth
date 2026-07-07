@@ -1391,7 +1391,7 @@ describe("oauth-proxy", async () => {
 		 * the before hook can't decrypt the state package.
 		 *
 		 * This is the root cause of the issue where users see:
-		 * "ERROR [Better Auth]: Failed to parse state BetterAuthError: State mismatch: State not persisted correctly"
+		 * "ERROR [Shinauth]: Failed to parse state BetterAuthError: State mismatch: State not persisted correctly"
 		 */
 		it("should fail when preview and production have different secrets (no shared secret)", async () => {
 			// Preview instance with its own secret

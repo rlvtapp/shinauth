@@ -361,7 +361,7 @@ async function getBetterAuthInfo(
 			error:
 				error instanceof Error
 					? error.message
-					: "Failed to load Better Auth config",
+					: "Failed to load Shinauth config",
 		};
 	}
 }
@@ -412,9 +412,9 @@ function formatOutput(data: any, indent = 0): string {
 }
 
 export const info = new Command("info")
-	.description("Display system and Better Auth configuration information")
+	.description("Display system and Shinauth configuration information")
 	.option("--cwd <cwd>", "The working directory", process.cwd())
-	.option("--config <config>", "Path to the Better Auth configuration file")
+	.option("--config <config>", "Path to the Shinauth configuration file")
 	.option("-j, --json", "Output as JSON")
 	.option("-c, --copy", "Copy output to clipboard (requires pbcopy/xclip)")
 	.action(async (options) => {
@@ -466,7 +466,7 @@ export const info = new Command("info")
 		}
 
 		// Format and display output
-		console.log(chalk.bold("\n📊 Better Auth System Information\n"));
+		console.log(chalk.bold("\n📊 Shinauth System Information\n"));
 		console.log(chalk.gray("=".repeat(50)));
 
 		console.log(chalk.bold.white("\n🖥️  System Information:"));
@@ -488,7 +488,7 @@ export const info = new Command("info")
 			console.log(formatOutput(databases, 2));
 		}
 
-		console.log(chalk.bold.white("\n🔐 Better Auth:"));
+		console.log(chalk.bold.white("\n🔐 Shinauth:"));
 		if (betterAuthInfo.error) {
 			console.log(`  ${chalk.red("Error:")} ${betterAuthInfo.error}`);
 		} else {
@@ -508,7 +508,7 @@ export const info = new Command("info")
 
 		if (options.copy) {
 			const textOutput = `
-Better Auth System Information
+Shinauth System Information
 ==============================
 
 System Information:
@@ -526,7 +526,7 @@ ${JSON.stringify(frameworks, null, 2)}
 Database Clients:
 ${JSON.stringify(databases, null, 2)}
 
-Better Auth:
+Shinauth:
 ${JSON.stringify(betterAuthInfo, null, 2)}
 `;
 

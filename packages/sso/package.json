@@ -10,7 +10,7 @@
     "url": "git+https://github.com/rlvtapp/shinauth.git",
     "directory": "packages/sso"
   },
-  "author": "Bereket Engida",
+  "author": "Shinauth contributors",
   "keywords": [
     "sso",
     "auth",

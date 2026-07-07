@@ -49,7 +49,7 @@ const signInPhoneNumberBodySchema = z.object({
  * **client:**
  * `authClient.signIn.phoneNumber`
  *
- * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/phone-number#api-method-sign-in-phone-number)
+ * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
  */
 export const signInPhoneNumber = (opts: RequiredPhoneNumberOptions) =>
 	createAuthEndpoint(
@@ -220,7 +220,7 @@ const sendPhoneNumberOTPBodySchema = z.object({
  * **client:**
  * `authClient.phoneNumber.sendOtp`
  *
- * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/phone-number#api-method-phone-number-send-otp)
+ * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
  */
 export const sendPhoneNumberOTP = (opts: RequiredPhoneNumberOptions) =>
 	createAuthEndpoint(
@@ -358,7 +358,7 @@ const verifyPhoneNumberBodySchema = z
  * **client:**
  * `authClient.phoneNumber.verify`
  *
- * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/phone-number#api-method-phone-number-verify)
+ * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
  */
 export const verifyPhoneNumber = (opts: RequiredPhoneNumberOptions) =>
 	createAuthEndpoint(

@@ -250,7 +250,7 @@ const upgradeSubscriptionBodySchema = z.object({
  * **client:**
  * `authClient.subscription.upgrade`
  *
- * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/stripe#api-method-subscription-upgrade)
+ * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
  */
 export const upgradeSubscription = (options: StripeOptions) => {
 	const client = options.stripeClient;
@@ -1245,7 +1245,7 @@ const cancelSubscriptionBodySchema = z.object({
  * **client:**
  * `authClient.subscription.cancel`
  *
- * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/stripe#api-method-subscription-cancel)
+ * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
  */
 export const cancelSubscription = (options: StripeOptions) => {
 	const client = options.stripeClient;
@@ -1618,7 +1618,7 @@ const listActiveSubscriptionsQuerySchema = z.optional(
  * **client:**
  * `authClient.subscription.list`
  *
- * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/stripe#api-method-subscription-list)
+ * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
  */
 export const listActiveSubscriptions = (options: StripeOptions) => {
 	return createAuthEndpoint(

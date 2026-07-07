@@ -225,12 +225,12 @@ export default function SignIn() {
 					<p className="text-center text-xs text-neutral-500">
 						built with{" "}
 						<Link
-							href="https://better-auth.com"
+							href="https://github.com/rlvtapp/shinauth"
 							className="underline"
 							target="_blank"
 						>
 							<span className="dark:text-white/70 cursor-pointer">
-								better-auth.
+								shinauth.
 							</span>
 						</Link>
 					</p>

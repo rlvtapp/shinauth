@@ -44,7 +44,7 @@ export const authClient = createAuthClient({
 		lastLoginMethodClient(),
 		electronProxyClient({
 			protocol: {
-				scheme: "com.better-auth.demo",
+				scheme: "com.shinauth.demo",
 			},
 		}),
 	],

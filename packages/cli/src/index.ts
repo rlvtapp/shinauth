@@ -42,13 +42,13 @@ async function main() {
 		.addCommand(mcp)
 		.addCommand(upgrade)
 		.version(cliVersion)
-		.description("Better Auth CLI")
+		.description("Shinauth CLI")
 		.action(() => program.help());
 
 	program.parse();
 }
 
 main().catch((error) => {
-	console.error("Error running Better Auth CLI:", error);
+	console.error("Error running Shinauth CLI:", error);
 	process.exit(1);
 });

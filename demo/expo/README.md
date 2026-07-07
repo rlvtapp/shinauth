@@ -1,6 +1,6 @@
-# Better Auth Expo Example
+# Shinauth Expo Example
 
-This is an example of how to use Better Auth with Expo.
+This is an example of how to use Shinauth with Expo.
 It uses Expo’s new API Router to host the auth server.
 
 ## How to run
@@ -14,5 +14,5 @@ It uses Expo’s new API Router to host the auth server.
    pnpm start
    ```
 
-Checkout the [expo guide](https://www.better-auth.com/docs/integrations/expo) to
+Checkout the [expo guide](https://github.com/rlvtapp/shinauth) to
 learn more.

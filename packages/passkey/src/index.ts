@@ -35,7 +35,7 @@ export const passkey = (options?: PasskeyOptions | undefined) => {
 		origin: null,
 		...options,
 		advanced: {
-			webAuthnChallengeCookie: "better-auth-passkey",
+			webAuthnChallengeCookie: "shinauth-passkey",
 			...options?.advanced,
 		},
 	};

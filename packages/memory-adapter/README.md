@@ -1,6 +1,6 @@
 # Shinauth Memory Adapter
 
-In-memory adapter for [Shinauth](https://www.better-auth.com) — useful for development and testing.
+In-memory adapter for [Shinauth](https://github.com/rlvtapp/shinauth) — useful for development and testing.
 
 ## Installation
 
@@ -10,7 +10,7 @@ npm install @shinauth/memory-adapter
 
 ## Documentation
 
-For full documentation, visit [better-auth.com](https://www.better-auth.com).
+For full documentation, visit [github.com/rlvtapp/shinauth](https://github.com/rlvtapp/shinauth).
 
 ## License
 

@@ -205,13 +205,13 @@ describe("next-js integration", () => {
 			.getSetCookie()
 			.map((cookie) => cookie.split("=")[0]!);
 		expect(setCookieNames).toEqual([
-			"better-auth.session_token",
-			"better-auth.session_data",
+			"shinauth.session_token",
+			"shinauth.session_data",
 		]);
 
 		expect(cookieSet.mock.calls.map(([name]) => name)).toEqual(setCookieNames);
 		const sessionDataCall = cookieSet.mock.calls.find(
-			([name]) => name === "better-auth.session_data",
+			([name]) => name === "shinauth.session_data",
 		);
 		expect(sessionDataCall?.[2]).toMatchObject({ maxAge: 600 });
 	});

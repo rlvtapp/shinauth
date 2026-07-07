@@ -43,7 +43,7 @@ interface LineUserInfo {
  * ```ts
  * import { genericOAuth, line } from "shinauth/plugins/generic-oauth";
  *
- * export const auth = betterAuth({
+ * export const auth = shinAuth({
  *   plugins: [
  *     genericOAuth({
  *       config: [

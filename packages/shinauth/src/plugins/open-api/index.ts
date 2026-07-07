@@ -4,7 +4,6 @@ import { APIError } from "../../api";
 import { HIDE_METADATA } from "../../utils";
 import { PACKAGE_VERSION } from "../../version";
 import { generator } from "./generator";
-import { logo } from "./logo";
 
 declare module "@shinauth/core" {
 	interface BetterAuthPluginRegistry<AuthOptions, Options> {
@@ -53,11 +52,10 @@ const getHTML = (
     </script>
 	 <script ${nonceAttr}>
       var configuration = {
-	  	favicon: "data:image/svg+xml;utf8,${encodeURIComponent(logo)}",
 	   	theme: "${theme || "default"}",
         metaData: {
-			title: "Better Auth API",
-			description: "API Reference for your Better Auth Instance",
+			title: "Shinauth API",
+			description: "API Reference for your Shinauth instance",
 		}
       }
 

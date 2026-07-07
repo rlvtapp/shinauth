@@ -1,6 +1,6 @@
 # Shinauth Prisma Adapter
 
-Prisma adapter for [Shinauth](https://www.better-auth.com).
+Prisma adapter for [Shinauth](https://github.com/rlvtapp/shinauth).
 
 ## Installation
 
@@ -10,7 +10,7 @@ npm install @shinauth/prisma-adapter
 
 ## Documentation
 
-For full documentation, visit [better-auth.com/docs/adapters/prisma](https://www.better-auth.com/docs/adapters/prisma).
+For full documentation, visit [github.com/rlvtapp/shinauth](https://github.com/rlvtapp/shinauth).
 
 ## License
 

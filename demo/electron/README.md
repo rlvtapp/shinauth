@@ -1,10 +1,10 @@
-# Better Auth Electron Example
+# Shinauth Electron Example
 
-This is an example of how to use Better Auth with Electron.
+This is an example of how to use Shinauth with Electron.
 
 ## Prerequirements
 
-Make sure you've set-up the [Better Auth Demo App](../nextjs/README.md).
+Make sure you've set-up the [Shinauth Demo App](../nextjs/README.md).
 
 ## How to run
 
@@ -16,4 +16,4 @@ Make sure you've set-up the [Better Auth Demo App](../nextjs/README.md).
   pnpm dev
   ```
 
-Checkout the [electron guide](https://www.better-auth.com/docs/integrations/electron) to learn more.
+Checkout the [electron guide](https://github.com/rlvtapp/shinauth) to learn more.

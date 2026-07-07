@@ -113,7 +113,7 @@ export const twoFactor = <O extends TwoFactorOptions>(options?: O) => {
 			 * **client:**
 			 * `authClient.twoFactor.enable`
 			 *
-			 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/2fa#api-method-two-factor-enable)
+			 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 			 */
 			enableTwoFactor: createAuthEndpoint(
 				"/two-factor/enable",
@@ -256,7 +256,7 @@ export const twoFactor = <O extends TwoFactorOptions>(options?: O) => {
 			 * **client:**
 			 * `authClient.twoFactor.disable`
 			 *
-			 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/2fa#api-method-two-factor-disable)
+			 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 			 */
 			disableTwoFactor: createAuthEndpoint(
 				"/two-factor/disable",

@@ -450,19 +450,19 @@ describe("anonymous", async () => {
 				context: {
 					responseHeaders: new Headers({
 						"set-cookie":
-							"better-auth.session_token=new-token.value; Path=/; HttpOnly",
+							"shinauth.session_token=new-token.value; Path=/; HttpOnly",
 					}),
 					authCookies: {
 						sessionToken: {
-							name: "better-auth.session_token",
+							name: "shinauth.session_token",
 							options: {},
 						},
 						sessionData: {
-							name: "better-auth.session_data",
+							name: "shinauth.session_data",
 							options: {},
 						},
 						dontRememberToken: {
-							name: "better-auth.dont_remember",
+							name: "shinauth.dont_remember",
 							options: {},
 						},
 					},

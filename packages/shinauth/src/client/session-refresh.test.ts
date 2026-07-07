@@ -319,7 +319,7 @@ describe("session-refresh", () => {
 		const mockFetchSession = vi.fn(async () => {});
 		const storageEvent = () =>
 			new StorageEvent("storage", {
-				key: "better-auth.message",
+				key: "shinauth.message",
 				newValue: JSON.stringify({
 					event: "session",
 					data: { trigger: "getSession" },

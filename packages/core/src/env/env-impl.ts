@@ -93,7 +93,7 @@ export function getBooleanEnvVar(key: string, fallback = true): boolean {
 }
 
 /**
- * Common environment variables used in Better Auth
+ * Common environment variables used in Shinauth
  */
 export const ENV = Object.freeze({
 	get BETTER_AUTH_SECRET() {

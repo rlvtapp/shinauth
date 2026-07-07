@@ -921,7 +921,7 @@ export const verifyPasskeyAuthentication = (options: RequiredPassKeyOptions) =>
  * **client:**
  * `authClient.passkey.listUserPasskeys`
  *
- * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/passkey#api-method-passkey-list-user-passkeys)
+ * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
  */
 export const listPasskeys = createAuthEndpoint(
 	"/passkey/list-user-passkeys",
@@ -988,7 +988,7 @@ const deletePasskeyBodySchema = z.object({
  * **client:**
  * `authClient.passkey.deletePasskey`
  *
- * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/passkey#api-method-passkey-delete-passkey)
+ * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
  */
 export const deletePasskey = createAuthEndpoint(
 	"/passkey/delete-passkey",
@@ -1064,7 +1064,7 @@ const updatePassKeyBodySchema = z.object({
  * **client:**
  * `authClient.passkey.updatePasskey`
  *
- * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/passkey#api-method-passkey-update-passkey)
+ * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
  */
 export const updatePasskey = createAuthEndpoint(
 	"/passkey/update-passkey",

@@ -33,7 +33,7 @@ declare module "@shinauth/core" {
 }
 
 /**
- * Test utilities plugin for Better Auth.
+ * Test utilities plugin for Shinauth.
  *
  * Provides helpers for integration and E2E testing including:
  * - User/Organization factories (creates objects without DB writes)
@@ -52,10 +52,10 @@ declare module "@shinauth/core" {
  *
  * @example
  * ```ts
- * import { betterAuth } from "shinauth";
+ * import { shinAuth } from "shinauth";
  * import { testUtils } from "shinauth/plugins";
  *
- * export const testAuth = betterAuth({
+ * export const testAuth = shinAuth({
  *   plugins: [
  *     testUtils({ captureOTP: true }),
  *   ],

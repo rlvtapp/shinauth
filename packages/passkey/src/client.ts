@@ -116,7 +116,7 @@ export const getPasskeyActions = (
 			return verified;
 		} catch (err) {
 			// Error logs ran on the front-end
-			console.error(`[Better Auth] Error verifying passkey`, err);
+			console.error(`[Shinauth] Error verifying passkey`, err);
 			return {
 				data: null,
 				error: {

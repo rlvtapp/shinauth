@@ -98,7 +98,7 @@ const signInWithOAuth2BodySchema = z.object({
  * **client:**
  * `authClient.signIn.oauth2`
  *
- * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/sign-in#api-method-sign-in-oauth2)
+ * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
  */
 export const signInWithOAuth2 = (options: GenericOAuthOptions) =>
 	createAuthEndpoint(
@@ -644,7 +644,7 @@ const OAuth2LinkAccountBodySchema = z.object({
  * **client:**
  * `authClient.oauth2.link`
  *
- * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/generic-oauth#api-method-oauth2-link)
+ * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
  */
 export const oAuth2LinkAccount = (options: GenericOAuthOptions) =>
 	createAuthEndpoint(

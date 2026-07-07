@@ -23,7 +23,7 @@ export const generateDrizzleSchema: SchemaGenerator = async ({
 
 	if (!databaseType) {
 		throw new Error(
-			`Database provider type is undefined during Drizzle schema generation. Please define a \`provider\` in the Drizzle adapter config. Read more at https://better-auth.com/docs/adapters/drizzle`,
+			`Database provider type is undefined during Drizzle schema generation. Please define a \`provider\` in the Drizzle adapter config. Read more at https://github.com/rlvtapp/shinauth`,
 		);
 	}
 	const fileExist = existsSync(filePath);
@@ -56,7 +56,7 @@ export const generateDrizzleSchema: SchemaGenerator = async ({
 			// Not possible to reach, it's here to make typescript happy
 			if (!databaseType) {
 				throw new Error(
-					`Database provider type is undefined during Drizzle schema generation. Please define a \`provider\` in the Drizzle adapter config. Read more at https://better-auth.com/docs/adapters/drizzle`,
+					`Database provider type is undefined during Drizzle schema generation. Please define a \`provider\` in the Drizzle adapter config. Read more at https://github.com/rlvtapp/shinauth`,
 				);
 			}
 			name = convertToSnakeCase(name, adapter.options?.camelCase);

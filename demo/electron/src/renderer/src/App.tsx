@@ -15,17 +15,17 @@ function App(): React.JSX.Element {
 
 			<div className="z-10 flex flex-col items-center gap-6">
 				<h3 className="text-3xl sm:text-4xl text-black dark:text-white text-center">
-					BETTER-AUTH.
+					SHINAUTH.
 				</h3>
 
 				<p className="text-center wrap-break-word text-sm md:text-base">
 					Official demo to showcase{" "}
 					<a
-						href="https://better-auth.com"
+						href="https://github.com/rlvtapp/shinauth"
 						target="_blank"
 						className="italic underline"
 					>
-						better-auth.
+						shinauth.
 					</a>{" "}
 					with Electron.
 				</p>

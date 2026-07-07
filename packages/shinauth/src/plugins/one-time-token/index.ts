@@ -126,7 +126,7 @@ export const oneTimeToken = (options?: OneTimeTokenOptions | undefined) => {
 			 * **client:**
 			 * `authClient.oneTimeToken.generate`
 			 *
-			 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/one-time-token#api-method-one-time-token-generate)
+			 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 			 */
 			generateOneTimeToken: createAuthEndpoint(
 				"/one-time-token/generate",
@@ -159,7 +159,7 @@ export const oneTimeToken = (options?: OneTimeTokenOptions | undefined) => {
 			 * **client:**
 			 * `authClient.oneTimeToken.verify`
 			 *
-			 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/one-time-token#api-method-one-time-token-verify)
+			 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 			 */
 			verifyOneTimeToken: createAuthEndpoint(
 				"/one-time-token/verify",

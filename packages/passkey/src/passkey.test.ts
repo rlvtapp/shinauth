@@ -96,7 +96,7 @@ describe("passkey", async () => {
 			onResponse(context: { response: Response }) {
 				const setCookie = context.response.headers.get("Set-Cookie");
 				expect(setCookie).toBeDefined();
-				expect(setCookie).toContain("better-auth-passkey");
+				expect(setCookie).toContain("shinauth-passkey");
 			},
 		});
 	});

@@ -1,6 +1,6 @@
 # Shinauth Telemetry
 
-Telemetry package for [Shinauth](https://www.better-auth.com) — anonymous usage analytics to help improve the framework.
+Telemetry package for [Shinauth](https://github.com/rlvtapp/shinauth) — anonymous usage analytics to help improve the framework.
 
 ## Installation
 
@@ -10,7 +10,7 @@ npm install @shinauth/telemetry
 
 ## Documentation
 
-For full documentation, visit [better-auth.com](https://www.better-auth.com).
+For full documentation, visit [github.com/rlvtapp/shinauth](https://github.com/rlvtapp/shinauth).
 
 ## License
 

@@ -62,11 +62,11 @@ export const oAuthState = defineRequestState<{
 export const getOAuthProviderState = oAuthState.get;
 
 /**
- * oAuth 2.1 provider plugin for Better Auth.
+ * oAuth 2.1 provider plugin for Shinauth.
  *
- * @see https://better-auth.com/docs/plugins/oauth-provider
+ * @see https://github.com/rlvtapp/shinauth
  * @param options - The options for the oAuth Provider plugin.
- * @returns A Better Auth plugin.
+ * @returns A Shinauth plugin.
  */
 export const oauthProvider = <O extends OAuthOptions<Scope[]>>(options: O) => {
 	let clientRegistrationAllowedScopes = options.clientRegistrationAllowedScopes;

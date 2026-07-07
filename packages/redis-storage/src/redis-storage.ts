@@ -14,7 +14,7 @@ export interface RedisStorageConfig {
 }
 
 /**
- * Creates a Redis secondary storage for Better Auth using ioredis.
+ * Creates a Redis secondary storage for Shinauth using ioredis.
  *
  * @example
  * ```ts
@@ -32,7 +32,7 @@ export interface RedisStorageConfig {
  * ```
  *
  * @param config - Configuration object containing the Redis client and optional key prefix
- * @returns SecondaryStorage implementation for Better Auth
+ * @returns SecondaryStorage implementation for Shinauth
  */
 export function redisStorage(config: RedisStorageConfig) {
 	const { client, keyPrefix = "better-auth:" } = config;

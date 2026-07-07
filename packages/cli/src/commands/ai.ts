@@ -107,7 +107,7 @@ async function setupServerSelection() {
 		message: "Choose an implementation",
 		choices: [
 			{
-				title: "Better Auth + Agent Auth",
+				title: "Shinauth + Agent Auth",
 				value: "shinauth",
 				description: "TypeScript",
 			},
@@ -615,12 +615,10 @@ function showServerOutro() {
 	console.log(chalk.white("  2. Configure your database:"));
 	console.log(
 		chalk.gray(
-			"     Better Auth needs a database to store agents, hosts, and grants.",
+			"     Shinauth needs a database to store agents, hosts, and grants.",
 		),
 	);
-	console.log(
-		chalk.cyan("     https://www.better-auth.com/docs/concepts/database\n"),
-	);
+	console.log(chalk.cyan("     https://github.com/rlvtapp/shinauth\n"));
 	console.log(chalk.white("  3. Run database migrations:"));
 	console.log(chalk.cyan("     npx @shinauth/cli migrate\n"));
 	console.log(

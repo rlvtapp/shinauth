@@ -112,7 +112,7 @@ export interface ElectronClientOptions extends ElectronSharedClientOptions {
 		  }
 		| undefined;
 	/**
-	 * Prefix(es) for server cookie names to filter (e.g., "better-auth.session_token")
+	 * Prefix(es) for server cookie names to filter (e.g., "shinauth.session_token")
 	 * This is used to identify which cookies belong to better-auth to prevent
 	 * infinite refetching when third-party cookies are set.
 	 *

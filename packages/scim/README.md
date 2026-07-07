@@ -1,6 +1,6 @@
 # Shinauth SCIM Plugin
 
-SCIM (System for Cross-domain Identity Management) plugin for [Shinauth](https://www.better-auth.com) — enable enterprise user provisioning.
+SCIM (System for Cross-domain Identity Management) plugin for [Shinauth](https://github.com/rlvtapp/shinauth) — enable enterprise user provisioning.
 
 ## Installation
 
@@ -10,7 +10,7 @@ npm install @shinauth/scim
 
 ## Documentation
 
-For full documentation, visit [better-auth.com/docs/plugins/scim](https://www.better-auth.com/docs/plugins/scim).
+For full documentation, visit [github.com/rlvtapp/shinauth](https://github.com/rlvtapp/shinauth).
 
 ## License
 

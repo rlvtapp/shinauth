@@ -1051,7 +1051,7 @@ describe("stripe checkout", () => {
 			// User passes {CHECKOUT_SESSION_ID} in their successUrl, which gets
 			// URL-encoded inside callbackURL. Stripe can only replace the literal
 			// (unencoded) placeholder, so the encoded version stays as-is.
-			// Better Auth should replace it with the actual session ID before redirecting.
+			// Shinauth should replace it with the actual session ID before redirecting.
 			const callbackURL =
 				"http://localhost:5173/billing/success?session_id={CHECKOUT_SESSION_ID}";
 			const url = `http://localhost:3000/api/auth/subscription/success?callbackURL=${encodeURIComponent(callbackURL)}&checkoutSessionId=${testCheckoutSessionId}`;

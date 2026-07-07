@@ -1,6 +1,6 @@
 # Shinauth Drizzle Adapter
 
-Drizzle ORM adapter for [Shinauth](https://www.better-auth.com).
+Drizzle ORM adapter for [Shinauth](https://github.com/rlvtapp/shinauth).
 
 ## Installation
 
@@ -10,7 +10,7 @@ npm install @shinauth/drizzle-adapter
 
 ## Documentation
 
-For full documentation, visit [better-auth.com/docs/adapters/drizzle](https://www.better-auth.com/docs/adapters/drizzle).
+For full documentation, visit [github.com/rlvtapp/shinauth](https://github.com/rlvtapp/shinauth).
 
 ## License
 

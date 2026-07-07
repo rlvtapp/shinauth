@@ -15,7 +15,7 @@ declare module "@shinauth/core" {
 export interface LastLoginMethodOptions {
 	/**
 	 * Name of the cookie to store the last login method
-	 * @default "better-auth.last_used_login_method"
+	 * @default "shinauth.last_used_login_method"
 	 */
 	cookieName?: string | undefined;
 	/**
@@ -100,7 +100,7 @@ export const lastLoginMethod = <O extends LastLoginMethodOptions>(
 	};
 
 	const config = {
-		cookieName: "better-auth.last_used_login_method",
+		cookieName: "shinauth.last_used_login_method",
 		maxAge: 60 * 60 * 24 * 30,
 		...userConfig,
 	} satisfies LastLoginMethodOptions;
@@ -171,7 +171,7 @@ export const lastLoginMethod = <O extends LastLoginMethodOptions>(
 								cookie.includes(sessionTokenName),
 							);
 							if (hasSessionToken) {
-								// Inherit cookie attributes from Better Auth's centralized cookie system
+								// Inherit cookie attributes from Shinauth's centralized cookie system
 								// This ensures consistency with cross-origin, cross-subdomain, and security settings
 								const cookieAttributes = {
 									...ctx.context.authCookies.sessionToken.attributes,

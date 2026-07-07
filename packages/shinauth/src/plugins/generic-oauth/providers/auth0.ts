@@ -15,7 +15,7 @@ export interface Auth0Options extends BaseOAuthProviderOptions {
  * ```ts
  * import { genericOAuth, auth0 } from "shinauth/plugins/generic-oauth";
  *
- * export const auth = betterAuth({
+ * export const auth = shinAuth({
  *   plugins: [
  *     genericOAuth({
  *       config: [

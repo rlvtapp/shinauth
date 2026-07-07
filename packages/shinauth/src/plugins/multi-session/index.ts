@@ -71,7 +71,7 @@ export const multiSession = (options?: MultiSessionConfig | undefined) => {
 			 * **client:**
 			 * `authClient.multiSession.listDeviceSessions`
 			 *
-			 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/multi-session#api-method-multi-session-list-device-sessions)
+			 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 			 */
 			listDeviceSessions: createAuthEndpoint(
 				"/multi-session/list-device-sessions",
@@ -133,7 +133,7 @@ export const multiSession = (options?: MultiSessionConfig | undefined) => {
 			 * **client:**
 			 * `authClient.multiSession.setActive`
 			 *
-			 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/multi-session#api-method-multi-session-set-active)
+			 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 			 */
 			setActiveSession: createAuthEndpoint(
 				"/multi-session/set-active",
@@ -216,7 +216,7 @@ export const multiSession = (options?: MultiSessionConfig | undefined) => {
 			 * **client:**
 			 * `authClient.multiSession.revoke`
 			 *
-			 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/multi-session#api-method-multi-session-revoke)
+			 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 			 */
 			revokeDeviceSession: createAuthEndpoint(
 				"/multi-session/revoke",

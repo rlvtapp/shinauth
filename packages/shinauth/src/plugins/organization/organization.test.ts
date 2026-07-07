@@ -3136,10 +3136,10 @@ describe("Additional Fields", async () => {
 			onSuccess(context) {
 				const header = context.response.headers.get("set-cookie");
 				const cookies = parseSetCookieHeader(header || "");
-				const signedCookie = cookies.get("better-auth.session_token")?.value;
+				const signedCookie = cookies.get("shinauth.session_token")?.value;
 				addedMemberHeaders.set(
 					"cookie",
-					`better-auth.session_token=${signedCookie}`,
+					`shinauth.session_token=${signedCookie}`,
 				);
 			},
 		},
@@ -3315,8 +3315,8 @@ describe("Additional Fields", async () => {
 				onSuccess(context) {
 					const header = context.response.headers.get("set-cookie");
 					const cookies = parseSetCookieHeader(header || "");
-					const signedCookie = cookies.get("better-auth.session_token")?.value;
-					headers.set("cookie", `better-auth.session_token=${signedCookie}`);
+					const signedCookie = cookies.get("shinauth.session_token")?.value;
+					headers.set("cookie", `shinauth.session_token=${signedCookie}`);
 				},
 			},
 		});

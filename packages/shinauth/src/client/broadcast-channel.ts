@@ -21,7 +21,7 @@ class WindowBroadcastChannel implements BroadcastChannel {
 	listeners = new Set<BroadcastListener>();
 	private name: string;
 
-	constructor(name = "better-auth.message") {
+	constructor(name = "shinauth.message") {
 		this.name = name;
 	}
 
@@ -66,7 +66,7 @@ class WindowBroadcastChannel implements BroadcastChannel {
 	}
 }
 
-export function getGlobalBroadcastChannel(name = "better-auth.message") {
+export function getGlobalBroadcastChannel(name = "shinauth.message") {
 	if (!(globalThis as any)[kBroadcastChannel]) {
 		(globalThis as any)[kBroadcastChannel] = new WindowBroadcastChannel(name);
 	}

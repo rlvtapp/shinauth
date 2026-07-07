@@ -6,10 +6,15 @@ import { createBetterAuth } from "./base";
 export type { BetterAuthOptions };
 
 /**
- * Better Auth initializer for minimal mode (without Kysely)
+ * Shinauth initializer for minimal mode (without Kysely)
  */
-export const betterAuth = <Options extends BetterAuthOptions>(
+export const shinAuth = <Options extends BetterAuthOptions>(
 	options: Options & {},
 ): Auth<Options> => {
 	return createBetterAuth(options, initMinimal);
 };
+
+/**
+ * Compatibility alias for Better Auth users migrating to Shinauth.
+ */
+export const betterAuth = shinAuth;

@@ -30,7 +30,7 @@ test.describe("vanilla-node", async () => {
 		// Check that the session is now set
 		const cookies = await page.context().cookies();
 		expect(
-			cookies.find((c) => c.name === "better-auth.session_token"),
+			cookies.find((c) => c.name === "shinauth.session_token"),
 		).toBeDefined();
 	});
 });

@@ -4,28 +4,33 @@ import type { Auth } from "../types";
 import { createBetterAuth } from "./base";
 
 /**
- * Better Auth initializer for full mode (with Kysely)
+ * Shinauth initializer for full mode (with Kysely)
  *
  * @example
  * ```ts
- * import { betterAuth } from "shinauth";
+ * import { shinAuth } from "shinauth";
  *
- * const auth = betterAuth({
+ * const auth = shinAuth({
  * 	database: new PostgresDialect({ connection: process.env.DATABASE_URL }),
  * });
  * ```
  *
- * For minimal mode (without Kysely), import from `better-auth/minimal` instead
+ * For minimal mode (without Kysely), import from `shinauth/minimal` instead
  * @example
  * ```ts
- * import { betterAuth } from "shinauth/minimal";
+ * import { shinAuth } from "shinauth/minimal";
  *
- * const auth = betterAuth({
+ * const auth = shinAuth({
  *	  database: drizzleAdapter(db, { provider: "pg" }),
  * });
  */
-export const betterAuth = <Options extends BetterAuthOptions>(
+export const shinAuth = <Options extends BetterAuthOptions>(
 	options: Options & {},
 ): Auth<Options> => {
 	return createBetterAuth(options, init);
 };
+
+/**
+ * Compatibility alias for Better Auth users migrating to Shinauth.
+ */
+export const betterAuth = shinAuth;

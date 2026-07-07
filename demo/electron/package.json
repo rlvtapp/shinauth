@@ -1,6 +1,6 @@
 {
   "name": "@shinauth/electron-demo",
-  "productName": "Better Auth + Electron",
+  "productName": "Shinauth + Electron",
   "private": true,
   "version": "1.0.0",
   "description": "An Electron application with React and TypeScript",

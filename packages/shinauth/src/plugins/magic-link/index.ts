@@ -201,7 +201,7 @@ export const magicLink = (options: MagicLinkOptions) => {
 			 * **client:**
 			 * `authClient.signIn.magicLink`
 			 *
-			 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/sign-in#api-method-sign-in-magic-link)
+			 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 			 */
 			signInMagicLink: createAuthEndpoint(
 				"/sign-in/magic-link",
@@ -292,7 +292,7 @@ export const magicLink = (options: MagicLinkOptions) => {
 			 * **client:**
 			 * `authClient.magicLink.verify`
 			 *
-			 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/magic-link#api-method-magic-link-verify)
+			 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 			 */
 			magicLinkVerify: createAuthEndpoint(
 				"/magic-link/verify",

@@ -15,7 +15,7 @@ export interface KeycloakOptions extends BaseOAuthProviderOptions {
  * ```ts
  * import { genericOAuth, keycloak } from "shinauth/plugins/generic-oauth";
  *
- * export const auth = betterAuth({
+ * export const auth = shinAuth({
  *   plugins: [
  *     genericOAuth({
  *       config: [

@@ -386,9 +386,9 @@ describe("cookie-utils stripSecureCookiePrefix", () => {
 	});
 
 	it("should handle cookie names with dots and special characters", () => {
-		const cookieName = `${SECURE_COOKIE_PREFIX}better-auth.session_token`;
+		const cookieName = `${SECURE_COOKIE_PREFIX}shinauth.session_token`;
 		const result = stripSecureCookiePrefix(cookieName);
-		expect(result).toBe("better-auth.session_token");
+		expect(result).toBe("shinauth.session_token");
 	});
 });
 
@@ -399,33 +399,33 @@ describe("cookie-utils stripSecureCookiePrefix", () => {
 describe("cookie-utils setRequestCookie", () => {
 	it("writes a cookie when the header is empty", () => {
 		const headers = new Headers();
-		setRequestCookie(headers, "better-auth.session_token", "abc");
-		expect(headers.get("cookie")).toBe("better-auth.session_token=abc");
+		setRequestCookie(headers, "shinauth.session_token", "abc");
+		expect(headers.get("cookie")).toBe("shinauth.session_token=abc");
 	});
 
 	it("preserves existing cookies and joins with `; ` per RFC 6265", () => {
 		const headers = new Headers({ cookie: "preference=dark; locale=en" });
-		setRequestCookie(headers, "better-auth.session_token", "abc");
+		setRequestCookie(headers, "shinauth.session_token", "abc");
 		expect(headers.get("cookie")).toBe(
-			"preference=dark; locale=en; better-auth.session_token=abc",
+			"preference=dark; locale=en; shinauth.session_token=abc",
 		);
 	});
 
 	it("replaces an existing cookie of the same name rather than duplicating it", () => {
 		const headers = new Headers({
-			cookie: "better-auth.session_token=stale; locale=en",
+			cookie: "shinauth.session_token=stale; locale=en",
 		});
-		setRequestCookie(headers, "better-auth.session_token", "fresh");
+		setRequestCookie(headers, "shinauth.session_token", "fresh");
 		expect(headers.get("cookie")).toBe(
-			"better-auth.session_token=fresh; locale=en",
+			"shinauth.session_token=fresh; locale=en",
 		);
 	});
 
 	it("ignores malformed pairs in the existing header", () => {
 		const headers = new Headers({ cookie: "valid=1; ; =orphan; locale=en" });
-		setRequestCookie(headers, "better-auth.session_token", "abc");
+		setRequestCookie(headers, "shinauth.session_token", "abc");
 		expect(headers.get("cookie")).toBe(
-			"valid=1; locale=en; better-auth.session_token=abc",
+			"valid=1; locale=en; shinauth.session_token=abc",
 		);
 	});
 
@@ -559,7 +559,7 @@ describe("getSessionCookie", async () => {
 		const headers = new Headers();
 		headers.set(
 			"cookie",
-			"better-auth.session_token=stale; __Secure-better-auth.session_token=current",
+			"shinauth.session_token=stale; __Secure-shinauth.session_token=current",
 		);
 		const request = new Request("https://example.com/api/auth/session", {
 			headers,
@@ -571,7 +571,7 @@ describe("getSessionCookie", async () => {
 		const headers = new Headers();
 		headers.set(
 			"cookie",
-			"better-auth.session_token=stale; __Secure-better-auth.session_token=",
+			"shinauth.session_token=stale; __Secure-shinauth.session_token=",
 		);
 		const request = new Request("https://example.com/api/auth/session", {
 			headers,
@@ -637,7 +637,7 @@ describe("getSessionCookie", async () => {
 
 	it("should return cookie cache", async () => {
 		const { client, testUser, cookieSetter } = await getTestInstance({
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 			session: {
 				cookieCache: {
 					enabled: true,
@@ -662,7 +662,7 @@ describe("getSessionCookie", async () => {
 		});
 
 		const cache = await getCookieCache(request, {
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 		});
 		expect(cache).not.toBeNull();
 		expect(cache?.user?.email).toEqual(testUser.email);
@@ -671,7 +671,7 @@ describe("getSessionCookie", async () => {
 
 	it("should respect dontRememberMe when storing session in cookie cache", async () => {
 		const { client, testUser } = await getTestInstance({
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 			session: {
 				cookieCache: {
 					enabled: true,
@@ -693,11 +693,11 @@ describe("getSessionCookie", async () => {
 
 					const parsed = parseSetCookieHeader(setCookieHeader!);
 
-					const sessionTokenCookie = parsed.get("better-auth.session_token")!;
+					const sessionTokenCookie = parsed.get("shinauth.session_token")!;
 					expect(sessionTokenCookie).toBeDefined();
 					expect(sessionTokenCookie["max-age"]).toBeUndefined();
 
-					const sessionDataCookie = parsed.get("better-auth.session_data")!;
+					const sessionDataCookie = parsed.get("shinauth.session_data")!;
 					expect(sessionDataCookie).toBeDefined();
 					expect(sessionDataCookie["max-age"]).toBeUndefined();
 				},
@@ -753,7 +753,7 @@ describe("getSessionCookie", async () => {
 
 	it("should chunk large cookies instead of logging error", async () => {
 		const { client } = await getTestInstance({
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 			user: {
 				additionalFields: {
 					customField1: {
@@ -876,7 +876,7 @@ describe("sensitive session middleware cookie cache", () => {
 describe("Cookie Cache Field Filtering", () => {
 	it("should exclude user fields with returned: false from cookie cache", async () => {
 		const { client, testUser, cookieSetter } = await getTestInstance({
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 			user: {
 				additionalFields: {
 					internalNote: {
@@ -910,7 +910,7 @@ describe("Cookie Cache Field Filtering", () => {
 		});
 
 		const cache = await getCookieCache(request, {
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 		});
 
 		expect(cache).not.toBeNull();
@@ -920,7 +920,7 @@ describe("Cookie Cache Field Filtering", () => {
 
 	it("should correctly filter multiple user fields based on returned config", async () => {
 		const { client, testUser, cookieSetter } = await getTestInstance({
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 			user: {
 				additionalFields: {
 					publicBio: {
@@ -968,7 +968,7 @@ describe("Cookie Cache Field Filtering", () => {
 		});
 
 		const cache = await getCookieCache(request, {
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 		});
 
 		expect(cache).not.toBeNull();
@@ -983,7 +983,7 @@ describe("Cookie Cache Field Filtering", () => {
 	it("should reduce cookie size when large fields are excluded", async () => {
 		const largeString = "x".repeat(2000);
 		const { client, testUser, cookieSetter } = await getTestInstance({
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 			user: {
 				additionalFields: {
 					largeBio: {
@@ -1023,7 +1023,7 @@ describe("Cookie Cache Field Filtering", () => {
 		});
 
 		const cache = await getCookieCache(request, {
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 		});
 
 		// Cookie cache should exist (not exceed size limit)
@@ -1036,7 +1036,7 @@ describe("Cookie Cache Field Filtering", () => {
 
 	it("should maintain session field filtering (regression check)", async () => {
 		const { client, testUser, cookieSetter } = await getTestInstance({
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 			session: {
 				additionalFields: {
 					internalSessionData: {
@@ -1074,7 +1074,7 @@ describe("Cookie Cache Field Filtering", () => {
 		});
 
 		const cache = await getCookieCache(request, {
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 		});
 
 		expect(cache).not.toBeNull();
@@ -1087,7 +1087,7 @@ describe("Cookie Cache Field Filtering", () => {
 
 	it("should include unknown user fields for backward compatibility", async () => {
 		const { client, testUser, cookieSetter } = await getTestInstance({
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 			user: {
 				additionalFields: {
 					knownField: {
@@ -1121,7 +1121,7 @@ describe("Cookie Cache Field Filtering", () => {
 		});
 
 		const cache = await getCookieCache(request, {
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 		});
 
 		expect(cache).not.toBeNull();
@@ -1134,7 +1134,7 @@ describe("Cookie Cache Field Filtering", () => {
 
 	it("should work with JWT strategy", async () => {
 		const { client, testUser, cookieSetter } = await getTestInstance({
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 			session: {
 				cookieCache: {
 					enabled: true,
@@ -1160,7 +1160,7 @@ describe("Cookie Cache Field Filtering", () => {
 		});
 
 		const cache = await getCookieCache(request, {
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 			strategy: "jwt",
 		});
 		expect(cache).not.toBeNull();
@@ -1170,7 +1170,7 @@ describe("Cookie Cache Field Filtering", () => {
 
 	it("should work with compact strategy", async () => {
 		const { client, testUser, cookieSetter } = await getTestInstance({
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 			session: {
 				cookieCache: {
 					enabled: true,
@@ -1196,7 +1196,7 @@ describe("Cookie Cache Field Filtering", () => {
 		});
 
 		const cache = await getCookieCache(request, {
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 			strategy: "compact",
 		});
 		expect(cache).not.toBeNull();
@@ -1207,14 +1207,14 @@ describe("Cookie Cache Field Filtering", () => {
 	it("should return null for invalid JWT token", async () => {
 		const headers = new Headers();
 		// Set an invalid JWT token manually
-		headers.set("cookie", "better-auth.session_data=invalid.jwt.token");
+		headers.set("cookie", "shinauth.session_data=invalid.jwt.token");
 
 		const request = new Request("https://example.com/api/auth/session", {
 			headers,
 		});
 
 		const cache = await getCookieCache(request, {
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 			strategy: "jwt",
 		});
 		expect(cache).toBeNull();
@@ -1222,7 +1222,7 @@ describe("Cookie Cache Field Filtering", () => {
 
 	it("should default to JWT strategy when not specified", async () => {
 		const { client, testUser, cookieSetter } = await getTestInstance({
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 			session: {
 				cookieCache: {
 					enabled: true,
@@ -1248,7 +1248,7 @@ describe("Cookie Cache Field Filtering", () => {
 		});
 
 		const cache = await getCookieCache(request, {
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 			// No strategy specified, should default to "jwt"
 		});
 		expect(cache).not.toBeNull();
@@ -1263,7 +1263,7 @@ describe("Cookie Chunking", () => {
 		const largeString = "x".repeat(2000);
 
 		const { client } = await getTestInstance({
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 			user: {
 				additionalFields: {
 					field1: {
@@ -1329,7 +1329,7 @@ describe("Cookie Chunking", () => {
 		});
 
 		const cache = await getCookieCache(request, {
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 		});
 
 		expect(cache).not.toBeNull();
@@ -1341,7 +1341,7 @@ describe("Cookie Chunking", () => {
 		const largeString = "y".repeat(2500);
 
 		const { client, cookieSetter } = await getTestInstance({
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 			user: {
 				additionalFields: {
 					largeField: {
@@ -1376,7 +1376,7 @@ describe("Cookie Chunking", () => {
 		});
 
 		const cache = await getCookieCache(request, {
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 		});
 
 		expect(cache).not.toBeNull();
@@ -1388,7 +1388,7 @@ describe("Cookie Chunking", () => {
 		const largeString = "z".repeat(2000);
 
 		const { client } = await getTestInstance({
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 			user: {
 				additionalFields: {
 					field1: {
@@ -1459,7 +1459,7 @@ describe("Cookie Chunking", () => {
 
 	it("should NOT chunk cookies when they are under 4KB", async () => {
 		const { client, testUser } = await getTestInstance({
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 			session: {
 				cookieCache: {
 					enabled: true,
@@ -1511,7 +1511,7 @@ describe("Cookie Chunking", () => {
 		});
 
 		const cache = await getCookieCache(request, {
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 		});
 
 		expect(cache).not.toBeNull();
@@ -1527,7 +1527,7 @@ describe("Cookie Chunking", () => {
 		// the serialized line overflows once name + attributes are added.
 		const longPrefix = "better-auth-" + "x".repeat(80);
 		const { client } = await getTestInstance({
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 			advanced: { cookiePrefix: longPrefix },
 			user: {
 				additionalFields: {
@@ -1580,7 +1580,7 @@ describe("Cookie Chunking", () => {
 			headers,
 		});
 		const cache = await getCookieCache(request, {
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 			cookiePrefix: longPrefix,
 		});
 		expect(cache).not.toBeNull();
@@ -1590,7 +1590,7 @@ describe("Cookie Chunking", () => {
 	it("skips the session cache and warns when it is too large to chunk", async () => {
 		const warn = vi.fn();
 		const { client, auth, cookieSetter } = await getTestInstance({
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 			logger: {
 				log: (level, message) => {
 					if (level === "warn") warn(message);
@@ -1646,7 +1646,7 @@ describe("Cookie Chunking", () => {
 		// The store must skip the cache instead of throwing on the request.
 		const longPrefix = "better-auth-" + "x".repeat(4100);
 		const { client, auth, cookieSetter } = await getTestInstance({
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 			advanced: { cookiePrefix: longPrefix },
 			logger: {
 				log: (level, message) => {
@@ -1691,28 +1691,28 @@ describe("Cookie Chunking", () => {
 describe("parse cookies", () => {
 	it("should parse cookies into key-value map", () => {
 		const cookieHeader =
-			"better-auth.session_token=session-token.signature; better-auth.session_data=session-data.signature";
+			"shinauth.session_token=session-token.signature; shinauth.session_data=session-data.signature";
 
 		const parsedCookies = parseCookies(cookieHeader);
 
-		expect(parsedCookies.get("better-auth.session_token")).toBe(
+		expect(parsedCookies.get("shinauth.session_token")).toBe(
 			"session-token.signature",
 		);
-		expect(parsedCookies.get("better-auth.session_data")).toBe(
+		expect(parsedCookies.get("shinauth.session_data")).toBe(
 			"session-data.signature",
 		);
 	});
 
 	it("should securely parse the signed cookies with padding", () => {
 		const cookieHeader =
-			"better-auth.session_token=session-token.signature=; better-auth.session_data=session-data.signature=";
+			"shinauth.session_token=session-token.signature=; shinauth.session_data=session-data.signature=";
 
 		const parsedCookies = parseCookies(cookieHeader);
 
-		expect(parsedCookies.get("better-auth.session_token")).toBe(
+		expect(parsedCookies.get("shinauth.session_token")).toBe(
 			"session-token.signature=",
 		);
-		expect(parsedCookies.get("better-auth.session_data")).toBe(
+		expect(parsedCookies.get("shinauth.session_data")).toBe(
 			"session-data.signature=",
 		);
 	});
@@ -1724,16 +1724,14 @@ describe("parse cookies", () => {
 describe("Cookie header without whitespace after semicolon", () => {
 	it("parseCookies returns each pair when separator is `;` only", () => {
 		const cookieHeader =
-			"better-auth.session_token=session-token.signature;better-auth.session_data=session-data.signature";
+			"shinauth.session_token=session-token.signature;shinauth.session_data=session-data.signature";
 
 		const parsed = parseCookies(cookieHeader);
 
-		expect(parsed.get("better-auth.session_token")).toBe(
+		expect(parsed.get("shinauth.session_token")).toBe(
 			"session-token.signature",
 		);
-		expect(parsed.get("better-auth.session_data")).toBe(
-			"session-data.signature",
-		);
+		expect(parsed.get("shinauth.session_data")).toBe("session-data.signature");
 	});
 
 	it("parseCookies tolerates mixed `;`, `; `, and `;\\t` separators", () => {
@@ -1749,10 +1747,7 @@ describe("Cookie header without whitespace after semicolon", () => {
 
 	it("getSessionCookie finds the session cookie when separator is `;` only", () => {
 		const headers = new Headers();
-		headers.set(
-			"cookie",
-			"preference=dark;better-auth.session_token=token-123",
-		);
+		headers.set("cookie", "preference=dark;shinauth.session_token=token-123");
 		const request = new Request("https://example.com/api/auth/session", {
 			headers,
 		});
@@ -1764,16 +1759,14 @@ describe("Cookie header without whitespace after semicolon", () => {
 		const headers = new Headers();
 		headers.set(
 			"cookie",
-			"better-auth.session_data.0=chunkA;better-auth.session_data.1=chunkB",
+			"shinauth.session_data.0=chunkA;shinauth.session_data.1=chunkB",
 		);
 		const ctx = {
 			getCookie: () => undefined,
 			headers,
 		} as unknown as Parameters<typeof getChunkedCookie>[0];
 
-		expect(getChunkedCookie(ctx, "better-auth.session_data")).toBe(
-			"chunkAchunkB",
-		);
+		expect(getChunkedCookie(ctx, "shinauth.session_data")).toBe("chunkAchunkB");
 	});
 });
 
@@ -2106,7 +2099,7 @@ describe("account cookie sync on user switch", () => {
 });
 
 describe("getCookieCache expiry (compact strategy)", () => {
-	const SECRET = "better-auth.secret";
+	const SECRET = "shinauth.secret";
 
 	// Build a validly-signed compact session_data cookie, mirroring the encoding
 	// in setCookieCache, so the only variable under test is freshness.
@@ -2150,7 +2143,7 @@ describe("getCookieCache expiry (compact strategy)", () => {
 
 	function requestWith(cookieValue: string) {
 		const headers = new Headers();
-		headers.set("cookie", `better-auth.session_data=${cookieValue}`);
+		headers.set("cookie", `shinauth.session_data=${cookieValue}`);
 		return new Request("https://example.com/api/auth/session", { headers });
 	}
 

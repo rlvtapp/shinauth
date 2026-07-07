@@ -15,10 +15,10 @@ for the popup when a top-level redirect is not possible (embedded / iframe).
 Server (`bearer` is required):
 
 ```ts
-import { betterAuth } from "shinauth";
+import { shinAuth } from "shinauth";
 import { bearer, oauthPopup } from "shinauth/plugins";
 
-export const auth = betterAuth({
+export const auth = shinAuth({
   trustedOrigins: ["https://your-app.com"], // the opener app origin(s)
   plugins: [oauthPopup(), bearer()],
 });

@@ -1373,7 +1373,7 @@ export const createAdapterFactory =
 					// engines with real transaction isolation; race window narrows
 					// (does not close) on adapters that fall through to sequential
 					// execution. Remove this branch when consumeOne becomes required.
-					// Use Better Auth's transaction context here, not a direct adapter
+					// Use Shinauth's transaction context here, not a direct adapter
 					// transaction, so callers already inside a transaction keep using
 					// the active transaction adapter.
 					res = await withSpan(

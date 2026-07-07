@@ -150,7 +150,7 @@ export function mcpAuthMcpUse(config: McpUseBetterAuthConfig): OAuthProvider {
 
 	if (!authURL) {
 		throw new Error(
-			"Better Auth authURL is required. " +
+			"Shinauth authURL is required. " +
 				"Pass authURL in config, e.g.: mcpAuthMcpUse({ authURL: 'http://localhost:3000/api/auth' })",
 		);
 	}

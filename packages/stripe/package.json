@@ -10,7 +10,7 @@
     "url": "git+https://github.com/rlvtapp/shinauth.git",
     "directory": "packages/stripe"
   },
-  "author": "Bereket Engida",
+  "author": "Shinauth contributors",
   "keywords": [
     "stripe",
     "auth",

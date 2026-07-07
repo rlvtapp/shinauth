@@ -16,7 +16,7 @@ import { warnIfCookiePluginNotLast } from "./cookie-plugin-guard";
  * ```ts
  * import { tanstackStartCookies } from "shinauth/tanstack-start/solid";
  *
- * const auth = betterAuth({
+ * const auth = shinAuth({
  *   plugins: [tanstackStartCookies()],
  * });
  * ```

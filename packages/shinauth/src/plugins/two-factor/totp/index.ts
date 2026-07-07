@@ -376,7 +376,7 @@ export const totp2fa = (options?: TOTPOptions | undefined) => {
 			 * **server:**
 			 * `auth.api.generateTOTP`
 			 *
-			 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/2fa#totp)
+			 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 			 */
 			generateTOTP: generateTOTP,
 			/**
@@ -392,7 +392,7 @@ export const totp2fa = (options?: TOTPOptions | undefined) => {
 			 * **client:**
 			 * `authClient.twoFactor.getTotpUri`
 			 *
-			 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/2fa#getting-totp-uri)
+			 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 			 */
 			getTOTPURI: getTOTPURI,
 			/**
@@ -408,7 +408,7 @@ export const totp2fa = (options?: TOTPOptions | undefined) => {
 			 * **client:**
 			 * `authClient.twoFactor.verifyTotp`
 			 *
-			 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/2fa#verifying-totp)
+			 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 			 */
 			verifyTOTP,
 		},

@@ -7,7 +7,7 @@ export const authClient = createAuthClient({
 	plugins: [
 		electronClient({
 			protocol: {
-				scheme: "com.better-auth.demo",
+				scheme: "com.shinauth.demo",
 			},
 			signInURL: "http://localhost:3000/sign-in",
 			storage: storage(),

@@ -9,7 +9,6 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { Logo } from "@/components/logo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { auth } from "@/lib/auth";
@@ -62,8 +61,8 @@ export default async function AuthorizePage({
 			<div className="min-h-screen bg-black text-white flex flex-col">
 				<div className="flex flex-col items-center justify-center max-w-2xl mx-auto px-4">
 					<div className="flex items-center gap-8 mb-8">
-						<div className="w-16 h-16 border rounded-full flex items-center justify-center">
-							{clientDetails.logo_uri ? (
+						{clientDetails.logo_uri ? (
+							<div className="w-16 h-16 border rounded-full flex items-center justify-center">
 								<Image
 									src={clientDetails.logo_uri}
 									alt="App Logo"
@@ -71,10 +70,8 @@ export default async function AuthorizePage({
 									width={64}
 									height={64}
 								/>
-							) : (
-								<Logo />
-							)}
-						</div>
+							</div>
+						) : null}
 						<ArrowLeftRight className="h-6 w-6" />
 						<div className="w-16 h-16 rounded-full overflow-hidden">
 							<Avatar className="hidden h-16 w-16 sm:flex ">
@@ -89,7 +86,7 @@ export default async function AuthorizePage({
 					</div>
 
 					<h1 className="text-3xl font-semibold text-center mb-8">
-						{clientDetails.client_name} is requesting access to your Better Auth
+						{clientDetails.client_name} is requesting access to your Shinauth
 						account
 					</h1>
 
@@ -110,7 +107,7 @@ export default async function AuthorizePage({
 								{scope.includes("profile") && (
 									<div className="flex items-center gap-3 text-zinc-300">
 										<User className="h-5 w-5" />
-										<span>Read your Better Auth user data.</span>
+										<span>Read your Shinauth user data.</span>
 									</div>
 								)}
 

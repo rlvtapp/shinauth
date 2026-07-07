@@ -344,7 +344,7 @@ describe("mcp-client", async () => {
 
 		it("should throw for missing authURL", () => {
 			expect(() => mcpAuthMcpUse({ authURL: "" })).toThrow(
-				"Better Auth authURL is required",
+				"Shinauth authURL is required",
 			);
 		});
 

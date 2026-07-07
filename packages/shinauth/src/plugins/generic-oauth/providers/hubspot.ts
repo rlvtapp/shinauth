@@ -34,7 +34,7 @@ interface HubSpotProfile extends Record<string, any> {
  * ```ts
  * import { genericOAuth, hubspot } from "shinauth/plugins/generic-oauth";
  *
- * export const auth = betterAuth({
+ * export const auth = shinAuth({
  *   plugins: [
  *     genericOAuth({
  *       config: [

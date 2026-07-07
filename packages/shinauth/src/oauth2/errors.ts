@@ -1,7 +1,6 @@
 import type { GenericEndpointContext } from "@shinauth/core";
 
-const HANDLING_DOCS_URL =
-	"https://www.better-auth.com/docs/concepts/oauth#handling-providers-without-email";
+const HANDLING_DOCS_URL = "https://github.com/rlvtapp/shinauth";
 
 /**
  * Redirect the user to the OAuth error page with a machine-readable `error`

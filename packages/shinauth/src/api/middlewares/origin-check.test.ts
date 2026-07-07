@@ -438,7 +438,7 @@ describe("Fetch Metadata CSRF Protection", async () => {
 
 		const setCookieHeader = signInResponse.headers.get("set-cookie");
 		const cookies = parseSetCookieHeader(setCookieHeader || "");
-		const sessionCookie = cookies.get("better-auth.session_token");
+		const sessionCookie = cookies.get("shinauth.session_token");
 		if (!sessionCookie) {
 			throw new Error("Failed to get session cookie");
 		}
@@ -449,7 +449,7 @@ describe("Fetch Metadata CSRF Protection", async () => {
 				method: "POST",
 				headers: {
 					"content-type": "application/json",
-					cookie: `better-auth.session_token=${sessionCookie.value}`,
+					cookie: `shinauth.session_token=${sessionCookie.value}`,
 					"Sec-Fetch-Site": "cross-site",
 					"Sec-Fetch-Mode": "navigate",
 					origin: "http://localhost:3000",
@@ -531,7 +531,7 @@ describe("Fetch Metadata CSRF Protection", async () => {
 				method: "POST",
 				headers: {
 					"content-type": "application/json",
-					cookie: "better-auth.session_token=expired_or_invalid_token",
+					cookie: "shinauth.session_token=expired_or_invalid_token",
 					"Sec-Fetch-Site": "cross-site",
 					"Sec-Fetch-Mode": "navigate",
 					origin: "http://localhost:3000",

@@ -380,8 +380,8 @@ export async function initAction(opts: any) {
 		"\n" +
 			[
 				`   ██  ████`,
-				`   ████  ██  ${chalk.bold(`Better Auth CLI`)} ${chalk.dim(`(${cliVersion})`)}`,
-				`   ██  ████  ${chalk.gray("Welcome to the Better Auth CLI! Let's get you set up.")}`,
+				`   ████  ██  ${chalk.bold(`Shinauth CLI`)} ${chalk.dim(`(${cliVersion})`)}`,
+				`   ██  ████  ${chalk.gray("Welcome to the Shinauth CLI! Let's get you set up.")}`,
 			]
 				// .map((x) => x.padStart(10))
 				.join("\n"),
@@ -415,11 +415,11 @@ export async function initAction(opts: any) {
 	>();
 	const filesToWrite: (() => Promise<unknown>)[] = [];
 
-	// Install Better Auth
+	// Install Shinauth
 	await (async () => {
 		const hasBetterAuth = await hasDependency(packageJson, "shinauth");
 		if (hasBetterAuth) return;
-		await nextStep("Install Better Auth");
+		await nextStep("Install Shinauth");
 
 		const shouldInstallBetterAuth = await confirm({
 			message: `Would you like to install shinauth using ${chalk.bold(pm)}?`,
@@ -458,7 +458,7 @@ export async function initAction(opts: any) {
 				const { providedSecret } = await prompts({
 					type: "text",
 					name: "providedSecret",
-					message: `Better Auth secret (used for encryption, hashing, and signing). ${chalk.dim("(Press Enter to auto generate)")}`,
+					message: `Shinauth secret (used for encryption, hashing, and signing). ${chalk.dim("(Press Enter to auto generate)")}`,
 				});
 				if (isCancel(providedSecret)) {
 					cancel("✋ Operation cancelled.");
@@ -467,7 +467,7 @@ export async function initAction(opts: any) {
 				const { providedURL } = await prompts({
 					type: "text",
 					name: "providedURL",
-					message: `Better Auth Base URL (your auth server URL):`,
+					message: `Shinauth Base URL (your auth server URL):`,
 					initial: "http://localhost:3000",
 				});
 				if (isCancel(providedURL)) {
@@ -516,7 +516,7 @@ export async function initAction(opts: any) {
 						const { providedSecret } = await prompts({
 							type: "text",
 							name: "providedSecret",
-							message: `Better Auth secret (used for encryption, hashing, and signing). ${chalk.dim("(Press Enter to auto generate)")}`,
+							message: `Shinauth secret (used for encryption, hashing, and signing). ${chalk.dim("(Press Enter to auto generate)")}`,
 						});
 						if (isCancel(providedSecret)) {
 							cancel("✋ Operation cancelled.");
@@ -529,7 +529,7 @@ export async function initAction(opts: any) {
 						const { providedURL } = await prompts({
 							type: "text",
 							name: "providedURL",
-							message: `Better Auth base URL (your auth server URL):`,
+							message: `Shinauth base URL (your auth server URL):`,
 							initial: "http://localhost:3000",
 						});
 						if (isCancel(providedURL)) {
@@ -637,7 +637,7 @@ export async function initAction(opts: any) {
 	})();
 
 	if (!hasAuthConfigAlready) {
-		await nextStep("Create A Better Auth Instance");
+		await nextStep("Create A Shinauth Instance");
 
 		const { data: allFiles, error } = await tryCatch(fs.readdir(cwd, "utf-8"));
 		if (error) {
@@ -1503,8 +1503,7 @@ export const auth = betterAuth({
 	const connectResponse = await prompts({
 		type: "confirm",
 		name: "connect",
-		message:
-			"Would you like to connect your app to Better Auth infrastructure?",
+		message: "Would you like to connect your app to Shinauth infrastructure?",
 		initial: true,
 	});
 	// If the user cancels the prompt, `connect` will be undefined.
@@ -1512,7 +1511,7 @@ export const auth = betterAuth({
 	if (connectResponse.connect === undefined) {
 		console.log(
 			chalk.yellow("\n✖ ") +
-				"Setup cancelled before connecting to Better Auth infrastructure.\n",
+				"Setup cancelled before connecting to Shinauth infrastructure.\n",
 		);
 		return;
 	}
@@ -1521,15 +1520,14 @@ export const auth = betterAuth({
 	if (connectResponse.connect === undefined) {
 		console.log(
 			chalk.yellow("\n✖ ") +
-				"Setup cancelled before connecting to Better Auth infrastructure.\n",
+				"Setup cancelled before connecting to Shinauth infrastructure.\n",
 		);
 		return;
 	}
 	if (connectResponse.connect) {
-		await open("https://dash.better-auth.com/onboarding");
+		await open("https://github.com/rlvtapp/shinauth");
 		console.log(
-			chalk.cyan("\n→ ") +
-				"Opening Better Auth onboarding in your browser...\n",
+			chalk.cyan("\n→ ") + "Opening Shinauth onboarding in your browser...\n",
 		);
 	}
 

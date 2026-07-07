@@ -5,55 +5,55 @@ import { auth } from "@/lib/auth";
 const features: { name: string; link: string }[] = [
 	{
 		name: "Email & Password",
-		link: "https://www.better-auth.com/docs/authentication/email-password",
+		link: "https://github.com/rlvtapp/shinauth",
 	},
 	{
 		name: "Organization | Teams",
-		link: "https://www.better-auth.com/docs/plugins/organization",
+		link: "https://github.com/rlvtapp/shinauth",
 	},
 	{
 		name: "Passkeys",
-		link: "https://www.better-auth.com/docs/plugins/passkey",
+		link: "https://github.com/rlvtapp/shinauth",
 	},
 	{
 		name: "Multi Factor",
-		link: "https://www.better-auth.com/docs/plugins/2fa",
+		link: "https://github.com/rlvtapp/shinauth",
 	},
 	{
 		name: "Password Reset",
-		link: "https://www.better-auth.com/docs/authentication/email-password#request-password-reset",
+		link: "https://github.com/rlvtapp/shinauth",
 	},
 	{
 		name: "Email Verification",
-		link: "https://www.better-auth.com/docs/authentication/email-password#email-verification",
+		link: "https://github.com/rlvtapp/shinauth",
 	},
 	{
 		name: "Roles & Permissions",
-		link: "https://www.better-auth.com/docs/plugins/organization#roles",
+		link: "https://github.com/rlvtapp/shinauth",
 	},
 	{
 		name: "Rate Limiting",
-		link: "https://www.better-auth.com/docs/reference/security#rate-limiting",
+		link: "https://github.com/rlvtapp/shinauth",
 	},
 	{
 		name: "Session Management",
-		link: "https://www.better-auth.com/docs/concepts/session-management",
+		link: "https://github.com/rlvtapp/shinauth",
 	},
 	{
 		name: "Multiple Session",
-		link: "https://www.better-auth.com/docs/plugins/multi-session",
+		link: "https://github.com/rlvtapp/shinauth",
 	},
 	{
 		name: "Stripe Integration",
-		link: "https://www.better-auth.com/docs/plugins/stripe",
+		link: "https://github.com/rlvtapp/shinauth",
 	},
 	{
 		name: "Last Login Method",
-		link: "https://www.better-auth.com/docs/plugins/last-login-method",
+		link: "https://github.com/rlvtapp/shinauth",
 	},
 	{
 		name: "OAuth Provider",
-		link: "https://www.better-auth.com/docs/plugins/oauth-provider",
+		link: "https://github.com/rlvtapp/shinauth",
 	},
 ];
 
@@ -67,16 +67,16 @@ export default async function Page() {
 			<main className="flex flex-col gap-4 row-start-2 items-center justify-center">
 				<div className="flex flex-col gap-1">
 					<h3 className="text-3xl sm:text-4xl text-black dark:text-white text-center">
-						BETTER-AUTH.
+						SHINAUTH.
 					</h3>
 					<p className="text-center wrap-break-word text-sm md:text-base">
 						Official demo to showcase{" "}
 						<a
-							href="https://better-auth.com"
+							href="https://github.com/rlvtapp/shinauth"
 							target="_blank"
 							className="italic underline"
 						>
-							better-auth.
+							shinauth.
 						</a>{" "}
 						features and capabilities. <br />
 					</p>
@@ -86,7 +86,7 @@ export default async function Page() {
 						<div className="border p-2 border-dashed bg-secondary/70">
 							<div className="text-xs flex items-center gap-2 justify-center text-muted-foreground">
 								<span className="text-center">
-									All features on this demo are implemented with Better Auth
+									All features on this demo are implemented with Shinauth
 									without any custom backend code
 								</span>
 							</div>

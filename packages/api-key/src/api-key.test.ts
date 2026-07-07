@@ -4687,7 +4687,7 @@ describe("api-key", async () => {
 				body: { email: nonMemberEmail, password: "password123" },
 			});
 			const nonMemberHeaders = {
-				cookie: `better-auth.session_token=${nonMemberSession.token}`,
+				cookie: `shinauth.session_token=${nonMemberSession.token}`,
 			};
 
 			// Non-member should not be able to list org API keys
@@ -5309,7 +5309,7 @@ describe("api key creation uses a fresh session", async () => {
 		expect(userId).toBeDefined();
 		// The cookie cache must actually be present, otherwise this test would
 		// pass for the wrong reason.
-		expect(headers.get("cookie")).toContain("better-auth.session_data");
+		expect(headers.get("cookie")).toContain("shinauth.session_data");
 
 		// With a live session, creation succeeds.
 		const first = await client.apiKey.create({}, { headers });

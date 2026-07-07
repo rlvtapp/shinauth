@@ -78,13 +78,13 @@ export function validateSecretsArray(
 	const current = secrets[0]!;
 	if (current.value.length < 32) {
 		logger.warn(
-			`[better-auth] Warning: the current secret (version ${current.version}) should be at least 32 characters long for adequate security.`,
+			`[shinauth] Warning: the current secret (version ${current.version}) should be at least 32 characters long for adequate security.`,
 		);
 	}
 	const entropy = estimateEntropy(current.value);
 	if (entropy < 120) {
 		logger.warn(
-			"[better-auth] Warning: the current secret appears low-entropy. Use a randomly generated secret for production.",
+			"[shinauth] Warning: the current secret appears low-entropy. Use a randomly generated secret for production.",
 		);
 	}
 }

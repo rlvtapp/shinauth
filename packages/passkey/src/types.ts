@@ -107,7 +107,7 @@ export interface PasskeyOptions {
 	/**
 	 * Human-readable title for your website
 	 *
-	 * @default "Better Auth"
+	 * @default "Shinauth"
 	 */
 	rpName?: string | undefined;
 	/**
@@ -132,7 +132,7 @@ export interface PasskeyOptions {
 				/**
 				 * Cookie name for storing WebAuthn challenge ID during authentication flow
 				 *
-				 * @default "better-auth-passkey"
+				 * @default "shinauth-passkey"
 				 */
 				webAuthnChallengeCookie?: string;
 		  }

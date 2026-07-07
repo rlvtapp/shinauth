@@ -10,5 +10,5 @@ authentication to your Electron applications.
 
 MIT
 
-[electron integration guide]: https://www.better-auth.com/docs/integrations/electron
-[installation guide]: https://www.better-auth.com/docs/installation
+[electron integration guide]: https://github.com/rlvtapp/shinauth
+[installation guide]: https://github.com/rlvtapp/shinauth

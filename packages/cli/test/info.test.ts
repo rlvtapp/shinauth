@@ -67,7 +67,7 @@ describe("info command", () => {
 		expect(output.packageManager).toHaveProperty("name");
 		expect(output.packageManager).toHaveProperty("version");
 
-		// Better Auth config should have an error since no auth file exists
+		// Shinauth config should have an error since no auth file exists
 		expect(output.betterAuth).toHaveProperty("version");
 		expect(output.betterAuth.config).toBeNull();
 	});

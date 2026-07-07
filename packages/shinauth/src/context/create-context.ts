@@ -78,7 +78,7 @@ function validateSecret(
 
 	if (secret.length < 32) {
 		logger.warn(
-			`[better-auth] Warning: your BETTER_AUTH_SECRET should be at least 32 characters long for adequate security. Generate one with \`npx auth secret\` or \`openssl rand -base64 32\`.`,
+			`[shinauth] Warning: your BETTER_AUTH_SECRET should be at least 32 characters long for adequate security. Generate one with \`npx auth secret\` or \`openssl rand -base64 32\`.`,
 		);
 	}
 
@@ -86,7 +86,7 @@ function validateSecret(
 	const entropy = estimateEntropy(secret);
 	if (entropy < 120) {
 		logger.warn(
-			"[better-auth] Warning: your BETTER_AUTH_SECRET appears low-entropy. Use a randomly generated secret for production.",
+			"[shinauth] Warning: your BETTER_AUTH_SECRET appears low-entropy. Use a randomly generated secret for production.",
 		);
 	}
 }
@@ -150,7 +150,7 @@ export async function createAuthContext<Options extends BetterAuthOptions>(
 
 	if (!baseURL && !isDynamicConfig) {
 		logger.warn(
-			`[better-auth] Base URL is not set. Set the baseURL option or BETTER_AUTH_URL env, or use a dynamic baseURL with allowedHosts for multi-host setups. Without it the origin is derived from the incoming request, and callbacks and redirects may not work correctly.`,
+			`[shinauth] Base URL is not set. Set the baseURL option or BETTER_AUTH_URL env, or use a dynamic baseURL with allowedHosts for multi-host setups. Without it the origin is derived from the incoming request, and callbacks and redirects may not work correctly.`,
 		);
 	}
 
@@ -159,10 +159,10 @@ export async function createAuthContext<Options extends BetterAuthOptions>(
 		options.advanced?.database?.generateId === false
 	) {
 		logger.error(
-			`[better-auth] Misconfiguration detected.
+			`[shinauth] Misconfiguration detected.
 You are using the memory DB with generateId: false.
 This will cause no id to be generated for any model.
-Most of the features of Better Auth will not work correctly.`,
+Most of the features of Shinauth will not work correctly.`,
 		);
 	}
 
@@ -280,7 +280,7 @@ Most of the features of Better Auth will not work correctly.`,
 	const trustedProviders = await getTrustedProviders(options);
 
 	const ctx: AuthContext = {
-		appName: options.appName || "Better Auth",
+		appName: options.appName || "Shinauth",
 		baseURL: baseURL || "",
 		version: getBetterAuthVersion(),
 		socialProviders: providers,
@@ -323,7 +323,7 @@ Most of the features of Better Auth will not work correctly.`,
 				// and disable stateless refresh behavior to avoid confusing/unsafe configurations.
 				if (isStateful && refreshCache) {
 					logger.warn(
-						"[better-auth] `session.cookieCache.refreshCache` is enabled while `database` or `secondaryStorage` is configured. `refreshCache` is meant for stateless (DB-less) setups. Disabling `refreshCache` — remove it from your config to silence this warning.",
+						"[shinauth] `session.cookieCache.refreshCache` is enabled while `database` or `secondaryStorage` is configured. `refreshCache` is meant for stateless (DB-less) setups. Disabling `refreshCache` — remove it from your config to silence this warning.",
 					);
 					return false;
 				}

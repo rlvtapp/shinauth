@@ -47,7 +47,7 @@ describe("session", async () => {
 					const header = context.response.headers.get("set-cookie");
 					const cookies = parseSetCookieHeader(header || "");
 					cookieSetter(headers)(context);
-					const cookie = cookies.get("better-auth.session_token");
+					const cookie = cookies.get("shinauth.session_token");
 					expect(cookie).toMatchObject({
 						value: expect.any(String),
 						"max-age": 60 * 60 * 24 * 7,
@@ -226,7 +226,7 @@ describe("session", async () => {
 						const parsed = parseSetCookieHeader(
 							context.response.headers.get("set-cookie") || "",
 						);
-						const maxAge = parsed.get("better-auth.session_token")?.["max-age"];
+						const maxAge = parsed.get("shinauth.session_token")?.["max-age"];
 						expect(maxAge).toBe(t === 121 ? 0 : 60 * 2);
 					},
 				},
@@ -317,7 +317,7 @@ describe("session", async () => {
 				onSuccess(context) {
 					const header = context.response.headers.get("set-cookie");
 					const cookies = parseSetCookieHeader(header || "");
-					expect(cookies.get("better-auth.session_token")).toMatchObject({
+					expect(cookies.get("shinauth.session_token")).toMatchObject({
 						value: expect.any(String),
 						"max-age": 60 * 60 * 24 * 7,
 						path: "/",
@@ -526,9 +526,7 @@ describe("session", async () => {
 					const parsed = parseSetCookieHeader(
 						context.response.headers.get("set-cookie") || "",
 					);
-					refreshedMaxAge = parsed.get("better-auth.session_token")?.[
-						"max-age"
-					];
+					refreshedMaxAge = parsed.get("shinauth.session_token")?.["max-age"];
 				},
 			},
 		});
@@ -794,7 +792,7 @@ describe("cookie cache with JWT strategy", async () => {
 			},
 		});
 		const jwt = parseCookies(headers.get("cookie") || "").get(
-			"better-auth.session_data",
+			"shinauth.session_data",
 		);
 		if (!jwt) {
 			throw new Error("JWT not found");
@@ -817,7 +815,7 @@ describe("cookie cache with JWT strategy", async () => {
 			},
 		);
 		const jwt = parseCookies(headers.get("cookie") || "").get(
-			"better-auth.session_data",
+			"shinauth.session_data",
 		);
 		if (!jwt) {
 			throw new Error("JWT not found");
@@ -834,13 +832,13 @@ describe("cookie cache with JWT strategy", async () => {
 			"tampered-secret",
 		);
 		const sessionCookie = parseCookies(headers.get("cookie") || "").get(
-			"better-auth.session_token",
+			"shinauth.session_token",
 		);
 		if (!sessionCookie) {
 			throw new Error("Session cookie not found");
 		}
-		headers.set("cookie", `better-auth.session_data=${newJWT}`);
-		headers.append("cookie", `better-auth.session_token=${sessionCookie}`);
+		headers.set("cookie", `shinauth.session_data=${newJWT}`);
+		headers.append("cookie", `shinauth.session_token=${sessionCookie}`);
 		const res = await client.getSession({
 			fetchOptions: {
 				headers,
@@ -866,7 +864,7 @@ describe("cookie cache with JWT strategy", async () => {
 			},
 		);
 		const jwt = parseCookies(headers.get("cookie") || "").get(
-			"better-auth.session_data",
+			"shinauth.session_data",
 		);
 		if (!jwt) {
 			throw new Error("JWT not found");
@@ -1294,7 +1292,7 @@ describe("cookie cache refreshCache", async () => {
 		).getTime();
 		const initialSessionDataCookie = parseCookies(
 			headers.get("cookie") || "",
-		).get("better-auth.session_data");
+		).get("shinauth.session_data");
 		expect(initialSessionDataCookie).toBeDefined();
 
 		const ctx = await auth.$context;
@@ -1314,10 +1312,10 @@ describe("cookie cache refreshCache", async () => {
 						context.response.headers.get("set-cookie") || "",
 					);
 					refreshedSessionDataCookie = parsed.get(
-						"better-auth.session_data",
+						"shinauth.session_data",
 					)?.value;
 					refreshedSessionTokenCookie = parsed.get(
-						"better-auth.session_token",
+						"shinauth.session_token",
 					)?.value;
 					cookieSetter(headers)(context);
 				},
@@ -1519,7 +1517,7 @@ describe("cookie cache refreshCache", async () => {
 					const parsed = parseSetCookieHeader(
 						context.response.headers.get("set-cookie") || "",
 					);
-					sessionTokenMaxAge = parsed.get("better-auth.session_token")?.[
+					sessionTokenMaxAge = parsed.get("shinauth.session_token")?.[
 						"max-age"
 					];
 				},

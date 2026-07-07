@@ -208,7 +208,7 @@ export interface OrganizationOptions {
 	 * Require email verification before session-authenticated recipient
 	 * invitation calls that carry an invitation ID (accept, reject, get).
 	 *
-	 * When unset, Better Auth preserves the normal emailed-invitation flow for
+	 * When unset, Shinauth preserves the normal emailed-invitation flow for
 	 * built-in opaque invitation IDs, including the default generator and
 	 * `advanced.database.generateId: "uuid"`. It requires verification for
 	 * externally controlled or predictable invitation IDs, such as
@@ -231,7 +231,7 @@ export interface OrganizationOptions {
 	 * Send an email with the
 	 * invitation link to the user.
 	 *
-	 * Note: Better Auth doesn't
+	 * Note: Shinauth doesn't
 	 * generate invitation URLs.
 	 * You'll need to construct the
 	 * URL using the invitation ID

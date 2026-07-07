@@ -1,6 +1,6 @@
-# Better Auth Demo App
+# Shinauth Demo App
 
-Welcome to the Better Auth demo app!
+Welcome to the Shinauth demo app!
 This project is built with [Next.js](https://nextjs.org) using
 [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
@@ -37,7 +37,7 @@ Here’s how you can get the app running locally:
 
    * Open `.env` and fill in the required details.
      These will include things like API URLs, client IDs, and secrets needed to
-     connect to the Better Auth service.
+     connect to the Shinauth service.
 
 Make sure `TURSO_DATABASE_URL=your_turso_url` and
 `TURSO_AUTH_TOKEN=your_turso_token` is set or `USE_MYSQL=true` and
@@ -83,8 +83,8 @@ Here’s what this app supports out of the box:
 
 Here are some helpful links if you want to dive deeper:
 
-* [Better Auth Documentation](https://better-auth.com/docs) - Everything you
-  need to know to integrate Better Auth.
+* [Shinauth Documentation](https://github.com/rlvtapp/shinauth) - Everything you
+  need to know to integrate Shinauth.
 * [Next.js Documentation](https://nextjs.org/docs) - Learn about the framework
   we used to build this app.
 * [Learn Next.js](https://nextjs.org/learn) - A hands-on tutorial for Next.js.
@@ -96,22 +96,22 @@ a pull request on the [GitHub repo](https://github.com/better-auth/better-auth).
 
 Happy coding!
 
-[email & password]: https://www.better-auth.com/docs/basic-usage#email-password
+[email & password]: https://github.com/rlvtapp/shinauth
 
-[email verification]: https://www.better-auth.com/docs/concepts/email#email-verification
+[email verification]: https://github.com/rlvtapp/shinauth
 
-[multi-factor authentication (mfa)]: https://www.better-auth.com/docs/plugins/2fa
+[multi-factor authentication (mfa)]: https://github.com/rlvtapp/shinauth
 
-[organization / teams]: https://www.better-auth.com/docs/plugins/organization
+[organization / teams]: https://github.com/rlvtapp/shinauth
 
-[passkeys]: https://www.better-auth.com/docs/plugins/passkey
+[passkeys]: https://github.com/rlvtapp/shinauth
 
-[password reset]: https://www.better-auth.com/docs/concepts/email#password-reset-email
+[password reset]: https://github.com/rlvtapp/shinauth
 
-[rate limiting]: https://www.better-auth.com/docs/concepts/rate-limit
+[rate limiting]: https://github.com/rlvtapp/shinauth
 
-[roles & permissions]: https://www.better-auth.com/docs/plugins/admin#role
+[roles & permissions]: https://github.com/rlvtapp/shinauth
 
-[session management]: https://www.better-auth.com/docs/concepts/session-management
+[session management]: https://github.com/rlvtapp/shinauth
 
-[stripe plugin]: https://www.better-auth.com/docs/plugins/stripe
+[stripe plugin]: https://github.com/rlvtapp/shinauth

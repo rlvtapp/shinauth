@@ -322,12 +322,12 @@ export type OrganizationPlugin<O extends OrganizationOptions> = {
 };
 
 /**
- * Organization plugin for Better Auth. Organization allows you to create teams, members,
+ * Organization plugin for Shinauth. Organization allows you to create teams, members,
  * and manage access control for your users.
  *
  * @example
  * ```ts
- * const auth = betterAuth({
+ * const auth = shinAuth({
  *  plugins: [
  *    organization({
  *      allowUserToCreateOrganization: true,
@@ -457,7 +457,7 @@ export function organization<O extends OrganizationOptions>(options?: O) {
 		 * **client:**
 		 * `authClient.organization.create`
 		 *
-		 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/organization#api-method-organization-create)
+		 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 		 */
 		createOrganization: createOrganization(opts),
 		/**
@@ -473,7 +473,7 @@ export function organization<O extends OrganizationOptions>(options?: O) {
 		 * **client:**
 		 * `authClient.organization.update`
 		 *
-		 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/organization#api-method-organization-update)
+		 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 		 */
 		updateOrganization: updateOrganization(opts),
 		/**
@@ -489,7 +489,7 @@ export function organization<O extends OrganizationOptions>(options?: O) {
 		 * **client:**
 		 * `authClient.organization.delete`
 		 *
-		 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/organization#api-method-organization-delete)
+		 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 		 */
 		deleteOrganization: deleteOrganization(opts),
 		/**
@@ -505,7 +505,7 @@ export function organization<O extends OrganizationOptions>(options?: O) {
 		 * **client:**
 		 * `authClient.organization.setActive`
 		 *
-		 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/organization#api-method-organization-set-active)
+		 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 		 */
 		setActiveOrganization: setActiveOrganization(opts),
 		/**
@@ -521,7 +521,7 @@ export function organization<O extends OrganizationOptions>(options?: O) {
 		 * **client:**
 		 * `authClient.organization.getFullOrganization`
 		 *
-		 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/organization#api-method-organization-get-full-organization)
+		 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 		 */
 		getFullOrganization: getFullOrganization(opts),
 		/**
@@ -537,7 +537,7 @@ export function organization<O extends OrganizationOptions>(options?: O) {
 		 * **client:**
 		 * `authClient.organization.list`
 		 *
-		 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/organization#api-method-organization-list)
+		 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 		 */
 		listOrganizations: listOrganizations(opts),
 		/**
@@ -553,7 +553,7 @@ export function organization<O extends OrganizationOptions>(options?: O) {
 		 * **client:**
 		 * `authClient.organization.inviteMember`
 		 *
-		 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/organization#api-method-organization-invite-member)
+		 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 		 */
 		createInvitation: createInvitation(opts),
 		/**
@@ -569,7 +569,7 @@ export function organization<O extends OrganizationOptions>(options?: O) {
 		 * **client:**
 		 * `authClient.organization.cancelInvitation`
 		 *
-		 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/organization#api-method-organization-cancel-invitation)
+		 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 		 */
 		cancelInvitation: cancelInvitation(opts),
 		/**
@@ -585,7 +585,7 @@ export function organization<O extends OrganizationOptions>(options?: O) {
 		 * **client:**
 		 * `authClient.organization.acceptInvitation`
 		 *
-		 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/organization#api-method-organization-accept-invitation)
+		 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 		 */
 		acceptInvitation: acceptInvitation(opts),
 		/**
@@ -601,7 +601,7 @@ export function organization<O extends OrganizationOptions>(options?: O) {
 		 * **client:**
 		 * `authClient.organization.getInvitation`
 		 *
-		 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/organization#api-method-organization-get-invitation)
+		 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 		 */
 		getInvitation: getInvitation(opts),
 		/**
@@ -617,7 +617,7 @@ export function organization<O extends OrganizationOptions>(options?: O) {
 		 * **client:**
 		 * `authClient.organization.rejectInvitation`
 		 *
-		 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/organization#api-method-organization-reject-invitation)
+		 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 		 */
 		rejectInvitation: rejectInvitation(opts),
 		/**
@@ -633,7 +633,7 @@ export function organization<O extends OrganizationOptions>(options?: O) {
 		 * **client:**
 		 * `authClient.organization.listInvitations`
 		 *
-		 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/organization#api-method-organization-list-invitations)
+		 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 		 */
 		listInvitations: listInvitations(opts),
 		/**
@@ -649,7 +649,7 @@ export function organization<O extends OrganizationOptions>(options?: O) {
 		 * **client:**
 		 * `authClient.organization.getActiveMember`
 		 *
-		 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/organization#api-method-organization-get-active-member)
+		 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 		 */
 		getActiveMember: getActiveMember(opts),
 		/**
@@ -665,7 +665,7 @@ export function organization<O extends OrganizationOptions>(options?: O) {
 		 * **client:**
 		 * `authClient.organization.checkSlug`
 		 *
-		 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/organization#api-method-organization-check-slug)
+		 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 		 */
 		checkOrganizationSlug: checkOrganizationSlug(opts),
 		/**
@@ -681,7 +681,7 @@ export function organization<O extends OrganizationOptions>(options?: O) {
 		 * **server:**
 		 * `auth.api.addMember`
 		 *
-		 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/organization#api-method-organization-add-member)
+		 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 		 */
 
 		addMember: addMember<O>(opts),
@@ -698,7 +698,7 @@ export function organization<O extends OrganizationOptions>(options?: O) {
 		 * **client:**
 		 * `authClient.organization.removeMember`
 		 *
-		 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/organization#api-method-organization-remove-member)
+		 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 		 */
 		removeMember: removeMember(opts),
 		/**
@@ -714,7 +714,7 @@ export function organization<O extends OrganizationOptions>(options?: O) {
 		 * **client:**
 		 * `authClient.organization.updateMemberRole`
 		 *
-		 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/organization#api-method-organization-update-member-role)
+		 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 		 */
 		updateMemberRole: updateMemberRole(opts),
 		/**
@@ -730,7 +730,7 @@ export function organization<O extends OrganizationOptions>(options?: O) {
 		 * **client:**
 		 * `authClient.organization.leave`
 		 *
-		 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/organization#api-method-organization-leave)
+		 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 		 */
 		leaveOrganization: leaveOrganization(opts),
 		listUserInvitations: listUserInvitations(opts),
@@ -761,7 +761,7 @@ export function organization<O extends OrganizationOptions>(options?: O) {
 		 * **client:**
 		 * `authClient.organization.getActiveMemberRole`
 		 *
-		 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/organization#api-method-organization-get-active-member-role)
+		 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 		 */
 		getActiveMemberRole: getActiveMemberRole(opts),
 	};
@@ -780,7 +780,7 @@ export function organization<O extends OrganizationOptions>(options?: O) {
 		 * **client:**
 		 * `authClient.organization.createTeam`
 		 *
-		 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/organization#api-method-organization-create-team)
+		 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 		 */
 		createTeam: createTeam(opts),
 		/**
@@ -796,7 +796,7 @@ export function organization<O extends OrganizationOptions>(options?: O) {
 		 * **client:**
 		 * `authClient.organization.listTeams`
 		 *
-		 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/organization#api-method-organization-list-teams)
+		 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 		 */
 		listOrganizationTeams: listOrganizationTeams(opts),
 		/**
@@ -812,7 +812,7 @@ export function organization<O extends OrganizationOptions>(options?: O) {
 		 * **client:**
 		 * `authClient.organization.removeTeam`
 		 *
-		 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/organization#api-method-organization-remove-team)
+		 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 		 */
 		removeTeam: removeTeam(opts),
 		/**
@@ -828,7 +828,7 @@ export function organization<O extends OrganizationOptions>(options?: O) {
 		 * **client:**
 		 * `authClient.organization.updateTeam`
 		 *
-		 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/organization#api-method-organization-update-team)
+		 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 		 */
 		updateTeam: updateTeam(opts),
 		/**
@@ -844,7 +844,7 @@ export function organization<O extends OrganizationOptions>(options?: O) {
 		 * **client:**
 		 * `authClient.organization.setActiveTeam`
 		 *
-		 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/organization#api-set-active-team)
+		 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 		 */
 		setActiveTeam: setActiveTeam(opts),
 		/**
@@ -860,7 +860,7 @@ export function organization<O extends OrganizationOptions>(options?: O) {
 		 * **client:**
 		 * `authClient.organization.listUserTeams`
 		 *
-		 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/organization#api-set-active-team)
+		 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 		 */
 		listUserTeams: listUserTeams(opts),
 		/**
@@ -876,7 +876,7 @@ export function organization<O extends OrganizationOptions>(options?: O) {
 		 * **client:**
 		 * `authClient.organization.listTeamMembers`
 		 *
-		 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/organization#api-set-active-team)
+		 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 		 */
 		listTeamMembers: listTeamMembers(opts),
 		/**
@@ -892,7 +892,7 @@ export function organization<O extends OrganizationOptions>(options?: O) {
 		 * **client:**
 		 * `authClient.organization.addTeamMember`
 		 *
-		 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/organization#api-add-team-member)
+		 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 		 */
 		addTeamMember: addTeamMember(opts),
 		/**
@@ -908,7 +908,7 @@ export function organization<O extends OrganizationOptions>(options?: O) {
 		 * **client:**
 		 * `authClient.organization.removeTeamMember`
 		 *
-		 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/organization#api-remove-team-member)
+		 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 		 */
 		removeTeamMember: removeTeamMember(opts),
 	};

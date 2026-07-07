@@ -8,4 +8,4 @@ export const OAUTH_POPUP_DATA_ELEMENT_ID = "better-auth-oauth-popup";
 export const POPUP_MARKER_COOKIE = "oauth_popup";
 
 /** localStorage key the popup session token is persisted under. */
-export const POPUP_TOKEN_STORAGE_KEY = "better-auth.popup_token";
+export const POPUP_TOKEN_STORAGE_KEY = "shinauth.popup_token";

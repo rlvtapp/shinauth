@@ -1,6 +1,5 @@
 import { Toaster } from "sonner";
 import { Route, Router, Switch } from "wouter";
-import { Logo } from "@/components/logo";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { AuthProvider } from "@/lib/auth/AuthProvider";
@@ -37,7 +36,7 @@ function App() {
 					{/* Header */}
 					<header className="border-b">
 						<div className="container mx-auto px-4 py-4 flex items-center justify-between">
-							<Logo />
+							<span className="font-semibold">Shinauth OIDC Client</span>
 							<ThemeToggle />
 						</div>
 					</header>

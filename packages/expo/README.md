@@ -47,10 +47,10 @@ your `auth.ts` or `lib/auth.ts` file):
 
 ```typescript
 // lib/auth.ts
-import { betterAuth } from 'shinauth';
+import { shinAuth } from 'shinauth';
 import { expo } from '@shinauth/expo'; // Import the server plugin
 
-export const auth = betterAuth({
+export const auth = shinAuth({
   // ...your other Shinauth options
   baseURL: 'http://localhost:8081', // The base URL of your application server where the routes are mounted.
   plugins: [expo()], // Add the Expo server plugin
@@ -101,6 +101,6 @@ documentation:
 
 MIT
 
-[expo integration guide]: https://www.better-auth.com/docs/integrations/expo
+[expo integration guide]: https://github.com/rlvtapp/shinauth
 
-[installation guide]: https://www.better-auth.com/docs/installation
+[installation guide]: https://github.com/rlvtapp/shinauth

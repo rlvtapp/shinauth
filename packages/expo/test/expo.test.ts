@@ -12,7 +12,7 @@ vi.mock("expo-web-browser", async () => {
 			fn(...args);
 			return {
 				type: "success",
-				url: "better-auth://?cookie=better-auth.session_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMzQwZj",
+				url: "shinauth://?cookie=shinauth.session_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMzQwZj",
 			};
 		}),
 	};
@@ -42,7 +42,7 @@ vi.mock("expo-constants", async () => {
 
 vi.mock("expo-linking", async () => {
 	return {
-		createURL: vi.fn((url) => `better-auth://${url}`),
+		createURL: vi.fn((url) => `shinauth://${url}`),
 	};
 });
 
@@ -63,7 +63,7 @@ describe("expo", async () => {
 				},
 			},
 			plugins: [expo(), oAuthProxy()],
-			trustedOrigins: ["better-auth://"],
+			trustedOrigins: ["shinauth://"],
 		},
 		{
 			clientOptions: {
@@ -94,7 +94,7 @@ describe("expo", async () => {
 		const storedCookie = storage.get("better-auth_cookie");
 		expect(storedCookie).toBeDefined();
 		const parsedCookie = JSON.parse(storedCookie || "");
-		expect(parsedCookie["better-auth.session_token"]).toMatchObject({
+		expect(parsedCookie["shinauth.session_token"]).toMatchObject({
 			value: expect.stringMatching(/.+/),
 			expires: expect.any(String),
 		});
@@ -120,13 +120,13 @@ describe("expo", async () => {
 		}
 		const state = await ctx.internalAdapter.findVerificationValue(stateId);
 		const callbackURL = JSON.parse(state?.value || "{}").callbackURL;
-		expect(callbackURL).toBe("better-auth:///dashboard");
+		expect(callbackURL).toBe("shinauth:///dashboard");
 		expect(res).toMatchObject({
 			url: expect.stringContaining("accounts.google"),
 		});
 		expect(fn).toHaveBeenCalledWith(
 			expect.stringContaining("accounts.google"),
-			"better-auth:///dashboard",
+			"shinauth:///dashboard",
 			undefined,
 		);
 	});
@@ -135,7 +135,7 @@ describe("expo", async () => {
 		const { client } = await getTestInstance(
 			{
 				plugins: [expo()],
-				trustedOrigins: ["better-auth://"],
+				trustedOrigins: ["shinauth://"],
 				socialProviders: {
 					google: {
 						clientId: "GOOGLE_CLIENT_ID",
@@ -165,7 +165,7 @@ describe("expo", async () => {
 		});
 		expect(fn).toHaveBeenCalledWith(
 			expect.stringContaining("accounts.google"),
-			"better-auth:///dashboard",
+			"shinauth:///dashboard",
 			{
 				preferEphemeralSession: true,
 			},
@@ -174,40 +174,40 @@ describe("expo", async () => {
 
 	it("should get cookies", async () => {
 		const c = client.getCookie();
-		expect(c).includes("better-auth.session_token");
+		expect(c).includes("shinauth.session_token");
 	});
 
 	it("should remove expired cookies from store when Max-Age=0", async () => {
 		const { getSetCookie } = await import("../src/client");
 		const prevCookie = JSON.stringify({
-			"better-auth.session_token": { value: "abc123", expires: null },
-			"better-auth.session_data": { value: "xyz789", expires: null },
+			"shinauth.session_token": { value: "abc123", expires: null },
+			"shinauth.session_data": { value: "xyz789", expires: null },
 		});
 		// Server sends Max-Age=0 to delete the cookies
 		const header =
-			"better-auth.session_token=; Max-Age=0, better-auth.session_data=; Max-Age=0";
+			"shinauth.session_token=; Max-Age=0, shinauth.session_data=; Max-Age=0";
 		const result = JSON.parse(getSetCookie(header, prevCookie));
-		expect(result["better-auth.session_token"]).toBeUndefined();
-		expect(result["better-auth.session_data"]).toBeUndefined();
+		expect(result["shinauth.session_token"]).toBeUndefined();
+		expect(result["shinauth.session_data"]).toBeUndefined();
 	});
 
 	it("should remove cookies with past Expires from store", async () => {
 		const { getSetCookie } = await import("../src/client");
 		const prevCookie = JSON.stringify({
-			"better-auth.session_token": { value: "abc123", expires: null },
+			"shinauth.session_token": { value: "abc123", expires: null },
 		});
 		const pastDate = new Date(Date.now() - 1000).toUTCString();
-		const header = `better-auth.session_token=; Expires=${pastDate}`;
+		const header = `shinauth.session_token=; Expires=${pastDate}`;
 		const result = JSON.parse(getSetCookie(header, prevCookie));
-		expect(result["better-auth.session_token"]).toBeUndefined();
+		expect(result["shinauth.session_token"]).toBeUndefined();
 	});
 
 	it("should correctly parse multiple Set-Cookie headers with Expires commas", async () => {
 		const header =
-			"better-auth.session_token=abc; Expires=Wed, 21 Oct 2015 07:28:00 GMT; Path=/, better-auth.session_data=xyz; Expires=Thu, 22 Oct 2015 07:28:00 GMT; Path=/";
+			"shinauth.session_token=abc; Expires=Wed, 21 Oct 2015 07:28:00 GMT; Path=/, shinauth.session_data=xyz; Expires=Thu, 22 Oct 2015 07:28:00 GMT; Path=/";
 		const map = (await import("../src/client")).parseSetCookieHeader(header);
-		expect(map.get("better-auth.session_token")?.value).toBe("abc");
-		expect(map.get("better-auth.session_data")?.value).toBe("xyz");
+		expect(map.get("shinauth.session_token")?.value).toBe("abc");
+		expect(map.get("shinauth.session_data")?.value).toBe("xyz");
 	});
 
 	it("should skip cookies with empty names", async () => {
@@ -242,18 +242,18 @@ describe("expo", async () => {
 	it("should not trigger infinite refetch with non-better-auth cookies", async () => {
 		const { hasBetterAuthCookies } = await import("../src/client");
 
-		const betterAuthOnlyHeader = "better-auth.session_token=abc; Path=/";
+		const betterAuthOnlyHeader = "shinauth.session_token=abc; Path=/";
 		expect(hasBetterAuthCookies(betterAuthOnlyHeader, "shinauth")).toBe(true);
 
-		const sessionDataHeader = "better-auth.session_data=xyz; Path=/";
+		const sessionDataHeader = "shinauth.session_data=xyz; Path=/";
 		expect(hasBetterAuthCookies(sessionDataHeader, "shinauth")).toBe(true);
 
 		const secureBetterAuthHeader =
-			"__Secure-better-auth.session_token=abc; Path=/";
+			"__Secure-shinauth.session_token=abc; Path=/";
 		expect(hasBetterAuthCookies(secureBetterAuthHeader, "shinauth")).toBe(true);
 
 		const secureSessionDataHeader =
-			"__Secure-better-auth.session_data=xyz; Path=/";
+			"__Secure-shinauth.session_data=xyz; Path=/";
 		expect(hasBetterAuthCookies(secureSessionDataHeader, "shinauth")).toBe(
 			true,
 		);
@@ -262,7 +262,7 @@ describe("expo", async () => {
 		expect(hasBetterAuthCookies(nonBetterAuthHeader, "shinauth")).toBe(false);
 
 		const mixedHeader =
-			"__cf_bm=abc123; Path=/; HttpOnly; Secure, better-auth.session_token=xyz; Path=/";
+			"__cf_bm=abc123; Path=/; HttpOnly; Secure, shinauth.session_token=xyz; Path=/";
 		expect(hasBetterAuthCookies(mixedHeader, "shinauth")).toBe(true);
 
 		const customPrefixHeader = "my-app.session_token=abc; Path=/";
@@ -288,17 +288,17 @@ describe("expo", async () => {
 		);
 
 		// Non-session better-auth cookies should still be detected (e.g., passkey cookies)
-		const nonSessionBetterAuthHeader = "better-auth.other_cookie=abc; Path=/";
+		const nonSessionBetterAuthHeader = "shinauth.other_cookie=abc; Path=/";
 		expect(hasBetterAuthCookies(nonSessionBetterAuthHeader, "shinauth")).toBe(
 			true,
 		);
 
 		// Passkey cookie should be detected
-		const passkeyHeader = "better-auth-passkey=xyz; Path=/";
+		const passkeyHeader = "shinauth-passkey=xyz; Path=/";
 		expect(hasBetterAuthCookies(passkeyHeader, "shinauth")).toBe(true);
 
 		// Secure passkey cookie should be detected
-		const securePasskeyHeader = "__Secure-better-auth-passkey=xyz; Path=/";
+		const securePasskeyHeader = "__Secure-shinauth-passkey=xyz; Path=/";
 		expect(hasBetterAuthCookies(securePasskeyHeader, "shinauth")).toBe(true);
 
 		// Custom passkey cookie name should be detected
@@ -359,7 +359,7 @@ describe("expo", async () => {
 			password: testUser.password,
 			callbackURL: "http://localhost:3000/callback",
 		});
-		expect(origin).toBe("better-auth://");
+		expect(origin).toBe("shinauth://");
 		expect(originalOrigin).toBeNull();
 	});
 
@@ -457,7 +457,7 @@ describe("expo", async () => {
 				password: testUser.password,
 				callbackURL: "http://localhost:3000/callback",
 			});
-			expect(origin).toBe("better-auth://");
+			expect(origin).toBe("shinauth://");
 			expect(currentRequest).toBeDefined();
 			expect(currentRequest).not.toBe(originalRequest);
 		});
@@ -521,7 +521,7 @@ describe("expo", async () => {
 		storage.set(
 			"better-auth_cookie",
 			JSON.stringify({
-				"better-auth.session_token": {
+				"shinauth.session_token": {
 					value: "existing-token",
 					expires: new Date(Date.now() + 1000 * 60 * 60).toISOString(),
 				},
@@ -583,7 +583,7 @@ describe("expo", async () => {
 		storage.set(
 			"better-auth_cookie",
 			JSON.stringify({
-				"better-auth.session_token": {
+				"shinauth.session_token": {
 					value: "existing-token",
 					expires: new Date(Date.now() + 1000 * 60 * 60).toISOString(),
 				},
@@ -627,7 +627,7 @@ describe("expo", async () => {
 			},
 		});
 
-		expect(cookieHeader).toContain("better-auth.session_token=existing-token");
+		expect(cookieHeader).toContain("shinauth.session_token=existing-token");
 		expect(expoOriginHeader).toBeNull();
 	});
 
@@ -636,7 +636,7 @@ describe("expo", async () => {
 			email: testUser.email,
 			password: testUser.password,
 		});
-		const testCookie = "better-auth.test-key";
+		const testCookie = "shinauth.test-key";
 		const testCookieValue = "abc";
 
 		const storedCookieBefore = storage.get("better-auth_cookie");
@@ -647,7 +647,7 @@ describe("expo", async () => {
 		const expoWebBrowser = await import("expo-web-browser");
 		vi.mocked(expoWebBrowser.openAuthSessionAsync).mockResolvedValueOnce({
 			type: "success",
-			url: `better-auth://?cookie=${testCookie}=${testCookieValue}`,
+			url: `shinauth://?cookie=${testCookie}=${testCookieValue}`,
 		});
 
 		await client.linkSocial({ provider: "google" });
@@ -673,13 +673,13 @@ describe("expo", async () => {
 		const storedCookieBefore = storage.get("better-auth_cookie");
 		expect(storedCookieBefore).toBeDefined();
 		const parsedCookieBefore = JSON.parse(storedCookieBefore || "");
-		expect(parsedCookieBefore["better-auth.session_token"]).toBeDefined();
+		expect(parsedCookieBefore["shinauth.session_token"]).toBeDefined();
 
 		const expoWebBrowser = await import("expo-web-browser");
 
 		vi.mocked(expoWebBrowser.openAuthSessionAsync).mockResolvedValueOnce({
 			type: "success",
-			url: "better-auth:///dashboard", // No cookie param
+			url: "shinauth:///dashboard", // No cookie param
 		});
 
 		await client.signIn.social({
@@ -696,9 +696,9 @@ describe("expo", async () => {
 		expect(parsedCookieAfter["null"]).toBeUndefined();
 
 		// Original session_token should still exist
-		expect(parsedCookieAfter["better-auth.session_token"]).toBeDefined();
-		expect(parsedCookieAfter["better-auth.session_token"]?.value).toBe(
-			parsedCookieBefore["better-auth.session_token"]?.value,
+		expect(parsedCookieAfter["shinauth.session_token"]).toBeDefined();
+		expect(parsedCookieAfter["shinauth.session_token"]?.value).toBe(
+			parsedCookieBefore["shinauth.session_token"]?.value,
 		);
 	});
 
@@ -759,11 +759,11 @@ describe("expo with cookieCache", async () => {
 		const storedCookie = storage.get("better-auth_cookie");
 		expect(storedCookie).toBeDefined();
 		const parsedCookie = JSON.parse(storedCookie || "");
-		expect(parsedCookie["better-auth.session_token"]).toMatchObject({
+		expect(parsedCookie["shinauth.session_token"]).toMatchObject({
 			value: expect.stringMatching(/.+/),
 			expires: expect.any(String),
 		});
-		expect(parsedCookie["better-auth.session_data"]).toMatchObject({
+		expect(parsedCookie["shinauth.session_data"]).toMatchObject({
 			value: expect.stringMatching(/.+/),
 			expires: expect.any(String),
 		});
@@ -778,11 +778,11 @@ describe("expo with cookieCache", async () => {
 		const storedCookie = storage.get("better-auth_cookie");
 		expect(storedCookie).toBeDefined();
 		const parsedCookie = JSON.parse(storedCookie || "");
-		expect(parsedCookie["better-auth.session_token"]).toMatchObject({
+		expect(parsedCookie["shinauth.session_token"]).toMatchObject({
 			value: expect.any(String),
 			expires: expect.any(String),
 		});
-		expect(parsedCookie["better-auth.session_data"]).toMatchObject({
+		expect(parsedCookie["shinauth.session_data"]).toMatchObject({
 			value: expect.any(String),
 			expires: expect.any(String),
 		});
@@ -795,11 +795,11 @@ describe("expo with cookieCache", async () => {
 		const storedCookie = storage.get("better-auth_cookie");
 		expect(storedCookie).toBeDefined();
 		const parsedCookie = JSON.parse(storedCookie || "");
-		expect(parsedCookie["better-auth.session_token"]).toMatchObject({
+		expect(parsedCookie["shinauth.session_token"]).toMatchObject({
 			value: expect.any(String),
 			expires: expect.any(String),
 		});
-		expect(parsedCookie["better-auth.session_data"]).toMatchObject({
+		expect(parsedCookie["shinauth.session_data"]).toMatchObject({
 			value: expect.any(String),
 			expires: expect.any(String),
 		});
@@ -830,7 +830,7 @@ describe("expo with cookieCache", async () => {
 		const { hasBetterAuthCookies } = await import("../src/client");
 
 		// Test with multiple prefixes - should match any of them
-		const betterAuthHeader = "better-auth.session_token=abc; Path=/";
+		const betterAuthHeader = "shinauth.session_token=abc; Path=/";
 		expect(hasBetterAuthCookies(betterAuthHeader, ["shinauth", "my-app"])).toBe(
 			true,
 		);
@@ -846,7 +846,7 @@ describe("expo with cookieCache", async () => {
 		);
 
 		// Test with passkey cookies
-		const passkeyHeader1 = "better-auth-passkey=xyz; Path=/";
+		const passkeyHeader1 = "shinauth-passkey=xyz; Path=/";
 		expect(hasBetterAuthCookies(passkeyHeader1, ["shinauth", "my-app"])).toBe(
 			true,
 		);
@@ -1035,7 +1035,7 @@ describe("expo with cookie storeStateStrategy", async () => {
 				},
 			},
 			plugins: [expo(), oAuthProxy()],
-			trustedOrigins: ["better-auth://"],
+			trustedOrigins: ["shinauth://"],
 		},
 		{
 			clientOptions: {
@@ -1106,7 +1106,7 @@ describe("expo with cookie storeStateStrategy", async () => {
 				fn(proxyURL, to, webBrowserOptions);
 				return {
 					type: "success",
-					url: "better-auth://?cookie=better-auth.session_token=dummy",
+					url: "shinauth://?cookie=shinauth.session_token=dummy",
 				};
 			},
 		);
@@ -1172,7 +1172,7 @@ describe("expo deep link cookie injection", async () => {
 					const url = new URL(location!);
 					const cookie = url.searchParams.get("cookie");
 					expect(cookie).toBeDefined();
-					expect(cookie).toContain("better-auth.session_token");
+					expect(cookie).toContain("shinauth.session_token");
 				},
 			},
 		});
@@ -1237,7 +1237,7 @@ describe("expo deep link cookie injection with wildcard trustedOrigins", async (
 					const url = new URL(location!);
 					const cookie = url.searchParams.get("cookie");
 					expect(cookie).toBeDefined();
-					expect(cookie).toContain("better-auth.session_token");
+					expect(cookie).toContain("shinauth.session_token");
 				},
 			},
 		});
@@ -1306,7 +1306,7 @@ describe("expo deep link cookie injection for verify-email", async () => {
 					const url = new URL(location!);
 					const cookie = url.searchParams.get("cookie");
 					expect(cookie).toBeDefined();
-					expect(cookie).toContain("better-auth.session_token");
+					expect(cookie).toContain("shinauth.session_token");
 				},
 			},
 		);
@@ -1346,7 +1346,7 @@ describe("expo session cache hydration", async () => {
 				},
 			},
 			plugins: [expo()],
-			trustedOrigins: ["better-auth://"],
+			trustedOrigins: ["shinauth://"],
 		};
 
 		const { client: writer, testUser } = await getTestInstance(serverConfig, {
@@ -1385,7 +1385,7 @@ describe("expo session cache hydration", async () => {
 		);
 
 		const { client } = await getTestInstance(
-			{ plugins: [expo()], trustedOrigins: ["better-auth://"] },
+			{ plugins: [expo()], trustedOrigins: ["shinauth://"] },
 			{
 				clientOptions: {
 					plugins: [
@@ -1417,7 +1417,7 @@ describe("expo session cache hydration", async () => {
 		);
 
 		const { client } = await getTestInstance(
-			{ plugins: [expo()], trustedOrigins: ["better-auth://"] },
+			{ plugins: [expo()], trustedOrigins: ["shinauth://"] },
 			{
 				clientOptions: {
 					plugins: [

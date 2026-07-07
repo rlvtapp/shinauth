@@ -2,13 +2,12 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import React from "react";
-import { Logo } from "@/components/logo";
 
 export function Features() {
 	return (
 		<>
 			<div className="flex flex-col lg:flex-row bg-white dark:bg-black w-full gap-4 mx-auto px-8">
-				<Card title="Better Auth" icon={<Logo className="w-44" />}></Card>
+				<Card title="Shinauth"></Card>
 			</div>
 		</>
 	);
@@ -20,7 +19,7 @@ const Card = ({
 	children,
 }: {
 	title: string;
-	icon: React.ReactNode;
+	icon?: React.ReactNode;
 	children?: React.ReactNode;
 }) => {
 	const [hovered, setHovered] = React.useState(false);

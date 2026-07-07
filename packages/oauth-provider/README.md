@@ -1,6 +1,6 @@
 # Shinauth OAuth Provider Plugin
 
-OAuth provider plugin for [Shinauth](https://www.better-auth.com) — turn your application into an OAuth 2.0 provider.
+OAuth provider plugin for [Shinauth](https://github.com/rlvtapp/shinauth) — turn your application into an OAuth 2.0 provider.
 
 ## Installation
 
@@ -10,7 +10,7 @@ npm install @shinauth/oauth-provider
 
 ## Documentation
 
-For full documentation, visit [better-auth.com/docs/plugins/oauth-provider](https://www.better-auth.com/docs/plugins/oauth-provider).
+For full documentation, visit [github.com/rlvtapp/shinauth](https://github.com/rlvtapp/shinauth).
 
 ## License
 

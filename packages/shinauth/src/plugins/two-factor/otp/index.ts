@@ -439,7 +439,7 @@ export const otp2fa = (options?: OTPOptions | undefined) => {
 			 * **client:**
 			 * `authClient.twoFactor.sendOtp`
 			 *
-			 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/2fa#api-method-two-factor-send-otp)
+			 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 			 */
 			sendTwoFactorOTP: send2FaOTP,
 			/**
@@ -455,7 +455,7 @@ export const otp2fa = (options?: OTPOptions | undefined) => {
 			 * **client:**
 			 * `authClient.twoFactor.verifyOtp`
 			 *
-			 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/2fa#api-method-two-factor-verify-otp)
+			 * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
 			 */
 			verifyTwoFactorOTP: verifyOTP,
 		},

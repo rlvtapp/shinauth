@@ -256,7 +256,7 @@ describe("Social Providers", async (c) => {
 				const cookies = parseSetCookieHeader(
 					context.response.headers.get("set-cookie") || "",
 				);
-				expect(cookies.get("better-auth.session_token")?.value).toBeDefined();
+				expect(cookies.get("shinauth.session_token")?.value).toBeDefined();
 			},
 		});
 	});
@@ -347,7 +347,7 @@ describe("Social Providers", async (c) => {
 				const cookies = parseSetCookieHeader(
 					context.response.headers.get("set-cookie") || "",
 				);
-				expect(cookies.get("better-auth.session_token")?.value).toBeDefined();
+				expect(cookies.get("shinauth.session_token")?.value).toBeDefined();
 			},
 		});
 	});
@@ -383,7 +383,7 @@ describe("Social Providers", async (c) => {
 				const cookies = parseSetCookieHeader(
 					context.response.headers.get("set-cookie") || "",
 				);
-				expect(cookies.get("better-auth.session_token")?.value).toBeDefined();
+				expect(cookies.get("shinauth.session_token")?.value).toBeDefined();
 			},
 		});
 	});
@@ -439,7 +439,7 @@ describe("Social Providers", async (c) => {
 					);
 					headers.set(
 						"cookie",
-						`better-auth.state=${cookies.get("better-auth.state")?.value}`,
+						`shinauth.state=${cookies.get("shinauth.state")?.value}`,
 					);
 				},
 			},
@@ -480,7 +480,7 @@ describe("Social Providers", async (c) => {
 					context.response.headers.get("set-cookie") || "",
 				);
 				cookieSetter(headers)(context as any);
-				expect(cookies.get("better-auth.session_token")?.value).toBeDefined();
+				expect(cookies.get("shinauth.session_token")?.value).toBeDefined();
 			},
 		});
 		await client.listAccounts({
@@ -658,7 +658,7 @@ describe("Disable implicit signup", async () => {
 				const cookies = parseSetCookieHeader(
 					context.response.headers.get("set-cookie") || "",
 				);
-				expect(cookies.get("better-auth.session_token")?.value).toBeDefined();
+				expect(cookies.get("shinauth.session_token")?.value).toBeDefined();
 			},
 		});
 	});
@@ -1407,7 +1407,7 @@ describe("Apple Provider", async () => {
 			},
 		});
 
-		expect(session.data?.user.name).toBe("Better Auth");
+		expect(session.data?.user.name).toBe("Shinauth");
 	});
 
 	it("should pass user name via idToken body for Apple sign-in", async () => {
@@ -1779,7 +1779,7 @@ describe("Vercel Provider", async () => {
 				const cookies = parseSetCookieHeader(
 					context.response.headers.get("set-cookie") || "",
 				);
-				expect(cookies.get("better-auth.session_token")?.value).toBeDefined();
+				expect(cookies.get("shinauth.session_token")?.value).toBeDefined();
 
 				cookieSetter(headers)(context as any);
 			},
@@ -2436,7 +2436,7 @@ describe("Railway Provider", async () => {
 					expect(params.get("code")).toBeDefined();
 					expect(params.get("redirect_uri")).toBeDefined();
 
-					// Verify PKCE code_verifier is present (Better Auth uses PKCE by default)
+					// Verify PKCE code_verifier is present (Shinauth uses PKCE by default)
 					const codeVerifier = params.get("code_verifier");
 					expect(codeVerifier).not.toBeNull();
 					expect(codeVerifier).not.toBe("");
@@ -2501,7 +2501,7 @@ describe("Railway Provider", async () => {
 		expect(authUrl.searchParams.get("scope")).toContain("email");
 		expect(authUrl.searchParams.get("scope")).toContain("profile");
 
-		// Verify PKCE parameters are present (Better Auth uses PKCE by default)
+		// Verify PKCE parameters are present (Shinauth uses PKCE by default)
 		expect(authUrl.searchParams.get("code_challenge")).not.toBeNull();
 		expect(authUrl.searchParams.get("code_challenge_method")).toBe("S256");
 	});
@@ -2550,7 +2550,7 @@ describe("Railway Provider", async () => {
 				const cookies = parseSetCookieHeader(
 					context.response.headers.get("set-cookie") || "",
 				);
-				expect(cookies.get("better-auth.session_token")?.value).toBeDefined();
+				expect(cookies.get("shinauth.session_token")?.value).toBeDefined();
 
 				cookieSetter(headers)(context as any);
 			},

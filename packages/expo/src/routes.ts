@@ -17,7 +17,7 @@ export const expoAuthorizationProxy = createAuthEndpoint(
 
 		// This endpoint sets an OAuth state cookie and redirects, so the target
 		// must be an external provider authorization endpoint. Reject malformed
-		// or non-https targets and any same-origin Better Auth URL: a same-origin
+		// or non-https targets and any same-origin Shinauth URL: a same-origin
 		// target would allow a state cookie to be planted and a
 		// login-CSRF / session-fixation flow through the auth domain.
 		// FIXME(next): bind the redirect to a server-generated, signed proxy

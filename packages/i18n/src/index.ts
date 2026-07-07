@@ -38,7 +38,7 @@ function parseAcceptLanguage(header: string | null): string[] {
 }
 
 /**
- * i18n plugin for Better Auth
+ * i18n plugin for Shinauth
  *
  * Translates error messages based on detected locale.
  *

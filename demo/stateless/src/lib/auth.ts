@@ -1,4 +1,4 @@
-import { betterAuth } from "shinauth/minimal";
+import { shinAuth } from "shinauth/minimal";
 
 const baseURL: string | undefined =
 	process.env.VERCEL === "1"
@@ -9,7 +9,7 @@ const baseURL: string | undefined =
 				: undefined
 		: undefined;
 
-export const auth = betterAuth({
+export const auth = shinAuth({
 	baseURL,
 	socialProviders: {
 		github: {

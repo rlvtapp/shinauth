@@ -21,10 +21,10 @@ bun add shinauth @shinauth/passkey
 ### Server
 
 ```typescript
-import { betterAuth } from 'shinauth';
+import { shinAuth } from 'shinauth';
 import { passkey } from '@shinauth/passkey';
 
-export const auth = betterAuth({
+export const auth = shinAuth({
   plugins: [
     passkey({
       rpID: 'example.com',
@@ -47,7 +47,7 @@ export const authClient = createAuthClient({
 
 ## Documentation
 
-For more information, visit the [Shinauth Passkey documentation](https://better-auth.com/docs/plugins/passkey).
+For more information, visit the [Shinauth Passkey documentation](https://github.com/rlvtapp/shinauth).
 
 ## License
 

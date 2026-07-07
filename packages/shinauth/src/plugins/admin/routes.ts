@@ -80,7 +80,7 @@ const setRoleBodySchema = z.object({
  * **client:**
  * `authClient.admin.setRole`
  *
- * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/admin#api-method-admin-set-role)
+ * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
  */
 export const setRole = <O extends AdminOptions>(opts: O) =>
 	createAuthEndpoint(
@@ -285,7 +285,7 @@ const createUserBodySchema = z.object({
  * **client:**
  * `authClient.admin.createUser`
  *
- * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/admin#api-method-admin-create-user)
+ * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
  */
 export const createUser = <O extends AdminOptions>(opts: O) =>
 	createAuthEndpoint(
@@ -487,7 +487,7 @@ const adminUpdateUserBodySchema = z.object({
  * **client:**
  * `authClient.admin.updateUser`
  *
- * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/admin#api-method-admin-update-user)
+ * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
  */
 export const adminUpdateUser = (opts: AdminOptions) =>
 	createAuthEndpoint(
@@ -875,7 +875,7 @@ const listUserSessionsBodySchema = z.object({
  * **client:**
  * `authClient.admin.listUserSessions`
  *
- * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/admin#api-method-admin-list-user-sessions)
+ * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
  */
 export const listUserSessions = (opts: AdminOptions) =>
 	createAuthEndpoint(
@@ -958,7 +958,7 @@ const unbanUserBodySchema = z.object({
  * **client:**
  * `authClient.admin.unbanUser`
  *
- * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/admin#api-method-admin-unban-user)
+ * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
  */
 export const unbanUser = (opts: AdminOptions) =>
 	createAuthEndpoint(
@@ -1068,7 +1068,7 @@ const banUserBodySchema = z.object({
  * **client:**
  * `authClient.admin.banUser`
  *
- * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/admin#api-method-admin-ban-user)
+ * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
  */
 export const banUser = (opts: AdminOptions) =>
 	createAuthEndpoint(
@@ -1173,7 +1173,7 @@ const impersonateUserBodySchema = z.object({
  * **client:**
  * `authClient.admin.impersonateUser`
  *
- * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/admin#api-method-admin-impersonate-user)
+ * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
  */
 export const impersonateUser = (opts: AdminOptions) =>
 	createAuthEndpoint(
@@ -1324,7 +1324,7 @@ export const impersonateUser = (opts: AdminOptions) =>
  * **client:**
  * `authClient.admin.stopImpersonating`
  *
- * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/admin#api-method-admin-stop-impersonating)
+ * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
  */
 export const stopImpersonating = () =>
 	createAuthEndpoint(
@@ -1405,7 +1405,7 @@ const revokeUserSessionBodySchema = z.object({
  * **client:**
  * `authClient.admin.revokeUserSession`
  *
- * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/admin#api-method-admin-revoke-user-session)
+ * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
  */
 export const revokeUserSession = (opts: AdminOptions) =>
 	createAuthEndpoint(
@@ -1481,7 +1481,7 @@ const revokeUserSessionsBodySchema = z.object({
  * **client:**
  * `authClient.admin.revokeUserSessions`
  *
- * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/admin#api-method-admin-revoke-user-sessions)
+ * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
  */
 export const revokeUserSessions = (opts: AdminOptions) =>
 	createAuthEndpoint(
@@ -1558,7 +1558,7 @@ const removeUserBodySchema = z.object({
  * **client:**
  * `authClient.admin.removeUser`
  *
- * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/admin#api-method-admin-remove-user)
+ * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
  */
 export const removeUser = (opts: AdminOptions) =>
 	createAuthEndpoint(
@@ -1655,7 +1655,7 @@ const setUserPasswordBodySchema = z.object({
  * **client:**
  * `authClient.admin.setUserPassword`
  *
- * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/admin#api-method-admin-set-user-password)
+ * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
  */
 export const setUserPassword = (opts: AdminOptions) =>
 	createAuthEndpoint(
@@ -1777,7 +1777,7 @@ const userHasPermissionBodySchema = z
  * **client:**
  * `authClient.admin.hasPermission`
  *
- * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/admin#api-method-admin-has-permission)
+ * @see [Read our docs to learn more.](https://github.com/rlvtapp/shinauth)
  */
 export const userHasPermission = <O extends AdminOptions>(opts: O) => {
 	type DefaultStatements = typeof defaultStatements;

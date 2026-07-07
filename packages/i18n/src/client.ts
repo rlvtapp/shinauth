@@ -3,7 +3,7 @@ import type { i18n } from ".";
 import { PACKAGE_VERSION } from "./version";
 
 /**
- * i18n client plugin for Better Auth
+ * i18n client plugin for Shinauth
  *
  * This client plugin provides type inference for the i18n server plugin.
  * Error messages from the server will already be translated based on

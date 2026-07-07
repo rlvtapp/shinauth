@@ -953,8 +953,8 @@ export async function generator(ctx: AuthContext, options: BetterAuthOptions) {
 	const res = {
 		openapi: "3.1.1",
 		info: {
-			title: "Better Auth",
-			description: "API Reference for your Better Auth Instance",
+			title: "Shinauth",
+			description: "API Reference for your Shinauth Instance",
 			version: "1.1.0",
 		},
 		components: {
@@ -988,7 +988,7 @@ export async function generator(ctx: AuthContext, options: BetterAuthOptions) {
 			{
 				name: "Default",
 				description:
-					"Default endpoints that are included with Better Auth by default. These endpoints are not part of any plugin.",
+					"Default endpoints that are included with Shinauth by default. These endpoints are not part of any plugin.",
 			},
 		],
 		paths,

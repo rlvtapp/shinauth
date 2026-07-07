@@ -119,6 +119,6 @@ describe("(node) passkey pre-auth", () => {
 		assert.equal(typeof payload.challenge, "string");
 
 		const setCookie = response.headers.get("set-cookie") || "";
-		assert.strictEqual(setCookie.includes("better-auth-passkey"), true);
+		assert.strictEqual(setCookie.includes("shinauth-passkey"), true);
 	});
 });

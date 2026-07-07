@@ -4,7 +4,7 @@ import type { oidcProvider } from ".";
 
 /**
  * @deprecated Use `@better-auth/oauth-provider` instead. This plugin will be removed in the next major version.
- * @see https://www.better-auth.com/docs/plugins/oauth-provider
+ * @see https://github.com/rlvtapp/shinauth
  */
 export const oidcClient = () => {
 	return {

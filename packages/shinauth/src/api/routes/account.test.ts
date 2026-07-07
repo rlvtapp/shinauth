@@ -128,7 +128,7 @@ describe("account", async () => {
 						);
 						headers.set(
 							"cookie",
-							`better-auth.state=${cookies.get("better-auth.state")?.value}`,
+							`shinauth.state=${cookies.get("shinauth.state")?.value}`,
 						);
 					},
 				},
@@ -597,7 +597,7 @@ describe("account", async () => {
 						);
 						headers.set(
 							"cookie",
-							`better-auth.state=${cookies.get("better-auth.state")?.value}`,
+							`shinauth.state=${cookies.get("shinauth.state")?.value}`,
 						);
 					},
 				},
@@ -663,7 +663,7 @@ describe("account", async () => {
 						);
 						headers.set(
 							"cookie",
-							`better-auth.state=${cookies.get("better-auth.state")?.value}`,
+							`shinauth.state=${cookies.get("shinauth.state")?.value}`,
 						);
 					},
 				},
@@ -1623,7 +1623,7 @@ describe("account", async () => {
 
 	it("should NOT chunk account data cookies when exceeding 4KB", async () => {
 		const { client, cookieSetter } = await getTestInstance({
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 			account: {
 				storeAccountCookie: true,
 			},
@@ -1708,7 +1708,7 @@ describe("account", async () => {
 
 	it("should chunk account data cookies when exceeding 4KB", async () => {
 		const { client, cookieSetter } = await getTestInstance({
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 			account: {
 				storeAccountCookie: true,
 				additionalFields: {
@@ -1794,7 +1794,7 @@ describe("account", async () => {
 
 	it("should encrypt account cookie payload", async () => {
 		const { auth, client, cookieSetter } = await getTestInstance({
-			secret: "better-auth.secret",
+			secret: "shinauth.secret",
 			account: {
 				storeAccountCookie: true,
 			},
@@ -1842,7 +1842,7 @@ describe("account", async () => {
 				expect(setCookie).toBeDefined();
 
 				const parsed = parseSetCookieHeader(setCookie!);
-				const accountData = parsed.get("better-auth.account_data")?.value;
+				const accountData = parsed.get("shinauth.account_data")?.value;
 
 				expect(accountData).toBeDefined();
 				expect(accountData!.startsWith("ey")).toBe(true);

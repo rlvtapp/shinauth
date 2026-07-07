@@ -758,7 +758,7 @@ export interface OAuthAuthorizationQuery {
 	 *
 	 * Recommended for clients, but optional for the authorization server.
 	 *
-	 * Note: Better Auth stores the state in a database instead of a cookie. - This is to minimize
+	 * Note: Shinauth stores the state in a database instead of a cookie. - This is to minimize
 	 * the complication with native apps and other clients that may not have access to cookies.
 	 */
 	state?: string;
@@ -782,7 +782,7 @@ export interface OAuthAuthorizationQuery {
 	 * then French (without a region designation), followed by English (without a region
 	 * designation).
 	 *
-	 * Better Auth does not support this parameter yet. It'll not throw an error if it's provided,
+	 * Shinauth does not support this parameter yet. It'll not throw an error if it's provided,
 	 *
 	 * 🏗️ currently not implemented
 	 */

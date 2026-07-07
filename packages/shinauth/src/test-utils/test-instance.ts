@@ -309,8 +309,8 @@ export async function getTestInstance<
 				onSuccess(context) {
 					const header = context.response.headers.get("set-cookie");
 					const cookies = parseSetCookieHeader(header || "");
-					const signedCookie = cookies.get("better-auth.session_token")?.value;
-					headers.set("cookie", `better-auth.session_token=${signedCookie}`);
+					const signedCookie = cookies.get("shinauth.session_token")?.value;
+					headers.set("cookie", `shinauth.session_token=${signedCookie}`);
 				},
 			},
 		});
@@ -337,8 +337,8 @@ export async function getTestInstance<
 				onSuccess(context) {
 					const header = context.response.headers.get("set-cookie");
 					const cookies = parseSetCookieHeader(header || "");
-					const signedCookie = cookies.get("better-auth.session_token")?.value;
-					headers.set("cookie", `better-auth.session_token=${signedCookie}`);
+					const signedCookie = cookies.get("shinauth.session_token")?.value;
+					headers.set("cookie", `shinauth.session_token=${signedCookie}`);
 				},
 			},
 		});
@@ -356,8 +356,8 @@ export async function getTestInstance<
 			const header = context.response.headers.get("set-cookie");
 			if (header) {
 				const cookies = parseSetCookieHeader(header || "");
-				const signedCookie = cookies.get("better-auth.session_token")?.value;
-				headers.set("cookie", `better-auth.session_token=${signedCookie}`);
+				const signedCookie = cookies.get("shinauth.session_token")?.value;
+				headers.set("cookie", `shinauth.session_token=${signedCookie}`);
 			}
 		};
 	}
