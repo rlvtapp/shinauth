@@ -1,41 +1,81 @@
 <div align="center">
-  <picture>
-    <source srcset="./banner-dark.png" media="(prefers-color-scheme: dark)"/>
-    <source srcset="./banner-light.png" media="(prefers-color-scheme: light)"/>
-    <img src="./banner-light.png" alt="Shinauth Logo"/>
-  </picture>
+  <h1>Shinauth</h1>
 
   [![npm](https://img.shields.io/npm/dm/shinauth?style=flat&colorA=000000&colorB=000000)](https://npm.chart.dev/shinauth?primary=neutral&gray=neutral&theme=dark)
   [![npm version](https://img.shields.io/npm/v/shinauth.svg?style=flat&colorA=000000&colorB=000000)](https://www.npmjs.com/package/shinauth)
-  [![GitHub stars](https://img.shields.io/github/stars/shinauth/shinauth?style=flat&colorA=000000&colorB=000000)](https://github.com/rlvtapp/shinauth/stargazers)
+  [![GitHub stars](https://img.shields.io/github/stars/rlvtapp/shinauth?style=flat&colorA=000000&colorB=000000)](https://github.com/rlvtapp/shinauth/stargazers)
 
   <p>
-    <a href="https://discord.gg/shinauth">Discord</a>
-    ·
-    <a href="https://shinauth.com">Website</a>
-    ·
     <a href="https://github.com/rlvtapp/shinauth/issues">Issues</a>
+    ·
+    <a href="./packages">Packages</a>
+    ·
+    <a href="./LICENSE.md">License</a>
   </p>
 </div>
 
 ## Shinauth
 
-Shinauth is a framework-agnostic authentication (and authorization) framework for TypeScript. It provides a comprehensive set of features out of the box and includes a plugin ecosystem that simplifies adding advanced functionalities with minimal code in a short amount of time. Whether you need 2FA, multi-tenant support, or other complex features, it lets you focus on building your actual application instead of reinventing the wheel.
+Shinauth is a framework-agnostic authentication and authorization framework for TypeScript. It is an independent fork of Better Auth, created to keep the auth stack detached from Vercel stewardship and portable across runtimes, frameworks, hosts, and deployment platforms.
 
-### Why Shinauth
+The name “Shinauth” combines “shin” and “auth”. In Japanese, shin can be read through ideas like `新` (new), `真` (true), `信` (trust), and `心` (heart or core), which fits a fork focused on keeping authentication independent, portable, and open.
 
-Authentication in the TypeScript ecosystem is a half-solved problem. Other open-source libraries often require a lot of additional code for anything beyond basic authentication. Rather than just pushing third-party services as the solution, I believe we can do better as a community—hence, Shinauth.
+The project keeps the broad Better Auth feature surface: email and password auth, social sign-in, sessions, passkeys, two-factor auth, organizations, OAuth/OIDC, SSO, SCIM, API keys, Stripe integration, and database adapters.
 
-## Contribution
+Although Shinauth is maintained under Relevate and may use Relevate-run infrastructure such as Relevate Docs, Relevate will never turn Shinauth into a product. There will be no enterprise section, hosted upsell, or proprietary tier. Shinauth will stay MIT-licensed. We maintain it because we need an independent auth framework ourselves, and because the TypeScript community benefits from having one that stays open and portable.
 
-Shinauth is a free and open source project licensed under the [MIT License](./LICENSE.md). You are free to do whatever you want with it.
+## Install
 
-You could help continuing its development by:
+```bash
+pnpm add shinauth
+```
 
-- [Contribute to the source code](./CONTRIBUTING.md)
-- [Suggest new features and report issues](https://github.com/rlvtapp/shinauth/issues)
+```ts
+import { shinAuth } from "shinauth";
 
-## Security
-If you discover a security vulnerability within Shinauth, please send an e-mail to [security@shinauth.com](mailto:security@shinauth.com).
+export const auth = shinAuth({
+	emailAndPassword: {
+		enabled: true,
+	},
+});
+```
 
-All reports will be promptly addressed, and you'll be credited accordingly.
+Client packages and integrations live under the `@shinauth` scope:
+
+```bash
+pnpm add @shinauth/passkey @shinauth/sso @shinauth/drizzle-adapter
+```
+
+The CLI is published as `@shinauth/cli` and exposes the `shinauth` command:
+
+```bash
+pnpm dlx @shinauth/cli init
+```
+
+## Packages
+
+- `shinauth` - main authentication library
+- `@shinauth/core` - shared core types and utilities
+- `@shinauth/cli` - project setup, schema generation, and migration helpers
+- `@shinauth/*-adapter` - database adapters for Prisma, Drizzle, Kysely, MongoDB, and memory
+- `@shinauth/passkey`, `@shinauth/sso`, `@shinauth/scim`, `@shinauth/api-key`, `@shinauth/stripe`, and more - optional plugins and integrations
+
+## Documentation
+
+The documentation site is still being carried over from Better Auth. It will move to Relevate docs later; until then, package names in this repository are the source of truth for Shinauth usage.
+
+## Development
+
+This repository uses `pnpm`.
+
+```bash
+pnpm install
+pnpm typecheck
+pnpm build
+```
+
+Avoid `pnpm test` for normal development because it runs the whole workspace. Run targeted Vitest files instead.
+
+## License
+
+Shinauth is free and open source under the [MIT License](./LICENSE.md).
