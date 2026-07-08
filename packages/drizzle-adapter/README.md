@@ -1,16 +1,16 @@
-# Better Auth Drizzle Adapter
+# Shinauth Drizzle Adapter
 
-Drizzle ORM adapter for [Better Auth](https://www.better-auth.com).
+Drizzle ORM adapter for [Shinauth](https://www.shinauth.com).
 
 ## Installation
 
 ```bash
-npm install @better-auth/drizzle-adapter
+npm install @shinauth/drizzle-adapter
 ```
 
 ## Documentation
 
-For full documentation, visit [better-auth.com/docs/adapters/drizzle](https://www.better-auth.com/docs/adapters/drizzle).
+For full documentation, visit [shinauth.com/docs/adapters/drizzle](https://www.shinauth.com/docs/adapters/drizzle).
 
 ## License
 

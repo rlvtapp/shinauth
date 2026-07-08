@@ -1,6 +1,6 @@
 ---
 title: MS SQL
-description: Integrate Better Auth with MS SQL.
+description: Integrate Shinauth with MS SQL.
 ---
 
 Microsoft SQL Server is a relational database management system developed by Microsoft, designed for enterprise-level data storage, management, and analytics with robust security and scalability features.
@@ -9,10 +9,10 @@ Read more about [Microsoft SQL Server](https://en.wikipedia.org/wiki/Microsoft_S
 ## Example Usage
 
 Make sure you have MS SQL installed and configured.
-Then, you can connect it straight into Better Auth.
+Then, you can connect it straight into Shinauth.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 import { MssqlDialect } from "kysely";
 import * as Tedious from 'tedious'
 import * as Tarn from 'tarn'
@@ -65,8 +65,8 @@ export const auth = betterAuth({
 
 ## Schema generation & migration
 
-The [Better Auth CLI](/docs/concepts/cli) allows you to generate or migrate
-your database schema based on your Better Auth configuration and plugins.
+The [Shinauth CLI](/docs/concepts/cli) allows you to generate or migrate
+your database schema based on your Shinauth configuration and plugins.
 
 <table>
   <thead>
@@ -113,7 +113,7 @@ The Kysely MS SQL dialect supports joins out of the box since version `1.4.0`.
 To enable this feature, you need to set the `experimental.joins` option to `true` in your auth configuration.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 
 export const auth = betterAuth({
   experimental: { joins: true }

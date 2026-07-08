@@ -27,7 +27,7 @@ description: Salesforce provider setup and usage.
 
     <Callout type="info">
       * For development, you can use `http://localhost:3000` URLs, but production requires HTTPS
-      * The callback URL must exactly match what's configured in Better Auth
+      * The callback URL must exactly match what's configured in Shinauth
       * PKCE (Proof Key for Code Exchange) is required by Salesforce and is automatically handled by the provider
     </Callout>
 
@@ -42,7 +42,7 @@ description: Salesforce provider setup and usage.
     To configure the provider, you need to import the provider and pass it to the `socialProviders` option of the auth instance.
 
     ```ts title="auth.ts"
-    import { betterAuth } from "better-auth"
+    import { betterAuth } from "shinauth"
 
     export const auth = betterAuth({
         socialProviders: {
@@ -114,7 +114,7 @@ description: Salesforce provider setup and usage.
     * `provider`: The provider to use. It should be set to `salesforce`.
 
     ```ts title="auth-client.ts"
-    import { createAuthClient } from "better-auth/client"
+    import { createAuthClient } from "shinauth/client"
     const authClient = createAuthClient()
 
     const signIn = async () => {
@@ -132,7 +132,7 @@ description: Salesforce provider setup and usage.
 
     If you encounter a `redirect_uri_mismatch` error:
 
-    1. **Check Callback URL**: Ensure the Callback URL in your Salesforce Connected App exactly matches your Better Auth callback URL
+    1. **Check Callback URL**: Ensure the Callback URL in your Salesforce Connected App exactly matches your Shinauth callback URL
     2. **Protocol**: Make sure you're using the same protocol (`http://` vs `https://`)
     3. **Port**: Verify the port number matches (e.g., `:3000`)
     4. **Override if needed**: Use the `redirectURI` option to explicitly set the redirect URI

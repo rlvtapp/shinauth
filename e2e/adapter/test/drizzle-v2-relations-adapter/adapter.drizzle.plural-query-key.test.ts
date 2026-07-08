@@ -1,10 +1,10 @@
 /**
  * Drizzle keys `db.query` by the schema export names, commonly plural ("users"),
- * while Better Auth passes singular model names. The adapter read
+ * while Shinauth passes singular model names. The adapter read
  * `db.query[model]` directly, so a plural-keyed schema fell back to the
  * non-relational query, returning empty joins under `experimental.joins`.
  */
-import { drizzleAdapter } from "@better-auth/drizzle-adapter/relations-v2";
+import { drizzleAdapter } from "@shinauth/drizzle-adapter/relations-v2";
 import Database from "better-sqlite3";
 import { defineRelationsPart } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/better-sqlite3";

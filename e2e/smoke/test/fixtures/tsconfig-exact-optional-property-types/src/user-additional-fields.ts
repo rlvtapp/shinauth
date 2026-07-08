@@ -1,4 +1,4 @@
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 
 const auth = betterAuth({
 	trustedOrigins: [],

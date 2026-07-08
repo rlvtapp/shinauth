@@ -1,7 +1,7 @@
 ---
-"@better-auth/drizzle-adapter": patch
-"@better-auth/kysely-adapter": patch
-"better-auth": patch
+"@shinauth/drizzle-adapter": patch
+"@shinauth/kysely-adapter": patch
+"shinauth": patch
 ---
 
 chore(adapters): require patched `drizzle-orm` and `kysely` peer versions

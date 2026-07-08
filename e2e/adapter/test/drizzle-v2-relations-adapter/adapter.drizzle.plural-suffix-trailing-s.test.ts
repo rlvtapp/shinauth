@@ -6,7 +6,7 @@
  * mirrors the generator's trailing-"s" rule and renames the result back to the
  * model name directly.
  */
-import { drizzleAdapter } from "@better-auth/drizzle-adapter/relations-v2";
+import { drizzleAdapter } from "@shinauth/drizzle-adapter/relations-v2";
 import Database from "better-sqlite3";
 import { defineRelationsPart } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/better-sqlite3";

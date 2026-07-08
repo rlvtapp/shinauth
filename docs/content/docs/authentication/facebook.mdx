@@ -26,7 +26,7 @@ description: Facebook provider setup and usage.
     To configure the provider, you need to import the provider and pass it to the `socialProviders` option of the auth instance.
 
     ```ts title="auth.ts"  
-    import { betterAuth } from "better-auth"
+    import { betterAuth } from "shinauth"
 
     export const auth = betterAuth({
         socialProviders: {
@@ -56,7 +56,7 @@ description: Facebook provider setup and usage.
     * `provider`: The provider to use. It should be set to `facebook`.
 
     ```ts title="auth-client.ts"
-    import { createAuthClient } from "better-auth/auth-client"
+    import { createAuthClient } from "shinauth/auth-client"
     const authClient = createAuthClient()
 
     const signIn = async () => {
@@ -104,7 +104,7 @@ This is useful when you have the ID Token from Facebook on the client-side and w
   If ID token is provided no redirection will happen, and the user will be signed in directly.
 </Callout>
 
-For limited login, you need to pass `idToken.token`, for only `accessToken` you need to pass `idToken.accessToken` and `idToken.token` together because of [#1183](https://github.com/better-auth/better-auth/issues/1183).
+For limited login, you need to pass `idToken.token`, for only `accessToken` you need to pass `idToken.accessToken` and `idToken.token` together because of [#1183](https://github.com/rlvtapp/shinauth/issues/1183).
 
 ```ts title="auth-client.ts"
 const data = await authClient.signIn.social({

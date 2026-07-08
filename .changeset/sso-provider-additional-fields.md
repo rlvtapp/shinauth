@@ -1,5 +1,5 @@
 ---
-"@better-auth/sso": minor
+"@shinauth/sso": minor
 ---
 
 Add `schema.ssoProvider.additionalFields` support for storing and returning custom SSO provider fields.

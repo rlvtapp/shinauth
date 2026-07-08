@@ -1,11 +1,11 @@
-import { createAuthClient } from "better-auth/client";
-import { generateRandomString } from "better-auth/crypto";
+import { createAuthClient } from "shinauth/client";
+import { generateRandomString } from "shinauth/crypto";
 import {
 	authorizationCodeRequest,
 	createAuthorizationURL,
-} from "better-auth/oauth2";
-import { jwt } from "better-auth/plugins/jwt";
-import { getTestInstance } from "better-auth/test";
+} from "shinauth/oauth2";
+import { jwt } from "shinauth/plugins/jwt";
+import { getTestInstance } from "shinauth/test";
 import type { JSONWebKeySet } from "jose";
 import { createLocalJWKSet, jwtVerify } from "jose";
 import { beforeAll, describe, expect, it } from "vitest";

@@ -1,4 +1,4 @@
-import type { VerifyAccessTokenRequestOptions } from "better-auth/oauth2";
+import type { VerifyAccessTokenRequestOptions } from "shinauth/oauth2";
 import {
 	createInMemoryDpopReplayStore,
 	DPOP_SIGNING_ALGORITHMS,
@@ -6,7 +6,7 @@ import {
 	getDpopJktFromPayload,
 	isDpopBindingError,
 	parseAccessTokenAuthorization,
-} from "better-auth/oauth2";
+} from "shinauth/oauth2";
 import type { JWTPayload } from "jose";
 import { createRemoteJWKSet, jwtVerify } from "jose";
 
@@ -360,7 +360,7 @@ export function createMcpResourceClient(
 				return Response.json(cachedMetadata, { headers: corsHeaders });
 			} catch {
 				return Response.json(
-					{ error: "Better Auth server unreachable" },
+					{ error: "Shinauth server unreachable" },
 					{ status: 502, headers: corsHeaders },
 				);
 			}

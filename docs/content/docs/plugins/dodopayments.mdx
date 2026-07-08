@@ -1,6 +1,6 @@
 ---
 title: Dodo Payments
-description: Better Auth Plugin for Dodo Payments
+description: Shinauth Plugin for Dodo Payments
 ---
 
 [Dodo Payments](https://dodopayments.com) is a global Merchant-of-Record platform that lets AI, SaaS and digital businesses sell in 150+ countries without touching tax, fraud, or compliance. A single, developer-friendly API powers checkout, billing, and payouts so you can launch worldwide in minutes.
@@ -32,7 +32,7 @@ description: Better Auth Plugin for Dodo Payments
     Run the following command in your project root:
 
     ```bash
-    npm install @dodopayments/better-auth dodopayments better-auth zod
+    npm install @dodopayments/shinauth dodopayments shinauth zod
     ```
   </Step>
 
@@ -49,13 +49,13 @@ description: Better Auth Plugin for Dodo Payments
     Create or update `src/lib/auth.ts`:
 
     ```typescript
-    import { betterAuth } from "better-auth";
+    import { betterAuth } from "shinauth";
     import {
       dodopayments,
       checkout,
       portal,
       webhooks,
-    } from "@dodopayments/better-auth";
+    } from "@dodopayments/shinauth";
     import DodoPayments from "dodopayments";
 
     export const dodoPayments = new DodoPayments({
@@ -101,8 +101,8 @@ description: Better Auth Plugin for Dodo Payments
     Create or update `src/lib/auth-client.ts`:
 
     ```typescript
-    import { createAuthClient } from "better-auth/react";
-    import { dodopaymentsClient } from "@dodopayments/better-auth";
+    import { createAuthClient } from "shinauth/react";
+    import { dodopaymentsClient } from "@dodopayments/shinauth";
 
     export const authClient = createAuthClient({
       baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",

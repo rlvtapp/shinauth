@@ -4,15 +4,15 @@ import { blogs } from "./source";
 
 export function getRSS() {
 	const feed = new Feed({
-		title: "Better Auth Blog",
-		description: "Latest updates, articles, and insights about Better Auth",
-		generator: "better-auth",
+		title: "Shinauth Blog",
+		description: "Latest updates, articles, and insights about Shinauth",
+		generator: "shinauth",
 		id: `${baseUrl}blog`,
 		link: `${baseUrl}blog`,
 		language: "en",
 		image: `${baseUrl}release-og/blogs.png`,
 		favicon: `${baseUrl}favicon/favicon-32x32.png`,
-		copyright: `All rights reserved ${new Date().getFullYear()}, Better Auth Inc.`,
+		copyright: `All rights reserved ${new Date().getFullYear()}, Shinauth Inc.`,
 	});
 
 	for (const page of blogs.getPages().sort((a, b) => {

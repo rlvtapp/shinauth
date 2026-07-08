@@ -1,6 +1,6 @@
 ---
-"better-auth": minor
-"@better-auth/core": minor
+"shinauth": minor
+"@shinauth/core": minor
 ---
 
 Add `requireEmailVerification` to OAuth provider options, for built-in social providers and the Generic OAuth plugin. When a provider reports an unverified email, the user and account are still created or linked, but no session is issued: the OAuth callback redirects with `?error=email_not_verified`, and ID token and One Tap sign-in return `403` `EMAIL_NOT_VERIFIED`. Verification emails follow the existing `emailVerification.sendOnSignUp` / `sendOnSignIn` settings.

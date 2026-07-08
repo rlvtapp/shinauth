@@ -1,6 +1,6 @@
-import type { DBFieldAttribute } from "@better-auth/core/db";
-import { APIError } from "better-auth/api";
-import { parseInputData, toZodSchema } from "better-auth/db";
+import type { DBFieldAttribute } from "@shinauth/core/db";
+import { APIError } from "shinauth/api";
+import { parseInputData, toZodSchema } from "shinauth/db";
 import * as z from "zod";
 import type { SSOOptions } from "../types";
 

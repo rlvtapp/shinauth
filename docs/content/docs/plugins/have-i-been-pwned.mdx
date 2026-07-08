@@ -10,8 +10,8 @@ The Have I Been Pwned plugin helps protect user accounts by preventing the use o
 ### Add the plugin to your **auth** config
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth"
-import { haveIBeenPwned } from "better-auth/plugins" // [!code highlight]
+import { betterAuth } from "shinauth"
+import { haveIBeenPwned } from "shinauth/plugins" // [!code highlight]
 
 export const auth = betterAuth({
     plugins: [
@@ -38,8 +38,8 @@ When a user attempts to create an account or update their password with a compro
 Enable or disable password checks against the HIBP database. Useful for skipping checks in development or testing without removing the plugin. Defaults to `true`.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth"
-import { haveIBeenPwned } from "better-auth/plugins"
+import { betterAuth } from "shinauth"
+import { haveIBeenPwned } from "shinauth/plugins"
 
 const auth = betterAuth({
     plugins: [
@@ -55,8 +55,8 @@ const auth = betterAuth({
 Customize the error message shown when a compromised password is detected.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth"
-import { haveIBeenPwned } from "better-auth/plugins"
+import { betterAuth } from "shinauth"
+import { haveIBeenPwned } from "shinauth/plugins"
 
 const auth = betterAuth({
     plugins: [

@@ -1,4 +1,4 @@
-import { APIError } from "better-auth/api";
+import { APIError } from "shinauth/api";
 import * as constants from "../constants";
 
 export interface TimestampValidationOptions {

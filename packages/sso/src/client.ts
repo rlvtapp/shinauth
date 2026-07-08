@@ -1,5 +1,5 @@
-import type { BetterAuthClientPlugin } from "better-auth/client";
-import type { DBFieldAttribute } from "better-auth/db";
+import type { BetterAuthClientPlugin } from "shinauth/client";
+import type { DBFieldAttribute } from "shinauth/db";
 import type { SSOPlugin } from "./index";
 import { PACKAGE_VERSION } from "./version";
 

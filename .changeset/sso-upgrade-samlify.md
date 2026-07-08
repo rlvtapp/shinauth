@@ -1,5 +1,5 @@
 ---
-"@better-auth/sso": patch
+"@shinauth/sso": patch
 ---
 
 ### Security: upgrade samlify to 2.12.0

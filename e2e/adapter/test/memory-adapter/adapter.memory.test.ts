@@ -1,6 +1,6 @@
-import { memoryAdapter } from "@better-auth/memory-adapter";
-import { testAdapter } from "@better-auth/test-utils/adapter";
-import { getAuthTables } from "better-auth/db";
+import { memoryAdapter } from "@shinauth/memory-adapter";
+import { testAdapter } from "@shinauth/test-utils/adapter";
+import { getAuthTables } from "shinauth/db";
 import {
 	authFlowTestSuite,
 	caseInsensitiveTestSuite,

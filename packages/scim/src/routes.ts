@@ -1,19 +1,19 @@
-import { base64Url } from "@better-auth/utils/base64";
+import { base64Url } from "@shinauth/utils/base64";
 import type {
 	Account,
 	DBAdapter,
 	GenericEndpointContext,
 	User,
-} from "better-auth";
-import { HIDE_METADATA } from "better-auth";
+} from "shinauth";
+import { HIDE_METADATA } from "shinauth";
 import {
 	APIError,
 	createAuthEndpoint,
 	sessionMiddleware,
-} from "better-auth/api";
-import { generateRandomString } from "better-auth/crypto";
-import type { Member } from "better-auth/plugins";
-import { getOrgAdapter } from "better-auth/plugins";
+} from "shinauth/api";
+import { generateRandomString } from "shinauth/crypto";
+import type { Member } from "shinauth/plugins";
+import { getOrgAdapter } from "shinauth/plugins";
 import * as z from "zod";
 import {
 	applySCIMGroupPatch,

@@ -1,5 +1,5 @@
 ---
-"better-auth": patch
+"shinauth": patch
 ---
 
 fix(two-factor): preserve backup codes storage format after verification

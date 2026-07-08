@@ -1,5 +1,5 @@
 ---
-"@better-auth/stripe": patch
+"@shinauth/stripe": patch
 ---
 
 fix(stripe): drop unsafe keys when merging user-supplied metadata

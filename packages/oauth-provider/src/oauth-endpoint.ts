@@ -1,5 +1,5 @@
-import type { AuthContext } from "@better-auth/core";
-import { createAuthEndpoint } from "better-auth/api";
+import type { AuthContext } from "@shinauth/core";
+import { createAuthEndpoint } from "shinauth/api";
 import type {
 	EndpointContext,
 	EndpointOptions,

@@ -1,32 +1,32 @@
 ---
 title: Electron Integration
-description: Integrate Better Auth with Electron.
+description: Integrate Shinauth with Electron.
 ---
 
 Electron is a popular framework for building cross-platform desktop applications using web technologies.
 
-Better Auth can be integrated into Electron apps to provide secure authentication flows, leveraging the system browser.
+Shinauth can be integrated into Electron apps to provide secure authentication flows, leveraging the system browser.
 
 ## Installation
 
 <Steps>
   <Step>
-    ### Configure a Better Auth front- & back-end
+    ### Configure a Shinauth front- & back-end
 
-    Before integrating with Electron, ensure you have a Better Auth server and client set up.
+    Before integrating with Electron, ensure you have a Shinauth server and client set up.
 
-    To get started, check out our [installation](/docs/installation) guide for setting up Better Auth.
+    To get started, check out our [installation](/docs/installation) guide for setting up Shinauth.
   </Step>
 
   <Step>
     ### Install the required packages
 
-    Install the Better Auth server package and the Electron integration package in your server, Electron app, and web client projects.
+    Install the Shinauth server package and the Electron integration package in your server, Electron app, and web client projects.
 
     **In each project, run:**
 
     ```package-install
-    better-auth @better-auth/electron
+    shinauth @shinauth/electron
     ```
 
     <Callout type="info">
@@ -36,13 +36,13 @@ Better Auth can be integrated into Electron apps to provide secure authenticatio
   </Step>
 
   <Step>
-    ### Add the Electron plugin to your Better Auth server
+    ### Add the Electron plugin to your Shinauth server
 
-    Add the Electron plugin to your Better Auth server.
+    Add the Electron plugin to your Shinauth server.
 
     ```ts title="web/lib/auth.ts"
-    import { betterAuth } from "better-auth";
-    import { electron } from "@better-auth/electron";
+    import { betterAuth } from "shinauth";
+    import { electron } from "@shinauth/electron";
 
     export const auth = betterAuth({
       plugins: [electron()],
@@ -65,8 +65,8 @@ Better Auth can be integrated into Electron apps to provide secure authenticatio
     On your frontend, add the proxy plugin to handle redirects back into the Electron app.
 
     ```ts title="web/lib/auth-client.ts"
-    import { createAuthClient } from "better-auth/client";
-    import { electronProxyClient } from "@better-auth/electron/proxy";
+    import { createAuthClient } from "shinauth/client";
+    import { electronProxyClient } from "@shinauth/electron/proxy";
 
     export const authClient = createAuthClient({
       baseURL: "http://localhost:8081",
@@ -85,11 +85,11 @@ Better Auth can be integrated into Electron apps to provide secure authenticatio
     ### Initialize the Electron client
 
     ```ts title="electron/lib/auth-client.ts"
-    import { createAuthClient } from "better-auth/client";
-    import { electronClient } from "@better-auth/electron/client";
+    import { createAuthClient } from "shinauth/client";
+    import { electronClient } from "@shinauth/electron/client";
 
     export const authClient = createAuthClient({
-      baseURL: "http://localhost:8081", // Base URL of your Better Auth frontend
+      baseURL: "http://localhost:8081", // Base URL of your Shinauth frontend
       plugins: [
         electronClient({
           signInURL: "https://app.example.com/sign-in", // The URL to redirect to for authentication
@@ -120,7 +120,7 @@ Better Auth can be integrated into Electron apps to provide secure authenticatio
     2. Then, you can use it as follows:
 
     ```ts title="electron/lib/auth-client.ts"
-    import { storage } from "@better-auth/electron/storage";
+    import { storage } from "@shinauth/electron/storage";
 
     electronClient({
       storage: storage(),
@@ -139,7 +139,7 @@ Better Auth can be integrated into Electron apps to provide secure authenticatio
     ### Scheme and Trusted Origins
 
     The Electron plugin uses deep links to redirect users back to your app after authentication.
-    To enable this, you need to add your app's protocol scheme to the `trustedOrigins` on your **Better Auth server**.
+    To enable this, you need to add your app's protocol scheme to the `trustedOrigins` on your **Shinauth server**.
 
     First, make sure you have a custom protocol scheme registered in your build configuration.
 
@@ -173,7 +173,7 @@ Better Auth can be integrated into Electron apps to provide secure authenticatio
       </Tab>
     </Tabs>
 
-    Then, update your Better Auth config to include the scheme in `trustedOrigins`:
+    Then, update your Shinauth config to include the scheme in `trustedOrigins`:
 
     ```ts title="web/lib/auth.ts"
     export const auth = betterAuth({
@@ -201,8 +201,8 @@ Better Auth can be integrated into Electron apps to provide secure authenticatio
     ```
 
     <Callout type="warning">
-      To run your process in `sandbox` mode, you need to ensure that `@better-auth/electron` is bundled into the preload script.
-      Import only `@better-auth/electron/preload` inside the preload script with tree-shaking enabled, to avoid bundling unwanted dependencies.
+      To run your process in `sandbox` mode, you need to ensure that `@shinauth/electron` is bundled into the preload script.
+      Import only `@shinauth/electron/preload` inside the preload script with tree-shaking enabled, to avoid bundling unwanted dependencies.
 
       The following example uses electron-vite, but the concept applies to any bundler:
 
@@ -213,14 +213,14 @@ Better Auth can be integrated into Electron apps to provide secure authenticatio
         preload: {
           build: {
             externalizeDeps: { // [!code highlight]
-              exclude: ["@better-auth/electron"], // [!code highlight]
+              exclude: ["@shinauth/electron"], // [!code highlight]
             }, // [!code highlight]
           },
         },
       });
       ```
 
-      If your config uses a list of externals instead, do **not** add `@better-auth/electron` to that list so it gets bundled.
+      If your config uses a list of externals instead, do **not** add `@shinauth/electron` to that list so it gets bundled.
     </Callout>
   </Step>
 
@@ -251,7 +251,7 @@ Better Auth can be integrated into Electron apps to provide secure authenticatio
     In your preload script, use the `setupRenderer()` method from the Electron auth client to expose safe IPC bridges to the renderer process.
 
     ```ts title="electron/preload.ts"
-    import { setupRenderer } from "@better-auth/electron/preload";
+    import { setupRenderer } from "@shinauth/electron/preload";
 
     setupRenderer();
     ```
@@ -318,7 +318,7 @@ function SignIn({
 }
 ```
 
-To handle already signed-in users, you can use the `electron.transferUser` method on the client and `electronTransferUser` on the server to transfer the user to the Electron app. [See Example](https://github.com/better-auth/better-auth/blob/main/demo/nextjs/app/\(auth\)/sign-in/_components/electron.tsx)
+To handle already signed-in users, you can use the `electron.transferUser` method on the client and `electronTransferUser` on the server to transfer the user to the Electron app. [See Example](https://github.com/rlvtapp/shinauth/blob/main/demo/nextjs/app/\(auth\)/sign-in/_components/electron.tsx)
 
 ### Handling Authentication in Electron
 
@@ -580,11 +580,11 @@ The redirect cookie name is derived by the `clientID`.
 
 #### `cookiePrefix?`
 
-The prefix to use for cookies set by the plugin. (defaults to `better-auth`)
+The prefix to use for cookies set by the plugin. (defaults to `shinauth`)
 
 ```ts title="web/auth.ts"
 electron({
-  cookiePrefix: "better-auth",
+  cookiePrefix: "shinauth",
 });
 ```
 
@@ -650,11 +650,11 @@ electronProxyClient({
 
 #### `cookiePrefix?`
 
-The prefix to use for cookies set by the plugin. (defaults to `better-auth`)
+The prefix to use for cookies set by the plugin. (defaults to `shinauth`)
 
 ```ts title="web/auth-client.ts"
 electronProxyClient({
-  cookiePrefix: "better-auth",
+  cookiePrefix: "shinauth",
 });
 ```
 
@@ -725,36 +725,36 @@ electronClient({
 
 #### `storagePrefix?`
 
-Prefix for local storage keys. (defaults to `better-auth`)
+Prefix for local storage keys. (defaults to `shinauth`)
 
 ```ts title="electron/auth-client.ts"
 electronClient({
-  storagePrefix: "better-auth",
+  storagePrefix: "shinauth",
 });
 ```
 
 #### `cookiePrefix?`
 
-Prefix(es) for server cookie names to filter. (defaults to `better-auth`)
+Prefix(es) for server cookie names to filter. (defaults to `shinauth`)
 
-This is used to identify which cookies belong to better-auth to
+This is used to identify which cookies belong to shinauth to
 prevent infinite refetching when third-party cookies are set.
 
 ```ts title="electron/auth-client.ts"
 electronClient({
-  cookiePrefix: "better-auth",
+  cookiePrefix: "shinauth",
 });
 ```
 
 ```ts title="electron/auth-client.ts"
 electronClient({
-  cookiePrefix: ["better-auth", "my-app"],
+  cookiePrefix: ["shinauth", "my-app"],
 });
 ```
 
 #### `channelPrefix?`
 
-Channel prefix for IPC bridges. (defaults to `better-auth`)
+Channel prefix for IPC bridges. (defaults to `shinauth`)
 
 ```ts title="electron/auth-client.ts"
 electronClient({

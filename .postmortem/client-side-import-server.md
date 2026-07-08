@@ -3,12 +3,12 @@
 ## Issue Reference
 
 * [PR #7532][pr-7532]
-* [Issue #7529](https://github.com/better-auth/better-auth/issues/7529)
-* [Incorrectly blamed PR #4360](https://github.com/better-auth/better-auth/pull/4360)
+* [Issue #7529](https://github.com/rlvtapp/shinauth/issues/7529)
+* [Incorrectly blamed PR #4360](https://github.com/rlvtapp/shinauth/pull/4360)
 
 ## Summary
 
-Users are incorrectly importing the server-side `better-auth` package
+Users are incorrectly importing the server-side `shinauth` package
 directly in their client-side code, causing build and runtime errors.
 This is a common user mistake that keeps resurfacing.
 
@@ -23,7 +23,7 @@ loginPage (React/Vue/Solid component)
    ↓
 auth-client.ts
    ↓
-import { ... } from "better-auth"  ← WRONG!
+import { ... } from "shinauth"  ← WRONG!
 ```
 
 **This is 100% a user error.**
@@ -31,15 +31,15 @@ The correct import should be:
 
 ```ts
 // WRONG - Server package in client code
-import { ... } from "better-auth"
+import { ... } from "shinauth"
 
 // CORRECT - Client package for client code
-import { createAuthClient } from "better-auth/client"
+import { createAuthClient } from "shinauth/client"
 ```
 
 ### Why This Happens
 
-1. **Confusing package naming** - Users assume `better-auth` is the
+1. **Confusing package naming** - Users assume `shinauth` is the
    main entry point for everything
 2. **Auto-import suggestions** - IDEs often suggest the wrong import
 3. **Copy-paste from examples** - Users copy server examples into
@@ -49,7 +49,7 @@ import { createAuthClient } from "better-auth/client"
 
 ## The Real Problem
 
-When users import `better-auth` in client code:
+When users import `shinauth` in client code:
 
 1. **Node.js modules get bundled** - Server-only dependencies like
    `node:sqlite` end up in client bundles
@@ -71,11 +71,11 @@ The real issue is users importing server packages in client code.
 ```js
 // In any client-side file (React, Vue, Solid, etc.)
 // NEVER do this:
-import { anything } from "better-auth"
+import { anything } from "shinauth"
 
 // ALWAYS do this:
-import { createAuthClient } from "better-auth/client"
-import type { Session, User } from "better-auth/types"
+import { createAuthClient } from "shinauth/client"
+import type { Session, User } from "shinauth/types"
 ```
 
 ### For the Library
@@ -109,11 +109,11 @@ While fixing test infrastructure, the real issue was revealed:
 
 1. **Add runtime detection**:
    ```js
-   // In better-auth/index.ts
+   // In shinauth/index.ts
    if (typeof window !== "undefined") {
      throw new Error(
-       "You are importing 'better-auth' in client code. " +
-       "Use 'better-auth/client' instead."
+       "You are importing 'shinauth' in client code. " +
+       "Use 'shinauth/client' instead."
      );
    }
    ```
@@ -132,10 +132,10 @@ While fixing test infrastructure, the real issue was revealed:
 
 If you are seeing build errors with `node:*` modules:
 
-1. **Check your imports** - You are importing `better-auth` in client code
-2. **Fix the import** - Change to `better-auth/client`
+1. **Check your imports** - You are importing `shinauth` in client code
+2. **Fix the import** - Change to `shinauth/client`
 3. **Never import server packages in client code**
 
-This is not a bug in Better Auth - it is incorrect usage.
+This is not a bug in Shinauth - it is incorrect usage.
 
-[pr-7532]: https://github.com/better-auth/better-auth/pull/7532
+[pr-7532]: https://github.com/rlvtapp/shinauth/pull/7532

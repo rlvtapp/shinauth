@@ -21,7 +21,7 @@ description: LINE provider setup and usage.
     Add your LINE credentials to `socialProviders.line` in your auth configuration.
 
     ```ts title="auth.ts"
-    import { betterAuth } from "better-auth";
+    import { betterAuth } from "shinauth";
 
     export const auth = betterAuth({
       socialProviders: {
@@ -45,7 +45,7 @@ description: LINE provider setup and usage.
 Use the client `signIn.social` with `provider: "line"`.
 
 ```ts title="auth-client.ts"
-import { createAuthClient } from "better-auth/client";
+import { createAuthClient } from "shinauth/client";
 const authClient = createAuthClient();
 
 async function signInWithLINE() {
@@ -82,8 +82,8 @@ LINE requires separate OAuth channels for different countries (Japan, Thailand, 
 To support multiple countries/channels, use the [Generic OAuth plugin](/docs/plugins/generic-oauth) with the `line()` helper function. This allows you to configure multiple LINE providers with different `providerId`s:
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
-import { genericOAuth, line } from "better-auth/plugins";
+import { betterAuth } from "shinauth";
+import { genericOAuth, line } from "shinauth/plugins";
 
 export const auth = betterAuth({
   plugins: [
@@ -116,7 +116,7 @@ export const auth = betterAuth({
 When signing in, use the appropriate `providerId` (e.g., `"line-jp"`, `"line-th"`, `"line-tw"`) to identify which channel to use:
 
 ```ts title="auth-client.ts"
-import { createAuthClient } from "better-auth/client";
+import { createAuthClient } from "shinauth/client";
 
 const authClient = createAuthClient();
 

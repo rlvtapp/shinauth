@@ -1,6 +1,6 @@
 ---
 title: MCP
-description: Turn your Better Auth server into an OAuth provider for MCP clients
+description: Turn your Shinauth server into an OAuth provider for MCP clients
 ---
 
 `OAuth` `MCP`
@@ -10,7 +10,7 @@ The **MCP** plugin lets your app act as an OAuth authorization server for [Model
 `mcp()` configures the OAuth provider with MCP-appropriate defaults (dynamic registration for self-registering clients, PKCE for public clients) and serves the [RFC 9728](https://datatracker.ietf.org/doc/html/rfc9728) protected resource metadata.
 
 <Callout>
-  `mcp()` ships in the `@better-auth/mcp` package. Install it with `npm install @better-auth/mcp`.
+  `mcp()` ships in the `@shinauth/mcp` package. Install it with `npm install @shinauth/mcp`.
 </Callout>
 
 ## Installation
@@ -22,9 +22,9 @@ The **MCP** plugin lets your app act as an OAuth authorization server for [Model
     Add the MCP plugin to your auth configuration alongside the [JWT plugin](/docs/plugins/jwt). The JWT plugin is required: it provides the stable signing key used for ID tokens and access tokens, and exposes the `/jwks` endpoint that resource servers use to verify them.
 
     ```ts title="auth.ts"
-    import { betterAuth } from "better-auth";
-    import { jwt } from "better-auth/plugins"; // [!code highlight]
-    import { mcp } from "@better-auth/mcp"; // [!code highlight]
+    import { betterAuth } from "shinauth";
+    import { jwt } from "shinauth/plugins"; // [!code highlight]
+    import { mcp } from "@shinauth/mcp"; // [!code highlight]
 
     export const auth = betterAuth({
         plugins: [
@@ -102,7 +102,7 @@ Use `requireMcpAuth` to protect an MCP route. It reads the `Authorization` heade
 ```ts title="api/[transport]/route.ts"
 import { auth } from "@/lib/auth";
 import { createMcpHandler } from "@vercel/mcp-adapter";
-import { requireMcpAuth } from "@better-auth/mcp"; // [!code highlight]
+import { requireMcpAuth } from "@shinauth/mcp"; // [!code highlight]
 import { z } from "zod";
 
 const handler = requireMcpAuth(auth, (req, claims) => { // [!code highlight]
@@ -223,10 +223,10 @@ export const mcpOauthOptionsType = {
 
 ## Remote MCP Server
 
-`requireMcpAuth` verifies tokens against your Better Auth server's JWKS, so the MCP route can run anywhere as long as it can reach that JWKS URL. When the resource server runs separately from the authorization server, or uses a dynamic `baseURL`, use `mcpHandler` with explicit verification options instead of `requireMcpAuth`.
+`requireMcpAuth` verifies tokens against your Shinauth server's JWKS, so the MCP route can run anywhere as long as it can reach that JWKS URL. When the resource server runs separately from the authorization server, or uses a dynamic `baseURL`, use `mcpHandler` with explicit verification options instead of `requireMcpAuth`.
 
 ```ts title="mcp-server.ts"
-import { mcpHandler } from "@better-auth/mcp"; // [!code highlight]
+import { mcpHandler } from "@shinauth/mcp"; // [!code highlight]
 
 const handler = mcpHandler( // [!code highlight]
     {

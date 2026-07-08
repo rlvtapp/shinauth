@@ -1,9 +1,9 @@
-import type { Awaitable } from "@better-auth/core";
-import { raiseResourceServerChallenge } from "@better-auth/oauth-provider";
+import type { Awaitable } from "@shinauth/core";
+import { raiseResourceServerChallenge } from "@shinauth/oauth-provider";
 import {
 	requestToResourceInput,
 	verifyAccessTokenRequest,
-} from "better-auth/oauth2";
+} from "shinauth/oauth2";
 import { APIError } from "better-call";
 import type { JWTPayload } from "jose";
 

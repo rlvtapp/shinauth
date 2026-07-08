@@ -56,7 +56,7 @@ const chatTransport = new DefaultChatTransport({
 });
 
 /** Dispatched to open the panel from outside the provider tree (e.g. mobile top nav). */
-export const OPEN_AI_CHAT_EVENT = "better-auth:open-ai-chat";
+export const OPEN_AI_CHAT_EVENT = "shinauth:open-ai-chat";
 
 export function AIChat({ children }: { children: ReactNode }) {
 	const [open, setOpen] = useState(false);
@@ -192,7 +192,7 @@ function MobileDrawerPanel() {
 					<div className="flex-1 text-left">
 						<DrawerTitle className="text-xs font-medium">AI Chat</DrawerTitle>
 						<DrawerDescription className="text-[10px]">
-							Better Auth docs assistant
+							Shinauth docs assistant
 						</DrawerDescription>
 					</div>
 					<DrawerClose
@@ -288,7 +288,7 @@ function PanelHeader() {
 			<div className="flex-1">
 				<p className="text-sm font-medium">AI Chat</p>
 				<p className="text-[10px] text-muted-foreground">
-					Better Auth docs assistant
+					Shinauth docs assistant
 				</p>
 			</div>
 			<button

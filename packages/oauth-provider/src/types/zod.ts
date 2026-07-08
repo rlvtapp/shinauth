@@ -1,10 +1,10 @@
-import { SafeUrlSchema } from "@better-auth/core/utils/redirect-uri";
+import { SafeUrlSchema } from "@shinauth/core/utils/redirect-uri";
 import * as z from "zod";
 import { claimsRequestParameterSchema } from "../claims-request";
 
 /**
- * Re-exported from `@better-auth/core` so every OAuth provider plugin shares one
- * redirect-URI scheme policy. See `@better-auth/core/utils/redirect-uri`.
+ * Re-exported from `@shinauth/core` so every OAuth provider plugin shares one
+ * redirect-URI scheme policy. See `@shinauth/core/utils/redirect-uri`.
  */
 export { SafeUrlSchema };
 

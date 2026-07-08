@@ -1,6 +1,6 @@
 import { defineErrorCodes } from "../utils/error-codes";
 
-declare module "@better-auth/core" {
+declare module "@shinauth/core" {
 	interface BetterAuthPluginRegistry<AuthOptions, Options> {
 		/**
 		 * This plugin does not exist, do not use it in runtime.

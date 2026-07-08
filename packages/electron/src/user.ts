@@ -1,7 +1,7 @@
-import type { User } from "@better-auth/core/db";
-import { isDevelopment } from "@better-auth/core/env";
-import { isPublicRoutableHost } from "@better-auth/core/utils/host";
-import { base64 } from "@better-auth/utils/base64";
+import type { User } from "@shinauth/core/db";
+import { isDevelopment } from "@shinauth/core/env";
+import { isPublicRoutableHost } from "@shinauth/core/utils/host";
+import { base64 } from "@shinauth/utils/base64";
 import electron from "electron";
 import type { ElectronClientOptions } from "./client";
 

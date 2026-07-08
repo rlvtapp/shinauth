@@ -1,6 +1,6 @@
-import { createAuthClient } from "better-auth/client";
-import { jwt } from "better-auth/plugins/jwt";
-import { getTestInstance } from "better-auth/test";
+import { createAuthClient } from "shinauth/client";
+import { jwt } from "shinauth/plugins/jwt";
+import { getTestInstance } from "shinauth/test";
 import { beforeAll, describe, expect, it } from "vitest";
 import { oauthProviderClient } from "./client";
 import { oauthProvider } from "./oauth";
@@ -9,7 +9,7 @@ import type { OAuthClient } from "./types/oauth";
 const authServerBaseUrl = "http://localhost:3000";
 
 /**
- * @see https://github.com/better-auth/better-auth/issues/9250
+ * @see https://github.com/rlvtapp/shinauth/issues/9250
  */
 describe("RFC envelope compliance across OAuth endpoints", async () => {
 	const { auth, signInWithTestUser, customFetchImpl } = await getTestInstance({

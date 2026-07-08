@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-	transpilePackages: ["better-auth", "@better-auth/core"],
+	transpilePackages: ["shinauth", "@shinauth/core"],
 };
 
 export default nextConfig;

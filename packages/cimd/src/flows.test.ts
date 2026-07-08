@@ -1,9 +1,9 @@
-import { oauthProvider } from "@better-auth/oauth-provider";
-import { oauthProviderClient } from "@better-auth/oauth-provider/client";
-import { createAuthClient } from "better-auth/client";
-import { toNodeHandler } from "better-auth/node";
-import { jwt } from "better-auth/plugins/jwt";
-import { getTestInstance } from "better-auth/test";
+import { oauthProvider } from "@shinauth/oauth-provider";
+import { oauthProviderClient } from "@shinauth/oauth-provider/client";
+import { createAuthClient } from "shinauth/client";
+import { toNodeHandler } from "shinauth/node";
+import { jwt } from "shinauth/plugins/jwt";
+import { getTestInstance } from "shinauth/test";
 import type { Listener } from "listhen";
 import { listen } from "listhen";
 import {

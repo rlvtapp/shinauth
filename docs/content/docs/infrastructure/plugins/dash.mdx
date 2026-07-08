@@ -1,13 +1,13 @@
 ---
 title: Dashboard Plugin (dash)
-description: The `dash()` plugin connects your Better Auth instance to Better Auth Infrastructure, enabling analytics tracking, event logging, and admin dashboard APIs.
+description: The `dash()` plugin connects your Shinauth instance to Shinauth Infrastructure, enabling analytics tracking, event logging, and admin dashboard APIs.
 ---
 
 ## Installation
 
 ```ts
-import { betterAuth } from "better-auth";
-import { dash } from "@better-auth/infra";
+import { betterAuth } from "shinauth";
+import { dash } from "@shinauth/infra";
 
 export const auth = betterAuth({
   plugins: [
@@ -26,7 +26,7 @@ export const auth = betterAuth({
 
 | Option             | Type     | Description                                                           |
 | ------------------ | -------- | --------------------------------------------------------------------- |
-| `apiUrl`           | `string` | Better Auth Infrastructure API URL                                    |
+| `apiUrl`           | `string` | Shinauth Infrastructure API URL                                    |
 | `kvUrl`            | `string` | KV store URL for caching                                              |
 | `apiKey`           | `string` | Your API key for authentication                                       |
 | `apiTimeout`       | `number` | Timeout in ms for infra API HTTP requests (`apiUrl`). Default: `3000` |
@@ -237,15 +237,15 @@ The dash plugin registers numerous admin endpoints for the dashboard:
 The client plugin provides access to audit log queries:
 
 ```ts
-import { createAuthClient } from "better-auth/client";
-import { dashClient } from "@better-auth/infra/client";
+import { createAuthClient } from "shinauth/client";
+import { dashClient } from "@shinauth/infra/client";
 
 export const authClient = createAuthClient({
   plugins: [dashClient()],
 });
 ```
 
-**Note**: For **Expo** or **React Native**, import `dashClient` from `@better-auth/infra/native` (same API) and pair it with `sentinelNativeClient` as described in [Sentinel — Expo and React Native](/docs/infrastructure/plugins/sentinel#expo-and-react-native).
+**Note**: For **Expo** or **React Native**, import `dashClient` from `@shinauth/infra/native` (same API) and pair it with `sentinelNativeClient` as described in [Sentinel — Expo and React Native](/docs/infrastructure/plugins/sentinel#expo-and-react-native).
 
 ### Configuration
 

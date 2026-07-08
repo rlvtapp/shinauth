@@ -1,20 +1,20 @@
 {
-  "name": "@better-auth/api-key",
+  "name": "@shinauth/api-key",
   "version": "1.7.0-rc.1",
-  "description": "API Key plugin for Better Auth.",
+  "description": "API Key plugin for Shinauth.",
   "type": "module",
   "license": "MIT",
-  "homepage": "https://www.better-auth.com/docs/plugins/api-key",
+  "homepage": "https://www.shinauth.com/docs/plugins/api-key",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/better-auth/better-auth.git",
+    "url": "git+https://github.com/rlvtapp/shinauth.git",
     "directory": "packages/api-key"
   },
   "keywords": [
     "auth",
     "api-key",
     "typescript",
-    "better-auth"
+    "shinauth"
   ],
   "publishConfig": {
     "access": "public"
@@ -69,14 +69,14 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@better-auth/core": "workspace:*",
-    "better-auth": "workspace:*",
+    "@shinauth/core": "workspace:*",
+    "shinauth": "workspace:*",
     "tsdown": "catalog:"
   },
   "peerDependencies": {
-    "@better-auth/core": "workspace:^",
-    "@better-auth/utils": "catalog:",
-    "better-auth": "workspace:^",
+    "@shinauth/core": "workspace:^",
+    "@shinauth/utils": "catalog:",
+    "shinauth": "workspace:^",
     "better-call": "catalog:"
   }
 }

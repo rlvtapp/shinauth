@@ -1,8 +1,8 @@
-import { electronProxyClient } from "@better-auth/electron/proxy";
-import { dashClient } from "@better-auth/infra/client";
-import { oauthProviderClient } from "@better-auth/oauth-provider/client";
-import { passkeyClient } from "@better-auth/passkey/client";
-import { stripeClient } from "@better-auth/stripe/client";
+import { electronProxyClient } from "@shinauth/electron/proxy";
+import { dashClient } from "@shinauth/infra/client";
+import { oauthProviderClient } from "@shinauth/oauth-provider/client";
+import { passkeyClient } from "@shinauth/passkey/client";
+import { stripeClient } from "@shinauth/stripe/client";
 import {
 	adminClient,
 	customSessionClient,
@@ -12,8 +12,8 @@ import {
 	oneTapClient,
 	organizationClient,
 	twoFactorClient,
-} from "better-auth/client/plugins";
-import { createAuthClient } from "better-auth/react";
+} from "shinauth/client/plugins";
+import { createAuthClient } from "shinauth/react";
 import { toast } from "sonner";
 import type { auth } from "./auth";
 
@@ -44,7 +44,7 @@ export const authClient = createAuthClient({
 		lastLoginMethodClient(),
 		electronProxyClient({
 			protocol: {
-				scheme: "com.better-auth.demo",
+				scheme: "com.shinauth.demo",
 			},
 		}),
 	],

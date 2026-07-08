@@ -1,16 +1,16 @@
-import { clientCredentialsTokenRequest } from "@better-auth/core/oauth2";
-import { createAuthClient } from "better-auth/client";
-import { generateRandomString } from "better-auth/crypto";
-import type { ProviderOptions } from "better-auth/oauth2";
+import { clientCredentialsTokenRequest } from "@shinauth/core/oauth2";
+import { createAuthClient } from "shinauth/client";
+import { generateRandomString } from "shinauth/crypto";
+import type { ProviderOptions } from "shinauth/oauth2";
 import {
 	authorizationCodeRequest,
 	createAuthorizationURL,
 	deriveDpopAth,
 	deriveDpopJkt,
 	refreshAccessTokenRequest,
-} from "better-auth/oauth2";
-import { jwt } from "better-auth/plugins/jwt";
-import { getTestInstance } from "better-auth/test";
+} from "shinauth/oauth2";
+import { jwt } from "shinauth/plugins/jwt";
+import { getTestInstance } from "shinauth/test";
 import type { JWK } from "jose";
 import {
 	base64url,
@@ -437,7 +437,7 @@ describe("oauth token - authorization_code", async () => {
 	 * find/delete pair makes this test fail with two successes (verified
 	 * empirically), so a synthetic scheduling barrier is unnecessary.
 	 *
-	 * @see https://github.com/better-auth/better-auth/security/advisories/GHSA-7w99-5wm4-3g79
+	 * @see https://github.com/rlvtapp/shinauth/security/advisories/GHSA-7w99-5wm4-3g79
 	 */
 	it("rejects concurrent redemption of the same authorization code", async () => {
 		if (!oauthClient?.client_id || !oauthClient?.client_secret) {
@@ -474,7 +474,7 @@ describe("oauth token - authorization_code", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/pull/10150
+	 * @see https://github.com/rlvtapp/shinauth/pull/10150
 	 */
 	it("rejects authorization code replay with invalid_grant and revokes issued tokens", async () => {
 		if (!oauthClient?.client_id || !oauthClient?.client_secret) {
@@ -516,7 +516,7 @@ describe("oauth token - authorization_code", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/pull/10150
+	 * @see https://github.com/rlvtapp/shinauth/pull/10150
 	 */
 	it("rejects authorization code replay with invalid_grant and still attempts refresh-token cleanup when access-token cleanup fails", async () => {
 		if (!oauthClient?.client_id || !oauthClient?.client_secret) {
@@ -592,7 +592,7 @@ describe("oauth token - authorization_code", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/pull/10159
+	 * @see https://github.com/rlvtapp/shinauth/pull/10159
 	 *
 	 * RFC 6749 §4.1.3 binds redirect_uri at the token endpoint only when the
 	 * authorization request carried one. The authorize endpoint always records a
@@ -1378,7 +1378,7 @@ describe("oauth token - refresh_token", async () => {
 	 * so any subsequent replay of the original token trips the existing
 	 * family-invalidation guard in `handleRefreshTokenGrant`.
 	 *
-	 * @see https://github.com/better-auth/better-auth/security/advisories/GHSA-392p-2q2v-4372
+	 * @see https://github.com/rlvtapp/shinauth/security/advisories/GHSA-392p-2q2v-4372
 	 */
 	it("rejects concurrent rotation of the same refresh token", async () => {
 		if (!oauthClient?.client_id || !oauthClient?.client_secret) {
@@ -1436,7 +1436,7 @@ describe("oauth token - refresh_token", async () => {
 	 * usable for a subsequent rotation. The CAS only revokes the parent row; it
 	 * must not poison the rest of the legitimate user's session.
 	 *
-	 * @see https://github.com/better-auth/better-auth/security/advisories/GHSA-392p-2q2v-4372
+	 * @see https://github.com/rlvtapp/shinauth/security/advisories/GHSA-392p-2q2v-4372
 	 */
 	it("winner's child token is usable for a subsequent rotation", async () => {
 		if (!oauthClient?.client_id || !oauthClient?.client_secret) {
@@ -1486,7 +1486,7 @@ describe("oauth token - refresh_token", async () => {
 	 * `revoked` (via the same CAS used in rotation) so that subsequent reuse
 	 * trips the family-invalidation guard.
 	 *
-	 * @see https://github.com/better-auth/better-auth/security/advisories/GHSA-392p-2q2v-4372
+	 * @see https://github.com/rlvtapp/shinauth/security/advisories/GHSA-392p-2q2v-4372
 	 */
 	it("revoke endpoint marks the refresh row revoked and blocks reuse", async () => {
 		if (!oauthClient?.client_id || !oauthClient?.client_secret) {
@@ -1552,7 +1552,7 @@ describe("oauth token - refresh_token", async () => {
 	 * through the same CAS so exactly one wins; the loser fails closed and
 	 * the parent stays revoked.
 	 *
-	 * @see https://github.com/better-auth/better-auth/security/advisories/GHSA-392p-2q2v-4372
+	 * @see https://github.com/rlvtapp/shinauth/security/advisories/GHSA-392p-2q2v-4372
 	 */
 	it("concurrent revoke + rotate against the same refresh token: exactly one wins", async () => {
 		if (!oauthClient?.client_id || !oauthClient?.client_secret) {
@@ -1769,7 +1769,7 @@ describe("oauth token - refresh_token reuse interval", async () => {
 	}
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/8512
+	 * @see https://github.com/rlvtapp/shinauth/issues/8512
 	 */
 	it("replays the same response inside the refresh token reuse interval", async () => {
 		oauthClient = await createOAuthClient();
@@ -1810,7 +1810,7 @@ describe("oauth token - refresh_token reuse interval", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/8512
+	 * @see https://github.com/rlvtapp/shinauth/issues/8512
 	 */
 	it("replays equivalent requests when scope and resource order differ", async () => {
 		oauthClient = await createOAuthClient();
@@ -1847,7 +1847,7 @@ describe("oauth token - refresh_token reuse interval", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/pull/10145
+	 * @see https://github.com/rlvtapp/shinauth/pull/10145
 	 */
 	it("returns the rotated token response when storing the replay cache fails", async () => {
 		oauthClient = await createOAuthClient();
@@ -1898,7 +1898,7 @@ describe("oauth token - refresh_token reuse interval", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/8512
+	 * @see https://github.com/rlvtapp/shinauth/issues/8512
 	 */
 	it("does not replay a cached response for a different resource", async () => {
 		oauthClient = await createOAuthClient();
@@ -1927,7 +1927,7 @@ describe("oauth token - refresh_token reuse interval", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/8512
+	 * @see https://github.com/rlvtapp/shinauth/issues/8512
 	 */
 	it("invalidates the family after the reuse interval expires", async () => {
 		oauthClient = await createOAuthClient();
@@ -2773,7 +2773,7 @@ describe("oauth token - client secret validation", async () => {
 	}
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/8016
+	 * @see https://github.com/rlvtapp/shinauth/issues/8016
 	 */
 	it("should return invalid_client for encrypted client secret format mismatch", async () => {
 		const storedClientSecret = "Mda8BIefhR8eFkYfFq8H7XAW-fj8GNjQYKPfN8LZ6u8";
@@ -3819,7 +3819,7 @@ describe("verificationValueSchema", () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/pull/10159
+	 * @see https://github.com/rlvtapp/shinauth/pull/10159
 	 */
 	it("should validate a headless verification value without redirect_uri", () => {
 		const value: VerificationValue = {
@@ -4616,7 +4616,7 @@ describe("oauth token - DPoP", async () => {
 });
 
 /**
- * @see https://github.com/better-auth/better-auth/pull/10039
+ * @see https://github.com/rlvtapp/shinauth/pull/10039
  */
 describe("confirmationTokenType", () => {
 	it("falls back to Bearer for a malformed confirmation instead of throwing", () => {

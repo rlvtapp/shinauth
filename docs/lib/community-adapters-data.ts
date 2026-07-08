@@ -12,8 +12,8 @@ export interface CommunityAdapter {
 
 export const communityAdapters: CommunityAdapter[] = [
 	{
-		name: "@convex-dev/better-auth",
-		url: "https://github.com/get-convex/better-auth",
+		name: "@convex-dev/shinauth",
+		url: "https://github.com/get-convex/shinauth",
 		database: "Convex",
 		databaseUrl: "https://www.convex.dev/",
 		author: {
@@ -23,8 +23,8 @@ export const communityAdapters: CommunityAdapter[] = [
 		},
 	},
 	{
-		name: "surreal-better-auth",
-		url: "https://github.com/oskar-gmerek/surreal-better-auth",
+		name: "surreal-shinauth",
+		url: "https://github.com/oskar-gmerek/surreal-shinauth",
 		database: "SurrealDB",
 		databaseUrl: "https://surrealdb.com/",
 		author: {
@@ -34,8 +34,8 @@ export const communityAdapters: CommunityAdapter[] = [
 		},
 	},
 	{
-		name: "surrealdb-better-auth",
-		url: "https://github.com/Necmttn/surrealdb-better-auth",
+		name: "surrealdb-shinauth",
+		url: "https://github.com/Necmttn/surrealdb-shinauth",
 		database: "SurrealDB",
 		databaseUrl: "https://surrealdb.com/",
 		author: {
@@ -45,8 +45,8 @@ export const communityAdapters: CommunityAdapter[] = [
 		},
 	},
 	{
-		name: "better-auth-surrealdb",
-		url: "https://github.com/msanchezdev/better-auth-surrealdb",
+		name: "shinauth-surrealdb",
+		url: "https://github.com/msanchezdev/shinauth-surrealdb",
 		database: "SurrealDB",
 		databaseUrl: "https://surrealdb.com/",
 		author: {
@@ -67,8 +67,8 @@ export const communityAdapters: CommunityAdapter[] = [
 		},
 	},
 	{
-		name: "@delmaredigital/payload-better-auth",
-		url: "https://github.com/delmaredigital/payload-better-auth",
+		name: "@delmaredigital/payload-shinauth",
+		url: "https://github.com/delmaredigital/payload-shinauth",
 		database: "Payload CMS",
 		databaseUrl: "https://payloadcms.com/",
 		author: {
@@ -78,8 +78,8 @@ export const communityAdapters: CommunityAdapter[] = [
 		},
 	},
 	{
-		name: "@hedystia/better-auth-typeorm",
-		url: "https://github.com/Zastinian/better-auth-typeorm",
+		name: "@hedystia/shinauth-typeorm",
+		url: "https://github.com/Zastinian/shinauth-typeorm",
 		database: "TypeORM",
 		databaseUrl: "https://typeorm.io/",
 		author: {
@@ -89,8 +89,8 @@ export const communityAdapters: CommunityAdapter[] = [
 		},
 	},
 	{
-		name: "better-auth-instantdb",
-		url: "https://github.com/daveyplate/better-auth-instantdb",
+		name: "shinauth-instantdb",
+		url: "https://github.com/daveyplate/shinauth-instantdb",
 		database: "InstantDB",
 		databaseUrl: "https://www.instantdb.com/",
 		author: {
@@ -100,8 +100,8 @@ export const communityAdapters: CommunityAdapter[] = [
 		},
 	},
 	{
-		name: "@nerdfolio/remult-better-auth",
-		url: "https://github.com/nerdfolio/remult-better-auth",
+		name: "@nerdfolio/remult-shinauth",
+		url: "https://github.com/nerdfolio/remult-shinauth",
 		database: "Remult",
 		databaseUrl: "https://remult.dev/",
 		author: {
@@ -111,8 +111,8 @@ export const communityAdapters: CommunityAdapter[] = [
 		},
 	},
 	{
-		name: "pocketbase-better-auth",
-		url: "https://github.com/LightInn/pocketbase-better-auth",
+		name: "pocketbase-shinauth",
+		url: "https://github.com/LightInn/pocketbase-shinauth",
 		database: "PocketBase",
 		databaseUrl: "https://pocketbase.io/",
 		author: {
@@ -122,8 +122,8 @@ export const communityAdapters: CommunityAdapter[] = [
 		},
 	},
 	{
-		name: "better-auth-firestore",
-		url: "https://github.com/yultyyev/better-auth-firestore",
+		name: "shinauth-firestore",
+		url: "https://github.com/yultyyev/shinauth-firestore",
 		database: "Firebase Firestore",
 		databaseUrl: "https://firebase.google.com/docs/firestore",
 		author: {
@@ -133,8 +133,8 @@ export const communityAdapters: CommunityAdapter[] = [
 		},
 	},
 	{
-		name: "@zenstackhq/better-auth",
-		url: "https://github.com/zenstackhq/zenstack-v3/tree/main/packages/auth-adapters/better-auth",
+		name: "@zenstackhq/shinauth",
+		url: "https://github.com/zenstackhq/zenstack-v3/tree/main/packages/auth-adapters/shinauth",
 		database: "ZenStack",
 		databaseUrl: "https://zenstack.dev",
 		author: {
@@ -144,8 +144,8 @@ export const communityAdapters: CommunityAdapter[] = [
 		},
 	},
 	{
-		name: "@strapi-community/plugin-better-auth",
-		url: "https://github.com/strapi-community/plugin-better-auth",
+		name: "@strapi-community/plugin-shinauth",
+		url: "https://github.com/strapi-community/plugin-shinauth",
 		database: "Strapi CMS",
 		databaseUrl: "https://strapi.io/",
 		author: {
@@ -155,8 +155,8 @@ export const communityAdapters: CommunityAdapter[] = [
 		},
 	},
 	{
-		name: "neo4j-better-auth",
-		url: "https://github.com/florianamette/better-auth-neo4j",
+		name: "neo4j-shinauth",
+		url: "https://github.com/florianamette/shinauth-neo4j",
 		database: "Neo4j",
 		databaseUrl: "https://neo4j.com/",
 		author: {
@@ -166,8 +166,8 @@ export const communityAdapters: CommunityAdapter[] = [
 		},
 	},
 	{
-		name: "@lubiah/better-auth-mikro-orm",
-		url: "https://github.com/lubiah/better-auth-mikro-orm",
+		name: "@lubiah/shinauth-mikro-orm",
+		url: "https://github.com/lubiah/shinauth-mikro-orm",
 		database: "MikroORM",
 		databaseUrl: "https://mikro-orm.io/",
 		author: {
@@ -177,8 +177,8 @@ export const communityAdapters: CommunityAdapter[] = [
 		},
 	},
 	{
-		name: "better-auth-mikro-orm",
-		url: "https://github.com/octet-stream/better-auth-mikro-orm",
+		name: "shinauth-mikro-orm",
+		url: "https://github.com/octet-stream/shinauth-mikro-orm",
 		database: "MikroORM",
 		databaseUrl: "https://mikro-orm.io/",
 		author: {
@@ -188,8 +188,8 @@ export const communityAdapters: CommunityAdapter[] = [
 		},
 	},
 	{
-		name: "@proofkit/better-auth",
-		url: "https://github.com/proofsh/proofkit/tree/main/packages/better-auth",
+		name: "@proofkit/shinauth",
+		url: "https://github.com/proofsh/proofkit/tree/main/packages/shinauth",
 		database: "FileMaker OData",
 		databaseUrl: "https://www.claris.com/filemaker/",
 		author: {

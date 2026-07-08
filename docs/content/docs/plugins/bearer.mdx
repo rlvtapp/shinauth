@@ -14,8 +14,8 @@ The Bearer plugin enables authentication using Bearer tokens as an alternative t
 Add the Bearer plugin to your authentication setup:
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
-import { bearer } from "better-auth/plugins";
+import { betterAuth } from "shinauth";
+import { bearer } from "shinauth/plugins";
 
 export const auth = betterAuth({
     plugins: [bearer()]
@@ -46,7 +46,7 @@ const { data } = await authClient.signIn.email({
 You can also set this up globally in your auth client:
 
 ```ts title="auth-client.ts"
-import { createAuthClient } from "better-auth/client"
+import { createAuthClient } from "shinauth/client"
 
 export const authClient = createAuthClient({
     fetchOptions: {
@@ -68,7 +68,7 @@ You may want to clear the token based on the response status code or other condi
 Set up your auth client to include the Bearer token in all requests:
 
 ```ts title="auth-client.ts"
-import { createAuthClient } from "better-auth/client"
+import { createAuthClient } from "shinauth/client"
 
 export const authClient = createAuthClient({
     fetchOptions: {

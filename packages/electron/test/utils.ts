@@ -1,12 +1,12 @@
 /// <reference types="electron" />
 
-import { base64Url } from "@better-auth/utils/base64";
-import type { BetterAuthOptions } from "better-auth";
-import { betterAuth } from "better-auth";
-import type { FetchEsque } from "better-auth/client";
-import { createAuthClient } from "better-auth/client";
-import { getMigrations } from "better-auth/db/migration";
-import { oAuthProxy } from "better-auth/plugins";
+import { base64Url } from "@shinauth/utils/base64";
+import type { BetterAuthOptions } from "shinauth";
+import { betterAuth } from "shinauth";
+import type { FetchEsque } from "shinauth/client";
+import { createAuthClient } from "shinauth/client";
+import { getMigrations } from "shinauth/db/migration";
+import { oAuthProxy } from "shinauth/plugins";
 import Database from "better-sqlite3";
 import { afterAll, afterEach, beforeAll, test, vi } from "vitest";
 import { electronClient } from "../src/client";

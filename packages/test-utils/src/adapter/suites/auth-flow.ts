@@ -1,5 +1,5 @@
-import type { Session, User } from "@better-auth/core/db";
-import { setCookieToHeader } from "better-auth/cookies";
+import type { Session, User } from "@shinauth/core/db";
+import { setCookieToHeader } from "shinauth/cookies";
 import { expect } from "vitest";
 import { createTestSuite } from "../create-test-suite";
 
@@ -75,7 +75,7 @@ export const authFlowTestSuite = createTestSuite(
 			expect(result.user.id).toBe(signUpResult.user.id);
 		},
 		/**
-		 * @see https://github.com/better-auth/better-auth/issues/10054
+		 * @see https://github.com/rlvtapp/shinauth/issues/10054
 		 */
 		"should reset password with a single-use token": async () => {
 			let resetToken = "";

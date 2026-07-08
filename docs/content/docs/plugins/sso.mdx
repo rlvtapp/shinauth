@@ -18,7 +18,7 @@ Single Sign-On (SSO) allows users to authenticate with multiple applications usi
     ### Install the plugin
 
     ```package-install
-    @better-auth/sso
+    @shinauth/sso
     ```
   </Step>
 
@@ -26,8 +26,8 @@ Single Sign-On (SSO) allows users to authenticate with multiple applications usi
     ### Add Plugin to the server
 
     ```ts title="auth.ts"
-    import { betterAuth } from "better-auth"
-    import { sso } from "@better-auth/sso"; // [!code highlight]
+    import { betterAuth } from "shinauth"
+    import { sso } from "@shinauth/sso"; // [!code highlight]
 
     const auth = betterAuth({
         plugins: [
@@ -63,8 +63,8 @@ Single Sign-On (SSO) allows users to authenticate with multiple applications usi
     ### Add the client plugin
 
     ```ts title="auth-client.ts"
-    import { createAuthClient } from "better-auth/client"
-    import { ssoClient } from "@better-auth/sso/client" // [!code highlight]
+    import { createAuthClient } from "shinauth/client"
+    import { ssoClient } from "@shinauth/sso/client" // [!code highlight]
 
     const authClient = createAuthClient({
         plugins: [
@@ -88,7 +88,7 @@ A redirect URL will be automatically generated using the provider ID. For instan
 </Callout>
 
 <Callout type="info">
-  When you register an OIDC provider, Better Auth automatically fetches and validates the IdP's [OIDC discovery document](#oidc-discovery). Most endpoint fields are optional — see [OIDC Discovery](#oidc-discovery) for details on auto-discovered fields and possible registration errors.
+  When you register an OIDC provider, Shinauth automatically fetches and validates the IdP's [OIDC discovery document](#oidc-discovery). Most endpoint fields are optional — see [OIDC Discovery](#oidc-discovery) for details on auto-discovered fields and possible registration errors.
 </Callout>
 
 #### Example
@@ -166,7 +166,7 @@ A redirect URL will be automatically generated using the provider ID. For instan
 
 ### OIDC Discovery
 
-Better Auth automatically fetches and validates the provider's [OpenID Connect Discovery Document](https://openid.net/specs/openid-connect-discovery-1_0.html) from:
+Shinauth automatically fetches and validates the provider's [OpenID Connect Discovery Document](https://openid.net/specs/openid-connect-discovery-1_0.html) from:
 
 ```
 {issuer}/.well-known/openid-configuration
@@ -214,7 +214,7 @@ This allows most endpoint-related fields in `oidcConfig` to be **optional** — 
 
 #### Fields Automatically Discovered
 
-Better Auth fills in the following fields by reading the IdP's discovery document (if not explicitly provided):
+Shinauth fills in the following fields by reading the IdP's discovery document (if not explicitly provided):
 
 * `authorizationEndpoint`
 * `tokenEndpoint`
@@ -289,16 +289,16 @@ See the [`trustedOrigins`](/docs/reference/security#trusted-origins) docs for mo
 
 #### Redirecting OIDC endpoints
 
-Better Auth does not follow redirects for server-side OIDC requests. Configure the final canonical URL for the discovery, token, userinfo, and JWKS endpoints.
+Shinauth does not follow redirects for server-side OIDC requests. Configure the final canonical URL for the discovery, token, userinfo, and JWKS endpoints.
 
-If one of those endpoints returns a `3xx` response, registration or sign-in fails with `oidc_endpoint_redirect`. This keeps endpoint validation tied to the exact URL that Better Auth fetches.
+If one of those endpoints returns a `3xx` response, registration or sign-in fails with `oidc_endpoint_redirect`. This keeps endpoint validation tied to the exact URL that Shinauth fetches.
 
 #### Why Discovery Can Fail
 
-Better Auth validates that the IdP's metadata is correct and complete **before** allowing registration. This prevents subtle runtime failures during sign-in or token validation.
+Shinauth validates that the IdP's metadata is correct and complete **before** allowing registration. This prevents subtle runtime failures during sign-in or token validation.
 
 <Callout type="info">
-  Better Auth does **not** support implicit-only OIDC flows.
+  Shinauth does **not** support implicit-only OIDC flows.
   For this reason, `token_endpoint` and `jwks_uri` are required even though the OIDC spec allows implicit-only providers to omit `token_endpoint`.
 </Callout>
 
@@ -316,7 +316,7 @@ If the Identity Provider is misconfigured or unreachable, registration will fail
 | `discovery_untrusted_origin`    | The discovery URL or one of the URLs discovered as part of this process was not trusted by your app's trusted origins configuration |
 | `discovery_invalid_json`        | The discovery response is empty or not valid JSON                                                                                   |
 | `oidc_endpoint_redirect`        | The discovery, token, userinfo, or JWKS endpoint returned a redirect; configure the final endpoint URL instead                      |
-| `unsupported_token_auth_method` | The IdP only supports token auth methods that Better Auth doesn't support                                                           |
+| `unsupported_token_auth_method` | The IdP only supports token auth methods that Shinauth doesn't support                                                           |
 
 **Supported token auth methods:**
 
@@ -339,7 +339,7 @@ If the Identity Provider is misconfigured or unreachable, registration will fail
 
 #### Summary
 
-* Better Auth automatically performs OIDC discovery at registration time
+* Shinauth automatically performs OIDC discovery at registration time
 * Most endpoint settings in `oidcConfig` become optional
 * Explicit user configuration always overrides discovery
 * Registration fails fast if the IdP is misconfigured
@@ -625,8 +625,8 @@ Note: If email is provided and loginHint is not specified, email will be sent as
 When a user is authenticated, if the user does not exist, the user will be provisioned using the `provisionUser` function. By default, `provisionUser` only runs when a new user is registered. If you want to run it on every login (e.g. to sync upstream identity provider profile changes), set `provisionUserOnEveryLogin` to `true`. If the organization provisioning is enabled and a provider is associated with an organization, the user will be added to the organization.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
-import { sso } from "@better-auth/sso";
+import { betterAuth } from "shinauth";
+import { sso } from "@shinauth/sso";
 
 const auth = betterAuth({
     plugins: [
@@ -662,8 +662,8 @@ User provisioning allows you to run custom logic when a user signs in through an
 * Updating user information from the SSO provider
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
-import { sso } from "@better-auth/sso";
+import { betterAuth } from "shinauth";
+import { sso } from "@shinauth/sso";
 
 const auth = betterAuth({
     plugins: [
@@ -717,8 +717,8 @@ Organization provisioning automatically manages user memberships in organization
 #### Basic Organization Provisioning
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
-import { sso } from "@better-auth/sso";
+import { betterAuth } from "shinauth";
+import { sso } from "@shinauth/sso";
 
 const auth = betterAuth({
     plugins: [
@@ -735,8 +735,8 @@ const auth = betterAuth({
 #### Advanced Organization Provisioning with Custom Roles
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
-import { sso } from "@better-auth/sso";
+import { betterAuth } from "shinauth";
+import { sso } from "@shinauth/sso";
 
 const auth = betterAuth({
     plugins: [
@@ -799,12 +799,12 @@ Now when users from `acmecorp.com` sign in through this provider, they'll automa
 
 #### Self-Service SSO Dashboard
 
-If you're using [Better Auth Infrastructure](https://dash.better-auth.com/sign-in), you get access to a self-service SSO dashboard that simplifies onboarding enterprise customers. Instead of manually exchanging SAML metadata and certificates, organization admins can generate a shareable onboarding link that guides enterprise IT teams through configuring their identity provider.
+If you're using [Shinauth Infrastructure](https://dash.shinauth.com/sign-in), you get access to a self-service SSO dashboard that simplifies onboarding enterprise customers. Instead of manually exchanging SAML metadata and certificates, organization admins can generate a shareable onboarding link that guides enterprise IT teams through configuring their identity provider.
 
 The dashboard is available at:
 
 ```
-https://dash.better-auth.com/[project]/organization/[orgId]/enterprise
+https://dash.shinauth.com/[project]/organization/[orgId]/enterprise
 ```
 
 From the dashboard you can:
@@ -914,8 +914,8 @@ organizationProvisioning: {
 ### Default SSO Provider
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
-import { sso } from "@better-auth/sso";
+import { betterAuth } from "shinauth";
+import { sso } from "@shinauth/sso";
 
 const auth = betterAuth({
     plugins: [
@@ -987,7 +987,7 @@ You also need to provide Identity Provider (IdP) configuration:
 
 ### Signing Certificates and Rotation
 
-When your IdP rotates its signing certificate, list both the old and the new PEM under `idpMetadata.cert` as an array. Better Auth accepts SAML responses signed by either, so users keep signing in while the rotation completes.
+When your IdP rotates its signing certificate, list both the old and the new PEM under `idpMetadata.cert` as an array. Shinauth accepts SAML responses signed by either, so users keep signing in while the rotation completes.
 
 ```ts
 samlConfig: {
@@ -1049,8 +1049,8 @@ You can enable InResponseTo validation for SP-initiated SAML flows. When enabled
 For single-instance deployments, enable validation with the built-in in-memory store:
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
-import { sso } from "@better-auth/sso";
+import { betterAuth } from "shinauth";
+import { sso } from "@shinauth/sso";
 
 const auth = betterAuth({
     plugins: [
@@ -1121,7 +1121,7 @@ According to the **SAML 2.0 Core specification**, `NotBefore` and `NotOnOrAfter`
 
 > "The Identity Provider MUST include a `<saml:Conditions>` element. Conditions restricting the period when the assertion is valid, the `@NotBefore` and `@NotOnOrAfter` MUST be included."
 
-Better Auth provides flexibility to support both:
+Shinauth provides flexibility to support both:
 
 * **Default behavior**: Accepts assertions without timestamps (SAML 2.0 Core compliant) but logs a warning
 * **Strict mode**: Rejects assertions without timestamps (SAML2Int compliant)
@@ -1136,8 +1136,8 @@ For each SAML assertion:
 #### Configuration
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
-import { sso } from "@better-auth/sso";
+import { betterAuth } from "shinauth";
+import { sso } from "@shinauth/sso";
 
 const auth = betterAuth({
     plugins: [
@@ -1200,7 +1200,7 @@ sso({
 
 ### Algorithm Validation
 
-Better Auth validates SAML cryptographic algorithms and warns about deprecated ones (SHA-1, RSA 1.5, 3DES) by default.
+Shinauth validates SAML cryptographic algorithms and warns about deprecated ones (SHA-1, RSA 1.5, 3DES) by default.
 
 ```ts title="auth.ts"
 sso({
@@ -1251,7 +1251,7 @@ sso({
 
 ### Size Limits
 
-Better Auth enforces size limits on SAML payloads to protect against denial-of-service attacks via oversized XML.
+Shinauth enforces size limits on SAML payloads to protect against denial-of-service attacks via oversized XML.
 
 | Option            | Default | Description                         |
 | ----------------- | ------- | ----------------------------------- |
@@ -1278,8 +1278,8 @@ sso({
 By default, each OIDC provider gets its own callback URL (`/sso/callback/:providerId`). You can configure all providers to share a single redirect URI instead:
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
-import { sso } from "@better-auth/sso";
+import { betterAuth } from "shinauth";
+import { sso } from "@shinauth/sso";
 
 const auth = betterAuth({
     plugins: [
@@ -1303,7 +1303,7 @@ sso({ redirectURI: "https://login.example.com/callback" })
 The provider ID is stored in the OAuth state so the callback can identify which provider initiated the flow.
 
 <Callout type="info">
-  When using a full URL, make sure it routes to your Better Auth instance.
+  When using a full URL, make sure it routes to your Shinauth instance.
 </Callout>
 
 <Callout type="info">
@@ -1338,8 +1338,8 @@ When a provider's domain is verified, it is also trusted for **automatic account
 
   <Tab value="server">
     ```ts title="auth.ts"
-    import { betterAuth } from "better-auth";
-    import { sso } from "@better-auth/sso";
+    import { betterAuth } from "shinauth";
+    import { sso } from "@shinauth/sso";
 
     const auth = betterAuth({
         plugins: [
@@ -1392,7 +1392,7 @@ To verify your ownership over a domain, follow these steps:
 
     To do this, you'll need to add a `TXT` record to your domain's DNS settings:
 
-    * **Host:** `_better-auth-token-{your-provider-id}` (**Note:** An underscore is automatically prepended to follow DNS infrastructure subdomain conventions. The `better-auth-token` part can be customized through the `domainVerification.tokenPrefix` option)
+    * **Host:** `_shinauth-token-{your-provider-id}` (**Note:** An underscore is automatically prepended to follow DNS infrastructure subdomain conventions. The `shinauth-token` part can be customized through the `domainVerification.tokenPrefix` option)
     * **Value:** The verification token you were given.
 
     If the SSO provider lists multiple comma-separated domains, add this `TXT` record under every listed domain. For example, a provider with `domain: "company.com,subsidiary.com"` must publish the record for both `company.com` and `subsidiary.com`.
@@ -1457,9 +1457,9 @@ The SAML ACS endpoint (`/api/auth/sso/saml2/sp/acs/{providerId}`) handles both *
 * **SP-initiated**: User clicks "Sign in with SSO" in your app → redirects to IdP → IdP POSTs SAMLResponse to callback
 * **IdP-initiated**: User clicks app icon in IdP dashboard (Okta, Azure AD, etc.) → IdP POSTs SAMLResponse to callback
 
-Better Auth derives the ACS URL automatically from your `baseURL` and `providerId`, so no SP-side configuration is required.
+Shinauth derives the ACS URL automatically from your `baseURL` and `providerId`, so no SP-side configuration is required.
 
-Your IdP must include an `AudienceRestriction` for this SP. The accepted audience is the SP entity ID, or the explicit `audience` value in `samlConfig` when you need to match an IdP-specific SP identifier. Better Auth also checks bearer `Recipient` and response `Destination` values against this provider's ACS endpoints.
+Your IdP must include an `AudienceRestriction` for this SP. The accepted audience is the SP entity ID, or the explicit `audience` value in `samlConfig` when you need to match an IdP-specific SP identifier. Shinauth also checks bearer `Recipient` and response `Destination` values against this provider's ACS endpoints.
 
 The post-login redirect destination is controlled by the `callbackURL` parameter in the client-side `signIn.sso()` call:
 
@@ -1477,8 +1477,8 @@ The callback route supports both GET and POST methods automatically, so you don'
 You can add custom columns to the `ssoProvider` table with `schema.ssoProvider.additionalFields`. These fields can be used to store provider metadata, such as a display name shown when an organization has multiple SSO providers.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
-import { sso } from "@better-auth/sso";
+import { betterAuth } from "shinauth";
+import { sso } from "@shinauth/sso";
 
 export const auth = betterAuth({
   plugins: [
@@ -1589,13 +1589,13 @@ export const ssoProviderDomainVerificationFields = [
 
 ### IdP-Initiated SAML SSO
 
-Better Auth supports **IdP-initiated SSO flows**, where users access your application directly from their Identity Provider dashboard (e.g., Okta, Azure AD, OneLogin). This is common in enterprise environments where IT admins prefer centralized app access.
+Shinauth supports **IdP-initiated SSO flows**, where users access your application directly from their Identity Provider dashboard (e.g., Okta, Azure AD, OneLogin). This is common in enterprise environments where IT admins prefer centralized app access.
 
 **How it works:**
 
 1. User clicks your app icon in the IdP dashboard
 2. IdP POSTs SAMLResponse to `/api/auth/sso/saml2/sp/acs/{providerId}`
-3. Better Auth processes the assertion, creates a session, and redirects to your application
+3. Shinauth processes the assertion, creates a session, and redirects to your application
 4. Browser follows the redirect with a GET request (handled automatically)
 
 **No additional configuration required** - the callback route automatically handles both GET and POST requests.
@@ -1605,11 +1605,11 @@ Better Auth supports **IdP-initiated SSO flows**, where users access your applic
 </Callout>
 
 <Callout type="info">
-  If you previously created a manual GET handler for the SAML callback route as a workaround, you can remove it after upgrading. Better Auth now handles GET requests automatically.
+  If you previously created a manual GET handler for the SAML callback route as a workaround, you can remove it after upgrading. Shinauth now handles GET requests automatically.
 </Callout>
 
 <Callout type="info">
-  **Security:** Better Auth validates all redirect URLs to prevent open redirect attacks. Only relative paths (e.g., `/dashboard`) and URLs matching your configured `trustedOrigins` are allowed. Malicious URLs like `https://evil.com` or protocol-relative URLs (`//evil.com`) are automatically blocked.
+  **Security:** Shinauth validates all redirect URLs to prevent open redirect attacks. Only relative paths (e.g., `/dashboard`) and URLs matching your configured `trustedOrigins` are allowed. Malicious URLs like `https://evil.com` or protocol-relative URLs (`//evil.com`) are automatically blocked.
 </Callout>
 
 For a detailed guide on setting up SAML SSO with examples for Okta and testing with DummyIDP, see our [SAML SSO with Okta](/docs/guides/saml-sso-with-okta).
@@ -1694,7 +1694,7 @@ export const ssoOptionsType = {
 				description: "Prefix used to generate the domain verification identifier. An underscore is automatically prepended.",
 				type: "string",
 				required: false,
-				default: "better-auth-token",
+				default: "shinauth-token",
 			},
 		},
 	},

@@ -1,11 +1,11 @@
-import type { GenericEndpointContext } from "@better-auth/core";
+import type { GenericEndpointContext } from "@shinauth/core";
 import type {
 	OAuthClient,
 	OAuthOptions,
 	SchemaClient,
 	Scope,
-} from "@better-auth/oauth-provider";
-import { checkOAuthClient, oauthToSchema } from "@better-auth/oauth-provider";
+} from "@shinauth/oauth-provider";
+import { checkOAuthClient, oauthToSchema } from "@shinauth/oauth-provider";
 import { APIError } from "better-call";
 import type { CimdOptions } from "./types";
 import {

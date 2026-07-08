@@ -3,7 +3,7 @@ title: OAuth
 description: Learn how to configure social OAuth providers, sign in and link accounts, request scopes, pass additional data, refresh access tokens, map profiles, and customize provider options.
 ---
 
-Better Auth comes with built-in support for OAuth 2.0 and OpenID Connect. This allows you to authenticate users via popular OAuth providers like Google, Facebook, GitHub, and more.
+Shinauth comes with built-in support for OAuth 2.0 and OpenID Connect. This allows you to authenticate users via popular OAuth providers like Google, Facebook, GitHub, and more.
 
 If your desired provider isn't directly supported, you can use the [Generic OAuth Plugin](/docs/plugins/generic-oauth) for custom integrations.
 
@@ -14,7 +14,7 @@ To enable a social provider, you need to provide `clientId` and `clientSecret` f
 Here's an example of how to configure Google as a provider:
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 
 export const auth = betterAuth({
   // Other configurations...
@@ -72,12 +72,12 @@ await auth.api.linkSocialAccount({
 
 ### Validate OAuth User Info
 
-Use [`user.validateUserInfo`](/docs/concepts/users-accounts#callbacks) to reject an OAuth identity before Better Auth creates a user, links a new account, or signs a returning user back in. The callback receives the mapped `user` and, in `source.oauth`, the provider id and raw provider profile.
+Use [`user.validateUserInfo`](/docs/concepts/users-accounts#callbacks) to reject an OAuth identity before Shinauth creates a user, links a new account, or signs a returning user back in. The callback receives the mapped `user` and, in `source.oauth`, the provider id and raw provider profile.
 
 It runs when an OAuth identity is first provisioned (`create-user` from a regular callback, ID-token sign-in, One Tap, or OAuth Proxy), when a new account is linked (`link-account`), and again every time an existing OAuth user signs in (`sign-in`). On the `sign-in` action the `user` carries the *fresh* provider email, so a domain check rejects a user whose provider email later moved to a disallowed domain. It works in stateless setups because it runs at the same points regardless of the database.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 
 export const auth = betterAuth({
   user: {
@@ -163,7 +163,7 @@ const requestAdditionalScopes = async () => {
 ```
 
 <Callout>
-  Make sure you're running Better Auth version 1.2.7 or later. Earlier versions (like 1.2.2) may show a "Social account already linked" error when trying to link with an existing provider for additional scopes.
+  Make sure you're running Shinauth version 1.2.7 or later. Earlier versions (like 1.2.2) may show a "Social account already linked" error when trying to link with an existing provider for additional scopes.
 </Callout>
 
 ### Customizing the Authorization URL
@@ -192,7 +192,7 @@ The provider's own baked-in query parameters (for example Google's `include_gran
 
 ### Passing Additional Data Through OAuth Flow
 
-Better Auth allows you to pass additional data through the OAuth flow without storing it in the database. This is useful for scenarios like tracking referral codes, analytics sources, or other temporary data that should be processed during authentication but not persisted.
+Shinauth allows you to pass additional data through the OAuth flow without storing it in the database. This is useful for scenarios like tracking referral codes, analytics sources, or other temporary data that should be processed during authentication but not persisted.
 
 When initiating OAuth sign-in or account linking, pass the additional data:
 
@@ -237,8 +237,8 @@ The additional data is available in your hooks during the OAuth callback through
 Example using an after hook:
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
-import { createAuthMiddleware, getOAuthState } from "better-auth/api";
+import { betterAuth } from "shinauth";
+import { createAuthMiddleware, getOAuthState } from "shinauth/api";
 
 export const auth = betterAuth({
   // Other configurations...
@@ -325,12 +325,12 @@ Example using a database hook:
 `additionalData` is client-supplied, so it must be validated before use on the callback. When a plugin (or your own `before` hook) needs to carry server-derived data across the redirect, use `addOAuthServerContext`. It writes to a server-only slot that the client cannot populate, and the values are readable on the callback under `serverContext`.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 import {
   addOAuthServerContext,
   createAuthMiddleware,
   getOAuthState,
-} from "better-auth/api";
+} from "shinauth/api";
 
 export const auth = betterAuth({
   hooks: {
@@ -353,7 +353,7 @@ export const auth = betterAuth({
 
 ## Handling Providers Without Email
 
-Better Auth currently requires an email address on every user record. Most providers return one with the `email` scope, but several can legitimately omit it. When that happens the OAuth flow fails with `error=email_not_found` (or `error=email_is_missing` for the Generic OAuth plugin).
+Shinauth currently requires an email address on every user record. Most providers return one with the `email` scope, but several can legitimately omit it. When that happens the OAuth flow fails with `error=email_not_found` (or `error=email_is_missing` for the Generic OAuth plugin).
 
 The table below summarises, for each affected provider, when `email` may be absent, which stable identifier you can use as a fallback in `mapProfileToUser`, and how much to trust the provider's `email_verified` signal.
 
@@ -365,14 +365,14 @@ The table below summarises, for each affected provider, when `email` may be abse
 | GitHub             | User has set email to private; GitHub App lacks the "Email addresses" permission                                                                                         | `profile.id` (numeric)                              | Reliable                                                                                                                                                            |
 | LinkedIn           | No confirmed email on the member; `email` scope not granted                                                                                                              | `profile.sub` (pairwise per app)                    | Reliable when present                                                                                                                                               |
 | Microsoft Entra ID | Managed users without a `mail` attribute, unless `email` is configured as an [optional claim](https://learn.microsoft.com/en-us/entra/identity-platform/optional-claims) | `profile.oid` plus `profile.tid` (or `profile.sub`) | **Untrustworthy**: Microsoft [explicitly warns](https://learn.microsoft.com/en-us/entra/identity-platform/id-token-claims-reference) never to use for authorization |
-| Roblox             | The default Roblox profile flow does not return an email; Better Auth currently falls back to `preferred_username`                                                       | `profile.sub` (Roblox user ID)                      | Unknown for the default profile flow                                                                                                                                |
+| Roblox             | The default Roblox profile flow does not return an email; Shinauth currently falls back to `preferred_username`                                                       | `profile.sub` (Roblox user ID)                      | Unknown for the default profile flow                                                                                                                                |
 
 ### Synthesize a placeholder email with `mapProfileToUser`
 
 Fall back to the provider's stable ID when the `email` field is null or absent:
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 
 export const auth = betterAuth({
   socialProviders: {
@@ -412,7 +412,7 @@ export const auth = betterAuth({
 * **Microsoft Entra ID**: because `email` is tenant-mutable and never verified, use `profile.oid` (immutable, stable within the tenant) as the identity anchor; treat `email` as a profile attribute only. Microsoft's [claims validation guidance](https://learn.microsoft.com/en-us/entra/identity-platform/claims-validation) explicitly warns never to use `email`, `preferred_username`, or `unique_name` for authorization decisions.
 * **Facebook**: without a per-email verification flag, treat every Facebook email as unverified unless you run your own verification challenge.
 
-First-class support for emailless users, using the stable `(providerId, accountId)` pair as the identity key (in line with [OpenID Connect Core §5.7](https://openid.net/specs/openid-connect-core-1_0.html#ClaimStability)), is tracked in [#9124](https://github.com/better-auth/better-auth/issues/9124).
+First-class support for emailless users, using the stable `(providerId, accountId)` pair as the identity key (in line with [OpenID Connect Core §5.7](https://openid.net/specs/openid-connect-core-1_0.html#ClaimStability)), is tracked in [#9124](https://github.com/rlvtapp/shinauth/issues/9124).
 
 ## Provider Options
 
@@ -420,10 +420,10 @@ First-class support for emailless users, using the stable `(providerId, accountI
 
 The OAuth 2.0 Client ID issued by the provider.
 
-For providers that verify ID tokens by audience (Google, Apple, Microsoft Entra, Facebook, Cognito), you can pass an array to accept tokens issued for any of the configured clients. The first entry is used when Better Auth drives the authorization code flow; all entries are accepted when verifying an ID token's `aud` claim. This enables cross-platform sign-in (Web, iOS, Android) with a single backend configuration, where each platform's native SDK issues tokens under its own Client ID.
+For providers that verify ID tokens by audience (Google, Apple, Microsoft Entra, Facebook, Cognito), you can pass an array to accept tokens issued for any of the configured clients. The first entry is used when Shinauth drives the authorization code flow; all entries are accepted when verifying an ID token's `aud` claim. This enables cross-platform sign-in (Web, iOS, Android) with a single backend configuration, where each platform's native SDK issues tokens under its own Client ID.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 
 export const auth = betterAuth({
   // Other configurations...
@@ -447,7 +447,7 @@ All Client IDs must live in the same provider project so consent is shared. For 
 The scope of the access request. For example, `email` or `profile`.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 
 export const auth = betterAuth({
   // Other configurations...
@@ -466,7 +466,7 @@ export const auth = betterAuth({
 Custom redirect URI for the provider. By default, it uses `/api/auth/callback/${providerName}`
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 
 export const auth = betterAuth({
   // Other configurations...
@@ -500,12 +500,12 @@ A boolean value that determines whether to override the user information in the 
 
 Require this provider's email to be verified before a session is created. Defaults to `false`.
 
-When the provider reports the email as unverified, Better Auth still creates or links the user and account, but it does not issue a session. The OAuth callback redirects with `?error=email_not_verified`, and ID token sign-in returns a `403` with the `EMAIL_NOT_VERIFIED` error code. A verification email is (re)sent according to your `emailVerification` settings: `sendOnSignUp` covers new users and `sendOnSignIn` covers returning users. Configure `emailVerification.sendVerificationEmail` and keep `sendOnSignUp` enabled so blocked users always receive a link to verify.
+When the provider reports the email as unverified, Shinauth still creates or links the user and account, but it does not issue a session. The OAuth callback redirects with `?error=email_not_verified`, and ID token sign-in returns a `403` with the `EMAIL_NOT_VERIFIED` error code. A verification email is (re)sent according to your `emailVerification` settings: `sendOnSignUp` covers new users and `sendOnSignIn` covers returning users. Configure `emailVerification.sendVerificationEmail` and keep `sendOnSignUp` enabled so blocked users always receive a link to verify.
 
 The gate checks the local user's verification state rather than the provider's claim on each request. A user already verified through another method (such as email and password) keeps access even if the provider later reports the email as unverified.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 
 export const auth = betterAuth({
   socialProviders: {
@@ -533,7 +533,7 @@ Useful, if you have additional fields in your user object you want to populate f
 `mapProfileToUser` follows the input rules from `user.additionalFields`. It can populate additional fields that allow input, but provider values for fields marked `input: false` are ignored during OAuth sign-up, sign-in profile override, and account-link profile sync. Use server-side provisioning code to set server-owned fields such as roles, bans, or internal flags.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 
 export const auth = betterAuth({
   // Other configurations...
@@ -564,7 +564,7 @@ export const auth = betterAuth({
 A custom function to refresh the token. This feature is only supported for built-in social providers (Google, Facebook, GitHub, etc.) and is not currently supported for custom OAuth providers configured through the Generic OAuth Plugin. For built-in providers, you can provide a custom function to refresh the token if needed.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 
 export const auth = betterAuth({
   // Other configurations...
@@ -588,7 +588,7 @@ export const auth = betterAuth({
 The client key of your application. This is used by TikTok Social Provider instead of `clientId`.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 
 export const auth = betterAuth({
   // Other configurations...
@@ -606,7 +606,7 @@ export const auth = betterAuth({
 A custom function to get user info from the provider. This allows you to override the default user info retrieval process.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 
 export const auth = betterAuth({
   // Other configurations...
@@ -643,7 +643,7 @@ export const auth = betterAuth({
 Disables implicit sign up for new users. When set to true for the provider, sign-in needs to be called with `requestSignUp` as true to create new users.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 
 export const auth = betterAuth({
   // Other configurations...
@@ -662,7 +662,7 @@ export const auth = betterAuth({
 The prompt to use for the authorization code request. This controls the authentication flow behavior.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 
 export const auth = betterAuth({
   // Other configurations...
@@ -681,7 +681,7 @@ export const auth = betterAuth({
 The response mode to use for the authorization code request. This determines how the authorization response is returned.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 
 export const auth = betterAuth({
   // Other configurations...
@@ -700,7 +700,7 @@ export const auth = betterAuth({
 Removes the default scopes of the provider. By default, providers include certain scopes like `email` and `profile`. Set this to `true` to remove these default scopes and use only the scopes you specify.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 
 export const auth = betterAuth({
   // Other configurations...

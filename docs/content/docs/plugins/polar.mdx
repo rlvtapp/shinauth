@@ -1,9 +1,9 @@
 ---
 title: Polar
-description: Better Auth Plugin for Payment and Checkouts using Polar
+description: Shinauth Plugin for Payment and Checkouts using Polar
 ---
 
-[Polar](https://polar.sh) is a developer first payment infrastructure. Out of the box it provides a lot of developer first integrations for payments, checkouts and more. This plugin helps you integrate Polar with Better Auth to make your auth + payments flow seamless.
+[Polar](https://polar.sh) is a developer first payment infrastructure. Out of the box it provides a lot of developer first integrations for payments, checkouts and more. This plugin helps you integrate Polar with Shinauth to make your auth + payments flow seamless.
 
 <Callout>
   This plugin is maintained by Polar team. For bugs, issues or feature requests,
@@ -23,7 +23,7 @@ description: Better Auth Plugin for Payment and Checkouts using Polar
 ## Installation
 
 ```bash
-pnpm add better-auth @polar-sh/better-auth @polar-sh/sdk
+pnpm add shinauth @polar-sh/shinauth @polar-sh/sdk
 ```
 
 ## Preparation
@@ -45,8 +45,8 @@ The Polar plugin comes with a handful additional plugins which adds functionalit
 * Webhooks - Listen for relevant Polar webhooks
 
 ```typescript
-import { betterAuth } from "better-auth";
-import { polar, checkout, portal, usage, webhooks } from "@polar-sh/better-auth";
+import { betterAuth } from "shinauth";
+import { polar, checkout, portal, usage, webhooks } from "@polar-sh/shinauth";
 import { Polar } from "@polar-sh/sdk";
 
 const polarClient = new Polar({
@@ -58,7 +58,7 @@ const polarClient = new Polar({
 });
 
 const auth = betterAuth({
-    // ... Better Auth config
+    // ... Shinauth config
     plugins: [
         polar({
             client: polarClient,
@@ -94,8 +94,8 @@ const auth = betterAuth({
 You will be using the BetterAuth Client to interact with the Polar functionalities.
 
 ```typescript
-import { createAuthClient } from "better-auth/react";
-import { polarClient } from "@polar-sh/better-auth/client";
+import { createAuthClient } from "shinauth/react";
+import { polarClient } from "@polar-sh/shinauth/client";
 
 // This is all that is needed
 // All Polar plugins, etc. should be attached to the server-side BetterAuth config
@@ -107,14 +107,14 @@ export const authClient = createAuthClient({
 ## Configuration Options
 
 ```typescript
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 import {
   polar,
   checkout,
   portal,
   usage,
   webhooks,
-} from "@polar-sh/better-auth";
+} from "@polar-sh/shinauth";
 import { Polar } from "@polar-sh/sdk";
 
 const polarClient = new Polar({
@@ -126,7 +126,7 @@ const polarClient = new Polar({
 });
 
 const auth = betterAuth({
-  // ... Better Auth config
+  // ... Shinauth config
   plugins: [
     polar({
       client: polarClient,
@@ -164,10 +164,10 @@ All new customers are created with an associated `externalId`, which is the ID o
 To support checkouts in your app, simply pass the Checkout plugin to the use-property.
 
 ```typescript
-import { polar, checkout } from "@polar-sh/better-auth";
+import { polar, checkout } from "@polar-sh/shinauth";
 
 const auth = betterAuth({
-    // ... Better Auth config
+    // ... Shinauth config
     plugins: [
         polar({
             ...
@@ -223,10 +223,10 @@ await authClient.checkout({
 A plugin which enables customer management of their purchases, orders and subscriptions.
 
 ```typescript
-import { polar, checkout, portal } from "@polar-sh/better-auth";
+import { polar, checkout, portal } from "@polar-sh/shinauth";
 
 const auth = betterAuth({
-    // ... Better Auth config
+    // ... Shinauth config
     plugins: [
         polar({
             ...
@@ -346,10 +346,10 @@ const userShouldHaveAccess = subscriptions.some(
 A simple plugin for Usage Based Billing.
 
 ```typescript
-import { polar, checkout, portal, usage } from "@polar-sh/better-auth";
+import { polar, checkout, portal, usage } from "@polar-sh/shinauth";
 
 const auth = betterAuth({
-    // ... Better Auth config
+    // ... Shinauth config
     plugins: [
         polar({
             ...
@@ -407,10 +407,10 @@ const { data: customerMeters } = await authClient.usage.meters.list({
 The Webhooks plugin can be used to capture incoming events from your Polar organization.
 
 ```typescript
-import { polar, webhooks } from "@polar-sh/better-auth";
+import { polar, webhooks } from "@polar-sh/shinauth";
 
 const auth = betterAuth({
-    // ... Better Auth config
+    // ... Shinauth config
     plugins: [
         polar({
             ...

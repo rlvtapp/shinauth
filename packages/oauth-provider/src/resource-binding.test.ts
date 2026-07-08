@@ -1,8 +1,8 @@
-import { createAuthClient } from "better-auth/client";
-import { generateRandomString } from "better-auth/crypto";
-import { createAuthorizationURL } from "better-auth/oauth2";
-import { jwt } from "better-auth/plugins/jwt";
-import { getTestInstance } from "better-auth/test";
+import { createAuthClient } from "shinauth/client";
+import { generateRandomString } from "shinauth/crypto";
+import { createAuthorizationURL } from "shinauth/oauth2";
+import { jwt } from "shinauth/plugins/jwt";
+import { getTestInstance } from "shinauth/test";
 import { decodeJwt } from "jose";
 import { beforeAll, describe, expect, it } from "vitest";
 import { oauthProviderClient } from "./client";
@@ -42,7 +42,7 @@ function tokenForm(params: Record<string, string | undefined>) {
  * global `resources` allowlist, so a client could obtain (or change, across
  * refreshes) a token for any allow-listed resource regardless of the grant.
  *
- * @see https://github.com/better-auth/better-auth/security/advisories/GHSA-p2fr-6hmx-4528
+ * @see https://github.com/rlvtapp/shinauth/security/advisories/GHSA-p2fr-6hmx-4528
  */
 describe("oauth-provider resource indicator binding", async () => {
 	const { auth, signInWithTestUser, customFetchImpl } = await getTestInstance({

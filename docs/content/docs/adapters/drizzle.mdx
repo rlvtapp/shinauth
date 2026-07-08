@@ -1,6 +1,6 @@
 ---
 title: Drizzle ORM Adapter
-description: Integrate Better Auth with Drizzle ORM.
+description: Integrate Shinauth with Drizzle ORM.
 ---
 
 Drizzle ORM is a powerful and flexible ORM for Node.js and TypeScript. It provides a simple and intuitive API for working with databases, and supports a wide range of databases including MySQL, PostgreSQL, SQLite, and more.
@@ -9,10 +9,10 @@ Before getting started, make sure you have Drizzle installed and configured. For
 
 ## Installation
 
-To use the Drizzle adapter, you need to install the `@better-auth/drizzle-adapter` package:
+To use the Drizzle adapter, you need to install the `@shinauth/drizzle-adapter` package:
 
 ```package-install
-@better-auth/drizzle-adapter
+@shinauth/drizzle-adapter
 ```
 
 ## Example Usage
@@ -20,8 +20,8 @@ To use the Drizzle adapter, you need to install the `@better-auth/drizzle-adapte
 You can use the Drizzle adapter to connect to your database as follows.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
-import { drizzleAdapter } from "@better-auth/drizzle-adapter";
+import { betterAuth } from "shinauth";
+import { drizzleAdapter } from "@shinauth/drizzle-adapter";
 import { db } from "./database.ts";
 
 export const auth = betterAuth({
@@ -34,10 +34,10 @@ export const auth = betterAuth({
 
 ## Schema generation & migration
 
-The [Better Auth CLI](/docs/concepts/cli) allows you to generate or migrate
-your database schema based on your Better Auth configuration and plugins.
+The [Shinauth CLI](/docs/concepts/cli) allows you to generate or migrate
+your database schema based on your Shinauth configuration and plugins.
 
-To generate the schema required by Better Auth, run the following command:
+To generate the schema required by Shinauth, run the following command:
 
 ```package-install
 npx auth@latest generate
@@ -69,7 +69,7 @@ The Drizzle adapter supports joins out of the box since version `1.4.0`.
 To enable this feature, you need to set the `experimental.joins` option to `true` in your auth configuration.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 
 export const auth = betterAuth({
   experimental: { joins: true }
@@ -89,9 +89,9 @@ export const auth = betterAuth({
 The Drizzle adapter expects the schema you define to match the table names. For example, if your Drizzle schema maps the `user` table to `users`, you need to manually pass the schema and map it to the user table.
 
 ```ts
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 import { db } from "./drizzle";
-import { drizzleAdapter } from "@better-auth/drizzle-adapter";
+import { drizzleAdapter } from "@shinauth/drizzle-adapter";
 import { schema } from "./schema";
 
 export const auth = betterAuth({
@@ -110,7 +110,7 @@ or you can mutate the auth config's `modelName` property directly.
 For example:
 
 ```ts
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -132,7 +132,7 @@ you simply need to change the Drizzle schema to:
 ```ts
 export const user = mysqlTable("user", {
   // Changed field name without changing the schema property name
-  // This allows drizzle & better-auth to still use the original field name,
+  // This allows drizzle & shinauth to still use the original field name,
   // while your DB uses the modified field name
   email: varchar("email_address", { length: 255 }).notNull().unique(), // [!code highlight]
   // ... others
@@ -144,7 +144,7 @@ or you can mutate the auth config's `fields` property directly.
 For example:
 
 ```ts
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -164,7 +164,7 @@ export const auth = betterAuth({
 If all your tables are using plural form, you can just pass the `usePlural` option:
 
 ```ts
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -207,19 +207,19 @@ The `schemaName` option is also supported by the
 ## Drizzle Relations v2
 
 The current Drizzle adapter uses Drizzle Relations v1.
-To use Drizzle Relations v2, you need to use the `@better-auth/drizzle-adapter/relations-v2` adapter.
+To use Drizzle Relations v2, you need to use the `@shinauth/drizzle-adapter/relations-v2` adapter.
 
 Install the adapter:
 
 ```package-install
-npm install @better-auth/drizzle-adapter
+npm install @shinauth/drizzle-adapter
 ```
 
 Update your imports to use the relations-v2 adapter:
 
 ```ts title="auth.ts"
-import { betterAuth } from 'better-auth';
-import { drizzleAdapter } from '@better-auth/drizzle-adapter/relations-v2'; // [!code highlight]
+import { betterAuth } from 'shinauth';
+import { drizzleAdapter } from '@shinauth/drizzle-adapter/relations-v2'; // [!code highlight]
 import { db } from './database.ts';
 import * as schema from './schema.ts';
 
@@ -232,7 +232,7 @@ export const auth = betterAuth({
 });
 ```
 
-Then regenerate your schema using the Better Auth CLI:
+Then regenerate your schema using the Shinauth CLI:
 
 ```package-install
 npx auth@latest generate

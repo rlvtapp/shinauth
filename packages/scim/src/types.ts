@@ -1,5 +1,5 @@
-import type { GenericEndpointContext, User } from "better-auth";
-import type { Member } from "better-auth/plugins";
+import type { GenericEndpointContext, User } from "shinauth";
+import type { Member } from "shinauth/plugins";
 
 export interface SCIMProvider {
 	id: string;
@@ -118,7 +118,7 @@ export type SCIMOptions = {
 	 */
 	staticProviders?: StaticSCIMProvider[];
 	/**
-	 * Maps an incoming SCIM Group resource to Better Auth organization role(s).
+	 * Maps an incoming SCIM Group resource to Shinauth organization role(s).
 	 *
 	 * Defaults to using the group's displayName as the role name.
 	 */

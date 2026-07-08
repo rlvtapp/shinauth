@@ -263,7 +263,7 @@ function ChangePlanDialog(props: {
 							onClick={() => {
 								if (selectedPlan === "enterprise") {
 									window.open(
-										"https://www.better-auth.com/enterprise",
+										"https://www.shinauth.com/enterprise",
 										"_blank",
 									);
 									return;

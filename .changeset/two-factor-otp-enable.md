@@ -1,5 +1,5 @@
 ---
-"better-auth": minor
+"shinauth": minor
 ---
 
 feat(two-factor)!: add OTP-only enablement and remove `skipVerificationOnEnable`

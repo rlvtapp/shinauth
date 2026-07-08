@@ -1,6 +1,6 @@
 ---
 title: Sign In With Ethereum (SIWE)
-description: Sign in with Ethereum plugin for Better Auth
+description: Sign in with Ethereum plugin for Shinauth
 ---
 
 The Sign in with Ethereum (SIWE) plugin allows users to authenticate using their Ethereum wallets following the [ERC-4361 standard](https://eips.ethereum.org/EIPS/eip-4361). This plugin provides flexibility by allowing you to implement your own message verification and nonce generation logic.
@@ -14,8 +14,8 @@ The Sign in with Ethereum (SIWE) plugin allows users to authenticate using their
     Add the SIWE plugin to your auth configuration:
 
     ```ts title="auth.ts"
-    import { betterAuth } from "better-auth";
-    import { siwe } from "better-auth/plugins"; // [!code highlight]
+    import { betterAuth } from "shinauth";
+    import { siwe } from "shinauth/plugins"; // [!code highlight]
 
     export const auth = betterAuth({
         plugins: [
@@ -71,8 +71,8 @@ The Sign in with Ethereum (SIWE) plugin allows users to authenticate using their
     ### Add the Client Plugin
 
     ```ts title="auth-client.ts"
-    import { createAuthClient } from "better-auth/client";
-    import { siweClient } from "better-auth/client/plugins"; // [!code highlight]
+    import { createAuthClient } from "shinauth/client";
+    import { siweClient } from "shinauth/client/plugins"; // [!code highlight]
 
     export const authClient = createAuthClient({
     plugins: [
@@ -204,8 +204,8 @@ The SIWE plugin accepts the following configuration options:
 The SIWE client plugin doesn't require any configuration options, but you can pass them if needed for future extensibility:
 
 ```ts title="auth-client.ts"
-import { createAuthClient } from "better-auth/client";
-import { siweClient } from "better-auth/client/plugins";
+import { createAuthClient } from "shinauth/client";
+import { siweClient } from "shinauth/client/plugins";
 
 export const authClient = createAuthClient({
   plugins: [
@@ -234,9 +234,9 @@ The SIWE plugin adds a `walletAddress` table to store user wallet associations:
 Here's a complete example showing how to implement SIWE authentication:
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
-import { siwe } from "better-auth/plugins";
-import { generateRandomString } from "better-auth/crypto";
+import { betterAuth } from "shinauth";
+import { siwe } from "shinauth/plugins";
+import { generateRandomString } from "shinauth/crypto";
 import { verifyMessage, createPublicClient, http } from "viem";
 import { mainnet } from "viem/chains";
 

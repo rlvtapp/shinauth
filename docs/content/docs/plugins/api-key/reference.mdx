@@ -159,7 +159,7 @@ When `storage` is `"secondary-storage"`, enable fallback to database if key is n
 Default is `false`.
 
 <Callout>
-  When `storage` is set to `"secondary-storage"`, you must configure `secondaryStorage` in your Better Auth options. API keys will be stored using key-value patterns:
+  When `storage` is set to `"secondary-storage"`, you must configure `secondaryStorage` in your Shinauth options. API keys will be stored using key-value patterns:
 
   * `api-key:${hashedKey}` - Primary lookup by hashed key
   * `api-key:by-id:${id}` - Lookup by ID
@@ -169,8 +169,8 @@ Default is `false`.
 </Callout>
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
-import { apiKey } from "@better-auth/api-key"
+import { betterAuth } from "shinauth";
+import { apiKey } from "@shinauth/api-key"
 
 export const auth = betterAuth({
   secondaryStorage: {
@@ -200,8 +200,8 @@ Custom secondary storage for API keys. If provided, it is used instead of `ctx.c
 Useful when you want to use a different storage backend specifically for API keys, or when you need custom logic for storage operations. It must implement the full secondary-storage contract, including `getAndDelete` and `increment`.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
-import { apiKey } from "@better-auth/api-key"
+import { betterAuth } from "shinauth";
+import { apiKey } from "@shinauth/api-key"
 
 export const auth = betterAuth({
   plugins: [
@@ -307,8 +307,8 @@ API keys can have permissions associated with them, allowing you to control acce
 You can configure default permissions that will be applied to all newly created API keys:
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth"
-import { apiKey } from "@better-auth/api-key"
+import { betterAuth } from "shinauth"
+import { apiKey } from "@shinauth/api-key"
 
 export const auth = betterAuth({
   plugins: [
@@ -327,8 +327,8 @@ export const auth = betterAuth({
 You can also provide a function that returns permissions dynamically:
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth"
-import { apiKey } from "@better-auth/api-key"
+import { betterAuth } from "shinauth"
+import { apiKey } from "@shinauth/api-key"
 
 export const auth = betterAuth({
   plugins: [

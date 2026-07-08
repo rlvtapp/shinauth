@@ -1,10 +1,10 @@
 /**
- * @see https://github.com/better-auth/better-auth/issues/9212
+ * @see https://github.com/rlvtapp/shinauth/issues/9212
  */
-import { passkey } from "@better-auth/passkey";
-import { passkeyClient } from "@better-auth/passkey/client";
-import { betterAuth } from "better-auth";
-import { createAuthClient } from "better-auth/react";
+import { passkey } from "@shinauth/passkey";
+import { passkeyClient } from "@shinauth/passkey/client";
+import { betterAuth } from "shinauth";
+import { createAuthClient } from "shinauth/react";
 
 export const auth = betterAuth({
 	plugins: [

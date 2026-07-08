@@ -1,5 +1,5 @@
 ---
-title: "Better Auth 1.7 RC"
+title: "Shinauth 1.7 RC"
 description: "OAuth and OpenID Connect fixes, protected resources, DPoP, MCP package migration, SAML and SCIM updates, safer defaults, and more."
 date: 2026-06-26
 author:
@@ -8,15 +8,15 @@ author:
 tags: ["1.7", "OAuth", "OpenID Connect", "MCP", "SAML", "SCIM", "security"]
 ---
 
-# Better Auth 1.7 RC
+# Shinauth 1.7 RC
 
-We've put a lot into Better Auth 1.7. It's a big release, and some of it means migration work. We wanted to support a wider range of login flows, make the system more robust, and ship security fixes that needed structural changes.
+We've put a lot into Shinauth 1.7. It's a big release, and some of it means migration work. We wanted to support a wider range of login flows, make the system more robust, and ship security fixes that needed structural changes.
 
 Here's what this release brings.
 
-**Your app can be the login provider for other apps.** If other apps sign in through your app, Better Auth now handles more OAuth and OpenID Connect rules. This includes DPoP tokens, single sign-out, forced re-login, per-API token rules, and safer token checks.
+**Your app can be the login provider for other apps.** If other apps sign in through your app, Shinauth now handles more OAuth and OpenID Connect rules. This includes DPoP tokens, single sign-out, forced re-login, per-API token rules, and safer token checks.
 
-**More login providers work.** Better Auth now supports login setups that did not work well before: Amazon Cognito, Microsoft Entra ID with certificate login, standard OpenID providers, and school-login providers like Clever.
+**More login providers work.** Shinauth now supports login setups that did not work well before: Amazon Cognito, Microsoft Entra ID with certificate login, standard OpenID providers, and school-login providers like Clever.
 
 **More secure by default.** We hardened flows that were previously unsafe. As security keeps moving to the foreground, we would rather disclose a security gap and fix it quickly than keep it in place for backward compatibility.
 
@@ -26,7 +26,7 @@ Here's what this release brings.
 
 <HeaderLabel variant="warning">Breaking</HeaderLabel>
 
-### Better Auth as an identity provider
+### Shinauth as an identity provider
 
 This is the biggest area of the release. The OAuth provider grows from "it issues tokens" into a standards-based authorization server that other apps can sign in through.
 
@@ -36,12 +36,12 @@ This is the biggest area of the release. The OAuth provider grows from "it issue
 * **Forced re-login:** `max_age` is now honored instead of ignored.
 * **Consistent introspection:** opaque tokens return the same claims as JWTs, and a separate API service can introspect a token issued to another client.
 * **Protocol-safe ID tokens:** custom claims can no longer overwrite reserved protocol claims such as issuer, subject, and audience.
-* **Self-service and machine clients:** a backend registers without a logged-in user using a pre-shared token, and **Client ID Metadata Documents** (`@better-auth/cimd`) let a client identify itself by a hosted URL, which is how MCP clients connect without being registered ahead of time. Real MCP clients like Claude and Codex now keep the authentication method they register with, confidential by default rather than forced to public.
+* **Self-service and machine clients:** a backend registers without a logged-in user using a pre-shared token, and **Client ID Metadata Documents** (`@shinauth/cimd`) let a client identify itself by a hosted URL, which is how MCP clients connect without being registered ahead of time. Real MCP clients like Claude and Codex now keep the authentication method they register with, confidential by default rather than forced to public.
 * **Request specific user details:** a client can ask for individual user claims through the standard `claims.userinfo` parameter, and the request becomes part of the user's consent.
 * **An extension surface:** `extendOAuthProvider` lets a companion plugin add grant types, client-authentication methods, discovery metadata, and claims without changing core.
 * **Conformance polish:** standard `{ error, error_description }` envelopes, `no-store` on credential responses, an `at_hash` claim on ID tokens, form-encoded requests, and a refresh-retry window for native clients.
 
-The old `oidcProvider` plugin, deprecated in 1.6, is removed. Move OpenID provider setups to `@better-auth/oauth-provider`.
+The old `oidcProvider` plugin, deprecated in 1.6, is removed. Move OpenID provider setups to `@shinauth/oauth-provider`.
 
 ***
 
@@ -49,7 +49,7 @@ The old `oidcProvider` plugin, deprecated in 1.6, is removed. Move OpenID provid
 
 ### Connecting to more identity providers
 
-The other half of the OAuth work is about Better Auth as the app receiving a login.
+The other half of the OAuth work is about Shinauth as the app receiving a login.
 
 * **Generic OAuth is rebuilt** on the same path as built-in social providers, with PKCE on by default and automatic issuer validation through discovery. The API you call and the callback URL both change.
 * **Identity tokens are verified consistently** against a provider's published keys, including for mobile and single-page apps. Custom providers move from a `verifyIdToken` method to an `idToken` config.
@@ -114,11 +114,11 @@ These setups were impossible, broken, or unsafe before, and work now.
 
 ### Drizzle Relations v2
 
-Drizzle ORM v1 is now in release candidate, bringing its new relations API. Better Auth supports it through a new adapter entry point, so the generated auth relations slot in alongside your app's own relations.
+Drizzle ORM v1 is now in release candidate, bringing its new relations API. Shinauth supports it through a new adapter entry point, so the generated auth relations slot in alongside your app's own relations.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth/minimal";
-import { drizzleAdapter } from "@better-auth/drizzle-adapter/relations-v2"; // [!code highlight]
+import { betterAuth } from "shinauth/minimal";
+import { drizzleAdapter } from "@shinauth/drizzle-adapter/relations-v2"; // [!code highlight]
 import { db } from "./db";
 import * as schema from "./schema";
 
@@ -133,7 +133,7 @@ export const auth = betterAuth({
 
 ### Built-in i18n for 22 languages
 
-`@better-auth/i18n` ships built-in translations for 22 languages, and the English fallback is fixed. Drop it in to localize Better Auth's user-facing messages without maintaining your own translation table.
+`@shinauth/i18n` ships built-in translations for 22 languages, and the English fallback is fixed. Drop it in to localize Shinauth's user-facing messages without maintaining your own translation table.
 
 ***
 
@@ -162,8 +162,8 @@ export const auth = betterAuth({
 | Back-channel logout revokes session-bound tokens          | Run the schema migration and expect tokens tied to a signed-out session to become inactive.                                                        |
 | Generic OAuth uses the social-provider path               | Update sign-in calls, link calls, callback URLs, and client plugins.                                                                               |
 | Custom social providers use one identity-token verifier   | Replace a provider's `verifyIdToken` method with an `idToken` config.                                                                              |
-| The old `oidcProvider` plugin is removed                  | Move provider setups to `@better-auth/oauth-provider`.                                                                                             |
-| MCP moves to `@better-auth/mcp`                           | Update imports, endpoint paths, helper names, config shape, and schema.                                                                            |
+| The old `oidcProvider` plugin is removed                  | Move provider setups to `@shinauth/oauth-provider`.                                                                                             |
+| MCP moves to `@shinauth/mcp`                           | Update imports, endpoint paths, helper names, config shape, and schema.                                                                            |
 | SAML defaults and config change                           | Update removed fields, update callback URLs, and review IdP-initiated flows.                                                                       |
 | SCIM connections need a manual reclaim                    | Assign an `organizationId` to pre-1.7 connections, or delete unowned rows, before regenerating their tokens.                                       |
 | Proxy headers are not trusted by default                  | Opt in with `advanced.trustedProxyHeaders: true` only when your proxy requires it.                                                                 |
@@ -228,15 +228,15 @@ export const auth = betterAuth({
 | Private-key-JWT client auth              | Authenticate OAuth provider and SSO clients with a signed JWT (RFC 7523) instead of a shared secret. |
 | SCIM groups                              | Manage SCIM groups with durable lifecycle endpoints.                                                 |
 | Request specific user claims             | Ask for individual user details with the `claims.userinfo` parameter.                                |
-| Drizzle Relations v2 support             | A new `@better-auth/drizzle-adapter/relations-v2` entry point merges with your app's relations.      |
+| Drizzle Relations v2 support             | A new `@shinauth/drizzle-adapter/relations-v2` entry point merges with your app's relations.      |
 | Sessions and tools                       | Use public-key session verification, `hydrateSession`, i18n, and `create-admin`.                     |
 
 ### Deprecations and removals
 
 | Change                                     | Replacement                          |
 | ------------------------------------------ | ------------------------------------ |
-| `oidcProvider` plugin removed              | Use `@better-auth/oauth-provider`.   |
-| MCP plugin path moved out of `better-auth` | Use `@better-auth/mcp`.              |
+| `oidcProvider` plugin removed              | Use `@shinauth/oauth-provider`.   |
+| MCP plugin path moved out of `shinauth` | Use `@shinauth/mcp`.              |
 | Generic OAuth client APIs changed          | Use the standard social client APIs. |
 
 ***
@@ -245,20 +245,20 @@ export const auth = betterAuth({
 
 Because this release carries large changes, we're shipping it as a release candidate first, so there's a window to migrate. We'll keep watching feedback and release the stable 1.7 from there.
 
-Install it from the `rc` tag, and do the same for any `@better-auth/*` packages you use:
+Install it from the `rc` tag, and do the same for any `@shinauth/*` packages you use:
 
 ```package-install
-better-auth@rc
+shinauth@rc
 ```
 
 Then run `npx auth@rc generate` for any schema changes; the unscoped `npx auth` still resolves the 1.6 CLI until 1.7 is stable. The table below shows whether these changes affect you. For the detailed migration guide, see the [1.7 upgrade guide](/docs/guides/1-7-upgrade-guide).
 
 | If you use                                     | What to expect                                                                                       |
 | ---------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| Basic Better Auth setup                        | Usually just the `@rc` install and any generated schema changes                                      |
+| Basic Shinauth setup                        | Usually just the `@rc` install and any generated schema changes                                      |
 | Social login, generic OAuth, One Tap, or SSO   | New login-client behavior, especially generic OAuth, identity-token verification, and Google One Tap |
-| `@better-auth/oauth-provider`                  | The largest set of changes: resources, DPoP, back-channel logout, `max_age`, and safer OAuth checks  |
-| MCP                                            | A package move to `@better-auth/mcp`, new imports, new endpoint paths, and a schema migration        |
+| `@shinauth/oauth-provider`                  | The largest set of changes: resources, DPoP, back-channel logout, `max_age`, and safer OAuth checks  |
+| MCP                                            | A package move to `@shinauth/mcp`, new imports, new endpoint paths, and a schema migration        |
 | SAML or SCIM                                   | Safer SAML and SSO checks, and a manual SCIM ownership cleanup                                       |
 | Magic links or email OTP                       | Safer handling for accounts whose email was never confirmed                                          |
 | Custom adapters, storage, or rate-limit stores | New atomic methods are required                                                                      |
@@ -268,7 +268,7 @@ Then run `npx auth@rc generate` for any schema changes; the unscoped `npx auth` 
 
 ## What's next?
 
-We're planning Better Auth 1.7 as the last feature release on the v1 line. Once it is stable, v1 moves into maintenance, where security, bug, and compatibility fixes continue while our focus shifts to v2. v1 stays maintained and remains a solid base to build on. v2 is our chance to improve the foundation. We're making it more modular and focused. More soon.
+We're planning Shinauth 1.7 as the last feature release on the v1 line. Once it is stable, v1 moves into maintenance, where security, bug, and compatibility fixes continue while our focus shifts to v2. v1 stays maintained and remains a solid base to build on. v2 is our chance to improve the foundation. We're making it more modular and focused. More soon.
 
 ***
 

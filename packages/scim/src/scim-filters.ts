@@ -1,4 +1,4 @@
-import type { Where } from "better-auth";
+import type { Where } from "shinauth";
 import { SCIMGroupResourceSchema } from "./group-schemas";
 import { SCIMUserResourceSchema } from "./user-schemas";
 

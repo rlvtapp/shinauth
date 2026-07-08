@@ -161,11 +161,11 @@ describe("instrumentation", () => {
 		expect(spans.map((s) => s.name).sort()).toEqual(["inner", "outer"]);
 	});
 
-	it("uses better-auth instrumentation scope", async () => {
+	it("uses shinauth instrumentation scope", async () => {
 		void withSpan("scope.check", {}, () => undefined);
 
 		const span = await waitForSpan((s) => s.name === "scope.check");
-		expect(span.instrumentationScope?.name).toBe("better-auth");
+		expect(span.instrumentationScope?.name).toBe("shinauth");
 	});
 
 	it("does not record error status for redirect APIErrors (sync)", async () => {

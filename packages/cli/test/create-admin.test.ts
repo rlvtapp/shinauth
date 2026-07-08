@@ -1,5 +1,5 @@
-import { betterAuth } from "better-auth";
-import { admin } from "better-auth/plugins";
+import { betterAuth } from "shinauth";
+import { admin } from "shinauth/plugins";
 import Database from "better-sqlite3";
 import prompts from "prompts";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";

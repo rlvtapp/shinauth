@@ -4,15 +4,15 @@ import { DatabaseSync } from "node:sqlite";
 import {
 	oauthProvider,
 	oauthProviderAuthServerMetadata,
-} from "@better-auth/oauth-provider";
-import type { BetterAuthOptions } from "better-auth";
-import { betterAuth } from "better-auth";
-import { getMigrations } from "better-auth/db/migration";
-import { toNodeHandler } from "better-auth/node";
-import { jwt } from "better-auth/plugins";
+} from "@shinauth/oauth-provider";
+import type { BetterAuthOptions } from "shinauth";
+import { betterAuth } from "shinauth";
+import { getMigrations } from "shinauth/db/migration";
+import { toNodeHandler } from "shinauth/node";
+import { jwt } from "shinauth/plugins";
 
 type Extras = {
-	/** Register `@better-auth/oauth-provider` + `jwt` and expose the well-known metadata route. */
+	/** Register `@shinauth/oauth-provider` + `jwt` and expose the well-known metadata route. */
 	oauthProvider?: boolean;
 	/** Skip `signUpEmail` during setup (required for dynamic configs without a usable fallback). */
 	disableTestUser?: boolean;

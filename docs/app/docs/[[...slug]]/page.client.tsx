@@ -118,7 +118,7 @@ export function ViewOptions(props: { markdownUrl: string; githubUrl: string }) {
 		props.markdownUrl,
 		typeof window !== "undefined"
 			? window.location.origin
-			: "https://better-auth.com",
+			: "https://shinauth.com",
 	);
 	const q = `Read ${markdownUrl}, I want to ask questions about it.`;
 

@@ -1,6 +1,6 @@
 ---
 title: Prisma
-description: Integrate Better Auth with Prisma.
+description: Integrate Shinauth with Prisma.
 ---
 
 Prisma ORM is an open-source database toolkit that simplifies database access and management in applications by providing a type-safe query builder and an intuitive data modeling interface.
@@ -9,10 +9,10 @@ Before getting started, make sure you have Prisma installed and configured. For 
 
 ## Installation
 
-To use the Prisma adapter, you need to install the `@better-auth/prisma-adapter` package:
+To use the Prisma adapter, you need to install the `@shinauth/prisma-adapter` package:
 
 ```package-install
-@better-auth/prisma-adapter
+@shinauth/prisma-adapter
 ```
 
 ## Example Usage
@@ -20,8 +20,8 @@ To use the Prisma adapter, you need to install the `@better-auth/prisma-adapter`
 You can use the Prisma adapter to connect to your database as follows.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
-import { prismaAdapter } from "better-auth/adapters/prisma";
+import { betterAuth } from "shinauth";
+import { prismaAdapter } from "shinauth/adapters/prisma";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -39,8 +39,8 @@ export const auth = betterAuth({
 
 ## Schema generation & migration
 
-The [Better Auth CLI](/docs/concepts/cli) allows you to generate or migrate
-your database schema based on your Better Auth configuration and plugins.
+The [Shinauth CLI](/docs/concepts/cli) allows you to generate or migrate
+your database schema based on your Shinauth configuration and plugins.
 
 <table>
   <thead>
@@ -77,7 +77,7 @@ The Prisma adapter supports joins out of the box since version `1.4.0`.
 To enable this feature, you need to set the `experimental.joins` option to `true` in your auth configuration.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 
 export const auth = betterAuth({
   experimental: { joins: true }
@@ -93,4 +93,4 @@ export const auth = betterAuth({
 ## Additional Information
 
 * If you're looking for performance improvements or tips, take a look at our guide to <Link href="/docs/guides/optimizing-for-performance">performance optimizations</Link>.
-* [How to use Prisma ORM with Better Auth and Next.js](https://www.prisma.io/docs/guides/betterauth-nextjs)
+* [How to use Prisma ORM with Shinauth and Next.js](https://www.prisma.io/docs/guides/betterauth-nextjs)

@@ -1,4 +1,4 @@
-import { deriveDpopJkt } from "better-auth/oauth2";
+import { deriveDpopJkt } from "shinauth/oauth2";
 import { exportJWK, generateKeyPair, SignJWT } from "jose";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { mcpAuthHono } from "./adapters";
@@ -6,7 +6,7 @@ import { createMcpResourceClient } from "./index";
 
 describe("createMcpResourceClient", () => {
 	/**
-	 * @see https://github.com/better-auth/better-auth/pull/9992
+	 * @see https://github.com/rlvtapp/shinauth/pull/9992
 	 */
 	it("uses RFC 9728 path insertion for the default resource_metadata challenge", async () => {
 		const client = createMcpResourceClient({
@@ -24,7 +24,7 @@ describe("createMcpResourceClient", () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/pull/9992
+	 * @see https://github.com/rlvtapp/shinauth/pull/9992
 	 */
 	it("uses RFC 9728 path insertion for an explicit resource", async () => {
 		const client = createMcpResourceClient({
@@ -43,7 +43,7 @@ describe("createMcpResourceClient", () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/pull/9992
+	 * @see https://github.com/rlvtapp/shinauth/pull/9992
 	 */
 	it("preserves the resource query in the resource_metadata challenge", async () => {
 		const client = createMcpResourceClient({
@@ -62,7 +62,7 @@ describe("createMcpResourceClient", () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/pull/9992
+	 * @see https://github.com/rlvtapp/shinauth/pull/9992
 	 */
 	it("does not invent protected-resource scopes for remote metadata", async () => {
 		const client = createMcpResourceClient({
@@ -87,7 +87,7 @@ describe("createMcpResourceClient", () => {
 
 describe("mcpAuthHono", () => {
 	/**
-	 * @see https://github.com/better-auth/better-auth/pull/9992
+	 * @see https://github.com/rlvtapp/shinauth/pull/9992
 	 */
 	it("uses RFC 9728 path insertion for the resource_metadata challenge", async () => {
 		const auth = mcpAuthHono({
@@ -115,7 +115,7 @@ describe("mcpAuthHono", () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/pull/9992
+	 * @see https://github.com/rlvtapp/shinauth/pull/9992
 	 */
 	it("registers the path-inserted protected-resource metadata alias", () => {
 		const auth = mcpAuthHono({
@@ -145,7 +145,7 @@ describe("createMcpResourceClient DPoP challenge", () => {
 	 * answered with an RFC 9449 `DPoP` challenge, not a bearer one, so the client
 	 * knows to retry with a proof.
 	 *
-	 * @see https://github.com/better-auth/better-auth/pull/10039
+	 * @see https://github.com/rlvtapp/shinauth/pull/10039
 	 */
 	it("answers a DPoP-bound token sent with the bearer scheme with a DPoP challenge", async () => {
 		const authURL = "https://auth.example.com";

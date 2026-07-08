@@ -1,14 +1,14 @@
-# Better Auth Electron Plugin
+# Shinauth Electron Plugin
 
-This plugin integrates Better Auth with Electron, allowing you to easily add
+This plugin integrates Shinauth with Electron, allowing you to easily add
 authentication to your Electron applications.
 
-- **Main Better Auth Installation:** [Installation Guide][]
+- **Main Shinauth Installation:** [Installation Guide][]
 - **Electron Integration Guide:** [Electron Integration Guide][]
 
 ## License
 
 MIT
 
-[electron integration guide]: https://www.better-auth.com/docs/integrations/electron
-[installation guide]: https://www.better-auth.com/docs/installation
+[electron integration guide]: https://www.shinauth.com/docs/integrations/electron
+[installation guide]: https://www.shinauth.com/docs/installation

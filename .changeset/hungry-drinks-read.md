@@ -1,5 +1,5 @@
 ---
-"better-auth": minor
+"shinauth": minor
 ---
 
 feat: make `Auth` instance fetchable

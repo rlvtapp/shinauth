@@ -1,9 +1,9 @@
-import { runWithTransaction } from "@better-auth/core/context";
-import { isAPIError } from "@better-auth/core/utils/is-api-error";
-import type { User } from "better-auth";
-import { APIError } from "better-auth/api";
-import { setSessionCookie } from "better-auth/cookies";
-import { handleOAuthUserInfo } from "better-auth/oauth2";
+import { runWithTransaction } from "@shinauth/core/context";
+import { isAPIError } from "@shinauth/core/utils/is-api-error";
+import type { User } from "shinauth";
+import { APIError } from "shinauth/api";
+import { setSessionCookie } from "shinauth/cookies";
+import { handleOAuthUserInfo } from "shinauth/oauth2";
 import { XMLParser } from "fast-xml-parser";
 import type { FlowResult } from "samlify/types/src/flow";
 
@@ -115,7 +115,7 @@ function buildSAMLRedirectUrl(
 	const searchParams = new URLSearchParams(params);
 	try {
 		const isRelativePath = url.startsWith("/") && !url.startsWith("//");
-		const parsedUrl = new URL(url, "http://better-auth.local");
+		const parsedUrl = new URL(url, "http://shinauth.local");
 		for (const [key, value] of searchParams) {
 			parsedUrl.searchParams.set(key, value);
 		}

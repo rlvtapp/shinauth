@@ -1,6 +1,6 @@
-import type { GenericEndpointContext, LiteralString } from "@better-auth/core";
-import type { JWSAlgorithms } from "better-auth/plugins";
-import type { InferOptionSchema, Session, User } from "better-auth/types";
+import type { GenericEndpointContext, LiteralString } from "@shinauth/core";
+import type { JWSAlgorithms } from "shinauth/plugins";
+import type { InferOptionSchema, Session, User } from "shinauth/types";
 import type { JWTPayload } from "jose";
 import type { schema } from "../schema";
 import type { Awaitable } from "./helpers";
@@ -372,7 +372,7 @@ export interface OAuthUserInfoExtensionInput {
  * RFC 8693 token exchange, which adds a grant, advertises metadata, and emits
  * claims) registers atomically and the host validates the combined surface in
  * one place. Every field is independently optional, so a single-concern plugin
- * (such as `@better-auth/cimd`, which contributes only `clientDiscovery`) sets
+ * (such as `@shinauth/cimd`, which contributes only `clientDiscovery`) sets
  * just the one it needs. This is the shape every future OAuth RFC plugin copies.
  *
  * Two contribution disciplines:
@@ -652,7 +652,7 @@ export interface OAuthOptions<
 	 * one-time `client_secret` in the registration response.
 	 *
 	 * For verified client discovery (MCP), consider installing the
-	 * `@better-auth/cimd` plugin, which verifies client identity through
+	 * `@shinauth/cimd` plugin, which verifies client identity through
 	 * domain ownership via Client ID Metadata Documents.
 	 *
 	 * @default false
@@ -710,7 +710,7 @@ export interface OAuthOptions<
 	 *
 	 * Extension plugins should prefer `extendOAuthProvider(ctx, extension)` in
 	 * their `init()` hook so users can compose plugins declaratively. Plugins
-	 * such as `@better-auth/cimd` contribute their client discovery this way.
+	 * such as `@shinauth/cimd` contribute their client discovery this way.
 	 */
 	extensions?: OAuthProviderExtension[];
 	/**
@@ -1357,7 +1357,7 @@ export interface OAuthAuthorizationQuery {
 	 * OpenID Connect Request Object by value.
 	 *
 	 * The parameter is parsed so unsupported use can be rejected with
-	 * `request_not_supported`; Better Auth does not process Request Objects yet.
+	 * `request_not_supported`; Shinauth does not process Request Objects yet.
 	 */
 	request?: string;
 	/**
@@ -1384,7 +1384,7 @@ export interface OAuthAuthorizationQuery {
 	 *
 	 * Recommended for clients, but optional for the authorization server.
 	 *
-	 * Note: Better Auth stores the state in a database instead of a cookie. - This is to minimize
+	 * Note: Shinauth stores the state in a database instead of a cookie. - This is to minimize
 	 * the complication with native apps and other clients that may not have access to cookies.
 	 */
 	state?: string;
@@ -1408,7 +1408,7 @@ export interface OAuthAuthorizationQuery {
 	 * then French (without a region designation), followed by English (without a region
 	 * designation).
 	 *
-	 * Better Auth does not support this parameter yet. It'll not throw an error if it's provided,
+	 * Shinauth does not support this parameter yet. It'll not throw an error if it's provided,
 	 *
 	 * 🏗️ currently not implemented
 	 */

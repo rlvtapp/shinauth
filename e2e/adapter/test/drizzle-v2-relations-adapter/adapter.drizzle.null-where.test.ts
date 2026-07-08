@@ -1,5 +1,5 @@
 /**
- * @see https://github.com/better-auth/better-auth/issues/7271
+ * @see https://github.com/rlvtapp/shinauth/issues/7271
  *
  * Regression test for `convertWhereClause` in the relations-v2 Drizzle
  * adapter. `eq(column, null)` compiles to `column = NULL` in SQL, which is
@@ -13,8 +13,8 @@
  * silently, so device codes were never claimed and approval always failed
  * with "Device code has not been claimed by a verifying session."
  */
-import type { User } from "@better-auth/core/db";
-import { drizzleAdapter } from "@better-auth/drizzle-adapter/relations-v2";
+import type { User } from "@shinauth/core/db";
+import { drizzleAdapter } from "@shinauth/drizzle-adapter/relations-v2";
 import Database from "better-sqlite3";
 import { drizzle } from "drizzle-orm/better-sqlite3";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";

@@ -1,6 +1,6 @@
 ---
 title: PostgreSQL
-description: Integrate Better Auth with PostgreSQL.
+description: Integrate Shinauth with PostgreSQL.
 ---
 
 PostgreSQL is a powerful, open-source relational database management system known for its advanced features, extensibility, and support for complex queries and large datasets.
@@ -9,10 +9,10 @@ Read more about [PostgreSQL](https://www.postgresql.org/).
 ## Example Usage
 
 Make sure you have PostgreSQL installed and configured.
-Then, you can connect it straight into Better Auth.
+Then, you can connect it straight into Shinauth.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 import { Pool } from "pg";
 
 export const auth = betterAuth({
@@ -29,8 +29,8 @@ export const auth = betterAuth({
 
 ## Schema generation & migration
 
-The [Better Auth CLI](/docs/concepts/cli) allows you to generate or migrate
-your database schema based on your Better Auth configuration and plugins.
+The [Shinauth CLI](/docs/concepts/cli) allows you to generate or migrate
+your database schema based on your Shinauth configuration and plugins.
 
 <table>
   <thead>
@@ -77,7 +77,7 @@ The Kysely PostgreSQL dialect supports joins out of the box since version `1.4.0
 To enable this feature, you need to set the `experimental.joins` option to `true` in your auth configuration.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 
 export const auth = betterAuth({
   experimental: { joins: true }
@@ -90,7 +90,7 @@ export const auth = betterAuth({
 
 ## Use a non-default schema
 
-In most cases, the default schema is `public`. To have Better Auth use a
+In most cases, the default schema is `public`. To have Shinauth use a
 non-default schema (e.g., `auth`) for its tables, you have several options:
 
 ### Option 1: Set search\_path in connection string (Recommended)
@@ -98,7 +98,7 @@ non-default schema (e.g., `auth`) for its tables, you have several options:
 Append the `options` parameter to your connection URI:
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 import { Pool } from "pg";
 
 export const auth = betterAuth({
@@ -113,7 +113,7 @@ URL-encode if needed: `?options=-c%20search_path%3Dauth`.
 ### Option 2: Set search\_path using Pool options
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 import { Pool } from "pg";
 
 export const auth = betterAuth({
@@ -156,7 +156,7 @@ Before using a non-default schema, ensure:
 
 ### How it works
 
-The Better Auth CLI migration system automatically detects your configured `search_path`:
+The Shinauth CLI migration system automatically detects your configured `search_path`:
 
 * When running `npx auth migrate`, it inspects only the tables in your configured schema
 * Tables in other schemas (e.g., `public`) are ignored, preventing conflicts
@@ -173,7 +173,7 @@ The Better Auth CLI migration system automatically detects your configured `sear
 <Callout type="info">
   **Verifying your schema configuration:**
 
-  You can verify which schema Better Auth will use by checking the `search_path`:
+  You can verify which schema Shinauth will use by checking the `search_path`:
 
   ```sql
   SHOW search_path;

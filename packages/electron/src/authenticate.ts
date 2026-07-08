@@ -1,19 +1,19 @@
-import type { BetterAuthClientOptions } from "@better-auth/core";
-import type { User } from "@better-auth/core/db";
-import { BetterAuthError } from "@better-auth/core/error";
-import { base64Url } from "@better-auth/utils/base64";
+import type { BetterAuthClientOptions } from "@shinauth/core";
+import type { User } from "@shinauth/core/db";
+import { BetterAuthError } from "@shinauth/core/error";
+import { base64Url } from "@shinauth/utils/base64";
 import type { BetterFetch, CreateFetchOption } from "@better-fetch/fetch";
-import { APIError, getBaseURL, safeJSONParse } from "better-auth";
-import { signInSocial } from "better-auth/api";
-import { generateRandomString } from "better-auth/crypto";
-import { generateCodeChallenge } from "better-auth/oauth2";
+import { APIError, getBaseURL, safeJSONParse } from "shinauth";
+import { signInSocial } from "shinauth/api";
+import { generateRandomString } from "shinauth/crypto";
+import { generateCodeChallenge } from "shinauth/oauth2";
 import { shell } from "electron";
 import * as z from "zod";
 import type { ElectronClientOptions } from "./types/client";
 import { normalizeUserOutput } from "./user";
 import { getChannelPrefixWithDelimiter, isProcessType } from "./utils";
 
-export const kElectron = Symbol.for("better-auth:electron");
+export const kElectron = Symbol.for("shinauth:electron");
 
 const requestAuthOptionsSchema = (() => {
 	const { provider, idToken, loginHint, ...signInSocialBody } =

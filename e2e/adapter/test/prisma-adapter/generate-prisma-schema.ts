@@ -1,8 +1,8 @@
 import fs from "node:fs/promises";
 import { join } from "node:path";
-import type { BetterAuthOptions } from "@better-auth/core";
-import type { DBAdapter } from "@better-auth/core/db/adapter";
-import { prismaAdapter } from "@better-auth/prisma-adapter";
+import type { BetterAuthOptions } from "@shinauth/core";
+import type { DBAdapter } from "@shinauth/core/db/adapter";
+import { prismaAdapter } from "@shinauth/prisma-adapter";
 import type { PrismaClient } from "@prisma/client";
 import type { Dialect } from "./constants";
 

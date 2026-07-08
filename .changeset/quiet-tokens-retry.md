@@ -1,6 +1,6 @@
 ---
-"@better-auth/oauth-provider": minor
-"@better-auth/mcp": minor
+"@shinauth/oauth-provider": minor
+"@shinauth/mcp": minor
 ---
 
 OAuth Provider can now replay the same refresh-token response for duplicate refresh requests during a configured `refreshTokenReuseInterval`. OAuth Provider keeps strict replay handling by default; set this option to opt into the overlap window.

@@ -3,7 +3,7 @@ import type {
 	BetterAuthPluginRegistryIdentifier,
 	GenericEndpointContext,
 	UnionToIntersection,
-} from "@better-auth/core";
+} from "@shinauth/core";
 
 type ALL_PLUGIN_ERROR_CODE_KEYS = keyof UnionToIntersection<
 	{

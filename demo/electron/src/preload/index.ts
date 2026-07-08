@@ -1,3 +1,3 @@
-import { setupRenderer } from "@better-auth/electron/preload";
+import { setupRenderer } from "@shinauth/electron/preload";
 
 setupRenderer();

@@ -3,10 +3,10 @@ import type {
 	GenericEndpointContext,
 	HookEndpointContext,
 	LiteralString,
-} from "@better-auth/core";
-import type { SecondaryStorage } from "@better-auth/core/db";
-import type { Statements } from "better-auth/plugins/access";
-import type { InferOptionSchema } from "better-auth/types";
+} from "@shinauth/core";
+import type { SecondaryStorage } from "@shinauth/core/db";
+import type { Statements } from "shinauth/plugins/access";
+import type { InferOptionSchema } from "shinauth/types";
 import type { apiKeySchema } from "./schema";
 
 export interface ApiKeyOptions {

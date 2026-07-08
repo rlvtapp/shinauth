@@ -1,5 +1,5 @@
-import type { AsyncLocalStorage } from "@better-auth/core/async_hooks";
-import { getAsyncLocalStorage } from "@better-auth/core/async_hooks";
+import type { AsyncLocalStorage } from "@shinauth/core/async_hooks";
+import { getAsyncLocalStorage } from "@shinauth/core/async_hooks";
 import { __getBetterAuthGlobal } from "./global";
 
 export type RequestStateWeakMap = WeakMap<object, any>;

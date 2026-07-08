@@ -1,4 +1,4 @@
-import { createAuthEndpoint } from "better-auth/api";
+import { createAuthEndpoint } from "shinauth/api";
 import * as z from "zod";
 import { JWS_ALGORITHMS } from "../resources";
 import type { OAuthOptions, Scope } from "../types";

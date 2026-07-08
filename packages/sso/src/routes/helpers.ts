@@ -1,5 +1,5 @@
-import type { DBAdapter } from "@better-auth/core/db/adapter";
-import { APIError } from "better-auth/api";
+import type { DBAdapter } from "@shinauth/core/db/adapter";
+import { APIError } from "shinauth/api";
 import { resolveSigningCerts } from "../saml";
 import { saml } from "../samlify";
 import type { SAMLConfig, SSOOptions, SSOProvider } from "../types";

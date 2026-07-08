@@ -1,11 +1,11 @@
-import type { BetterAuthPlugin } from "@better-auth/core";
-import { createAuthEndpoint } from "@better-auth/core/api";
-import { sessionMiddleware } from "better-auth/api";
-import { createAuthClient } from "better-auth/client";
-import { generateRandomString, makeSignature } from "better-auth/crypto";
-import { createAuthorizationURL } from "better-auth/oauth2";
-import { jwt } from "better-auth/plugins/jwt";
-import { getTestInstance } from "better-auth/test";
+import type { BetterAuthPlugin } from "@shinauth/core";
+import { createAuthEndpoint } from "@shinauth/core/api";
+import { sessionMiddleware } from "shinauth/api";
+import { createAuthClient } from "shinauth/client";
+import { generateRandomString, makeSignature } from "shinauth/crypto";
+import { createAuthorizationURL } from "shinauth/oauth2";
+import { jwt } from "shinauth/plugins/jwt";
+import { getTestInstance } from "shinauth/test";
 import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import * as z from "zod";
 import { validateIssuerUrl } from "./authorize";
@@ -431,7 +431,7 @@ describe("oauth authorize - max_age (OIDC Core 1.0 §3.1.2.1)", async () => {
 	}
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/pull/9936
+	 * @see https://github.com/rlvtapp/shinauth/pull/9936
 	 */
 	it("treats max_age=0 as an explicit re-authentication request", async () => {
 		const location = await redirectFor("0");
@@ -446,7 +446,7 @@ describe("oauth authorize - max_age (OIDC Core 1.0 §3.1.2.1)", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/pull/9936
+	 * @see https://github.com/rlvtapp/shinauth/pull/9936
 	 */
 	it("removes satisfied max_age before redirecting to consent", async () => {
 		if (!oauthClientNeedsConsent?.client_id) {
@@ -474,7 +474,7 @@ describe("oauth authorize - max_age (OIDC Core 1.0 §3.1.2.1)", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/pull/9936
+	 * @see https://github.com/rlvtapp/shinauth/pull/9936
 	 */
 	it("returns invalid_request for invalid max_age values", async () => {
 		const location = await redirectFor("-1");
@@ -485,7 +485,7 @@ describe("oauth authorize - max_age (OIDC Core 1.0 §3.1.2.1)", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/pull/9936
+	 * @see https://github.com/rlvtapp/shinauth/pull/9936
 	 */
 	it("returns invalid_request for empty max_age values", async () => {
 		for (const maxAge of ["", "   "]) {
@@ -556,7 +556,7 @@ describe("oauth authorize - acr_values (OIDC Core 1.0 §3.1.2.1)", async () => {
 	}
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/pull/10152
+	 * @see https://github.com/rlvtapp/shinauth/pull/10152
 	 */
 	it("rejects unsupported acr_values instead of silently downgrading", async () => {
 		const location = await redirectFor("1");
@@ -599,10 +599,10 @@ describe("oauth authorize - request_uri resolution", async () => {
 	const rpBaseUrl = "http://localhost:5000";
 	const providerId = "test";
 	const redirectUri = `${rpBaseUrl}/api/auth/callback/${providerId}`;
-	const requestUri = "urn:better-auth:par:test";
-	const requestUriWithPostLoginMarker = "urn:better-auth:par:post-login";
-	const requestUriWithInvalidMaxAge = "urn:better-auth:par:invalid-max-age";
-	const requestUriWithReorderedPrompt = "urn:better-auth:par:reordered-prompt";
+	const requestUri = "urn:shinauth:par:test";
+	const requestUriWithPostLoginMarker = "urn:shinauth:par:post-login";
+	const requestUriWithInvalidMaxAge = "urn:shinauth:par:invalid-max-age";
+	const requestUriWithReorderedPrompt = "urn:shinauth:par:reordered-prompt";
 	type RequestUriResolver = NonNullable<
 		OAuthOptions<Scope[]>["requestUriResolver"]
 	>;
@@ -784,7 +784,7 @@ describe("oauth authorize - request_uri resolution", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/pull/9936
+	 * @see https://github.com/rlvtapp/shinauth/pull/9936
 	 */
 	it("should validate resolved PAR parameters through the authorization query schema", async () => {
 		if (!oauthClient?.client_id) {
@@ -808,7 +808,7 @@ describe("oauth authorize - request_uri resolution", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/pull/9936
+	 * @see https://github.com/rlvtapp/shinauth/pull/9936
 	 */
 	it("should accept valid PAR prompt values in any order", async () => {
 		if (!oauthClient?.client_id) {

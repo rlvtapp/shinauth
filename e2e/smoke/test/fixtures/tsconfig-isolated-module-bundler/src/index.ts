@@ -1,14 +1,14 @@
 // Copy and modify from https://github.com/wannabespace/conar/blob/ae42097562d1d57b21e6ca32b31a203cebbaad6f/apps/api/src/lib/auth.ts
-import type { BetterAuthOptions, BetterAuthPlugin } from "better-auth";
-import { betterAuth } from "better-auth";
-import { createAuthMiddleware } from "better-auth/api";
+import type { BetterAuthOptions, BetterAuthPlugin } from "shinauth";
+import { betterAuth } from "shinauth";
+import { createAuthMiddleware } from "shinauth/api";
 import {
 	anonymous,
 	bearer,
 	lastLoginMethod,
 	organization,
 	twoFactor,
-} from "better-auth/plugins";
+} from "shinauth/plugins";
 import { emailHarmony } from "better-auth-harmony";
 
 /**

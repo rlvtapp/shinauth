@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 const fixturesDir = fileURLToPath(new URL("./fixtures", import.meta.url));
 
 /**
- * @see https://github.com/better-auth/better-auth/issues/6213
+ * @see https://github.com/rlvtapp/shinauth/issues/6213
  */
 it("build client without zod runtime", async () => {
 	const esbuildDir = join(fixturesDir, "esbuild");

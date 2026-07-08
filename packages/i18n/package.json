@@ -1,13 +1,13 @@
 {
-  "name": "@better-auth/i18n",
+  "name": "@shinauth/i18n",
   "version": "1.7.0-rc.1",
-  "description": "i18n plugin for Better Auth - translate error messages",
+  "description": "i18n plugin for Shinauth - translate error messages",
   "type": "module",
   "license": "MIT",
-  "homepage": "https://www.better-auth.com/docs/plugins/i18n",
+  "homepage": "https://www.shinauth.com/docs/plugins/i18n",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/better-auth/better-auth.git",
+    "url": "git+https://github.com/rlvtapp/shinauth.git",
     "directory": "packages/i18n"
   },
   "keywords": [
@@ -15,7 +15,7 @@
     "i18n",
     "internationalization",
     "typescript",
-    "better-auth"
+    "shinauth"
   ],
   "publishConfig": {
     "access": "public"
@@ -67,12 +67,12 @@
     }
   },
   "devDependencies": {
-    "@better-auth/core": "workspace:*",
-    "better-auth": "workspace:*",
+    "@shinauth/core": "workspace:*",
+    "shinauth": "workspace:*",
     "tsdown": "catalog:"
   },
   "peerDependencies": {
-    "@better-auth/core": "workspace:^",
-    "better-auth": "workspace:^"
+    "@shinauth/core": "workspace:^",
+    "shinauth": "workspace:^"
   }
 }

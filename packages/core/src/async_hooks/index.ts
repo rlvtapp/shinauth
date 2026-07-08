@@ -17,13 +17,13 @@ const AsyncLocalStoragePromise: Promise<typeof AsyncLocalStorage | null> =
 				return null;
 			}
 			console.warn(
-				"[better-auth] Warning: AsyncLocalStorage is not available in this environment. Some features may not work as expected.",
+				"[shinauth] Warning: AsyncLocalStorage is not available in this environment. Some features may not work as expected.",
 			);
 			console.warn(
-				"[better-auth] Please read more about this warning at https://better-auth.com/docs/installation#mount-handler",
+				"[shinauth] Please read more about this warning at https://shinauth.com/docs/installation#mount-handler",
 			);
 			console.warn(
-				"[better-auth] If you are using Cloudflare Workers, please see: https://developers.cloudflare.com/workers/configuration/compatibility-flags/#nodejs-compatibility-flag",
+				"[shinauth] If you are using Cloudflare Workers, please see: https://developers.cloudflare.com/workers/configuration/compatibility-flags/#nodejs-compatibility-flag",
 			);
 			throw err;
 		});

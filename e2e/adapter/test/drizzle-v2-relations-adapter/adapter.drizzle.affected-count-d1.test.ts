@@ -6,7 +6,7 @@
  *
  * @see https://developers.cloudflare.com/d1/worker-api/return-object/
  */
-import { drizzleAdapter } from "@better-auth/drizzle-adapter/relations-v2";
+import { drizzleAdapter } from "@shinauth/drizzle-adapter/relations-v2";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { describe, expect, it } from "vitest";
 

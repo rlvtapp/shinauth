@@ -28,7 +28,7 @@ description: Slack provider setup and usage.
     To configure the provider, you need to pass the `clientId` and `clientSecret` to `socialProviders.slack` in your auth configuration.
 
     ```ts title="auth.ts"
-    import { betterAuth } from "better-auth"
+    import { betterAuth } from "shinauth"
 
     export const auth = betterAuth({
         socialProviders: {
@@ -51,7 +51,7 @@ To sign in with Slack, you can use the `signIn.social` function provided by the 
 * `provider`: The provider to use. It should be set to `slack`.
 
 ```ts title="auth-client.ts"
-import { createAuthClient } from "better-auth/client";
+import { createAuthClient } from "shinauth/client";
 const authClient = createAuthClient();
 
 const signIn = async () => {

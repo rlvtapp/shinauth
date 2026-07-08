@@ -1,8 +1,8 @@
 ---
-"@better-auth/core": minor
-"better-auth": minor
-"@better-auth/sso": patch
-"@better-auth/scim": patch
+"@shinauth/core": minor
+"shinauth": minor
+"@shinauth/sso": patch
+"@shinauth/scim": patch
 ---
 
 Add a `user.validateUserInfo` provisioning gate that lets applications reject an identity before a user is created or a new account is linked. It runs once at the creation step for every method that provisions a user (OAuth, SSO/SAML, email/password, magic link, email OTP, anonymous, SIWE, phone number, admin-created users, and SCIM), including stateless setups with no persistent database.

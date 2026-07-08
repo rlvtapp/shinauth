@@ -106,7 +106,7 @@ export interface BetterAuthClientPlugin {
 		$fetch: BetterFetch,
 		$store: ClientStore,
 		/**
-		 * better-auth client options
+		 * shinauth client options
 		 */
 		options: BetterAuthClientOptions | undefined,
 	) => Record<string, any>;

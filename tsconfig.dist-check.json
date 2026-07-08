@@ -14,7 +14,7 @@
     "**/docs/**",
     "**/e2e/**",
     "**/test/**",
-    "packages/better-auth/src/**",
+    "packages/shinauth/src/**",
     "packages/core/src/**",
     "packages/electron/src/**"
   ]

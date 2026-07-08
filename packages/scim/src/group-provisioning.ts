@@ -1,12 +1,12 @@
-import { base64Url } from "@better-auth/utils/base64";
+import { base64Url } from "@shinauth/utils/base64";
 import type {
 	Account,
 	DBAdapter,
 	GenericEndpointContext,
 	User,
-} from "better-auth";
-import { generateRandomString } from "better-auth/crypto";
-import type { Member } from "better-auth/plugins";
+} from "shinauth";
+import { generateRandomString } from "shinauth/crypto";
+import type { Member } from "shinauth/plugins";
 import { scimAccountProviderId } from "./mappings";
 import { SCIMAPIError } from "./scim-error";
 import type { SCIMFilterWhere } from "./scim-filters";

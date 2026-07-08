@@ -1,13 +1,13 @@
 {
-  "name": "@better-auth-test/kysely-prisma-adapter",
+  "name": "@shinauth-test/kysely-prisma-adapter",
   "private": true,
   "type": "module",
   "scripts": {
     "e2e:integration": "vitest run"
   },
   "devDependencies": {
-    "@better-auth/kysely-adapter": "workspace:*",
-    "@better-auth/test-utils": "workspace:*",
-    "better-auth": "workspace:*"
+    "@shinauth/kysely-adapter": "workspace:*",
+    "@shinauth/test-utils": "workspace:*",
+    "shinauth": "workspace:*"
   }
 }

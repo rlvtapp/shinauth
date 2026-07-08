@@ -1,9 +1,9 @@
-import { sso } from "@better-auth/sso";
-import { betterAuth } from "better-auth";
-import { memoryAdapter } from "better-auth/adapters/memory";
-import { createAuthClient } from "better-auth/client";
-import { setCookieToHeader } from "better-auth/cookies";
-import { organization } from "better-auth/plugins";
+import { sso } from "@shinauth/sso";
+import { betterAuth } from "shinauth";
+import { memoryAdapter } from "shinauth/adapters/memory";
+import { createAuthClient } from "shinauth/client";
+import { setCookieToHeader } from "shinauth/cookies";
+import { organization } from "shinauth/plugins";
 import { describe, expect, it } from "vitest";
 import { scim } from ".";
 import { scimClient } from "./client";
@@ -51,7 +51,7 @@ const instance = () => {
 };
 
 /**
- * @see https://github.com/better-auth/better-auth/security/advisories/GHSA-rjg6
+ * @see https://github.com/rlvtapp/shinauth/security/advisories/GHSA-rjg6
  */
 describe("SCIM account namespacing", () => {
 	it("stores the SCIM account under a namespaced providerId, not the logical id", async () => {

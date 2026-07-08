@@ -1,10 +1,10 @@
-import type { BetterAuthOptions } from "@better-auth/core";
-import { APIError, BetterAuthError } from "@better-auth/core/error";
-import { createAuthClient } from "better-auth/client";
-import { DPOP_SIGNING_ALGORITHMS } from "better-auth/oauth2";
-import type { JwtOptions } from "better-auth/plugins/jwt";
-import { jwt } from "better-auth/plugins/jwt";
-import { getTestInstance } from "better-auth/test";
+import type { BetterAuthOptions } from "@shinauth/core";
+import { APIError, BetterAuthError } from "@shinauth/core/error";
+import { createAuthClient } from "shinauth/client";
+import { DPOP_SIGNING_ALGORITHMS } from "shinauth/oauth2";
+import type { JwtOptions } from "shinauth/plugins/jwt";
+import { jwt } from "shinauth/plugins/jwt";
+import { getTestInstance } from "shinauth/test";
 import { describe, expect, it } from "vitest";
 import { oauthProviderClient } from "./client";
 import { oauthProviderResourceClient } from "./client-resource";
@@ -137,7 +137,7 @@ describe("oauth metadata", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/8343
+	 * @see https://github.com/rlvtapp/shinauth/issues/8343
 	 */
 	it("should serve authorization server metadata at the issuer-appended well-known URL", async () => {
 		const { customFetchImpl } = await createTestInstance();
@@ -447,7 +447,7 @@ describe("oauth metadata", async () => {
 });
 
 /**
- * @see https://github.com/better-auth/better-auth/issues/9105
+ * @see https://github.com/rlvtapp/shinauth/issues/9105
  */
 describe("dynamic baseURL metadata wrappers", async () => {
 	const host = "tenant.example.com";

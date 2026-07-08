@@ -1,5 +1,5 @@
-import { expo } from "@better-auth/expo";
-import { betterAuth } from "better-auth";
+import { expo } from "@shinauth/expo";
+import { betterAuth } from "shinauth";
 
 const auth = betterAuth({
 	plugins: [expo()],

@@ -47,7 +47,7 @@ description: Zoom provider setup and usage.
     To configure the provider, you need to import the provider and pass it to the `socialProviders` option of the auth instance.
 
     ```ts title="auth.ts"
-    import { betterAuth } from "better-auth"
+    import { betterAuth } from "shinauth"
 
     export const auth = betterAuth({
       socialProviders: {
@@ -67,7 +67,7 @@ description: Zoom provider setup and usage.
     You will need to specify `zoom` as the provider.
 
     ```ts title="auth-client.ts"
-    import { createAuthClient } from "better-auth/client"
+    import { createAuthClient } from "shinauth/client"
     const authClient =  createAuthClient()
 
     const signIn = async () => {

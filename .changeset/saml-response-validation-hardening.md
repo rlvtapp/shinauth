@@ -1,5 +1,5 @@
 ---
-"@better-auth/sso": minor
+"@shinauth/sso": minor
 ---
 
 fix(sso)!: harden SAML response validation (InResponseTo, Audience, SessionIndex)

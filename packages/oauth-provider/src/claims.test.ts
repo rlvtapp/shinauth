@@ -1,5 +1,5 @@
-import type { GenericEndpointContext } from "@better-auth/core";
-import { logger } from "@better-auth/core/env";
+import type { GenericEndpointContext } from "@shinauth/core";
+import { logger } from "@shinauth/core/env";
 import { describe, expect, it, vi } from "vitest";
 import { resolveAccessTokenClaims } from "./claims";
 import type {

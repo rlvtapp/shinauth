@@ -45,7 +45,7 @@ function httpGet(
 
 test.describe("dynamic baseURL (HTTP)", () => {
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/8447
+	 * @see https://github.com/rlvtapp/shinauth/issues/8447
 	 */
 	test("oauthProviderAuthServerMetadata resolves issuer from request host", async () => {
 		const { port, stop } = await setupServer(
@@ -82,7 +82,7 @@ test.describe("dynamic baseURL (HTTP)", () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/9105
+	 * @see https://github.com/rlvtapp/shinauth/issues/9105
 	 */
 	test("direct auth.api calls resolve baseURL from forwarded headers", async () => {
 		const { port, stop } = await setupServer({

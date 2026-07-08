@@ -1,6 +1,6 @@
 ---
-"@better-auth/core": minor
-"better-auth": minor
+"@shinauth/core": minor
+"shinauth": minor
 ---
 
 Verify social-provider id_tokens with a single shared verifier.

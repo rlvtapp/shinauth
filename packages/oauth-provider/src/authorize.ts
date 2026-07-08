@@ -1,9 +1,9 @@
-import type { GenericEndpointContext } from "@better-auth/core";
-import { isBrowserFetchRequest } from "@better-auth/core/utils/fetch-metadata";
-import { isLoopbackHost, isLoopbackIP } from "@better-auth/core/utils/host";
-import { getSessionFromCtx } from "better-auth/api";
-import { generateRandomString, makeSignature } from "better-auth/crypto";
-import type { Verification } from "better-auth/db";
+import type { GenericEndpointContext } from "@shinauth/core";
+import { isBrowserFetchRequest } from "@shinauth/core/utils/fetch-metadata";
+import { isLoopbackHost, isLoopbackIP } from "@shinauth/core/utils/host";
+import { getSessionFromCtx } from "shinauth/api";
+import { generateRandomString, makeSignature } from "shinauth/crypto";
+import type { Verification } from "shinauth/db";
 import { APIError } from "better-call";
 import { UNSPECIFIED_ACR } from "./authentication-context";
 import { getRequestedUserInfoClaims } from "./claims-request";

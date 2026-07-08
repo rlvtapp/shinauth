@@ -1,5 +1,5 @@
 ---
-"@better-auth/oauth-provider": minor
+"@shinauth/oauth-provider": minor
 ---
 
 fix(oauth-provider): return RFC-compliant `{ error, error_description }` envelopes from validation failures

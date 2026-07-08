@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import path from "node:path";
-import { APIError } from "@better-auth/core/error";
-import { betterAuth } from "better-auth";
+import { APIError } from "@shinauth/core/error";
+import { betterAuth } from "shinauth";
 import chalk from "chalk";
 import { Command } from "commander";
 import prompts from "prompts";
@@ -129,7 +129,7 @@ export async function createAdminAction(opts: unknown) {
 
 	if (typeof createUser !== "function") {
 		exitWithError(
-			"The admin plugin is required. Add `admin()` to your Better Auth plugins before running this command.",
+			"The admin plugin is required. Add `admin()` to your Shinauth plugins before running this command.",
 		);
 	}
 
@@ -163,7 +163,7 @@ export async function createAdminAction(opts: unknown) {
 		}
 	} catch (error) {
 		exitWithError(
-			`Failed to inspect existing users. Make sure your database is reachable and your Better Auth schema is migrated before running this command.${
+			`Failed to inspect existing users. Make sure your database is reachable and your Shinauth schema is migrated before running this command.${
 				error instanceof Error ? `\n${error.message}` : ""
 			}`,
 		);

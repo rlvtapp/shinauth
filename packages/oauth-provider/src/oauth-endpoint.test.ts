@@ -3,7 +3,7 @@ import * as z from "zod";
 import { isMissingValueIssue, mapIssuesToOAuthError } from "./oauth-endpoint";
 
 /**
- * @see https://github.com/better-auth/better-auth/issues/9250
+ * @see https://github.com/rlvtapp/shinauth/issues/9250
  */
 describe("mapIssuesToOAuthError", () => {
 	it("returns defaultError when issue list is empty", () => {
@@ -133,7 +133,7 @@ describe("mapIssuesToOAuthError", () => {
  * `describeIssue` rely on. A rephrase in a zod release would fail these
  * assertions before it could silently reclassify missing or duplicated
  * fields in production.
- * @see https://github.com/better-auth/better-auth/issues/9250
+ * @see https://github.com/rlvtapp/shinauth/issues/9250
  */
 describe("zod v4 issue shape contract", () => {
 	it("reports missing required string as invalid_type + 'received undefined'", () => {

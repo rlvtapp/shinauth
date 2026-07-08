@@ -1,6 +1,6 @@
-import { organizationClient } from "better-auth/client/plugins";
-import { organization } from "better-auth/plugins/organization";
-import { getTestInstance } from "better-auth/test";
+import { organizationClient } from "shinauth/client/plugins";
+import { organization } from "shinauth/plugins/organization";
+import { getTestInstance } from "shinauth/test";
 import type Stripe from "stripe";
 import { describe, expect, vi } from "vitest";
 import { stripe } from "../src";
@@ -456,7 +456,7 @@ describe("stripe - organization customer", () => {
 	// A query referenceId is resolved by the middleware, so the handler must act on
 	// it and not fall back to the active org.
 	/**
-	 * @see https://github.com/better-auth/better-auth/security/advisories/GHSA-h3rm-78g3-j7cp
+	 * @see https://github.com/rlvtapp/shinauth/security/advisories/GHSA-h3rm-78g3-j7cp
 	 */
 	test("should act on the resolved reference id, not the active organization", async ({
 		stripeMock,

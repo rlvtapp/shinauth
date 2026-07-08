@@ -1,13 +1,13 @@
 import assert from "node:assert/strict";
 import { DatabaseSync } from "node:sqlite";
 import { describe, test } from "node:test";
-import { betterAuth } from "better-auth";
-import type { AuthClient } from "better-auth/client";
-import { createAuthClient } from "better-auth/client";
-import type { ApiKeyClientPlugin } from "better-auth/client/plugins";
-import { apiKeyClient } from "better-auth/client/plugins";
-import { getMigrations } from "better-auth/db/migration";
-import { apiKey } from "better-auth/plugins";
+import { betterAuth } from "shinauth";
+import type { AuthClient } from "shinauth/client";
+import { createAuthClient } from "shinauth/client";
+import type { ApiKeyClientPlugin } from "shinauth/client/plugins";
+import { apiKeyClient } from "shinauth/client/plugins";
+import { getMigrations } from "shinauth/db/migration";
+import { apiKey } from "shinauth/plugins";
 
 describe("server side client", () => {
 	test("can use api key on server side", async () => {

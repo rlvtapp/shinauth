@@ -1,6 +1,6 @@
 ---
 title: Client ID Metadata Document (CIMD)
-description: Unauthenticated dynamic client discovery for Better Auth's OAuth provider.
+description: Unauthenticated dynamic client discovery for Shinauth's OAuth provider.
 ---
 
 `OAuth2` `MCP`
@@ -9,7 +9,7 @@ description: Unauthenticated dynamic client discovery for Better Auth's OAuth pr
 
 This is the mechanism [MCP](https://modelcontextprotocol.io/specification/draft/basic/authorization#client-id-metadata-documents-flow) uses so authorization servers can discover clients on the fly.
 
-The plugin extends [`@better-auth/oauth-provider`](./oauth-provider) by contributing a `ClientDiscovery` entry through its extension surface, so every OAuth endpoint that authenticates a client (authorize, token, introspect, revoke, userinfo, PAR, logout) works seamlessly with URL-format `client_id` values.
+The plugin extends [`@shinauth/oauth-provider`](./oauth-provider) by contributing a `ClientDiscovery` entry through its extension surface, so every OAuth endpoint that authenticates a client (authorize, token, introspect, revoke, userinfo, PAR, logout) works seamlessly with URL-format `client_id` values.
 
 ## Installation
 
@@ -18,7 +18,7 @@ The plugin extends [`@better-auth/oauth-provider`](./oauth-provider) by contribu
     ### Install the plugin
 
     ```package-install
-    @better-auth/cimd
+    @shinauth/cimd
     ```
   </Step>
 
@@ -28,10 +28,10 @@ The plugin extends [`@better-auth/oauth-provider`](./oauth-provider) by contribu
     Install `cimd()` alongside `oauthProvider()`. The plugin requires `oauth-provider` to be present and will throw at startup if it is missing.
 
     ```ts title="auth.ts"
-    import { betterAuth } from "better-auth";
-    import { jwt } from "better-auth/plugins";
-    import { oauthProvider } from "@better-auth/oauth-provider";
-    import { cimd } from "@better-auth/cimd"; // [!code highlight]
+    import { betterAuth } from "shinauth";
+    import { jwt } from "shinauth/plugins";
+    import { oauthProvider } from "@shinauth/oauth-provider";
+    import { cimd } from "@shinauth/cimd"; // [!code highlight]
 
     export const auth = betterAuth({
       plugins: [
@@ -188,8 +188,8 @@ The plugin ships defense in depth against common abuses of unauthenticated clien
 Under the hood, `cimd()` contributes a `ClientDiscovery` entry through `oauthProvider`'s extension surface. If you prefer to wire it explicitly, or want to compose CIMD with other discovery implementations, use the `cimdClientDiscovery` factory:
 
 ```ts title="auth.ts"
-import { oauthProvider } from "@better-auth/oauth-provider";
-import { cimdClientDiscovery } from "@better-auth/cimd";
+import { oauthProvider } from "@shinauth/oauth-provider";
+import { cimdClientDiscovery } from "@shinauth/cimd";
 
 export const auth = betterAuth({
   plugins: [

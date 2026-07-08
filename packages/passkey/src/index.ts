@@ -1,5 +1,5 @@
-import type { BetterAuthPlugin } from "@better-auth/core";
-import { mergeSchema } from "better-auth/db";
+import type { BetterAuthPlugin } from "@shinauth/core";
+import { mergeSchema } from "shinauth/db";
 import { PASSKEY_ERROR_CODES } from "./error-codes";
 import {
 	deletePasskey,
@@ -14,7 +14,7 @@ import { schema } from "./schema";
 import type { Passkey, PasskeyOptions } from "./types";
 import { PACKAGE_VERSION } from "./version";
 
-declare module "@better-auth/core" {
+declare module "@shinauth/core" {
 	interface BetterAuthPluginRegistry<AuthOptions, Options> {
 		passkey: {
 			creator: typeof passkey;
@@ -35,7 +35,7 @@ export const passkey = (options?: PasskeyOptions | undefined) => {
 		origin: null,
 		...options,
 		advanced: {
-			webAuthnChallengeCookie: "better-auth-passkey",
+			webAuthnChallengeCookie: "shinauth-passkey",
 			...options?.advanced,
 		},
 	};

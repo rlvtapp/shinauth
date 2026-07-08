@@ -1,4 +1,4 @@
-import { base64Url } from "@better-auth/utils/base64";
+import { base64Url } from "@shinauth/utils/base64";
 import type { OAuth2Tokens } from "./oauth-provider";
 
 /**
@@ -8,7 +8,7 @@ import type { OAuth2Tokens } from "./oauth-provider";
  * providers vary: some return an already-split array. Accept both forms and
  * drop empty or non-string entries.
  *
- * @see https://github.com/better-auth/better-auth/issues/9076
+ * @see https://github.com/rlvtapp/shinauth/issues/9076
  */
 export function parseScopeField(scope: unknown): string[] {
 	if (Array.isArray(scope)) {

@@ -1,4 +1,4 @@
-import type { User } from "better-auth/types";
+import type { User } from "shinauth/types";
 import type { OAuthOptions, Scope } from "./types";
 
 /**
@@ -9,7 +9,7 @@ type StandardClaimScope = "profile" | "email";
 interface StandardClaimDefinition {
 	/** Scope value that requests this claim (OIDC Core §5.4). */
 	scope: StandardClaimScope;
-	/** Resolves the claim value from the Better Auth user. */
+	/** Resolves the claim value from the Shinauth user. */
 	resolve: (user: User) => unknown;
 }
 
@@ -23,12 +23,12 @@ function splitDisplayName(name: string): {
 }
 
 /**
- * The OIDC Standard Claims (OIDC Core §5.1) that Better Auth resolves from its
+ * The OIDC Standard Claims (OIDC Core §5.1) that Shinauth resolves from its
  * own user model, each paired with the scope that requests it (§5.4).
  *
  * This is the single source for UserInfo scope-claim resolution, individual
  * `claims.userinfo` resolution, the discovery `claims_supported` advertisement,
- * and the bound on requested claim names. Adding a standard claim Better Auth
+ * and the bound on requested claim names. Adding a standard claim Shinauth
  * can resolve means adding one entry here, not editing UserInfo, the metadata,
  * and the plugin init separately.
  *

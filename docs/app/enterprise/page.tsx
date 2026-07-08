@@ -5,7 +5,7 @@ import { EnterprisePageClient } from "./enterprise-client";
 export const metadata: Metadata = createMetadata({
 	title: "Enterprise",
 	description:
-		"Better Auth for enterprise — SSO, SAML, audit logs, and dedicated support.",
+		"Shinauth for enterprise — SSO, SAML, audit logs, and dedicated support.",
 });
 
 export default function EnterprisePage() {

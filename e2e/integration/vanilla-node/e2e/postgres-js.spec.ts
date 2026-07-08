@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
-import { betterAuth } from "better-auth";
-import { getMigrations } from "better-auth/db/migration";
-import { nextCookies } from "better-auth/next-js";
+import { betterAuth } from "shinauth";
+import { getMigrations } from "shinauth/db/migration";
+import { nextCookies } from "shinauth/next-js";
 import { PostgresJSDialect } from "kysely-postgres-js";
 import postgres from "postgres";
 

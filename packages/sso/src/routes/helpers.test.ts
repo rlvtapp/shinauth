@@ -1,4 +1,4 @@
-import { APIError } from "better-auth/api";
+import { APIError } from "shinauth/api";
 import { describe, expect, it } from "vitest";
 import { createSAMLPostForm } from "./helpers";
 

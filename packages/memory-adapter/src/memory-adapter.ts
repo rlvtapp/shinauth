@@ -1,11 +1,11 @@
-import type { BetterAuthOptions } from "@better-auth/core";
+import type { BetterAuthOptions } from "@shinauth/core";
 import type {
 	CleanedWhere,
 	DBAdapterDebugLogOption,
 	JoinConfig,
-} from "@better-auth/core/db/adapter";
-import { createAdapterFactory } from "@better-auth/core/db/adapter";
-import { logger } from "@better-auth/core/env";
+} from "@shinauth/core/db/adapter";
+import { createAdapterFactory } from "@shinauth/core/db/adapter";
+import { logger } from "@shinauth/core/env";
 import {
 	insensitiveCompare,
 	insensitiveContains,
@@ -25,7 +25,7 @@ export interface MemoryAdapterConfig {
 
 /**
  * Index a table's rows by their `id` for row-level reconciliation. Every
- * better-auth row carries an `id` (the adapter's join logic already keys on
+ * shinauth row carries an `id` (the adapter's join logic already keys on
  * `record.id`), so the id is a stable identity for the three-way merge.
  */
 function indexById(rows: any[]): Map<unknown, any> {

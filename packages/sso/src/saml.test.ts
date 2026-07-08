@@ -6,13 +6,13 @@ import {
 } from "node:crypto";
 import type { createServer } from "node:http";
 import { betterFetch } from "@better-fetch/fetch";
-import { betterAuth } from "better-auth";
-import { memoryAdapter } from "better-auth/adapters/memory";
-import { APIError } from "better-auth/api";
-import { createAuthClient } from "better-auth/client";
-import { parseSetCookieHeader, setCookieToHeader } from "better-auth/cookies";
-import { bearer } from "better-auth/plugins";
-import { getTestInstance } from "better-auth/test";
+import { betterAuth } from "shinauth";
+import { memoryAdapter } from "shinauth/adapters/memory";
+import { APIError } from "shinauth/api";
+import { createAuthClient } from "shinauth/client";
+import { parseSetCookieHeader, setCookieToHeader } from "shinauth/cookies";
+import { bearer } from "shinauth/plugins";
+import { getTestInstance } from "shinauth/test";
 import bodyParser from "body-parser";
 import type {
 	Application as ExpressApp,
@@ -2702,7 +2702,7 @@ describe("SAML SSO", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/8607
+	 * @see https://github.com/rlvtapp/shinauth/issues/8607
 	 */
 	it("should reject SAML response with mismatched audience restriction", async () => {
 		const { auth, signInWithTestUser } = await getTestInstance({
@@ -2838,7 +2838,7 @@ describe("SAML SSO", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/7777
+	 * @see https://github.com/rlvtapp/shinauth/issues/7777
 	 */
 	it("should correctly parse verification-ID-based RelayState on ACS route (SP-initiated)", async () => {
 		const { auth, signInWithTestUser } = await getTestInstance({
@@ -3076,7 +3076,7 @@ describe("SAML SSO", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/7777
+	 * @see https://github.com/rlvtapp/shinauth/issues/7777
 	 */
 	it("should fallback to baseURL on ACS route when RelayState is invalid", async () => {
 		const { auth, signInWithTestUser } = await getTestInstance({
@@ -4469,7 +4469,7 @@ describe("SAML ACS Origin Check Bypass", () => {
 					headers: {
 						"Content-Type": "application/json",
 						Origin: "http://attacker.com",
-						Cookie: "better-auth.session_token=fake-session",
+						Cookie: "shinauth.session_token=fake-session",
 					},
 					body: JSON.stringify({
 						email: "victim@example.com",
@@ -5491,14 +5491,14 @@ describe("SAML SSO - Single Assertion Validation", () => {
 			firstCallbackResponse.headers.get("set-cookie") ?? "",
 		);
 		const firstSessionToken = firstCookies.get(
-			"better-auth.session_token",
+			"shinauth.session_token",
 		)?.value;
 		expect(firstSessionToken).toBeDefined();
 
 		const firstSession = await client.getSession({
 			fetchOptions: {
 				headers: {
-					Cookie: `better-auth.session_token=${firstSessionToken}`,
+					Cookie: `shinauth.session_token=${firstSessionToken}`,
 				},
 			},
 		});
@@ -5542,14 +5542,14 @@ describe("SAML SSO - Single Assertion Validation", () => {
 			secondCallbackResponse.headers.get("set-cookie") ?? "",
 		);
 		const secondSessionToken = secondCookies.get(
-			"better-auth.session_token",
+			"shinauth.session_token",
 		)?.value;
 		expect(secondSessionToken).toBeDefined();
 
 		const secondSession = await client.getSession({
 			fetchOptions: {
 				headers: {
-					Cookie: `better-auth.session_token=${secondSessionToken}`,
+					Cookie: `shinauth.session_token=${secondSessionToken}`,
 				},
 			},
 		});
@@ -6058,7 +6058,7 @@ describe("SAML Single Logout (SLO)", () => {
 			expect(location).toBe(callbackUrl);
 
 			const setCookie = sloRes.headers.get("set-cookie");
-			expect(setCookie).toContain("better-auth.session_token=;");
+			expect(setCookie).toContain("shinauth.session_token=;");
 		});
 
 		it("should redirect to baseURL when relayState is missing", async () => {
@@ -6143,7 +6143,7 @@ describe("SAML Single Logout (SLO)", () => {
 });
 
 /**
- * @see https://github.com/better-auth/better-auth/issues/8630
+ * @see https://github.com/rlvtapp/shinauth/issues/8630
  */
 describe("SAML provisionUser should only be called for new users", async () => {
 	const provisionUserFn = vi.fn();
@@ -6286,7 +6286,7 @@ describe("SAML provisionUser should only be called for new users", async () => {
 });
 
 /**
- * @see https://github.com/better-auth/better-auth/issues/8630
+ * @see https://github.com/rlvtapp/shinauth/issues/8630
  */
 describe("SAML provisionUserOnEveryLogin should call provisionUser on every sign-in", async () => {
 	const provisionUserFn = vi.fn();
@@ -6403,7 +6403,7 @@ describe("SAML provisionUserOnEveryLogin should call provisionUser on every sign
 /**
  * End-to-end SP-initiated SAML SSO flow.
  *
- * Validates the complete lifecycle through the actual better-auth stack:
+ * Validates the complete lifecycle through the actual shinauth stack:
  * provider registration, AuthnRequest generation, IdP response, SAML pipeline
  * processing, user creation, session creation, and post-auth redirect.
  */

@@ -1,4 +1,4 @@
-import type { Account, User } from "better-auth";
+import type { Account, User } from "shinauth";
 import { SCIMGroupResourceSchema } from "./group-schemas";
 import type {
 	SCIMGroup,

@@ -173,7 +173,7 @@ const platforms = [
 	{
 		name: "Discord",
 		icon: DiscordIcon,
-		href: "https://discord.gg/better-auth",
+		href: "https://discord.gg/shinauth",
 		cta: "Join Discord",
 		members: "10,000+",
 		label: "members",
@@ -181,7 +181,7 @@ const platforms = [
 	{
 		name: "GitHub",
 		icon: GitHubIcon,
-		href: "https://github.com/better-auth/better-auth",
+		href: "https://github.com/rlvtapp/shinauth",
 		cta: "View on GitHub",
 		members: "Open Source",
 		label: "repository",
@@ -224,7 +224,7 @@ function CommunityHero({ stats }: { stats: CommunityStats }) {
 						<span className="text-foreground/50">build together.</span>
 					</h1>
 					<p className="text-sm text-foreground/70 dark:text-foreground/50 leading-relaxed max-w-[260px]">
-						Connect with developers building with Better Auth.
+						Connect with developers building with Shinauth.
 					</p>
 				</div>
 
@@ -423,7 +423,7 @@ export function CommunityPageClient({ stats }: { stats: CommunityStats }) {
 										<span className="text-foreground/50">build together.</span>
 									</h1>
 									<p className="text-sm text-foreground/70 dark:text-foreground/50 leading-relaxed">
-										Connect with developers building with Better Auth.
+										Connect with developers building with Shinauth.
 									</p>
 								</div>
 							</div>

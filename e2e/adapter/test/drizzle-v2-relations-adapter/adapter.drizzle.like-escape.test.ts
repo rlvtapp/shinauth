@@ -6,8 +6,8 @@
  *
  * @see https://www.sqlite.org/lang_expr.html
  */
-import type { User } from "@better-auth/core/db";
-import { drizzleAdapter } from "@better-auth/drizzle-adapter/relations-v2";
+import type { User } from "@shinauth/core/db";
+import { drizzleAdapter } from "@shinauth/drizzle-adapter/relations-v2";
 import Database from "better-sqlite3";
 import { drizzle } from "drizzle-orm/better-sqlite3";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";

@@ -22,7 +22,7 @@ importers:
 
   .:
     dependencies:
-      '@better-auth/electron':
+      '@shinauth/electron':
         specifier: link:../../packages/electron
         version: link:../../packages/electron
       '@electron-toolkit/utils':
@@ -34,9 +34,9 @@ importers:
       '@radix-ui/react-slot':
         specifier: ^1.2.4
         version: 1.2.4(@types/react@19.2.14)(react@19.2.4)
-      better-auth:
-        specifier: link:../../packages/better-auth
-        version: link:../../packages/better-auth
+      shinauth:
+        specifier: link:../../packages/shinauth
+        version: link:../../packages/shinauth
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1

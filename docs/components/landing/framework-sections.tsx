@@ -772,7 +772,7 @@ const ormAdapters = [
 ];
 
 const dbSnippets: Record<string, string> = {
-	PostgreSQL: `import { betterAuth } from "better-auth"
+	PostgreSQL: `import { betterAuth } from "shinauth"
 import { Pool } from "pg"
 
 const pool = new Pool({
@@ -807,7 +807,7 @@ export const auth = betterAuth({
 })`,
 };
 
-export const serverCode = `import { betterAuth } from "better-auth"
+export const serverCode = `import { betterAuth } from "shinauth"
 
 export const auth = betterAuth({
   emailAndPassword: {
@@ -830,7 +830,7 @@ export const auth = betterAuth({
   ],
 })`;
 
-export const clientCode = `import { createAuthClient } from "better-auth/react"
+export const clientCode = `import { createAuthClient } from "shinauth/react"
 
 export const authClient = createAuthClient({
   plugins: [
@@ -1247,17 +1247,17 @@ export function PluginEcosystem() {
 
 export function AiNativeSection() {
 	const steps = [
-		{ label: "mcp", text: "Connected to better-auth docs" },
-		{ label: "skill", text: "better-auth/add-provider → google" },
-		{ label: "skill", text: "better-auth/add-plugin → two-factor" },
+		{ label: "mcp", text: "Connected to shinauth docs" },
+		{ label: "skill", text: "shinauth/add-provider → google" },
+		{ label: "skill", text: "shinauth/add-plugin → two-factor" },
 		{ label: "write", text: "lib/auth.ts", lines: 14 },
 		{ label: "done", text: "Google OAuth + 2FA configured" },
 	];
 
 	const mcpClients = [
-		{ name: "Claude Code", cmd: "claude mcp add better-auth" },
-		{ name: "Cursor", cmd: "cursor mcp add better-auth" },
-		{ name: "VS Code", cmd: "code --add-mcp better-auth" },
+		{ name: "Claude Code", cmd: "claude mcp add shinauth" },
+		{ name: "Cursor", cmd: "cursor mcp add shinauth" },
+		{ name: "VS Code", cmd: "code --add-mcp shinauth" },
 	];
 
 	return (

@@ -14,8 +14,8 @@ The One-Time Token (OTT) plugin provides functionality to generate and verify se
     To use the One-Time Token plugin, add it to your auth config.
 
     ```ts title="auth.ts"
-    import { betterAuth } from "better-auth";
-    import { oneTimeToken } from "better-auth/plugins/one-time-token"; // [!code highlight]
+    import { betterAuth } from "shinauth";
+    import { oneTimeToken } from "shinauth/plugins/one-time-token"; // [!code highlight]
 
     export const auth = betterAuth({
         plugins: [
@@ -32,8 +32,8 @@ The One-Time Token (OTT) plugin provides functionality to generate and verify se
     Next, include the one-time-token client plugin in your authentication client instance.
 
     ```ts title="auth-client.ts"
-    import { createAuthClient } from "better-auth/client"
-    import { oneTimeTokenClient } from "better-auth/client/plugins" // [!code highlight]
+    import { createAuthClient } from "shinauth/client"
+    import { oneTimeTokenClient } from "shinauth/client/plugins" // [!code highlight]
 
     export const authClient = createAuthClient({
         plugins: [

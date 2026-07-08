@@ -1,5 +1,5 @@
 ---
-"@better-auth/oauth-provider": minor
+"@shinauth/oauth-provider": minor
 ---
 
 The OIDC provider now honors the `claims.userinfo` authorization request parameter. A client can ask for individual standard claims, and the UserInfo endpoint returns the ones it can supply in addition to the scope-granted claims. The requested claims become part of the user's consent, and `claims_parameter_supported` is advertised in discovery.

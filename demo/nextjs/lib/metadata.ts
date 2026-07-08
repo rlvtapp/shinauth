@@ -6,9 +6,9 @@ export function createMetadata(override: Metadata): Metadata {
 		openGraph: {
 			title: override.title ?? undefined,
 			description: override.description ?? undefined,
-			url: "https://demo.better-auth.com",
-			images: "https://demo.better-auth.com/og.png",
-			siteName: "Better Auth",
+			url: "https://demo.shinauth.com",
+			images: "https://demo.shinauth.com/og.png",
+			siteName: "Shinauth",
 			...override.openGraph,
 		},
 		twitter: {
@@ -16,7 +16,7 @@ export function createMetadata(override: Metadata): Metadata {
 			creator: "@beakcru",
 			title: override.title ?? undefined,
 			description: override.description ?? undefined,
-			images: "https://demo.better-auth.com/og.png",
+			images: "https://demo.shinauth.com/og.png",
 			...override.twitter,
 		},
 	};

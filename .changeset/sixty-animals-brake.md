@@ -1,5 +1,5 @@
 ---
-"better-auth": patch
+"shinauth": patch
 ---
 
 fix: add no-store cache-control headers to get-session route

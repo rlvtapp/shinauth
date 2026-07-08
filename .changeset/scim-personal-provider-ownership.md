@@ -1,5 +1,5 @@
 ---
-"@better-auth/scim": minor
+"@shinauth/scim": minor
 ---
 
 Personal (non-organization) SCIM connections now always belong to the user who created them. Owner binding used to be opt-in through the `providerOwnership` option, which defaulted to off. With it off, a personal connection was stored without an owner, and the management endpoints denied access only when a stored owner differed from the caller. An unowned connection passed that check for any signed-in user, who could read it, list it, regenerate its token, or delete it. Regenerating the token rotated the secret and invalidated the original.

@@ -1,7 +1,7 @@
-import { clientCredentialsTokenRequest } from "@better-auth/core/oauth2";
-import { createAuthClient } from "better-auth/client";
-import { jwt } from "better-auth/plugins/jwt";
-import { getTestInstance } from "better-auth/test";
+import { clientCredentialsTokenRequest } from "@shinauth/core/oauth2";
+import { createAuthClient } from "shinauth/client";
+import { jwt } from "shinauth/plugins/jwt";
+import { getTestInstance } from "shinauth/test";
 import { beforeAll, describe, expect, it } from "vitest";
 import { oauthProviderClient } from "./client";
 import { oauthProvider } from "./oauth";
@@ -110,7 +110,7 @@ describe("oauth credential responses carry no-store", async () => {
 		expect(response?.headers.get("Pragma")).toBe("no-cache");
 	});
 
-	// Introspection exposes token metadata; Better Auth marks it no-store.
+	// Introspection exposes token metadata; Shinauth marks it no-store.
 	it("sets no-store on the introspection response", async () => {
 		const { body, headers: reqHeaders } = await clientCredentialsTokenRequest({
 			options: {

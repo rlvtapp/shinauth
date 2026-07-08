@@ -1,6 +1,6 @@
-import type { SecondaryStorage } from "@better-auth/core/db";
-import type { APIError } from "@better-auth/core/error";
-import { getTestInstance } from "better-auth/test";
+import type { SecondaryStorage } from "@shinauth/core/db";
+import type { APIError } from "@shinauth/core/error";
+import { getTestInstance } from "shinauth/test";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { apiKey, API_KEY_ERROR_CODES as ERROR_CODES } from ".";
 import { apiKeyClient } from "./client";
@@ -1018,7 +1018,7 @@ describe("api-key", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/9504
+	 * @see https://github.com/rlvtapp/shinauth/issues/9504
 	 */
 	it("should return 429 when API key rate limit is exceeded via before hook", async () => {
 		const { client: rlClient, signInWithTestUser: rlSignIn } =
@@ -4138,7 +4138,7 @@ describe("api-key", async () => {
 		});
 
 		/**
-		 * @see https://github.com/better-auth/better-auth/issues/9779
+		 * @see https://github.com/rlvtapp/shinauth/issues/9779
 		 */
 		describe("verify scoping by configId", () => {
 			it("should verify a non-default key when configId is omitted", async () => {
@@ -4413,10 +4413,10 @@ describe("api-key", async () => {
 
 	describe("organization-owned API keys", async () => {
 		const { organization } = await import(
-			"../../better-auth/src/plugins/organization"
+			"../../shinauth/src/plugins/organization"
 		);
 		const { organizationClient } = await import(
-			"../../better-auth/src/plugins/organization/client"
+			"../../shinauth/src/plugins/organization/client"
 		);
 
 		const { auth, signInWithTestUser, client } = await getTestInstance(
@@ -4711,7 +4711,7 @@ describe("api-key", async () => {
 				body: { email: nonMemberEmail, password: "password123" },
 			});
 			const nonMemberHeaders = {
-				cookie: `better-auth.session_token=${nonMemberSession.token}`,
+				cookie: `shinauth.session_token=${nonMemberSession.token}`,
 			};
 
 			// Non-member should not be able to list org API keys
@@ -5353,7 +5353,7 @@ describe("api key creation uses a fresh session", async () => {
 		expect(userId).toBeDefined();
 		// The cookie cache must actually be present, otherwise this test would
 		// pass for the wrong reason.
-		expect(headers.get("cookie")).toContain("better-auth.session_data");
+		expect(headers.get("cookie")).toContain("shinauth.session_data");
 
 		// With a live session, creation succeeds.
 		const first = await client.apiKey.create({}, { headers });

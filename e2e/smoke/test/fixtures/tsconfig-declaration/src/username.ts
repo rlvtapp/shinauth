@@ -1,5 +1,5 @@
-import { betterAuth } from "better-auth";
-import { username } from "better-auth/plugins";
+import { betterAuth } from "shinauth";
+import { username } from "shinauth/plugins";
 import { expectTypeOf } from "vitest";
 
 export const auth = betterAuth({

@@ -45,7 +45,7 @@ export async function GET() {
 	const pages = source.getPages();
 	const groupedPages = groupPagesByCategory(pages);
 
-	let content = `# Better Auth
+	let content = `# Shinauth
 
 > The most comprehensive authentication framework for TypeScript
 

@@ -1,9 +1,9 @@
-import type { AuthContext, Awaitable } from "@better-auth/core";
-import { createAuthEndpoint } from "@better-auth/core/api";
-import { APIError } from "@better-auth/core/error";
-import { generateId } from "@better-auth/core/utils/id";
-import { safeJSONParse } from "@better-auth/core/utils/json";
-import { getSessionFromCtx } from "better-auth/api";
+import type { AuthContext, Awaitable } from "@shinauth/core";
+import { createAuthEndpoint } from "@shinauth/core/api";
+import { APIError } from "@shinauth/core/error";
+import { generateId } from "@shinauth/core/utils/id";
+import { safeJSONParse } from "@shinauth/core/utils/json";
+import { getSessionFromCtx } from "shinauth/api";
 import * as z from "zod";
 import { API_KEY_TABLE_NAME, API_KEY_ERROR_CODES as ERROR_CODES } from "..";
 import { defaultKeyHasher } from "../";

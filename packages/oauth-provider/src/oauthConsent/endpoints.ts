@@ -1,5 +1,5 @@
-import type { GenericEndpointContext } from "@better-auth/core";
-import { APIError, getSessionFromCtx } from "better-auth/api";
+import type { GenericEndpointContext } from "@shinauth/core";
+import { APIError, getSessionFromCtx } from "shinauth/api";
 import type { OAuthConsent, OAuthOptions, Scope } from "../types";
 import { getClient } from "../utils";
 

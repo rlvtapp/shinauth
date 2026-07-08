@@ -1,10 +1,10 @@
-import { sso } from "@better-auth/sso";
-import { betterAuth } from "better-auth";
-import { memoryAdapter } from "better-auth/adapters/memory";
-import { createAuthClient } from "better-auth/client";
-import { setCookieToHeader } from "better-auth/cookies";
-import { bearer, organization } from "better-auth/plugins";
-import { getTestInstance } from "better-auth/test";
+import { sso } from "@shinauth/sso";
+import { betterAuth } from "shinauth";
+import { memoryAdapter } from "shinauth/adapters/memory";
+import { createAuthClient } from "shinauth/client";
+import { setCookieToHeader } from "shinauth/cookies";
+import { bearer, organization } from "shinauth/plugins";
+import { getTestInstance } from "shinauth/test";
 import { describe, expect, it } from "vitest";
 import { scim } from ".";
 import { scimClient } from "./client";

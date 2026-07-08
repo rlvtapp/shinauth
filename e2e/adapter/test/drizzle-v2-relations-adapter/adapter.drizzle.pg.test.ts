@@ -1,6 +1,6 @@
 import { execSync } from "node:child_process";
-import { drizzleAdapter } from "@better-auth/drizzle-adapter/relations-v2";
-import { testAdapter } from "@better-auth/test-utils/adapter";
+import { drizzleAdapter } from "@shinauth/drizzle-adapter/relations-v2";
+import { testAdapter } from "@shinauth/test-utils/adapter";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import {

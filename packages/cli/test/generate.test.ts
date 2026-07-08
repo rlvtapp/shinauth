@@ -3,11 +3,11 @@ import * as fs from "node:fs";
 import * as os from "node:os";
 import * as path from "node:path";
 import { promisify } from "node:util";
-import type { BetterAuthOptions, BetterAuthPlugin } from "@better-auth/core";
-import type { DBAdapter } from "@better-auth/core/db/adapter";
-import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { prismaAdapter } from "better-auth/adapters/prisma";
-import { organization, twoFactor, username } from "better-auth/plugins";
+import type { BetterAuthOptions, BetterAuthPlugin } from "@shinauth/core";
+import type { DBAdapter } from "@shinauth/core/db/adapter";
+import { drizzleAdapter } from "shinauth/adapters/drizzle";
+import { prismaAdapter } from "shinauth/adapters/prisma";
+import { organization, twoFactor, username } from "shinauth/plugins";
 import Database from "better-sqlite3";
 import { describe, expect, it } from "vitest";
 import { generateSchema } from "../src/generators";
@@ -52,7 +52,7 @@ describe("generate", async () => {
 				fs.mkdirSync(outputDir);
 				fs.writeFileSync(
 					path.join(tmpDir, "auth.ts"),
-					`import { betterAuth } from "better-auth";
+					`import { betterAuth } from "shinauth";
 import Database from "better-sqlite3";
 
 export const auth = betterAuth({
@@ -125,7 +125,7 @@ export const auth = betterAuth({
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/9717
+	 * @see https://github.com/rlvtapp/shinauth/issues/9717
 	 */
 	const runBigintToggleTest = async (
 		fromBigint: boolean,
@@ -1208,7 +1208,7 @@ describe("Enum field support in Drizzle schemas", () => {
 
 describe("Drizzle array defaultValue serialization", () => {
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/10046
+	 * @see https://github.com/rlvtapp/shinauth/issues/10046
 	 */
 	it("emits a JS array literal for string[] additionalField defaultValue", async () => {
 		const schema = await generateDrizzleSchema({

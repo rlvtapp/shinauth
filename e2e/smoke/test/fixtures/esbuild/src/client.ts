@@ -1,6 +1,6 @@
-import { createAuthClient } from "better-auth/vue";
+import { createAuthClient } from "shinauth/vue";
 
-export * from "better-auth/client/plugins";
+export * from "shinauth/client/plugins";
 
 export const client = createAuthClient({
 	baseURL: "http://localhost:3000",

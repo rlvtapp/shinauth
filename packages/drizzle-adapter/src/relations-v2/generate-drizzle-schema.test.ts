@@ -1,4 +1,4 @@
-import type { BetterAuthOptions } from "@better-auth/core";
+import type { BetterAuthOptions } from "@shinauth/core";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import { generateDrizzleSchema } from "./generate-drizzle-schema";
@@ -123,7 +123,7 @@ describe("relations-v2 schema generator", () => {
 	 * (an undefined identifier), `.default([object Object])` (a syntax error),
 	 * or `.default("hello "admin"")` (a broken string literal).
 	 *
-	 * @see https://github.com/better-auth/better-auth/pull/10048
+	 * @see https://github.com/rlvtapp/shinauth/pull/10048
 	 */
 	it("serializes array, object, and quoted-string additionalField defaultValue to a literal", async () => {
 		const { code = "" } = await generate({

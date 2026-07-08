@@ -1,11 +1,11 @@
-import { createAuthClient } from "better-auth/client";
-import { generateRandomString } from "better-auth/crypto";
+import { createAuthClient } from "shinauth/client";
+import { generateRandomString } from "shinauth/crypto";
 import {
 	authorizationCodeRequest,
 	createAuthorizationURL,
-} from "better-auth/oauth2";
-import { jwt } from "better-auth/plugins/jwt";
-import { getTestInstance } from "better-auth/test";
+} from "shinauth/oauth2";
+import { jwt } from "shinauth/plugins/jwt";
+import { getTestInstance } from "shinauth/test";
 import { decodeJwt } from "jose";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import { oauthProviderClient } from "./client";
@@ -319,7 +319,7 @@ describe("PKCE optional - dynamic client registration policy", async () => {
 	const redirectUri = `${rpBaseUrl}/api/auth/callback/${providerId}`;
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/8588
+	 * @see https://github.com/rlvtapp/shinauth/issues/8588
 	 */
 	it("confidential DCR client without PKCE should succeed when registration policy disables PKCE", async () => {
 		const registration = await unauthenticatedClient.oauth2.register({

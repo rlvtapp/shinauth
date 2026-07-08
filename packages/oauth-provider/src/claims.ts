@@ -1,6 +1,6 @@
-import type { GenericEndpointContext } from "@better-auth/core";
-import { logger } from "@better-auth/core/env";
-import type { User } from "better-auth/types";
+import type { GenericEndpointContext } from "@shinauth/core";
+import { logger } from "@shinauth/core/env";
+import type { User } from "shinauth/types";
 import { collectExtensionAccessTokenClaims } from "./extensions";
 import type { OAuthOptions, SchemaClient, Scope } from "./types";
 import type { GrantType } from "./types/oauth";

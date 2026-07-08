@@ -63,7 +63,7 @@ type InferPluginOptions<
  *   options,
  * } satisfies BetterAuthPlugin);
  *
- * declare module "@better-auth/core" {
+ * declare module "@shinauth/core" {
  *  interface BetterAuthPluginRegistry<AuthOptions, Options> {
  *    'my-plugin': {
  *      creator: Options extends MyPluginOptions ? typeof createMyPlugin<Options>: typeof createMyPlugin

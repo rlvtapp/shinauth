@@ -2,7 +2,7 @@ import { execSync } from "node:child_process";
 import { writeFileSync } from "node:fs";
 
 const raw = execSync(
-	"gh api repos/better-auth/better-auth/contributors --paginate",
+	"gh api repos/shinauth/shinauth/contributors --paginate",
 	{ encoding: "utf-8" },
 );
 const data = JSON.parse(raw);

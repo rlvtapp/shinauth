@@ -17,7 +17,7 @@ export const sessionSchema = coreSchema.extend({
 export type BaseSession = z.infer<typeof sessionSchema>;
 
 /**
- * Session schema type used by better-auth, note that it's possible that session could have additional fields
+ * Session schema type used by shinauth, note that it's possible that session could have additional fields
  */
 export type Session<
 	DBOptions extends BetterAuthOptions["session"] = BetterAuthOptions["session"],

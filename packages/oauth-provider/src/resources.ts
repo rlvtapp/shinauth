@@ -1,7 +1,7 @@
-import type { AuthContext, GenericEndpointContext } from "@better-auth/core";
-import { logger } from "@better-auth/core/env";
-import { APIError } from "better-auth/api";
-import type { JWSAlgorithms } from "better-auth/plugins";
+import type { AuthContext, GenericEndpointContext } from "@shinauth/core";
+import { logger } from "@shinauth/core/env";
+import { APIError } from "shinauth/api";
+import type { JWSAlgorithms } from "shinauth/plugins";
 import type {
 	OAuthClientResource,
 	OAuthOptions,
@@ -13,7 +13,7 @@ import type {
 /**
  * Source-of-truth list of asymmetric JWS algorithms supported by the JWT
  * plugin. Mirrors the {@link JWSAlgorithms} literal-union type from
- * `packages/better-auth/src/plugins/jwt/types.ts`. Kept as a runtime const
+ * `packages/shinauth/src/plugins/jwt/types.ts`. Kept as a runtime const
  * so the admin-CRUD zod schema AND the seed-config validator can reject
  * bad values up-front rather than surfacing opaque jose errors at issuance.
  *
@@ -60,7 +60,7 @@ const MAX_AUD_VALUES = 64;
 /**
  * Builds a deterministic primary-key value for an `oauthClientResource`
  * row. Used so the implicit PK uniqueness constraint enforces the composite
- * `(clientId, resourceId)` uniqueness that Better Auth's schema layer
+ * `(clientId, resourceId)` uniqueness that Shinauth's schema layer
  * cannot declare directly — making client-resource links idempotent across
  * the admin link endpoint and Dynamic Client Registration.
  *
@@ -843,7 +843,7 @@ interface SeedState {
 
 /**
  * Per-adapter state for the lazy-seed path. A module-level boolean would let
- * one Better Auth instance suppress seeding for every later instance in the same
+ * one Shinauth instance suppress seeding for every later instance in the same
  * process. Endpoint `AuthContext` objects are not guaranteed to be stable across
  * requests, so keying by the adapter keeps one seed state per backing store.
  */
@@ -888,7 +888,7 @@ export function resetSeedStateForTests(): void {
  * the other catches the constraint error and treats it as a no-op.
  *
  * Migration ordering: at plugin `init` time, tables may not exist yet
- * (Better Auth's test harness, and many deployment setups, run migrations
+ * (Shinauth's test harness, and many deployment setups, run migrations
  * after auth construction). Seeding tolerates "no such table" errors and
  * defers — the lazy {@link seedResourcesOnce} path picks up the work on
  * the first resource access.

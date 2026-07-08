@@ -3,7 +3,7 @@ title: Captcha
 description: Captcha plugin
 ---
 
-The **Captcha Plugin** integrates bot protection into your Better Auth system by adding captcha verification for key endpoints. This plugin ensures that only human users can perform actions like signing up, signing in, or resetting passwords. The following providers are currently supported:
+The **Captcha Plugin** integrates bot protection into your Shinauth system by adding captcha verification for key endpoints. This plugin ensures that only human users can perform actions like signing up, signing in, or resetting passwords. The following providers are currently supported:
 
 * [Google reCAPTCHA](https://developers.google.com/recaptcha)
 * [Cloudflare Turnstile](https://www.cloudflare.com/application-services/products/turnstile/)
@@ -21,8 +21,8 @@ The **Captcha Plugin** integrates bot protection into your Better Auth system by
     ### Add the plugin to your **auth** config
 
     ```ts title="auth.ts"
-    import { betterAuth } from "better-auth";
-    import { captcha } from "better-auth/plugins"; // [!code highlight]
+    import { betterAuth } from "shinauth";
+    import { captcha } from "shinauth/plugins"; // [!code highlight]
 
     export const auth = betterAuth({
         plugins: [

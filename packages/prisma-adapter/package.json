@@ -1,13 +1,13 @@
 {
-  "name": "@better-auth/prisma-adapter",
+  "name": "@shinauth/prisma-adapter",
   "version": "1.7.0-rc.1",
-  "description": "Prisma adapter for Better Auth",
+  "description": "Prisma adapter for Shinauth",
   "type": "module",
   "license": "MIT",
-  "homepage": "https://www.better-auth.com/docs/adapters/prisma",
+  "homepage": "https://www.shinauth.com/docs/adapters/prisma",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/better-auth/better-auth.git",
+    "url": "git+https://github.com/rlvtapp/shinauth.git",
     "directory": "packages/prisma-adapter"
   },
   "keywords": [
@@ -15,7 +15,7 @@
     "prisma",
     "adapter",
     "typescript",
-    "better-auth"
+    "shinauth"
   ],
   "publishConfig": {
     "access": "public"
@@ -43,8 +43,8 @@
     }
   },
   "peerDependencies": {
-    "@better-auth/core": "workspace:^",
-    "@better-auth/utils": "catalog:",
+    "@shinauth/core": "workspace:^",
+    "@shinauth/utils": "catalog:",
     "@prisma/client": "^5.0.0 || ^6.0.0 || ^7.0.0",
     "prisma": "^5.0.0 || ^6.0.0 || ^7.0.0"
   },
@@ -57,8 +57,8 @@
     }
   },
   "devDependencies": {
-    "@better-auth/core": "workspace:*",
-    "@better-auth/utils": "catalog:",
+    "@shinauth/core": "workspace:*",
+    "@shinauth/utils": "catalog:",
     "tsdown": "catalog:",
     "typescript": "catalog:"
   }

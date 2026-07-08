@@ -38,7 +38,7 @@ export const accountSchema = coreSchema.extend({
 export type BaseAccount = z.infer<typeof accountSchema>;
 
 /**
- * Account schema type used by better-auth, note that it's possible that account could have additional fields
+ * Account schema type used by shinauth, note that it's possible that account could have additional fields
  */
 export type Account<
 	DBOptions extends BetterAuthOptions["account"] = BetterAuthOptions["account"],

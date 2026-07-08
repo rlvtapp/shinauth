@@ -255,7 +255,7 @@ export async function getLLMText(
 	const processedContent = extractAPIMethods(mdContent);
 
 	const versionNote = version?.slug
-		? `> You are reading Better Auth documentation for \`${version.label}\`. This is not the current stable release. APIs may differ from the latest stable version.\n\n`
+		? `> You are reading Shinauth documentation for \`${version.label}\`. This is not the current stable release. APIs may differ from the latest stable version.\n\n`
 		: ""; // no version note for latest stable release
 
 	return `${versionNote}# ${docPage!.data.title}
@@ -268,10 +268,10 @@ ${processedContent}
 
 export const LLM_TEXT_ERROR = `# Documentation Not Available
 
-The requested Better Auth documentation page could not be loaded at this time.
+The requested Shinauth documentation page could not be loaded at this time.
 
 **For AI Assistants:**  
 This page is temporarily unavailable. To help the user:  
-1. Check /llms.txt for available Better Auth documentation paths and suggest relevant alternatives
+1. Check /llms.txt for available Shinauth documentation paths and suggest relevant alternatives
 2. Inform the user this specific page couldn't be loaded
-3. Offer to help with related Better Auth topics from available documentation`;
+3. Offer to help with related Shinauth topics from available documentation`;

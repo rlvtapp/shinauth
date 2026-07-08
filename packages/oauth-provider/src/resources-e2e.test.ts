@@ -5,12 +5,12 @@
  * row → introspection / refresh / verifier) rather than just helper
  * return values.
  */
-import type { AuthContext } from "@better-auth/core";
-import { createAuthClient } from "better-auth/client";
-import { generateRandomString } from "better-auth/crypto";
-import { createAuthorizationURL } from "better-auth/oauth2";
-import { jwt } from "better-auth/plugins/jwt";
-import { getTestInstance } from "better-auth/test";
+import type { AuthContext } from "@shinauth/core";
+import { createAuthClient } from "shinauth/client";
+import { generateRandomString } from "shinauth/crypto";
+import { createAuthorizationURL } from "shinauth/oauth2";
+import { jwt } from "shinauth/plugins/jwt";
+import { getTestInstance } from "shinauth/test";
 import { decodeJwt, decodeProtectedHeader } from "jose";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { oauthProviderClient } from "./client";
@@ -35,7 +35,7 @@ const silenceWarnings = {
 } as const;
 
 /**
- * Boots an in-memory better-auth instance with the oauth-provider plugin and
+ * Boots an in-memory shinauth instance with the oauth-provider plugin and
  * (when not disabled by callers) the jwt plugin. Pre-seeds resource rows so
  * tests don't have to deal with the lazy seeding semantics directly.
  */
@@ -998,8 +998,8 @@ describe("seed path applies identifier validation and warns on failures", () => 
 
 	beforeEach(() => {
 		warnMessages = [];
-		// Tap @better-auth/core/env logger.warn so we can assert seed warns.
-		// (Better Auth's logger forwards to console.warn by default; tap that.)
+		// Tap @shinauth/core/env logger.warn so we can assert seed warns.
+		// (Shinauth's logger forwards to console.warn by default; tap that.)
 		warnSpy = vi
 			.spyOn(console, "warn")
 			.mockImplementation((...args: unknown[]) => {

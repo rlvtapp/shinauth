@@ -1,14 +1,14 @@
-import type { BetterAuthOptions } from "@better-auth/core";
+import type { BetterAuthOptions } from "@shinauth/core";
 import type {
 	AdapterFactoryCustomizeAdapterCreator,
 	AdapterFactoryOptions,
 	DBAdapter,
 	DBAdapterDebugLogOption,
 	Where,
-} from "@better-auth/core/db/adapter";
-import { createAdapterFactory } from "@better-auth/core/db/adapter";
-import { logger } from "@better-auth/core/env";
-import { BetterAuthError } from "@better-auth/core/error";
+} from "@shinauth/core/db/adapter";
+import { createAdapterFactory } from "@shinauth/core/db/adapter";
+import { logger } from "@shinauth/core/env";
+import { BetterAuthError } from "@shinauth/core/error";
 import type { SQL } from "drizzle-orm";
 import {
 	and,
@@ -82,7 +82,7 @@ function getAffectedRowCount(
 	}
 	if (typeof count !== "number" || !Number.isFinite(count)) {
 		logger.error(
-			`[Drizzle Adapter] The result of the ${operation} operation is not a finite number. This is likely a bug in the adapter. Please report this issue to the Better Auth team.`,
+			`[Drizzle Adapter] The result of the ${operation} operation is not a finite number. This is likely a bug in the adapter. Please report this issue to the Shinauth team.`,
 			{ result, ...context },
 		);
 		throw new BetterAuthError(
@@ -191,7 +191,7 @@ export const drizzleAdapter = (db: DB, config: DrizzleAdapterConfig) => {
 					"[Drizzle Adapter] MySQL does not support INSERT...RETURNING. " +
 						"With generateId set to false, the adapter uses best-effort fallback " +
 						"strategies (unique columns, full-field match) to retrieve inserted rows. " +
-						'For reliable behavior, use Better Auth\'s default ID generation, a custom generateId function, or generateId: "serial" for auto-increment.',
+						'For reliable behavior, use Shinauth\'s default ID generation, a custom generateId function, or generateId: "serial" for auto-increment.',
 				);
 			}
 
@@ -285,7 +285,7 @@ export const drizzleAdapter = (db: DB, config: DrizzleAdapterConfig) => {
 						}
 					}
 
-					// 4. Unique column lookup via Better Auth schema
+					// 4. Unique column lookup via Shinauth schema
 					const modelSchema = baSchema[getDefaultModelName(model)]?.fields;
 					if (modelSchema) {
 						for (const [fieldKey, fieldAttr] of Object.entries(modelSchema)) {
@@ -332,7 +332,7 @@ export const drizzleAdapter = (db: DB, config: DrizzleAdapterConfig) => {
 
 					logger.warn(
 						`[Drizzle Adapter] Unable to safely identify the inserted "${model}" row on MySQL. ` +
-							'Enable Better Auth ID generation or use generateId: "serial" for reliable behavior.',
+							'Enable Shinauth ID generation or use generateId: "serial" for reliable behavior.',
 					);
 					return null;
 				};
@@ -712,7 +712,7 @@ export const drizzleAdapter = (db: DB, config: DrizzleAdapterConfig) => {
 			/**
 			 * Resolve the db.query key for a model.
 			 *
-			 * When `usePlural` is false (default), Better Auth uses singular model
+			 * When `usePlural` is false (default), Shinauth uses singular model
 			 * names like "user", but Drizzle's db.query is keyed by the schema
 			 * export names (often plural like "users"). This function:
 			 *
@@ -1149,7 +1149,7 @@ export const drizzleAdapter = (db: DB, config: DrizzleAdapterConfig) => {
 			supportsArrays: config.provider === "pg" ? true : false,
 			customTransformOutput: ({ data, fieldAttributes }) => {
 				// not all providers support dates
-				// one such example case is https://github.com/better-auth/better-auth/issues/7819
+				// one such example case is https://github.com/rlvtapp/shinauth/issues/7819
 				if (fieldAttributes.type === "date") {
 					if (data === null || data === undefined) {
 						return data;

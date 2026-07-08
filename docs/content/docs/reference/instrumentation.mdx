@@ -1,18 +1,18 @@
 ---
 title: Instrumentation (Experimental)
-description: Distributed tracing for Better Auth
+description: Distributed tracing for Shinauth
 ---
 
 <Callout type="warning">
   OpenTelemetry instrumentation is experimental and may change in future releases. The API and span structure are subject to change.
 </Callout>
 
-Better Auth is instrumented through [OpenTelemetry](https://opentelemetry.io/) for distributed tracing. Spans are emitted for endpoints, hooks, database operations and the plugin lifecycle.
-The goal of this instrumentation is to provide better insights into the behavior of your Better Auth instance, helping you debug issues and optimize performance.
+Shinauth is instrumented through [OpenTelemetry](https://opentelemetry.io/) for distributed tracing. Spans are emitted for endpoints, hooks, database operations and the plugin lifecycle.
+The goal of this instrumentation is to provide better insights into the behavior of your Shinauth instance, helping you debug issues and optimize performance.
 
 ## Setup
 
-Better Auth uses the OpenTelemetry API to create spans. For traces to be collected and exported, at minimum, you must configure a **TracerProvider** and a **SpanExporter** in your application.
+Shinauth uses the OpenTelemetry API to create spans. For traces to be collected and exported, at minimum, you must configure a **TracerProvider** and a **SpanExporter** in your application.
 
 For setup instructions, see the official OpenTelemetry documentation:
 
@@ -20,7 +20,7 @@ For setup instructions, see the official OpenTelemetry documentation:
 
 ## Supported Spans
 
-The following spans are supported by Better Auth:
+The following spans are supported by Shinauth:
 
 ### Endpoint Spans
 

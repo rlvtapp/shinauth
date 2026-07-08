@@ -1,6 +1,6 @@
 ---
 title: OAuth 2.1 Provider
-description: A Better Auth plugin that enables your auth server to serve as an OAuth 2.1 provider.
+description: A Shinauth plugin that enables your auth server to serve as an OAuth 2.1 provider.
 ---
 
 An **OAuth 2.1 Provider Plugin** that allows you to turn your authentication server into an OAuth provider with OIDC compatibility allowing users and other services to authenticate with your API.
@@ -45,9 +45,9 @@ The plugin has a secured configuration by default providing ease to users unfami
     Add the OAuth Provider plugin to your auth config. See [Configuration Section](#configuration) on how to configure the plugin.
 
     ```ts title="auth.ts"
-    import { betterAuth } from "better-auth";
-    import { jwt } from "better-auth/plugins";
-    import { oauthProvider } from "@better-auth/oauth-provider"; // [!code highlight]
+    import { betterAuth } from "shinauth";
+    import { jwt } from "shinauth/plugins";
+    import { oauthProvider } from "@shinauth/oauth-provider"; // [!code highlight]
 
     const auth = betterAuth({
       disabledPaths: [
@@ -90,7 +90,7 @@ The plugin has a secured configuration by default providing ease to users unfami
   <Step>
     ### Confirm `/.well-known` endpoints
 
-    Better Auth serves the OAuth Authorization Server metadata and OpenID Connect discovery metadata from the auth handler automatically. If your framework only forwards requests under a catch-all auth route, make sure the issuer metadata URLs reach `auth.handler`.
+    Shinauth serves the OAuth Authorization Server metadata and OpenID Connect discovery metadata from the auth handler automatically. If your framework only forwards requests under a catch-all auth route, make sure the issuer metadata URLs reach `auth.handler`.
 
     * OAuth Authorization Server metadata is available at both `{issuer}/.well-known/oauth-authorization-server` and `/.well-known/oauth-authorization-server/[issuer-path]`.
     * OpenID Connect discovery metadata is available at `{issuer}/.well-known/openid-configuration` when you use the `openid` scope.
@@ -127,8 +127,8 @@ There exists two clients. You may wish to add one or both depending on your setu
 The OAuth Client is the connecting `oauthClient` such a mobile or web application.
 
 ```ts title="auth-client.ts"
-import { createAuthClient } from "better-auth/client";
-import { oauthProviderClient } from "@better-auth/oauth-provider/client" // [!code highlight]
+import { createAuthClient } from "shinauth/client";
+import { oauthProviderClient } from "@shinauth/oauth-provider/client" // [!code highlight]
 
 export const authClient = createAuthClient({
   plugins: [
@@ -143,8 +143,8 @@ The Resource Server is a client that operates on your API server to perform acti
 
 ```ts title="server-client.ts"
 import { auth } from "@/lib/auth";
-import { createAuthClient } from "better-auth/client";
-import { oauthProviderResourceClient } from "@better-auth/oauth-provider/resource-client" // [!code highlight]
+import { createAuthClient } from "shinauth/client";
+import { oauthProviderResourceClient } from "@shinauth/oauth-provider/resource-client" // [!code highlight]
 
 export const serverClient = createAuthClient({
   plugins: [
@@ -418,7 +418,7 @@ oauthProvider({
 })
 ```
 
-To enable open client registration without a Better Auth session, additionally set `allowUnauthenticatedClientRegistration: true` in your auth config. Public clients are registered with `token_endpoint_auth_method: "none"`. Confidential clients receive a one-time `client_secret` in the registration response.
+To enable open client registration without a Shinauth session, additionally set `allowUnauthenticatedClientRegistration: true` in your auth config. Public clients are registered with `token_endpoint_auth_method: "none"`. Confidential clients receive a one-time `client_secret` in the registration response.
 
 <Callout type="info">
   For MCP public-client identity, [Client ID Metadata Documents](https://github.com/modelcontextprotocol/modelcontextprotocol/issues/991) are [available](/docs/plugins/cimd).
@@ -470,7 +470,7 @@ Clients should send a state value to mitigate cross-site request forgery (CSRF) 
 
 Generate a state value from your client and store on your client such as in a secure, HTTP-only cookie or database.
 
-The authorization server accepts requests without `state` for compatibility with OAuth and OpenID Connect, and echoes `state` back when it is provided. Better Auth's client helpers generate and validate `state` for you.
+The authorization server accepts requests without `state` for compatibility with OAuth and OpenID Connect, and echoes `state` back when it is provided. Shinauth's client helpers generate and validate `state` for you.
 
 **Code Challenge**
 
@@ -504,7 +504,7 @@ Important Notes:
 
 #### DPoP sender-constrained tokens
 
-Better Auth supports Demonstrating Proof of Possession (DPoP) as defined by [RFC 9449](https://datatracker.ietf.org/doc/html/rfc9449). A client can ask for DPoP-bound tokens by registering with `dpop_bound_access_tokens: true`, by sending `dpop_jkt` on the authorization request, or by requesting a resource configured with `dpopBoundAccessTokensRequired: true`.
+Shinauth supports Demonstrating Proof of Possession (DPoP) as defined by [RFC 9449](https://datatracker.ietf.org/doc/html/rfc9449). A client can ask for DPoP-bound tokens by registering with `dpop_bound_access_tokens: true`, by sending `dpop_jkt` on the authorization request, or by requesting a resource configured with `dpopBoundAccessTokensRequired: true`.
 
 When a token is DPoP-bound:
 
@@ -612,7 +612,7 @@ oauthProvider({
 })
 ```
 
-The default is `0`, which keeps strict replay detection. During the interval, Better Auth replays the cached response only when the reused refresh token is from the same client and the request resolves to the same effective scopes, requested resources, and sender constraint (for example the same DPoP key). A mismatch during the interval returns `invalid_grant` without invalidating the whole family; once the interval expires, using the old refresh token is treated as replay and invalidates the refresh-token family.
+The default is `0`, which keeps strict replay detection. During the interval, Shinauth replays the cached response only when the reused refresh token is from the same client and the request resolves to the same effective scopes, requested resources, and sender constraint (for example the same DPoP key). A mismatch during the interval returns `invalid_grant` without invalidating the whole family; once the interval expires, using the old refresh token is treated as replay and invalidates the refresh-token family.
 
 The cached response is stored encrypted on the consumed refresh-token row and includes the replacement refresh token. `expires_in` is recalculated from the cached `expires_at` each time the response is replayed.
 
@@ -792,7 +792,7 @@ The UserInfo endpoint returns different claims based on the scopes that were gra
 * `profile`: Returns `name`, `picture`, `given_name`, `family_name`
 * `email`: Returns `email` and `email_verified`
 
-The endpoint also honors the OIDC `claims` request parameter for UserInfo. Claims listed under `claims.userinfo` are added to the scope-requested claims when Better Auth or your custom claim logic can supply them, bounded to the names advertised in `claims_supported`. Missing values are omitted from the JSON response rather than returned as `null` or an empty string.
+The endpoint also honors the OIDC `claims` request parameter for UserInfo. Claims listed under `claims.userinfo` are added to the scope-requested claims when Shinauth or your custom claim logic can supply them, bounded to the names advertised in `claims_supported`. Missing values are omitted from the JSON response rather than returned as `null` or an empty string.
 
 Per-claim selection through `claims.userinfo` applies to opaque access tokens. A JWT access token resolves UserInfo claims from its granted scopes, so an individually requested claim without its backing scope is omitted (OIDC Core §5.5.1). Request the backing scope, or issue an opaque access token, when a client needs a claim that no granted scope covers.
 
@@ -806,14 +806,14 @@ Provides [OpenID Connect discovery metadata](https://openid.net/specs/openid-con
 
 This endpoint requires the scope `openid`.
 
-The OAuth Provider plugin serves this endpoint automatically from the Better Auth handler. If you do not set a custom issuer, the issuer path is your basePath, such as `/api/auth`.
+The OAuth Provider plugin serves this endpoint automatically from the Shinauth handler. If you do not set a custom issuer, the issuer path is your basePath, such as `/api/auth`.
 
 For issuers with paths, OpenID Connect uses path appending. For example, issuer `https://example.com/api/auth` uses `/api/auth/.well-known/openid-configuration`.
 
 If your framework route does not forward this URL to `auth.handler`, add a route at the issuer path:
 
 ```ts title="[issuer-path]/.well-known/openid-configuration/route.ts"
-import { oauthProviderOpenIdConfigMetadata } from "@better-auth/oauth-provider";
+import { oauthProviderOpenIdConfigMetadata } from "@shinauth/oauth-provider";
 import { auth } from "@/lib/auth";
 
 export const GET = oauthProviderOpenIdConfigMetadata(auth);
@@ -827,7 +827,7 @@ export const GET = oauthProviderOpenIdConfigMetadata(auth);
 
 Provides [RFC 8414](https://datatracker.ietf.org/doc/html/rfc8414)-compliant metadata for the authorization server.
 
-The OAuth Provider plugin serves both path-prefixed issuer aliases automatically from the Better Auth handler:
+The OAuth Provider plugin serves both path-prefixed issuer aliases automatically from the Shinauth handler:
 
 * `{issuer}/.well-known/oauth-authorization-server`
 * `/.well-known/oauth-authorization-server/[issuer-path]`
@@ -837,7 +837,7 @@ For example, issuer `https://example.com/api/auth` can use `/api/auth/.well-know
 If your framework route does not forward one of these URLs to `auth.handler`, add a route and call the helper:
 
 ```ts title="/.well-known/oauth-authorization-server/[issuer-path]/route.ts"
-import { oauthProviderAuthServerMetadata } from "@better-auth/oauth-provider";
+import { oauthProviderAuthServerMetadata } from "@shinauth/oauth-provider";
 import { auth } from "@/lib/auth";
 
 export const GET = oauthProviderAuthServerMetadata(auth);
@@ -853,15 +853,15 @@ This section shows how your API should verify tokens received from your clients.
 
 ### Verification
 
-Verification can be performed using `verifyAccessTokenRequest` available through the `oauthProviderResourceClient` plugin or `better-auth/oauth2` package. This is the recommended resource-server API because it verifies the access token and, when the token is DPoP-bound, also verifies the request method, URL, `Authorization: DPoP` scheme, proof key, replay `jti`, and `ath` claim.
+Verification can be performed using `verifyAccessTokenRequest` available through the `oauthProviderResourceClient` plugin or `shinauth/oauth2` package. This is the recommended resource-server API because it verifies the access token and, when the token is DPoP-bound, also verifies the request method, URL, `Authorization: DPoP` scheme, proof key, replay `jti`, and `ath` claim.
 
-With `better-auth` package:
+With `shinauth` package:
 
 ```ts title="api/[endpoint].ts"
 import {
   requestToResourceInput,
   verifyAccessTokenRequest,
-} from "better-auth/oauth2";
+} from "shinauth/oauth2";
 
 export const GET = async (req: Request) => {
   const payload = await verifyAccessTokenRequest(requestToResourceInput(req), {
@@ -1309,7 +1309,7 @@ oauthProvider({
   For MCP public-client identity, use the [CIMD plugin](/docs/plugins/cimd).
 </Callout>
 
-Protected dynamic client registration allows machine callers to register public or confidential clients without a Better Auth user session. Issue an RFC 7591 initial access token out of band, then validate the token from the `Authorization: Bearer <token>` header. Defining `validateInitialAccessToken` enables this path; while it is undefined, a Bearer token sent to the registration endpoint is rejected.
+Protected dynamic client registration allows machine callers to register public or confidential clients without a Shinauth user session. Issue an RFC 7591 initial access token out of band, then validate the token from the `Authorization: Bearer <token>` header. Defining `validateInitialAccessToken` enables this path; while it is undefined, a Bearer token sent to the registration endpoint is rejected.
 
 ```ts title="auth.ts"
 import { createHash, timingSafeEqual } from "node:crypto"
@@ -1446,15 +1446,15 @@ Only disable PKCE for confidential clients when absolutely necessary for legacy 
 Some clients (notably MCP clients) need to connect to your authorization server without being registered in advance. The OAuth Provider plugin supports this through two mechanisms:
 
 * **`allowUnauthenticatedClientRegistration`**: lets anonymous callers hit `/oauth2/register` to create a client at request time. Confidential registrations receive a one-time `client_secret`; public registrations use `token_endpoint_auth_method: "none"`.
-* **[`@better-auth/cimd`](/docs/plugins/cimd)**: an optional plugin that lets clients identify themselves by hosting a metadata document at an HTTPS URL. The URL itself becomes the `client_id`; the server fetches and validates the document. This is the pattern MCP calls [Client ID Metadata Documents](https://datatracker.ietf.org/doc/draft-ietf-oauth-client-id-metadata-document/).
+* **[`@shinauth/cimd`](/docs/plugins/cimd)**: an optional plugin that lets clients identify themselves by hosting a metadata document at an HTTPS URL. The URL itself becomes the `client_id`; the server fetches and validates the document. This is the pattern MCP calls [Client ID Metadata Documents](https://datatracker.ietf.org/doc/draft-ietf-oauth-client-id-metadata-document/).
 
 ### Provider extensions
 
-OAuth companion plugins can extend the provider without changing OAuth Provider core. Use `extendOAuthProvider()` from a plugin `init()` hook to add token grants, assertion-based client authentication methods, additive discovery metadata, token or UserInfo claims, and client-id discovery sources. The [`@better-auth/cimd`](/docs/plugins/cimd) plugin uses this same surface to contribute its URL-based client discovery.
+OAuth companion plugins can extend the provider without changing OAuth Provider core. Use `extendOAuthProvider()` from a plugin `init()` hook to add token grants, assertion-based client authentication methods, additive discovery metadata, token or UserInfo claims, and client-id discovery sources. The [`@shinauth/cimd`](/docs/plugins/cimd) plugin uses this same surface to contribute its URL-based client discovery.
 
 ```ts title="custom-oauth-extension.ts"
-import type { BetterAuthPlugin } from "better-auth";
-import { extendOAuthProvider } from "@better-auth/oauth-provider";
+import type { BetterAuthPlugin } from "shinauth";
+import { extendOAuthProvider } from "@shinauth/oauth-provider";
 
 export const customOAuthExtension = () =>
   ({
@@ -1502,7 +1502,7 @@ To sender-constrain an issued token (RFC 7800 `cnf`), pass `confirmation` to `is
 A `clientAuthentication` strategy verifies the assertion against its own key source and returns the client id it proved; the provider resolves and authorizes the client record itself, so a strategy proves identity but never supplies the record. After verifying the signature it must enforce the same assertion hygiene the built-in `private_key_jwt` method enforces, or the provider will accept a forged or replayed assertion. Use the exported `consumeClientAssertion` helper to bind the assertion to the endpoint audience, require a bounded lifetime, and reject `jti` replays:
 
 ```ts
-import { consumeClientAssertion } from "@better-auth/oauth-provider";
+import { consumeClientAssertion } from "@shinauth/oauth-provider";
 
 authenticate: async ({ ctx, opts, assertion, expectedAudience }) => {
   const payload = await verifyAssertionSignature(assertion); // your key source
@@ -1579,7 +1579,7 @@ The OAuth Provider includes built-in rate limiting for all OAuth endpoints to pr
 </Callout>
 
 <Callout type="warn">
-  These rate limits only apply when Better Auth's global rate limiting is enabled. By default, rate limiting is only enabled in production. See [Rate Limiting](/docs/concepts/rate-limit) for global configuration.
+  These rate limits only apply when Shinauth's global rate limiting is enabled. By default, rate limiting is only enabled in production. See [Rate Limiting](/docs/concepts/rate-limit) for global configuration.
 </Callout>
 
 **Default limits:**
@@ -1619,7 +1619,7 @@ oauthProvider({
 ```
 
 <Callout type="info">
-  Setting an endpoint to `false` removes the OAuth Provider's stricter per-endpoint limit. The endpoint will still be subject to Better Auth's global rate limiting if enabled.
+  Setting an endpoint to `false` removes the OAuth Provider's stricter per-endpoint limit. The endpoint will still be subject to Shinauth's global rate limiting if enabled.
 </Callout>
 
 ### Refresh Token Customization
@@ -1654,9 +1654,9 @@ oauthProvider({
 Pseudocode for a token encryption method:
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 import { CompactEncrypt, compactDecrypt } from 'jose'
-import { oauthProvider } from "@better-auth/oauth-provider"; 
+import { oauthProvider } from "@shinauth/oauth-provider"; 
 
 const secret = "SOME_SECRET_OR_KEY"
 const alg = "A256KW"
@@ -1693,7 +1693,7 @@ The metadata endpoint can be customized so that the publicized scopes and claims
 
 All scopes inside the advertisedMetadata section MUST be listed in `scopes` otherwise initialization will fail.
 
-Better Auth advertises `acr_values_supported: ["0"]`, which is the unspecified authentication context. Custom ACR policies are not currently supported; authorization requests for other
+Shinauth advertises `acr_values_supported: ["0"]`, which is the unspecified authentication context. Custom ACR policies are not currently supported; authorization requests for other
 `acr_values` are rejected with `invalid_request`.
 
 #### Scopes
@@ -1815,8 +1815,8 @@ You can easily make your APIs [MCP-compatible](https://modelcontextprotocol.io/s
 
     ```ts title="server-client.ts"
     import { auth } from "@/lib/auth";
-    import { createAuthClient } from "better-auth/client";
-    import { oauthProviderResourceClient } from "@better-auth/oauth-provider/resource-client"
+    import { createAuthClient } from "shinauth/client";
+    import { oauthProviderResourceClient } from "@shinauth/oauth-provider/resource-client"
 
     export const serverClient = createAuthClient({
       plugins: [oauthProviderResourceClient(auth)], // auth optional
@@ -1898,7 +1898,7 @@ You can easily make your APIs [MCP-compatible](https://modelcontextprotocol.io/s
 
     ```ts title="api/[transport]/route.ts"
     import { createMcpHandler } from "mcp-handler";
-    import { mcpHandler } from "@better-auth/oauth-provider";
+    import { mcpHandler } from "@shinauth/oauth-provider";
     import { z } from "zod";
 
     const handler = mcpHandler({
@@ -1934,7 +1934,7 @@ You can easily make your APIs [MCP-compatible](https://modelcontextprotocol.io/s
           );
         }, {
           serverInfo: {
-            name: "demo-better-auth",
+            name: "demo-shinauth",
             version: "1.0.0",
           }
         }, {

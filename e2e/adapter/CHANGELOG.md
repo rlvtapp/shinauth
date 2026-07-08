@@ -1,3 +1,3 @@
-# @better-auth-test/adapter-base
+# @shinauth-test/adapter-base
 
 ## null

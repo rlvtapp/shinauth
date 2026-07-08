@@ -1,14 +1,14 @@
-import type { BetterAuthOptions } from "@better-auth/core";
+import type { BetterAuthOptions } from "@shinauth/core";
 import type {
 	AdapterFactoryCustomizeAdapterCreator,
 	AdapterFactoryOptions,
 	DBAdapter,
 	DBAdapterDebugLogOption,
 	Where,
-} from "@better-auth/core/db/adapter";
-import { createAdapterFactory } from "@better-auth/core/db/adapter";
-import { logger } from "@better-auth/core/env";
-import { BetterAuthError } from "@better-auth/core/error";
+} from "@shinauth/core/db/adapter";
+import { createAdapterFactory } from "@shinauth/core/db/adapter";
+import { logger } from "@shinauth/core/env";
+import { BetterAuthError } from "@shinauth/core/error";
 import type { SQL } from "drizzle-orm";
 import {
 	and,
@@ -102,7 +102,7 @@ function getAffectedRowCount(
 	}
 	if (typeof count !== "number" || !Number.isFinite(count)) {
 		logger.error(
-			`[Drizzle Adapter] The result of the ${operation} operation is not a finite number. This is likely a bug in the adapter. Please report this issue to the Better Auth team.`,
+			`[Drizzle Adapter] The result of the ${operation} operation is not a finite number. This is likely a bug in the adapter. Please report this issue to the Shinauth team.`,
 			{ result, ...context },
 		);
 		throw new BetterAuthError(
@@ -277,7 +277,7 @@ export const drizzleAdapter = (db: DB, config: DrizzleAdapterConfig) => {
 					"[Drizzle Adapter] MySQL does not support INSERT...RETURNING. " +
 						"With generateId set to false, the adapter uses best-effort fallback " +
 						"strategies (unique columns, full-field match) to retrieve inserted rows. " +
-						'For reliable behavior, use Better Auth\'s default ID generation, a custom generateId function, or generateId: "serial" for auto-increment.',
+						'For reliable behavior, use Shinauth\'s default ID generation, a custom generateId function, or generateId: "serial" for auto-increment.',
 				);
 			}
 
@@ -301,7 +301,7 @@ export const drizzleAdapter = (db: DB, config: DrizzleAdapterConfig) => {
 			 * Resolve the `db.query` key for a model.
 			 *
 			 * `db.query` is keyed by the Drizzle schema export names, which are
-			 * often plural ("users") even when Better Auth uses singular model
+			 * often plural ("users") even when Shinauth uses singular model
 			 * names. Try the model directly, then the `usePlural` variant, then
 			 * scan the schema for the key pointing at the same table.
 			 */
@@ -423,7 +423,7 @@ export const drizzleAdapter = (db: DB, config: DrizzleAdapterConfig) => {
 						return res[0] ?? null;
 					}
 
-					// 4. Unique column lookup via Better Auth schema
+					// 4. Unique column lookup via Shinauth schema
 					const modelSchema = baSchema[getDefaultModelName(model)]?.fields;
 					if (modelSchema) {
 						for (const [fieldKey, fieldAttr] of Object.entries(modelSchema)) {
@@ -467,7 +467,7 @@ export const drizzleAdapter = (db: DB, config: DrizzleAdapterConfig) => {
 
 					logger.warn(
 						`[Drizzle Adapter] Unable to safely identify the inserted "${model}" row on MySQL. ` +
-							'Enable Better Auth ID generation or use generateId: "serial" for reliable behavior.',
+							'Enable Shinauth ID generation or use generateId: "serial" for reliable behavior.',
 					);
 					return null;
 				};
@@ -675,7 +675,7 @@ export const drizzleAdapter = (db: DB, config: DrizzleAdapterConfig) => {
 				for (const key in values) {
 					if (!schema[key]) {
 						throw new BetterAuthError(
-							`The field "${key}" does not exist in the "${model}" Drizzle schema. Please update your drizzle schema or re-generate using "npx @better-auth/cli@latest generate".`,
+							`The field "${key}" does not exist in the "${model}" Drizzle schema. Please update your drizzle schema or re-generate using "npx @shinauth/cli@latest generate".`,
 						);
 					}
 				}
@@ -697,7 +697,7 @@ export const drizzleAdapter = (db: DB, config: DrizzleAdapterConfig) => {
 						const queryModel = getQueryModel(model);
 						if (!db.query || !queryModel) {
 							logger.error(
-								`[# Drizzle Adapter]: The model "${model}" was not found in the query object. Please update your Drizzle schema to include relations or re-generate using "npx @better-auth/cli@latest generate".`,
+								`[# Drizzle Adapter]: The model "${model}" was not found in the query object. Please update your Drizzle schema to include relations or re-generate using "npx @shinauth/cli@latest generate".`,
 							);
 							logger.info("Falling back to regular query");
 						} else {
@@ -779,7 +779,7 @@ export const drizzleAdapter = (db: DB, config: DrizzleAdapterConfig) => {
 						const queryModel = getQueryModel(model);
 						if (!db.query || !queryModel) {
 							logger.error(
-								`[# Drizzle Adapter]: The model "${model}" was not found in the query object. Please update your Drizzle schema to include relations or re-generate using "npx @better-auth/cli@latest generate".`,
+								`[# Drizzle Adapter]: The model "${model}" was not found in the query object. Please update your Drizzle schema to include relations or re-generate using "npx @shinauth/cli@latest generate".`,
 							);
 							logger.info("Falling back to regular query");
 						} else {
@@ -1075,13 +1075,13 @@ export const drizzleAdapter = (db: DB, config: DrizzleAdapterConfig) => {
 			//   - PostgreSQL: native `jsonb` column.
 			//   - MySQL: `json()` column (Drizzle stringifies the driver value).
 			//   - SQLite: `text(..., { mode: "json" })` column (Drizzle stringifies).
-			// If Better Auth also pre-stringified, the value would be JSON-encoded twice.
+			// If Shinauth also pre-stringified, the value would be JSON-encoded twice.
 			supportsJSON: true,
 			// For SQLite and MySQL, the generated schema uses JSON-mode columns
 			// (`text({ mode: "json" })` / `json()`) which means Drizzle handles
 			// serialization. So we don't need to pre-stringify arrays (which would
 			// cause double-stringification). For PostgreSQL, native arrays are used.
-			// See: https://github.com/better-auth/better-auth/issues/7440
+			// See: https://github.com/rlvtapp/shinauth/issues/7440
 			supportsArrays: true,
 			transaction:
 				(config.transaction ?? false)

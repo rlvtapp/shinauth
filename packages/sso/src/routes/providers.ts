@@ -1,15 +1,15 @@
 import {
 	getCurrentAdapter,
 	runWithTransaction,
-} from "@better-auth/core/context";
-import type { DBFieldAttribute } from "@better-auth/core/db";
-import { filterOutputFields } from "@better-auth/core/utils/db";
-import type { AuthContext } from "better-auth";
+} from "@shinauth/core/context";
+import type { DBFieldAttribute } from "@shinauth/core/db";
+import { filterOutputFields } from "@shinauth/core/utils/db";
+import type { AuthContext } from "shinauth";
 import {
 	APIError,
 	createAuthEndpoint,
 	sessionMiddleware,
-} from "better-auth/api";
+} from "shinauth/api";
 import * as z from "zod";
 import { DEFAULT_MAX_SAML_METADATA_SIZE } from "../constants";
 import {

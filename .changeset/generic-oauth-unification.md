@@ -1,8 +1,8 @@
 ---
-"better-auth": minor
-"@better-auth/electron": minor
-"@better-auth/expo": minor
-"@better-auth/oauth-provider": minor
+"shinauth": minor
+"@shinauth/electron": minor
+"@shinauth/expo": minor
+"@shinauth/oauth-provider": minor
 ---
 
 Rewrite the generic OAuth plugin as a first-class social provider with OAuth 2.1 security defaults. Providers now use `signIn.social` + `callback/:id` instead of dedicated plugin endpoints, with PKCE required by default (OAuth 2.1), RFC 9207 issuer validation, OIDC auto-discovery with `openid` scope injection, and typed provider IDs.

@@ -1,5 +1,5 @@
 ---
-"better-auth": patch
+"shinauth": patch
 ---
 
 fix(api): align top-level `operationId` on `requestPasswordResetCallback` with the OpenAPI `resetPasswordCallback`

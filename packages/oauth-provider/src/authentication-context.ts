@@ -1,9 +1,9 @@
-import { logger } from "@better-auth/core/env";
+import { logger } from "@shinauth/core/env";
 
 /**
  * RFC 6711 "unspecified" Authentication Context Class Reference.
  *
- * Better Auth does not currently evaluate a stronger ACR policy, so discovery
+ * Shinauth does not currently evaluate a stronger ACR policy, so discovery
  * and ID tokens must not claim an assurance profile such as InCommon bronze.
  */
 export const UNSPECIFIED_ACR = "0";

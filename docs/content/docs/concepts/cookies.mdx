@@ -1,24 +1,24 @@
 ---
 title: Cookies
-description: Learn how Better Auth uses cookies, including cookie prefixes, custom cookie attributes, cross-subdomain sharing, secure cookies, and handling Safari ITP with proxies.
+description: Learn how Shinauth uses cookies, including cookie prefixes, custom cookie attributes, cross-subdomain sharing, secure cookies, and handling Safari ITP with proxies.
 ---
 
 Cookies are used to store data such as session tokens, session data, OAuth state, and more.
 
 * The primary `session_token` cookie remains an opaque, secret-signed session identifier.
 * The `session_data` cookie is only present when `session.cookieCache` is enabled, and its encoding depends on the configured strategy:
-  * `compact`: base64url + HMAC with your Better Auth secret
+  * `compact`: base64url + HMAC with your Shinauth secret
   * `jwt`: HS256 by default, or asymmetric signing with the JWT plugin's JWKS when `session.cookieCache.jwt.signingKey = "jwt-plugin"` and the `jwt()` plugin is installed
-  * `jwe`: encrypted with your Better Auth secret
+  * `jwe`: encrypted with your Shinauth secret
 
 If you use [versioned secrets](/docs/reference/options#secrets) for rotation, secret-backed cookie data (including signed cookies and encrypted JWE session caches) will automatically use the current key and remain compatible with previous keys where supported.
 
 ### Cookie Prefix
 
-By default, Better Auth cookies follow the format `${prefix}.${cookie_name}`. The default prefix is "better-auth". You can change the prefix by setting `cookiePrefix` in the `advanced` object of the auth options.
+By default, Shinauth cookies follow the format `${prefix}.${cookie_name}`. The default prefix is "shinauth". You can change the prefix by setting `cookiePrefix` in the `advanced` object of the auth options.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth"
+import { betterAuth } from "shinauth"
 
 export const auth = betterAuth({
     advanced: {
@@ -33,7 +33,7 @@ All cookies are `httpOnly` and `secure` when the server is running in production
 
 If you want to set custom cookie names and attributes, you can do so by setting `cookieOptions` in the `advanced` object of the auth options.
 
-By default, Better Auth uses the following cookies:
+By default, Shinauth uses the following cookies:
 
 * `session_token` to store the session token
 * `session_data` to store the session data if cookie cache is enabled
@@ -42,7 +42,7 @@ By default, Better Auth uses the following cookies:
 Plugins may also use cookies to store data. For example, the Two Factor Authentication plugin uses the `two_factor` cookie to store the two-factor authentication state.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth"
+import { betterAuth } from "shinauth"
 
 export const auth = betterAuth({
     advanced: {
@@ -73,7 +73,7 @@ For example, if you authenticate on `auth.example.com`, you may also want to acc
 </Callout>
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth"
+import { betterAuth } from "shinauth"
 
 export const auth = betterAuth({
     advanced: {
@@ -95,7 +95,7 @@ export const auth = betterAuth({
 By default, cookies are secure only when the server is running in production mode. You can force cookies to be always secure by setting `useSecureCookies` to `true` in the `advanced` object in the auth options.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth"
+import { betterAuth } from "shinauth"
 
 export const auth = betterAuth({
     advanced: {
@@ -108,7 +108,7 @@ export const auth = betterAuth({
 
 Safari includes a privacy feature called Intelligent Tracking Prevention (ITP) that blocks third-party cookies.
 
-If your Better Auth API is hosted on a different domain than your frontend, Safari may block authentication cookies entirely.
+If your Shinauth API is hosted on a different domain than your frontend, Safari may block authentication cookies entirely.
 
 Example that breaks in Safari:
 
@@ -188,7 +188,7 @@ https://api.example.com
 Then, enable cross-subdomain cookies with the domain:
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth"
+import { betterAuth } from "shinauth"
 
 export const auth = betterAuth({
     advanced: {

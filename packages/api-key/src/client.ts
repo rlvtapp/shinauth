@@ -1,4 +1,4 @@
-import type { BetterAuthClientPlugin } from "@better-auth/core";
+import type { BetterAuthClientPlugin } from "@shinauth/core";
 import type { apiKey } from ".";
 import { API_KEY_ERROR_CODES } from "./error-codes";
 import { PACKAGE_VERSION } from "./version";

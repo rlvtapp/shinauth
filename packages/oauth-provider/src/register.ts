@@ -1,9 +1,9 @@
-import type { GenericEndpointContext } from "@better-auth/core";
-import { runWithTransaction } from "@better-auth/core/context";
-import { isLoopbackHost } from "@better-auth/core/utils/host";
-import { APIError, getSessionFromCtx, NO_STORE_HEADERS } from "better-auth/api";
-import { generateRandomString } from "better-auth/crypto";
-import { toExpJWT } from "better-auth/plugins";
+import type { GenericEndpointContext } from "@shinauth/core";
+import { runWithTransaction } from "@shinauth/core/context";
+import { isLoopbackHost } from "@shinauth/core/utils/host";
+import { APIError, getSessionFromCtx, NO_STORE_HEADERS } from "shinauth/api";
+import { generateRandomString } from "shinauth/crypto";
+import { toExpJWT } from "shinauth/plugins";
 import {
 	getSupportedAuthMethods,
 	getSupportedGrantTypes,

@@ -12,7 +12,7 @@
  *
  * @see https://dev.mysql.com/doc/refman/8.4/en/information-functions.html#function_last-insert-id
  */
-import { drizzleAdapter } from "@better-auth/drizzle-adapter/relations-v2";
+import { drizzleAdapter } from "@shinauth/drizzle-adapter/relations-v2";
 import { describe, expect, it } from "vitest";
 
 const INSERT_ID = 42;

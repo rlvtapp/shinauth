@@ -1,8 +1,8 @@
-import { betterAuth } from "better-auth";
-import { memoryAdapter } from "better-auth/adapters/memory";
-import { createAuthClient } from "better-auth/client";
-import { setCookieToHeader } from "better-auth/cookies";
-import { organization } from "better-auth/plugins";
+import { betterAuth } from "shinauth";
+import { memoryAdapter } from "shinauth/adapters/memory";
+import { createAuthClient } from "shinauth/client";
+import { setCookieToHeader } from "shinauth/cookies";
+import { organization } from "shinauth/plugins";
 import { describe, expect, expectTypeOf, it } from "vitest";
 import { sso } from ".";
 import { ssoClient } from "./client";
@@ -1876,7 +1876,7 @@ kBGIJYs=
 
 	describe("POST /sso/register", () => {
 		/**
-		 * @see https://github.com/better-auth/better-auth/issues/9133
+		 * @see https://github.com/rlvtapp/shinauth/issues/9133
 		 */
 		it("should reject registration from non-admin org members", async () => {
 			const { auth, getAuthHeaders, createOrganization, addMember, data } =
@@ -1924,7 +1924,7 @@ kBGIJYs=
 		});
 
 		/**
-		 * @see https://github.com/better-auth/better-auth/issues/9133
+		 * @see https://github.com/rlvtapp/shinauth/issues/9133
 		 */
 		it("should allow registration from org admins", async () => {
 			const { auth, getAuthHeaders, createOrganization, addMember, data } =
@@ -1972,7 +1972,7 @@ kBGIJYs=
 		});
 
 		/**
-		 * @see https://github.com/better-auth/better-auth/issues/9133
+		 * @see https://github.com/rlvtapp/shinauth/issues/9133
 		 */
 		it("should reject registration when user is not a member of the organization", async () => {
 			const { auth, getAuthHeaders, createOrganization } = createTestAuth(true);

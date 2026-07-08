@@ -1,11 +1,11 @@
-import type { GenericEndpointContext } from "@better-auth/core";
-import { BetterAuthError } from "@better-auth/core/error";
+import type { GenericEndpointContext } from "@shinauth/core";
+import { BetterAuthError } from "@shinauth/core/error";
 import type {
 	OAuthOptions,
 	SchemaClient,
 	Scope,
-} from "@better-auth/oauth-provider";
-import { toExpJWT } from "better-auth/plugins";
+} from "@shinauth/oauth-provider";
+import { toExpJWT } from "shinauth/plugins";
 import {
 	createMetadataDocumentClient,
 	refreshMetadataDocumentClient,
@@ -15,7 +15,7 @@ import { isUrlClientId } from "./validate-metadata-document";
 
 /**
  * Signature of the `resolve` function on a {@link ClientDiscovery}. Kept
- * here to avoid a circular import back into `@better-auth/oauth-provider`.
+ * here to avoid a circular import back into `@shinauth/oauth-provider`.
  */
 type CimdResolver = (
 	ctx: GenericEndpointContext,

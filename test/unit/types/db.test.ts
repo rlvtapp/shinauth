@@ -2,13 +2,13 @@ import type {
 	BetterAuthDBOptions,
 	BetterAuthOptions,
 	BetterAuthPlugin,
-} from "@better-auth/core";
+} from "@shinauth/core";
 import type {
 	Account,
 	Session,
 	User,
 	Verification,
-} from "@better-auth/core/db";
+} from "@shinauth/core/db";
 import { expectTypeOf, test } from "vitest";
 
 const testPlugin = () => {

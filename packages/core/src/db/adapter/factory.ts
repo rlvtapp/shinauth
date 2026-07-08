@@ -2,7 +2,7 @@ import {
 	ATTR_DB_COLLECTION_NAME,
 	ATTR_DB_OPERATION_NAME,
 	withSpan,
-} from "@better-auth/core/instrumentation";
+} from "@shinauth/core/instrumentation";
 import { createLogger, getColorDepth, TTY_COLORS } from "../../env";
 import { BetterAuthError } from "../../error";
 import type { BetterAuthOptions } from "../../types";

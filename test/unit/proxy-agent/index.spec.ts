@@ -1,24 +1,24 @@
 /**
- * Unit Test: Verify undici ProxyAgent works with better-auth OAuth flows
+ * Unit Test: Verify undici ProxyAgent works with shinauth OAuth flows
  *
  * This test demonstrates that when you set a global dispatcher with ProxyAgent,
- * all fetch() calls made by better-auth during OAuth flows are routed through it.
+ * all fetch() calls made by shinauth during OAuth flows are routed through it.
  * This is critical for corporate environments where all outbound HTTP requests
  * must go through a proxy server.
  *
  * Reference: https://github.com/nodejs/undici/blob/main/docs/docs/api/ProxyAgent.md
- * Related issue: https://github.com/better-auth/better-auth/issues/7396
+ * Related issue: https://github.com/rlvtapp/shinauth/issues/7396
  */
-import type { GoogleProfile } from "@better-auth/core/social-providers";
-import { signJWT } from "better-auth/crypto";
-import { getTestInstance } from "better-auth/test";
+import type { GoogleProfile } from "@shinauth/core/social-providers";
+import { signJWT } from "shinauth/crypto";
+import { getTestInstance } from "shinauth/test";
 import type { Dispatcher } from "undici";
 import { getGlobalDispatcher, MockAgent, setGlobalDispatcher } from "undici";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
-const DEFAULT_SECRET = "better-auth-secret-123456789";
+const DEFAULT_SECRET = "shinauth-secret-123456789";
 
-describe("ProxyAgent with better-auth OAuth", () => {
+describe("ProxyAgent with shinauth OAuth", () => {
 	let originalDispatcher: Dispatcher;
 	let mockAgent: MockAgent;
 
@@ -90,7 +90,7 @@ describe("ProxyAgent with better-auth OAuth", () => {
 				},
 			]);
 
-		// Create better-auth instance with GitHub OAuth
+		// Create shinauth instance with GitHub OAuth
 		const { client } = await getTestInstance({
 			secret: DEFAULT_SECRET,
 			socialProviders: {
@@ -138,7 +138,7 @@ describe("ProxyAgent with better-auth OAuth", () => {
 			},
 		});
 
-		// Verify that better-auth made requests through our global dispatcher (proxy)
+		// Verify that shinauth made requests through our global dispatcher (proxy)
 		// If this test passes, it means all OAuth requests went through setGlobalDispatcher
 		expect(signInRes.data?.url).toBeDefined();
 	});
@@ -185,7 +185,7 @@ describe("ProxyAgent with better-auth OAuth", () => {
 				},
 			);
 
-		// Create better-auth instance with Google OAuth
+		// Create shinauth instance with Google OAuth
 		const { client } = await getTestInstance({
 			secret: DEFAULT_SECRET,
 			socialProviders: {

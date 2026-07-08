@@ -1,9 +1,9 @@
 import assert from "node:assert/strict";
 import { DatabaseSync } from "node:sqlite";
 import { describe, test } from "node:test";
-import { sso } from "@better-auth/sso";
-import { betterAuth } from "better-auth";
-import { getMigrations } from "better-auth/db/migration";
+import { sso } from "@shinauth/sso";
+import { betterAuth } from "shinauth";
+import { getMigrations } from "shinauth/db/migration";
 
 const TEST_CERT = `MIIDXTCCAkWgAwIBAgIJAOxEm08dOr3PMA0GCSqGSIb3DqEBCwUAMEUxCzAJBgNV
 BAYTAkFVMRMwEQYDVQQIDApTb21lLVN0YXRlMSEwHwYDVQQKDBhJbnRlcm5ldCBX
@@ -28,16 +28,16 @@ const IDP_ENTRY_POINT = "https://idp.example.com/saml2/sso";
 
 describe("SAML SSO", () => {
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/8695
+	 * @see https://github.com/rlvtapp/shinauth/issues/8695
 	 *
 	 * samlify is a CJS module with __esModule: true but no exports.default.
 	 * Using `import saml from "samlify"` resolves to undefined in ESM,
 	 * causing `saml.setSchemaValidator(...)` to throw at module load time.
-	 * This test verifies that @better-auth/sso loads without error under ESM
+	 * This test verifies that @shinauth/sso loads without error under ESM
 	 * by using a native ESM import (not createRequire).
 	 */
-	test("should load @better-auth/sso via ESM without samlify import error", async () => {
-		const mod = await import("@better-auth/sso");
+	test("should load @shinauth/sso via ESM without samlify import error", async () => {
+		const mod = await import("@shinauth/sso");
 		assert.ok(mod.sso, "sso export should be defined");
 		assert.equal(typeof mod.sso, "function", "sso should be a function");
 	});

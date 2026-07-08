@@ -1,6 +1,6 @@
 ---
-"better-auth": patch
-"@better-auth/oauth-provider": patch
+"shinauth": patch
+"@shinauth/oauth-provider": patch
 ---
 
 harden dynamic `baseURL` handling for direct `auth.api.*` calls and plugin metadata helpers
@@ -18,4 +18,4 @@ harden dynamic `baseURL` handling for direct `auth.api.*` calls and plugin metad
 
 - `oauthProviderAuthServerMetadata`, `oauthProviderOpenIdConfigMetadata`, `oAuthDiscoveryMetadata`, and `oAuthProtectedResourceMetadata` forward the incoming request to their chained `auth.api` calls, so `issuer` and discovery URLs reflect the request host on dynamic configs.
 - `withMcpAuth` forwards the incoming request to `getMcpSession`, threads `trustedProxyHeaders`, and emits a bare `Bearer` challenge when `baseURL` can't be resolved (instead of `Bearer resource_metadata="undefined/..."`).
-- `metadataResponse` in `@better-auth/oauth-provider` normalizes headers via `new Headers()` so callers can pass `Headers`, tuple arrays, or records without silently dropping entries.
+- `metadataResponse` in `@shinauth/oauth-provider` normalizes headers via `new Headers()` so callers can pass `Headers`, tuple arrays, or records without silently dropping entries.

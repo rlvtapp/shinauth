@@ -2,10 +2,10 @@ import assert from "node:assert";
 import { once } from "node:events";
 import { createServer } from "node:http";
 import { describe, it } from "node:test";
-import { passkey } from "@better-auth/passkey";
-import { betterAuth } from "better-auth";
-import { memoryAdapter } from "better-auth/adapters/memory";
-import { toNodeHandler } from "better-auth/node";
+import { passkey } from "@shinauth/passkey";
+import { betterAuth } from "shinauth";
+import { memoryAdapter } from "shinauth/adapters/memory";
+import { toNodeHandler } from "shinauth/node";
 
 type PasskeyRegistrationOptionsPayload = {
 	user?: { name?: string; displayName?: string };
@@ -119,6 +119,6 @@ describe("(node) passkey pre-auth", () => {
 		assert.equal(typeof payload.challenge, "string");
 
 		const setCookie = response.headers.get("set-cookie") || "";
-		assert.strictEqual(setCookie.includes("better-auth-passkey"), true);
+		assert.strictEqual(setCookie.includes("shinauth-passkey"), true);
 	});
 });

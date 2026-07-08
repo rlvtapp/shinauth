@@ -1,9 +1,9 @@
-import { runWithTransaction } from "@better-auth/core/context";
-import { isAPIError } from "@better-auth/core/utils/is-api-error";
+import { runWithTransaction } from "@shinauth/core/context";
+import { isAPIError } from "@shinauth/core/utils/is-api-error";
 import type {
 	PrivateKeyJwtSigningAlgorithm,
 	TokenEndpointAuth,
-} from "better-auth";
+} from "shinauth";
 import {
 	authorizationCodeRequest,
 	createAuthorizationURL,
@@ -13,20 +13,20 @@ import {
 	HIDE_METADATA,
 	PRIVATE_KEY_JWT_SIGNING_ALGORITHMS,
 	parseState,
-} from "better-auth";
+} from "shinauth";
 import {
 	APIError,
 	addOAuthServerContext,
 	createAuthEndpoint,
 	getSessionFromCtx,
 	sessionMiddleware,
-} from "better-auth/api";
-import { deleteSessionCookie, setSessionCookie } from "better-auth/cookies";
-import { generateRandomString } from "better-auth/crypto";
+} from "shinauth/api";
+import { deleteSessionCookie, setSessionCookie } from "shinauth/cookies";
+import { generateRandomString } from "shinauth/crypto";
 import {
 	additionalAuthorizationParamsSchema,
 	handleOAuthUserInfo,
-} from "better-auth/oauth2";
+} from "shinauth/oauth2";
 import { decodeJwt } from "jose";
 import type { BindingContext } from "samlify/types/src/entity";
 import type { RequestInfo } from "samlify/types/src/types";

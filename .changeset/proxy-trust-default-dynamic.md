@@ -1,5 +1,5 @@
 ---
-"better-auth": minor
+"shinauth": minor
 ---
 
 The dynamic `baseURL` config now ignores `x-forwarded-host` and `x-forwarded-proto` unless you set `advanced.trustedProxyHeaders: true`.

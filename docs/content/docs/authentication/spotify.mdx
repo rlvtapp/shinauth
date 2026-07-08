@@ -30,7 +30,7 @@ description: Spotify provider setup and usage.
     ```
 
     ```ts title="auth.ts"  
-    import { betterAuth } from "better-auth"
+    import { betterAuth } from "shinauth"
 
     export const auth = betterAuth({
         
@@ -52,7 +52,7 @@ description: Spotify provider setup and usage.
     * `provider`: The provider to use. It should be set to `spotify`.
 
     ```ts title="auth-client.ts"
-    import { createAuthClient } from "better-auth/client"
+    import { createAuthClient } from "shinauth/client"
     const authClient =  createAuthClient()
 
     const signIn = async () => {

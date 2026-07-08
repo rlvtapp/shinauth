@@ -17,7 +17,7 @@ This plugin exposes a [SCIM](https://simplecloud.info/#Specification) server tha
     ### Install the plugin
 
     ```package-install
-    @better-auth/scim
+    @shinauth/scim
     ```
   </Step>
 
@@ -25,9 +25,9 @@ This plugin exposes a [SCIM](https://simplecloud.info/#Specification) server tha
     ### Add Plugin to the server
 
     ```ts title="auth.ts"
-    import { betterAuth } from "better-auth"
-    import { organization } from "better-auth/plugins";
-    import { scim } from "@better-auth/scim"; // [!code highlight]
+    import { betterAuth } from "shinauth"
+    import { organization } from "shinauth/plugins";
+    import { scim } from "@shinauth/scim"; // [!code highlight]
 
     const auth = betterAuth({
         plugins: [
@@ -50,7 +50,7 @@ This plugin exposes a [SCIM](https://simplecloud.info/#Specification) server tha
       <Tab value="Next.js">
         ```ts title="api/auth/[...all]/route.ts"
         import { auth } from "@/lib/auth";
-        import { toNextJsHandler } from "better-auth/next-js";
+        import { toNextJsHandler } from "shinauth/next-js";
 
         export const { POST, GET, PUT, PATCH, DELETE } = toNextJsHandler(auth); // [!code highlight]
         ```
@@ -59,7 +59,7 @@ This plugin exposes a [SCIM](https://simplecloud.info/#Specification) server tha
       <Tab value="Solid Start">
         ```ts title="routes/api/auth/*auth.ts"
         import { auth } from "~/lib/auth";
-        import { toSolidStartHandler } from "better-auth/solid-start";
+        import { toSolidStartHandler } from "shinauth/solid-start";
 
         export const { GET, POST, PUT, PATCH, DELETE } = toSolidStartHandler(auth); // [!code highlight]
         ```
@@ -99,12 +99,12 @@ Upon registration, this plugin will expose compliant [SCIM 2.0](https://simplecl
 
 ### Self-Service Directory Sync
 
-If you're using [Better Auth Infrastructure](https://dash.better-auth.com/sign-in), you get self-service directory sync in the dashboard. Organization admins can create and manage SCIM directory connections and rotate bearer tokens without calling the SCIM APIs directly.
+If you're using [Shinauth Infrastructure](https://dash.shinauth.com/sign-in), you get self-service directory sync in the dashboard. Organization admins can create and manage SCIM directory connections and rotate bearer tokens without calling the SCIM APIs directly.
 
 The dashboard is available at:
 
 ```
-https://dash.better-auth.com/[project]/organization/[orgId]/enterprise
+https://dash.shinauth.com/[project]/organization/[orgId]/enterprise
 ```
 
 From the dashboard you can:
@@ -136,7 +136,7 @@ A runtime SCIM token is a simple bearer token scoped to one organization:
   ```
 </APIMethod>
 
-A `SCIM` token is always restricted to a provider and an organization. `providerId` is the logical directory provider ID, such as `okta` or `entra-id`, and `organizationId` is the Better Auth organization the token can manage. Provider IDs cannot contain `:`, because SCIM bearer tokens use that character to separate token segments.
+A `SCIM` token is always restricted to a provider and an organization. `providerId` is the logical directory provider ID, such as `okta` or `entra-id`, and `organizationId` is the Shinauth organization the token can manage. Provider IDs cannot contain `:`, because SCIM bearer tokens use that character to separate token segments.
 
 <Callout>
   The management API no longer creates personal SCIM connections. Use organization-scoped tokens for customer directory sync. Use [`staticProviders`](#static-scim-providers) only when you need a code-configured, app-level provider for a single-tenant deployment.
@@ -144,7 +144,7 @@ A `SCIM` token is always restricted to a provider and an organization. `provider
 
 #### Organization-scoped authorization
 
-When `organizationId` is provided, Better Auth requires the current user to be a member of that organization and to have at least one of the configured `requiredRole` values.
+When `organizationId` is provided, Shinauth requires the current user to be a member of that organization and to have at least one of the configured `requiredRole` values.
 
 By default, `requiredRole` resolves to:
 
@@ -177,8 +177,8 @@ See the [hooks](#hooks) documentation for more details about supported hooks.
 Use `staticProviders` when the SCIM provider is declared in code instead of being created through `/scim/generate-token`. This is useful for single-tenant app-level SCIM or for test environments that should not persist provider rows in the database.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth"
-import { scim } from "@better-auth/scim"; 
+import { betterAuth } from "shinauth"
+import { scim } from "@shinauth/scim"; 
 
 const auth = betterAuth({
     plugins: [
@@ -290,7 +290,7 @@ Get a user from the database. The user is returned only when they are associated
 
 #### Create new user
 
-Provision a new user to the database. For organization-scoped tokens, Better Auth creates the SCIM account and adds the user to the token's organization unless the incoming resource has `active: false`.
+Provision a new user to the database. For organization-scoped tokens, Shinauth creates the SCIM account and adds the user to the token's organization unless the incoming resource has `active: false`.
 
 <APIMethod path="/scim/v2/Users" method="POST" requireBearerToken isExternalOnly note="Provision a new user via SCIM. See https://datatracker.ietf.org/doc/html/rfc7644#section-3.3">
   ```ts
@@ -468,7 +468,7 @@ By default, the SCIM provisioning will automatically map the following fields:
 
 The logical `providerId` remains in the SCIM token and the `scimProvider` table. Only account rows use the namespaced provider key, so SCIM accounts do not collide with social, SSO, OIDC, SAML, credential, or generic OAuth accounts that use the same provider ID.
 
-Better Auth's email field is globally unique. If another user already has the incoming SCIM email, `createSCIMUser` returns a `409` conflict unless you explicitly enable `linkExistingUsers` and every configured linking constraint passes.
+Shinauth's email field is globally unique. If another user already has the incoming SCIM email, `createSCIMUser` returns a `409` conflict unless you explicitly enable `linkExistingUsers` and every configured linking constraint passes.
 
 The SCIM `active` attribute maps to organization membership for organization-scoped tokens. `active: false` removes the organization membership and reports the user as inactive to that token, while preserving the SCIM account, SCIM group membership, SCIM role grants, and team association rows for reactivation. `active: true` recreates membership and reapplies SCIM-projected roles; manual roles stored only on the removed member row are not restored. `DELETE` is the full deprovisioning operation and removes SCIM group and team state for that organization. App-level static providers map `active: false` to the [admin](/docs/plugins/admin) plugin's `banned` state and revoke sessions, so honoring app-level deactivation requires the admin plugin. Changing a user's email through SCIM also resets their verified status.
 

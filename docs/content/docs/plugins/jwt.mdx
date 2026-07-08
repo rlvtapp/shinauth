@@ -10,9 +10,9 @@ The JWT plugin provides endpoints to retrieve a JWT token and a JWKS endpoint to
 </Callout>
 
 <Callout type="info">
-  The JWT plugin's `/token` endpoint and `set-auth-jwt` header produce JWKS-verifiable JWTs for external services. They are separate from Better Auth's primary `session_token` cookie.
+  The JWT plugin's `/token` endpoint and `set-auth-jwt` header produce JWKS-verifiable JWTs for external services. They are separate from Shinauth's primary `session_token` cookie.
 
-  If you enable `session.cookieCache.strategy = "jwt"`, the `session_data` cookie still uses HS256 with your Better Auth secret by default. To make that cookie-cache JWT verifiable with the JWT plugin's JWKS too, install `jwt()` and opt into `session.cookieCache.jwt.signingKey = "jwt-plugin"`.
+  If you enable `session.cookieCache.strategy = "jwt"`, the `session_data` cookie still uses HS256 with your Shinauth secret by default. To make that cookie-cache JWT verifiable with the JWT plugin's JWKS too, install `jwt()` and opt into `session.cookieCache.jwt.signingKey = "jwt-plugin"`.
 </Callout>
 
 ## Installation
@@ -22,8 +22,8 @@ The JWT plugin provides endpoints to retrieve a JWT token and a JWKS endpoint to
     ### Add the plugin to your **auth** config
 
     ```ts title="auth.ts"
-    import { betterAuth } from "better-auth"
-    import { jwt } from "better-auth/plugins" // [!code highlight]
+    import { betterAuth } from "shinauth"
+    import { jwt } from "shinauth/plugins" // [!code highlight]
 
     export const auth = betterAuth({
         plugins: [
@@ -59,8 +59,8 @@ The JWT plugin provides endpoints to retrieve a JWT token and a JWKS endpoint to
     ### Add the client plugin to your auth client
 
     ```ts title="auth-client.ts"
-    import { createAuthClient } from "better-auth/client"
-    import { jwtClient } from "better-auth/client/plugins" // [!code highlight]
+    import { createAuthClient } from "shinauth/client"
+    import { jwtClient } from "shinauth/client/plugins" // [!code highlight]
 
     export const authClient = createAuthClient({
       plugins: [
@@ -223,7 +223,7 @@ const payload = await validateToken(token)
 If you are making your system oAuth compliant (such as when utilizing the OIDC or MCP plugins), you **MUST** disable the `/token` endpoint (oAuth equivalent `/oauth2/token`) and disable setting the jwt header (oAuth equivalent `/oauth2/userinfo`).
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 
 betterAuth({
   disabledPaths: [
@@ -279,8 +279,8 @@ jwt({
 When using a custom `jwksPath` on the server, you **MUST** configure the client with the same path:
 
 ```ts title="auth-client.ts"
-import { createAuthClient } from "better-auth/client"
-import { jwtClient } from "better-auth/client/plugins"
+import { createAuthClient } from "shinauth/client"
+import { jwtClient } from "shinauth/client/plugins"
 
 export const authClient = createAuthClient({
   plugins: [

@@ -1,4 +1,4 @@
-import type { Awaitable, BetterAuthOptions } from "@better-auth/core";
+import type { Awaitable, BetterAuthOptions } from "@shinauth/core";
 import type {
 	AdapterFactoryCustomizeAdapterCreator,
 	AdapterFactoryOptions,
@@ -6,9 +6,9 @@ import type {
 	DBAdapterDebugLogOption,
 	JoinConfig,
 	Where,
-} from "@better-auth/core/db/adapter";
-import { createAdapterFactory } from "@better-auth/core/db/adapter";
-import { BetterAuthError } from "@better-auth/core/error";
+} from "@shinauth/core/db/adapter";
+import { createAdapterFactory } from "@shinauth/core/db/adapter";
+import { BetterAuthError } from "@shinauth/core/error";
 
 export interface PrismaConfig {
 	/**
@@ -440,7 +440,7 @@ export const prismaAdapter = (prisma: PrismaClient, config: PrismaConfig) => {
 						select: selects,
 					});
 
-					// transform the resulting `include` items to use better-auth expected field names
+					// transform the resulting `include` items to use shinauth expected field names
 					if (join && result) {
 						for (const [includeKey, originalKey] of map.entries()) {
 							if (includeKey === originalKey) continue;
@@ -490,7 +490,7 @@ export const prismaAdapter = (prisma: PrismaClient, config: PrismaConfig) => {
 						select: selects,
 					});
 
-					// transform the resulting join items to use better-auth expected field names
+					// transform the resulting join items to use shinauth expected field names
 					if (join && Array.isArray(result)) {
 						for (const item of result) {
 							for (const [includeKey, originalKey] of map.entries()) {

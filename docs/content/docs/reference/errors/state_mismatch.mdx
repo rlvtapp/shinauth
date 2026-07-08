@@ -5,11 +5,11 @@ description: State verification failed during the OAuth callback. Covers all sta
 
 ## What is it?
 
-When an OAuth or SSO flow begins, Better Auth generates a unique `state` value and stores it so it can be
+When an OAuth or SSO flow begins, Shinauth generates a unique `state` value and stores it so it can be
 verified when the provider redirects back. This prevents CSRF and replay attacks by ensuring the callback
 truly belongs to the same browser session that started it.
 
-Better Auth supports two state storage strategies - **database** (the default) and **cookie** - and each
+Shinauth supports two state storage strategies - **database** (the default) and **cookie** - and each
 has its own failure modes. This page covers every state-related error code, why it fires, and how to fix it.
 
 ***
@@ -131,7 +131,7 @@ The encrypted state cookie exists but cannot be decrypted or the decrypted JSON 
 
 ## `state_security_mismatch` - state not persisted correctly (database strategy)
 
-After the verification record is found in the database, Better Auth also checks that a **signed state
+After the verification record is found in the database, Shinauth also checks that a **signed state
 cookie** was sent back and its value matches the state from the callback URL. This is a second layer of
 CSRF protection. This error means the cookie is missing or its value does not match.
 
@@ -147,7 +147,7 @@ CSRF protection. This error means the cookie is missing or its value does not ma
 ### How to fix
 
 * Use a **stable, custom domain** and verify cookie attributes.
-* For SAML flows, Better Auth already sets `skipStateCookieCheck` internally.
+* For SAML flows, Shinauth already sets `skipStateCookieCheck` internally.
 * If your deployment requires it, you can skip this check:
 
 ```ts title="auth.ts"
@@ -211,8 +211,8 @@ triggers, and what to do about it.
 
 1. **Check the error code.** The `error` query parameter on your error page tells you the exact code
    (`state_mismatch`, `state_security_mismatch`, `state_invalid`, or `state_generation_error`).
-2. **Open DevTools → Application → Cookies.** Confirm the state cookie (`better-auth.state` or
-   `better-auth.oauth_state`) is set before the redirect and still present when the callback arrives.
+2. **Open DevTools → Application → Cookies.** Confirm the state cookie (`shinauth.state` or
+   `shinauth.oauth_state`) is set before the redirect and still present when the callback arrives.
 3. **Inspect the callback URL.** Confirm the `state` query parameter is present and unmodified.
 4. **Check your server logs.** The `details` object in the error includes the `state` value - you can
    cross-reference this with your `verification` table to see if the record exists, expired, or was

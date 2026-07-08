@@ -1,10 +1,10 @@
-import { oauthProvider } from "@better-auth/oauth-provider";
-import { betterAuth } from "better-auth";
-import { organization } from "better-auth/plugins";
-import type { GoogleProfile, JoinConfig, JoinOption } from "better-auth/types";
+import { oauthProvider } from "@shinauth/oauth-provider";
+import { betterAuth } from "shinauth";
+import { organization } from "shinauth/plugins";
+import type { GoogleProfile, JoinConfig, JoinOption } from "shinauth/types";
 
 /**
- * @see https://github.com/better-auth/better-auth/issues/9378
+ * @see https://github.com/rlvtapp/shinauth/issues/9378
  */
 export const auth = betterAuth({
 	plugins: [
@@ -56,7 +56,7 @@ auth.api
 	});
 
 /**
- * @see https://github.com/better-auth/better-auth/issues/6876
+ * @see https://github.com/rlvtapp/shinauth/issues/6876
  */
 export type TypeExportRegression = {
 	profile: GoogleProfile;

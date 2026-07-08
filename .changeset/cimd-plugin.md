@@ -1,17 +1,17 @@
 ---
-"@better-auth/cimd": minor
-"@better-auth/oauth-provider": minor
+"@shinauth/cimd": minor
+"@shinauth/oauth-provider": minor
 ---
 
-Add `@better-auth/cimd` plugin for [Client ID Metadata Document](https://datatracker.ietf.org/doc/draft-ietf-oauth-client-id-metadata-document/) support, and expose a typed `clientDiscovery` extension point on `oauthProvider()` so plugins can resolve `client_id` values from external sources.
+Add `@shinauth/cimd` plugin for [Client ID Metadata Document](https://datatracker.ietf.org/doc/draft-ietf-oauth-client-id-metadata-document/) support, and expose a typed `clientDiscovery` extension point on `oauthProvider()` so plugins can resolve `client_id` values from external sources.
 
-### `@better-auth/cimd` (new package)
+### `@shinauth/cimd` (new package)
 
 Install alongside `oauthProvider()` to let clients identify themselves by hosting an HTTPS metadata document; the URL becomes the `client_id`. This is the mechanism [MCP](https://modelcontextprotocol.io/specification/draft/basic/authorization#client-id-metadata-documents-flow) uses for unauthenticated dynamic client discovery.
 
 ```ts
-import { oauthProvider } from "@better-auth/oauth-provider";
-import { cimd } from "@better-auth/cimd";
+import { oauthProvider } from "@shinauth/oauth-provider";
+import { cimd } from "@shinauth/cimd";
 
 betterAuth({
   plugins: [
@@ -32,10 +32,10 @@ The `allowFetch` pre-fetch gate lets operators add origin allowlists, per-host r
 
 Admin-controlled fields (`disabled`, `skipConsent`, `enableEndSession`) are preserved across refreshes so admin decisions survive document updates.
 
-### `@better-auth/oauth-provider`: `clientDiscovery` extension field
+### `@shinauth/oauth-provider`: `clientDiscovery` extension field
 
 ```ts
-import type { ClientDiscovery } from "@better-auth/oauth-provider";
+import type { ClientDiscovery } from "@shinauth/oauth-provider";
 
 oauthProvider({
   extensions: [
@@ -55,7 +55,7 @@ oauthProvider({
 
 `clientDiscovery` accepts a single `ClientDiscovery` or an array. `getClient()` walks the entries in order after the database lookup; the first entry whose `matches()` returns `true` and whose `resolve()` returns a non-null client wins. Each entry can also contribute `discoveryMetadata` fields that are merged into `/.well-known/oauth-authorization-server` and `/.well-known/openid-configuration` responses.
 
-Plugins like `@better-auth/cimd` contribute an entry through the extension surface at init time, so multiple discoveries can coexist.
+Plugins like `@shinauth/cimd` contribute an entry through the extension surface at init time, so multiple discoveries can coexist.
 
 The `checkOAuthClient` and `oauthToSchema` helpers are now exported for plugins that create client records directly.
 

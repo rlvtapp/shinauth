@@ -1,13 +1,13 @@
-import { createAuthMiddleware } from "better-auth/api";
-import { createAuthClient } from "better-auth/client";
-import { toNodeHandler } from "better-auth/node";
-import type { GenericOAuthConfig } from "better-auth/plugins/generic-oauth";
-import { genericOAuth } from "better-auth/plugins/generic-oauth";
-import { jwt } from "better-auth/plugins/jwt";
-import { multiSession } from "better-auth/plugins/multi-session";
-import type { Organization } from "better-auth/plugins/organization";
-import { organization } from "better-auth/plugins/organization";
-import { getTestInstance } from "better-auth/test";
+import { createAuthMiddleware } from "shinauth/api";
+import { createAuthClient } from "shinauth/client";
+import { toNodeHandler } from "shinauth/node";
+import type { GenericOAuthConfig } from "shinauth/plugins/generic-oauth";
+import { genericOAuth } from "shinauth/plugins/generic-oauth";
+import { jwt } from "shinauth/plugins/jwt";
+import { multiSession } from "shinauth/plugins/multi-session";
+import type { Organization } from "shinauth/plugins/organization";
+import { organization } from "shinauth/plugins/organization";
+import { getTestInstance } from "shinauth/test";
 import { APIError } from "better-call";
 import { createLocalJWKSet, jwtVerify } from "jose";
 import type { Listener } from "listhen";
@@ -522,7 +522,7 @@ describe("oauth", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/7041
+	 * @see https://github.com/rlvtapp/shinauth/issues/7041
 	 */
 	it("should return JSON redirect after sign-in without Sec-Fetch-Mode header", async ({
 		onTestFinished,
@@ -595,7 +595,7 @@ describe("oauth", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/7041
+	 * @see https://github.com/rlvtapp/shinauth/issues/7041
 	 */
 	it("should still return 302 redirect for navigate-mode requests (form submissions)", async ({
 		onTestFinished,
@@ -666,7 +666,7 @@ describe("oauth", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/7041
+	 * @see https://github.com/rlvtapp/shinauth/issues/7041
 	 */
 	it("should still return 302 redirect for html accept requests without Sec-Fetch-Mode", async ({
 		onTestFinished,
@@ -734,7 +734,7 @@ describe("oauth", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/7041
+	 * @see https://github.com/rlvtapp/shinauth/issues/7041
 	 */
 	it("should return JSON error redirect when client is deleted during OAuth flow", async ({
 		onTestFinished,
@@ -830,7 +830,7 @@ describe("oauth", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/7041
+	 * @see https://github.com/rlvtapp/shinauth/issues/7041
 	 */
 	it("should return JSON error redirect when client is disabled during OAuth flow", async ({
 		onTestFinished,
@@ -1569,7 +1569,7 @@ describe("oauth - prompt", async () => {
 			},
 		});
 		expect(callbackURL).toContain("/success");
-		expect(headers.get("cookie")).toContain("better-auth.session_token=");
+		expect(headers.get("cookie")).toContain("shinauth.session_token=");
 	});
 
 	it("consent - should sign in given previous consent (see previous test)", async ({
@@ -1864,7 +1864,7 @@ describe("oauth - prompt", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/9887
+	 * @see https://github.com/rlvtapp/shinauth/issues/9887
 	 *
 	 * The resumed `/oauth2/authorize` step must run configured hooks. Before the
 	 * fix it called the raw authorize function directly, skipping the dispatch
@@ -2141,7 +2141,7 @@ describe("oauth - prompt", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/discussions/9261
+	 * @see https://github.com/rlvtapp/shinauth/discussions/9261
 	 */
 	it("login+consent - should not accept stale login prompt without reauthentication", async ({
 		onTestFinished,
@@ -2926,7 +2926,7 @@ describe("oauth - config", () => {
 	}
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/8017
+	 * @see https://github.com/rlvtapp/shinauth/issues/8017
 	 */
 	it("should preserve form-urlencoded token body when req.body was pre-parsed", async () => {
 		const { auth: authorizationServer, signInWithTestUser } =
@@ -3700,5 +3700,5 @@ describe("oauth - rate limiting", () => {
 	});
 
 	// Note: Window expiry/reset behavior is tested in the core rate-limiter tests.
-	// See packages/better-auth/src/api/rate-limiter/rate-limiter.test.ts
+	// See packages/shinauth/src/api/rate-limiter/rate-limiter.test.ts
 });

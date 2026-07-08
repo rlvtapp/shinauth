@@ -22,7 +22,7 @@ All you need to do is provide the database logic, and the `createAdapterFactory`
     3. Create the adapter!
 
     ```ts
-    import { createAdapterFactory, type DBAdapterDebugLogOption } from "better-auth/adapters";
+    import { createAdapterFactory, type DBAdapterDebugLogOption } from "shinauth/adapters";
 
     // Your custom adapter config options
     interface CustomAdapterConfig {
@@ -114,8 +114,8 @@ If you haven't already, check out the `options` object in the [config section](#
 
 Before we get into the adapter function, let's go over the parameters that are available to you.
 
-* `options`: The Better Auth options.
-* `schema`: The schema from the user's Better Auth instance.
+* `options`: The Shinauth options.
+* `schema`: The schema from the user's Shinauth instance.
 * `debugLog`: The debug log function.
 * `getModelName`: Function to get the transformed model name for the database.
 * `getFieldName`: Function to get the transformed field name for the database.
@@ -271,7 +271,7 @@ consumeOne: async ({ model, where }) => {
 ```
 
 <Callout type="warn">
-  `consumeOne` is required. Better Auth does not provide a `findMany` plus `deleteMany` fallback because that shape cannot guarantee single-use semantics across adapters without a native atomic delete-and-return operation.
+  `consumeOne` is required. Shinauth does not provide a `findMany` plus `deleteMany` fallback because that shape cannot guarantee single-use semantics across adapters without a native atomic delete-and-return operation.
 </Callout>
 
 ### `incrementOne` method
@@ -302,7 +302,7 @@ incrementOne: async ({ model, where, increment, set }) => {
 ```
 
 <Callout type="warn">
-  `incrementOne` is required. Better Auth uses it as a compare-and-swap primitive: the `where` clause is part of the guard, so concurrent requests cannot all update a stale snapshot.
+  `incrementOne` is required. Shinauth uses it as a compare-and-swap primitive: the `where` clause is part of the guard, so concurrent requests cannot all update a stale snapshot.
 </Callout>
 
 ### `findOne` method
@@ -392,7 +392,7 @@ const myAdapter = (config: CustomAdapterConfig) =>
 
 ### `createSchema` (optional)
 
-The `createSchema` method allows the [Better Auth CLI](/docs/concepts/cli) to [generate](/docs/concepts/cli/#generate) a schema for the database.
+The `createSchema` method allows the [Shinauth CLI](/docs/concepts/cli) to [generate](/docs/concepts/cli/#generate) a schema for the database.
 
 parameters:
 
@@ -407,18 +407,18 @@ createSchema: async ({ file, tables }) => {
 
 ## Test your adapter
 
-We've provided a test suite via the `@better-auth/test-utils` package that you can use to test your adapter. It requires you to use `vitest`.
+We've provided a test suite via the `@shinauth/test-utils` package that you can use to test your adapter. It requires you to use `vitest`.
 
 First, install the test utilities:
 
 ```bash
-npm install -D @better-auth/test-utils
+npm install -D @shinauth/test-utils
 ```
 
 Then create a test file using `testAdapter` and `createTestSuite`:
 
 ```ts title="my-adapter.test.ts"
-import { testAdapter, createTestSuite } from "@better-auth/test-utils/adapter";
+import { testAdapter, createTestSuite } from "@shinauth/test-utils/adapter";
 import { myAdapter } from "./my-adapter";
 
 const normalTestSuite = createTestSuite("Normal", ({ test, adapter }) => [
@@ -448,7 +448,7 @@ execute();
 The `testAdapter` function handles the test lifecycle for you, including running migrations before tests and cleaning up all tables after tests complete.
 
 <Callout type="info">
-  In v1.4, adapter tests used `runAdapterTest` and `runNumberIdAdapterTest` from `better-auth/adapters/test`. That export has been removed in v1.5. Use `@better-auth/test-utils/adapter` instead.
+  In v1.4, adapter tests used `runAdapterTest` and `runNumberIdAdapterTest` from `shinauth/adapters/test`. That export has been removed in v1.5. Use `@shinauth/test-utils/adapter` instead.
 </Callout>
 
 ## Config
@@ -595,7 +595,7 @@ The `customTransformInput` function receives the following arguments:
 * `action`: The action which was called from the adapter (`create` or `update`).
 * `model`: The model that is being transformed.
 * `schema`: The schema that is being transformed.
-* `options`: Better Auth options.
+* `options`: Shinauth options.
 
 The `customTransformInput` function runs at every key in the data object of a given action.
 

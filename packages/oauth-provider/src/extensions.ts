@@ -1,7 +1,7 @@
-import type { AuthContext, GenericEndpointContext } from "@better-auth/core";
-import { logger } from "@better-auth/core/env";
-import { BetterAuthError } from "@better-auth/core/error";
-import { CLIENT_ASSERTION_TYPE } from "@better-auth/core/oauth2";
+import type { AuthContext, GenericEndpointContext } from "@shinauth/core";
+import { logger } from "@shinauth/core/env";
+import { BetterAuthError } from "@shinauth/core/error";
+import { CLIENT_ASSERTION_TYPE } from "@shinauth/core/oauth2";
 import type {
 	ClientDiscovery,
 	OAuthClaimExtensionInput,

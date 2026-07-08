@@ -1,6 +1,6 @@
-import { mongodbAdapter } from "@better-auth/mongo-adapter";
-import { createTestSuite, testAdapter } from "@better-auth/test-utils/adapter";
-import type { Session, User } from "better-auth";
+import { mongodbAdapter } from "@shinauth/mongo-adapter";
+import { createTestSuite, testAdapter } from "@shinauth/test-utils/adapter";
+import type { Session, User } from "shinauth";
 import { MongoClient, ObjectId } from "mongodb";
 import { expect } from "vitest";
 import {
@@ -21,7 +21,7 @@ const dbClient = async (connectionString: string, dbName: string) => {
 
 const { db, client } = await dbClient(
 	"mongodb://127.0.0.1:27017",
-	"better-auth",
+	"shinauth",
 );
 
 const updateObjectIdTestSuite = createTestSuite(

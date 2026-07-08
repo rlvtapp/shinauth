@@ -1,9 +1,9 @@
-import { createAuthClient } from "better-auth/client";
-import { toNodeHandler } from "better-auth/node";
-import { createPrivateKeyJwtClientAssertionGetter } from "better-auth/oauth2";
-import { genericOAuth } from "better-auth/plugins/generic-oauth";
-import { jwt } from "better-auth/plugins/jwt";
-import { getHttpTestInstance, getTestInstance } from "better-auth/test";
+import { createAuthClient } from "shinauth/client";
+import { toNodeHandler } from "shinauth/node";
+import { createPrivateKeyJwtClientAssertionGetter } from "shinauth/oauth2";
+import { genericOAuth } from "shinauth/plugins/generic-oauth";
+import { jwt } from "shinauth/plugins/jwt";
+import { getHttpTestInstance, getTestInstance } from "shinauth/test";
 import { exportJWK, generateKeyPair } from "jose";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { oauthProviderClient } from "./client";

@@ -1,17 +1,17 @@
-import type { GenericEndpointContext } from "@better-auth/core";
+import type { GenericEndpointContext } from "@shinauth/core";
 import type {
 	OAuthOptions,
 	OAuthResourceInput,
 	ResourceServerMetadata,
 	Scope,
-} from "@better-auth/oauth-provider";
+} from "@shinauth/oauth-provider";
 import {
 	getIssuer,
 	metadataResponse,
 	oauthProvider,
 	ResourceUriSchema,
-} from "@better-auth/oauth-provider";
-import { DPOP_SIGNING_ALGORITHMS } from "better-auth/oauth2";
+} from "@shinauth/oauth-provider";
+import { DPOP_SIGNING_ALGORITHMS } from "shinauth/oauth2";
 
 const PROTECTED_RESOURCE_METADATA_PATH =
 	"/.well-known/oauth-protected-resource";
@@ -127,9 +127,9 @@ const buildResourceServerMetadata = (
  *
  * @example
  * ```ts
- * import { betterAuth } from "better-auth";
- * import { jwt } from "better-auth/plugins";
- * import { mcp } from "@better-auth/mcp";
+ * import { betterAuth } from "shinauth";
+ * import { jwt } from "shinauth/plugins";
+ * import { mcp } from "@shinauth/mcp";
  *
  * export const auth = betterAuth({
  *   plugins: [

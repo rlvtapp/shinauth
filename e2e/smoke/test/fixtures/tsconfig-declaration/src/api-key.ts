@@ -1,8 +1,8 @@
-import { apiKey } from "@better-auth/api-key";
-import { betterAuth } from "better-auth";
+import { apiKey } from "@shinauth/api-key";
+import { betterAuth } from "shinauth";
 
 /**
- * @see https://github.com/better-auth/better-auth/issues/9757
+ * @see https://github.com/rlvtapp/shinauth/issues/9757
  *
  * Declaration emit must not produce TS4023 for MiddlewareOptions
  * when using the api-key plugin.

@@ -1,8 +1,8 @@
-import type { GenericEndpointContext } from "@better-auth/core";
-import { defineRequestState } from "@better-auth/core/context";
-import { logger } from "@better-auth/core/env";
-import { BetterAuthError } from "@better-auth/core/error";
-import type { DispatchContext } from "better-auth/api";
+import type { GenericEndpointContext } from "@shinauth/core";
+import { defineRequestState } from "@shinauth/core/context";
+import { logger } from "@shinauth/core/env";
+import { BetterAuthError } from "@shinauth/core/error";
+import type { DispatchContext } from "shinauth/api";
 import {
 	APIError,
 	addOAuthServerContext,
@@ -11,10 +11,10 @@ import {
 	dispatchAuthEndpoint,
 	getOAuthState,
 	sessionMiddleware,
-} from "better-auth/api";
-import { parseSetCookieHeader } from "better-auth/cookies";
-import { mergeSchema } from "better-auth/db";
-import type { BetterAuthPlugin } from "better-auth/types";
+} from "shinauth/api";
+import { parseSetCookieHeader } from "shinauth/cookies";
+import { mergeSchema } from "shinauth/db";
+import type { BetterAuthPlugin } from "shinauth/types";
 import * as z from "zod";
 import type { AuthorizeEndpointSettings } from "./authorize";
 import { authorizeEndpoint, authorizeRedirectOnError } from "./authorize";
@@ -79,7 +79,7 @@ export const DEFAULT_OAUTH_SCOPES = [
 	"offline_access",
 ] as const;
 
-declare module "@better-auth/core" {
+declare module "@shinauth/core" {
 	interface BetterAuthPluginRegistry<AuthOptions, Options> {
 		"oauth-provider": {
 			creator: typeof oauthProvider;
@@ -109,11 +109,11 @@ function getServerContextSignedQueryIssuedAt(value: unknown) {
 }
 
 /**
- * oAuth 2.1 provider plugin for Better Auth.
+ * oAuth 2.1 provider plugin for Shinauth.
  *
- * @see https://better-auth.com/docs/plugins/oauth-provider
+ * @see https://shinauth.com/docs/plugins/oauth-provider
  * @param options - The options for the oAuth Provider plugin.
- * @returns A Better Auth plugin.
+ * @returns A Shinauth plugin.
  */
 export const oauthProvider = <O extends OAuthOptions<Scope[]>>(options: O) => {
 	let clientRegistrationAllowedScopes = options.clientRegistrationAllowedScopes;

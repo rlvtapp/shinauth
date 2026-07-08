@@ -5,7 +5,7 @@ description: Failed to decrypt or parse the OAuth state during the callback.
 
 ## What is it?
 
-When using the **cookie** state storage strategy (`account.storeStateStrategy: "cookie"`), Better Auth encrypts
+When using the **cookie** state storage strategy (`account.storeStateStrategy: "cookie"`), Shinauth encrypts
 all OAuth state data into a cookie. During the callback, this cookie is decrypted and parsed. The `state_invalid`
 error means the cookie exists but could not be decrypted, or the decrypted content could not be parsed as valid JSON.
 
@@ -35,7 +35,7 @@ cookie value. Look for cookie rewriting, truncation, or URL-encoding issues.
 
 ### Verify cookie names and values
 
-Use your browser's DevTools (Application, then Cookies) to confirm that the `better-auth.oauth_state` cookie is set
+Use your browser's DevTools (Application, then Cookies) to confirm that the `shinauth.oauth_state` cookie is set
 before the redirect and still exists (unmodified) when the callback arrives.
 
 ### Switch to the database strategy

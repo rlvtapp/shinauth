@@ -1,12 +1,12 @@
 import { existsSync } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
-import type { DBAdapter } from "@better-auth/core/db/adapter";
+import type { DBAdapter } from "@shinauth/core/db/adapter";
 import {
 	createTelemetry,
 	getTelemetryAuthConfig,
-} from "@better-auth/telemetry";
-import { getAdapter } from "better-auth/db/adapter";
+} from "@shinauth/telemetry";
+import { getAdapter } from "shinauth/db/adapter";
 import chalk from "chalk";
 import { Command } from "commander";
 import prompts from "prompts";

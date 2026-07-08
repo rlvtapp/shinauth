@@ -19,7 +19,7 @@ export const userSchema = coreSchema.extend({
 export type BaseUser = z.infer<typeof userSchema>;
 
 /**
- * User schema type used by better-auth, note that it's possible that user could have additional fields
+ * User schema type used by shinauth, note that it's possible that user could have additional fields
  */
 export type User<
 	DBOptions extends BetterAuthOptions["user"] = BetterAuthOptions["user"],

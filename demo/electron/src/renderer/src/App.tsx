@@ -21,11 +21,11 @@ function App(): React.JSX.Element {
 				<p className="text-center wrap-break-word text-sm md:text-base">
 					Official demo to showcase{" "}
 					<a
-						href="https://better-auth.com"
+						href="https://shinauth.com"
 						target="_blank"
 						className="italic underline"
 					>
-						better-auth.
+						shinauth.
 					</a>{" "}
 					with Electron.
 				</p>

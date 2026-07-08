@@ -1,8 +1,8 @@
-import type { SecondaryStorage } from "@better-auth/core/db";
-import { safeJSONParse } from "@better-auth/core/utils/json";
-import { magicLinkClient } from "better-auth/client/plugins";
-import { magicLink } from "better-auth/plugins";
-import { getTestInstance } from "better-auth/test";
+import type { SecondaryStorage } from "@shinauth/core/db";
+import { safeJSONParse } from "@shinauth/core/utils/json";
+import { magicLinkClient } from "shinauth/client/plugins";
+import { magicLink } from "shinauth/plugins";
+import { getTestInstance } from "shinauth/test";
 import { describe, expect, it } from "vitest";
 
 interface VerificationEmail {
@@ -64,7 +64,7 @@ function createParsedSecondaryStorage(
 }
 
 /**
- * @see https://github.com/better-auth/better-auth/issues/8228
+ * @see https://github.com/rlvtapp/shinauth/issues/8228
  */
 describe("magic link with secondary storage (string return)", async () => {
 	const store = new Map<string, string>();
@@ -151,7 +151,7 @@ describe("magic link with secondary storage (string return)", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/security/advisories/GHSA-hc7v-x88r-fmh4
+	 * @see https://github.com/rlvtapp/shinauth/security/advisories/GHSA-hc7v-x88r-fmh4
 	 */
 	it("consumes the token atomically on first verify, INVALID_TOKEN on retries", async () => {
 		const attemptStore = new Map<string, string>();
@@ -252,7 +252,7 @@ describe("magic link with secondary storage (string return)", async () => {
  * Redis client wrappers do). This exercises the `new Date()` defensive path
  * in updateVerificationByIdentifier.
  *
- * @see https://github.com/better-auth/better-auth/issues/8228
+ * @see https://github.com/rlvtapp/shinauth/issues/8228
  */
 describe("magic link with secondary storage (pre-parsed object return)", async () => {
 	const store = new Map<string, unknown>();
@@ -304,7 +304,7 @@ describe("magic link with secondary storage (pre-parsed object return)", async (
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/security/advisories/GHSA-hc7v-x88r-fmh4
+	 * @see https://github.com/rlvtapp/shinauth/security/advisories/GHSA-hc7v-x88r-fmh4
 	 */
 	it("consumes the token atomically with pre-parsed storage, INVALID_TOKEN on retries", async () => {
 		const attemptStore = new Map<string, unknown>();

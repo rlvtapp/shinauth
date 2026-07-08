@@ -1,4 +1,4 @@
-import { base64 } from "@better-auth/utils/base64";
+import { base64 } from "@shinauth/utils/base64";
 
 // RFC 7235 §2.1: auth scheme is case-insensitive and is followed by one or
 // more SP before the credentials. The trailing capture is everything after

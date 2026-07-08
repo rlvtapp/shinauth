@@ -1,4 +1,4 @@
-import { base64 } from "@better-auth/utils/base64";
+import { base64 } from "@shinauth/utils/base64";
 import { betterFetch } from "@better-fetch/fetch";
 import type { OAuthProvider, ProviderOptions } from "../oauth2";
 import {
@@ -49,7 +49,7 @@ export const reddit = (options: RedditOptions) => {
 			const headers = {
 				"content-type": "application/x-www-form-urlencoded",
 				accept: "text/plain",
-				"user-agent": "better-auth",
+				"user-agent": "shinauth",
 				Authorization: `Basic ${base64.encode(
 					`${options.clientId}:${options.clientSecret}`,
 				)}`,
@@ -95,7 +95,7 @@ export const reddit = (options: RedditOptions) => {
 				{
 					headers: {
 						Authorization: `Bearer ${token.accessToken}`,
-						"User-Agent": "better-auth",
+						"User-Agent": "shinauth",
 					},
 				},
 			);

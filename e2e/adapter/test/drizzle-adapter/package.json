@@ -1,14 +1,14 @@
 {
-  "name": "@better-auth-test/drizzle-adapter",
+  "name": "@shinauth-test/drizzle-adapter",
   "private": true,
   "type": "module",
   "scripts": {
     "e2e:integration": "vitest run"
   },
   "devDependencies": {
-    "@better-auth/core": "workspace:*",
-    "@better-auth/drizzle-adapter": "workspace:*",
-    "@better-auth/test-utils": "workspace:*",
-    "better-auth": "workspace:*"
+    "@shinauth/core": "workspace:*",
+    "@shinauth/drizzle-adapter": "workspace:*",
+    "@shinauth/test-utils": "workspace:*",
+    "shinauth": "workspace:*"
   }
 }

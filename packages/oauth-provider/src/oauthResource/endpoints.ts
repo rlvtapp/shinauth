@@ -1,6 +1,6 @@
-import type { GenericEndpointContext } from "@better-auth/core";
-import { APIError, getSessionFromCtx } from "better-auth/api";
-import type { Session, User } from "better-auth/types";
+import type { GenericEndpointContext } from "@shinauth/core";
+import { APIError, getSessionFromCtx } from "shinauth/api";
+import type { Session, User } from "shinauth/types";
 import {
 	assertIdentifierValid,
 	buildClientResourceLinkId,

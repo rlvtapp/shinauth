@@ -1,5 +1,5 @@
 ---
-"better-auth": patch
+"shinauth": patch
 ---
 
 fix(two-factor): revert enforcement broadening from #9122

@@ -1,7 +1,7 @@
-import type { GenericEndpointContext } from "@better-auth/core";
-import { createAuthEndpoint } from "@better-auth/core/api";
-import { APIError } from "@better-auth/core/error";
-import { base64 } from "@better-auth/utils/base64";
+import type { GenericEndpointContext } from "@shinauth/core";
+import { createAuthEndpoint } from "@shinauth/core/api";
+import { APIError } from "@shinauth/core/error";
+import { base64 } from "@shinauth/utils/base64";
 import type {
 	AuthenticationExtensionsClientInputs,
 	AuthenticationResponseJSON,
@@ -18,9 +18,9 @@ import {
 	getSessionFromCtx,
 	requireResourceOwnership,
 	sessionMiddleware,
-} from "better-auth/api";
-import { setSessionCookie } from "better-auth/cookies";
-import { generateRandomString } from "better-auth/crypto";
+} from "shinauth/api";
+import { setSessionCookie } from "shinauth/cookies";
+import { generateRandomString } from "shinauth/crypto";
 import type { OpenAPIParameter } from "better-call";
 import * as z from "zod";
 import { PASSKEY_ERROR_CODES } from "./error-codes";
@@ -919,7 +919,7 @@ export const verifyPasskeyAuthentication = (options: RequiredPassKeyOptions) =>
  * **client:**
  * `authClient.passkey.listUserPasskeys`
  *
- * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/passkey#api-method-passkey-list-user-passkeys)
+ * @see [Read our docs to learn more.](https://shinauth.com/docs/plugins/passkey#api-method-passkey-list-user-passkeys)
  */
 export const listPasskeys = createAuthEndpoint(
 	"/passkey/list-user-passkeys",
@@ -986,7 +986,7 @@ const deletePasskeyBodySchema = z.object({
  * **client:**
  * `authClient.passkey.deletePasskey`
  *
- * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/passkey#api-method-passkey-delete-passkey)
+ * @see [Read our docs to learn more.](https://shinauth.com/docs/plugins/passkey#api-method-passkey-delete-passkey)
  */
 export const deletePasskey = createAuthEndpoint(
 	"/passkey/delete-passkey",
@@ -1062,7 +1062,7 @@ const updatePassKeyBodySchema = z.object({
  * **client:**
  * `authClient.passkey.updatePasskey`
  *
- * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/passkey#api-method-passkey-update-passkey)
+ * @see [Read our docs to learn more.](https://shinauth.com/docs/plugins/passkey#api-method-passkey-update-passkey)
  */
 export const updatePasskey = createAuthEndpoint(
 	"/passkey/update-passkey",

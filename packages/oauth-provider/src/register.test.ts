@@ -1,15 +1,15 @@
-import { APIError } from "better-auth/api";
-import { createAuthClient } from "better-auth/client";
-import { generateRandomString } from "better-auth/crypto";
+import { APIError } from "shinauth/api";
+import { createAuthClient } from "shinauth/client";
+import { generateRandomString } from "shinauth/crypto";
 import {
 	authorizationCodeRequest,
 	createAuthorizationURL,
-} from "better-auth/oauth2";
-import { bearer } from "better-auth/plugins";
-import { jwt } from "better-auth/plugins/jwt";
-import type { Organization } from "better-auth/plugins/organization";
-import { organization } from "better-auth/plugins/organization";
-import { getTestInstance } from "better-auth/test";
+} from "shinauth/oauth2";
+import { bearer } from "shinauth/plugins";
+import { jwt } from "shinauth/plugins/jwt";
+import type { Organization } from "shinauth/plugins/organization";
+import { organization } from "shinauth/plugins/organization";
+import { getTestInstance } from "shinauth/test";
 import { beforeAll, describe, expect, it, onTestFinished, vi } from "vitest";
 import { oauthProviderClient } from "./client";
 import { oauthProvider } from "./oauth";
@@ -589,7 +589,7 @@ describe("oauth register - unauthenticated", async () => {
 	 * is "client_secret_basic". Open registration may still create a
 	 * confidential client and return the generated client_secret.
 	 *
-	 * @see https://github.com/better-auth/better-auth/issues/8588
+	 * @see https://github.com/rlvtapp/shinauth/issues/8588
 	 */
 	it("should apply the client_secret_basic default without authentication", async () => {
 		const response = await unauthenticatedClient.oauth2.register({
@@ -607,7 +607,7 @@ describe("oauth register - unauthenticated", async () => {
 	 * Open registration preserves the requested confidential client auth method
 	 * and returns a secret for token endpoint authentication.
 	 *
-	 * @see https://github.com/better-auth/better-auth/issues/8588
+	 * @see https://github.com/rlvtapp/shinauth/issues/8588
 	 */
 	it("should preserve client_secret_post for unauthenticated DCR", async () => {
 		const response = await unauthenticatedClient.oauth2.register({
@@ -623,7 +623,7 @@ describe("oauth register - unauthenticated", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/8588
+	 * @see https://github.com/rlvtapp/shinauth/issues/8588
 	 */
 	it("should accept client_secret_basic with inline jwks for unauthenticated DCR", async () => {
 		const jwks = {
@@ -643,7 +643,7 @@ describe("oauth register - unauthenticated", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/8588
+	 * @see https://github.com/rlvtapp/shinauth/issues/8588
 	 */
 	it("should preserve type 'web' for unauthenticated confidential DCR", async () => {
 		const response = await unauthenticatedClient.oauth2.register({
@@ -664,7 +664,7 @@ describe("oauth register - unauthenticated", async () => {
 	 * Keep open registration on authorization-code clients unless the caller is
 	 * authenticated through a session or an initial access token.
 	 *
-	 * @see https://github.com/better-auth/better-auth/issues/8588
+	 * @see https://github.com/rlvtapp/shinauth/issues/8588
 	 */
 	it("should reject client_credentials grant for unauthenticated DCR", async () => {
 		const response = await unauthenticatedClient.oauth2.register({
@@ -679,7 +679,7 @@ describe("oauth register - unauthenticated", async () => {
  * Verifies the open-registration confidential client is actually usable end-to-end:
  * DCR with client_secret_post -> authorize -> PKCE token exchange with client_secret.
  *
- * @see https://github.com/better-auth/better-auth/issues/8588
+ * @see https://github.com/rlvtapp/shinauth/issues/8588
  */
 describe("oauth register - unauthenticated DCR full flow", async () => {
 	const authServerBaseUrl = "http://localhost:3000";

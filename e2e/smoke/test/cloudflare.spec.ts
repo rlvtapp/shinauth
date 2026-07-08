@@ -23,7 +23,7 @@ const assertContentDoesNotInclude = (
 
 describe("(cloudflare) simple server", () => {
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/9983
+	 * @see https://github.com/rlvtapp/shinauth/issues/9983
 	 */
 	it("check repo", async (t) => {
 		const cp = spawn("pnpm", ["run", "check"], {
@@ -86,7 +86,7 @@ describe("(cloudflare) simple server", () => {
 			join(
 				repoDir,
 				"packages",
-				"better-auth",
+				"shinauth",
 				"dist",
 				"_virtual",
 				"_rolldown",
@@ -96,7 +96,7 @@ describe("(cloudflare) simple server", () => {
 		);
 
 		assertContentDoesNotInclude(
-			"better-auth rolldown runtime",
+			"shinauth rolldown runtime",
 			rolldownRuntime,
 			["createRequire", "node:module", "__require"],
 		);

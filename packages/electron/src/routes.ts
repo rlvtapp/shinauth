@@ -1,16 +1,16 @@
-import type { GenericEndpointContext } from "@better-auth/core";
-import { APIError, BASE_ERROR_CODES } from "@better-auth/core/error";
-import { safeJSONParse } from "@better-auth/core/utils/json";
+import type { GenericEndpointContext } from "@shinauth/core";
+import { APIError, BASE_ERROR_CODES } from "@shinauth/core/error";
+import { safeJSONParse } from "@shinauth/core/utils/json";
 import { betterFetch } from "@better-fetch/fetch";
-import { createAuthEndpoint, sessionMiddleware } from "better-auth/api";
+import { createAuthEndpoint, sessionMiddleware } from "shinauth/api";
 import {
 	parseSetCookieHeader,
 	setSessionCookie,
 	toCookieOptions,
-} from "better-auth/cookies";
-import type { User } from "better-auth/db";
-import { parseUserOutput } from "better-auth/db";
-import { generateCodeChallenge } from "better-auth/oauth2";
+} from "shinauth/cookies";
+import type { User } from "shinauth/db";
+import { parseUserOutput } from "shinauth/db";
+import { generateCodeChallenge } from "shinauth/oauth2";
 import * as z from "zod";
 import { ELECTRON_ERROR_CODES } from "./error-codes";
 import type { ElectronOptions } from "./types";

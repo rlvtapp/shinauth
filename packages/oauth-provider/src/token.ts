@@ -1,19 +1,19 @@
-import type { GenericEndpointContext } from "@better-auth/core";
-import { APIError } from "better-auth/api";
+import type { GenericEndpointContext } from "@shinauth/core";
+import { APIError } from "shinauth/api";
 import {
 	generateRandomString,
 	symmetricDecrypt,
 	symmetricEncrypt,
-} from "better-auth/crypto";
+} from "shinauth/crypto";
 import {
 	createDpopReplayStore,
 	generateCodeChallenge,
 	getConfirmationJkt,
 	isDpopProofError,
 	verifyDpopProof,
-} from "better-auth/oauth2";
-import { resolveSigningKey, signJWT, toExpJWT } from "better-auth/plugins";
-import type { Session, User } from "better-auth/types";
+} from "shinauth/oauth2";
+import { resolveSigningKey, signJWT, toExpJWT } from "shinauth/plugins";
+import type { Session, User } from "shinauth/types";
 import type { JWTPayload } from "jose";
 import { base64url, decodeProtectedHeader, SignJWT } from "jose";
 import {

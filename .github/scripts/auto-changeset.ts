@@ -188,8 +188,8 @@ function main() {
 	const fallback = cubicSummary || commit.subject || pr.title;
 
 	// All packages are in one changesets fixed group — listing any one
-	// bumps them all together. "better-auth" is the representative.
-	const frontmatter = `"better-auth": ${resolvedBump}`;
+	// bumps them all together. "shinauth" is the representative.
+	const frontmatter = `"shinauth": ${resolvedBump}`;
 
 	console.log("Analysis complete:");
 	setOutput("skip", "false");

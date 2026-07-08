@@ -1,8 +1,8 @@
-import type { GenericEndpointContext } from "@better-auth/core";
-import { generateRandomString } from "better-auth/crypto";
-import { getJwks } from "better-auth/oauth2";
-import { resolveSigningKey, signJWT } from "better-auth/plugins";
-import type { Session } from "better-auth/types";
+import type { GenericEndpointContext } from "@shinauth/core";
+import { generateRandomString } from "shinauth/crypto";
+import { getJwks } from "shinauth/oauth2";
+import { resolveSigningKey, signJWT } from "shinauth/plugins";
+import type { Session } from "shinauth/types";
 import { APIError } from "better-call";
 import type { JWTPayload } from "jose";
 import { compactVerify, createLocalJWKSet, decodeJwt } from "jose";

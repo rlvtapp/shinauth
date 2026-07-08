@@ -1,5 +1,5 @@
 ---
-"@better-auth/scim": minor
+"@shinauth/scim": minor
 ---
 
 Runtime SCIM tokens now require `organizationId`; use `staticProviders` for app-level SCIM.

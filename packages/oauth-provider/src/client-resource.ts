@@ -1,19 +1,19 @@
-import { logger } from "@better-auth/core/env";
-import { BetterAuthError } from "@better-auth/core/error";
+import { logger } from "@shinauth/core/env";
+import { BetterAuthError } from "@shinauth/core/error";
 import type {
 	ResourceRequestInput,
 	VerifyAccessTokenRequestOptions,
-} from "better-auth/oauth2";
+} from "shinauth/oauth2";
 import {
 	DPOP_SIGNING_ALGORITHMS,
 	requestToResourceInput,
 	verifyAccessTokenRequest,
 	verifyBearerToken,
-} from "better-auth/oauth2";
+} from "shinauth/oauth2";
 import type {
 	BetterAuthClientPlugin,
 	BetterAuthOptions,
-} from "better-auth/types";
+} from "shinauth/types";
 import { APIError } from "better-call";
 import type { JWTPayload, JWTVerifyOptions } from "jose";
 import { raiseResourceServerChallenge } from "./resource-challenge";

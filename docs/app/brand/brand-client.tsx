@@ -139,7 +139,7 @@ function SideRail() {
 							</span>
 						</h1>
 						<p className="text-sm text-foreground/70 dark:text-foreground/50 leading-relaxed max-w-[280px]">
-							The tokens, components, and motifs that make up the Better Auth
+							The tokens, components, and motifs that make up the Shinauth
 							visual language. Everything here is pulled live from the same
 							variables used across product and docs.
 						</p>
@@ -190,7 +190,7 @@ function MobileHeader() {
 					</span>
 				</h1>
 				<p className="text-sm text-foreground/70 dark:text-foreground/50 leading-relaxed">
-					The tokens, components, and motifs that make up Better Auth.
+					The tokens, components, and motifs that make up Shinauth.
 				</p>
 			</div>
 		</div>
@@ -418,7 +418,7 @@ function TypographyBlock() {
 					meta="text-[11px] font-mono uppercase tracking-wider"
 					className="text-[11px] font-mono uppercase tracking-wider text-foreground/70"
 				>
-					api / better-auth / v1.4.0
+					api / shinauth / v1.4.0
 				</TypeRow>
 				<TypeRow
 					label="Geist Mono · Code"
@@ -591,7 +591,7 @@ function FormBlock() {
 					<span className="text-[11px] font-mono uppercase tracking-wider text-foreground/50">
 						Email
 					</span>
-					<Input type="email" placeholder="you@better-auth.com" />
+					<Input type="email" placeholder="you@shinauth.com" />
 				</label>
 				<label className="flex flex-col gap-1.5">
 					<span className="text-[11px] font-mono uppercase tracking-wider text-foreground/50">
@@ -685,17 +685,17 @@ function TabsBlock() {
 					</TabsList>
 					<TabsContent value="ts">
 						<pre className="mt-3 font-mono text-xs p-3 bg-foreground/[0.03] border border-foreground/10 overflow-x-auto">
-							<code>{`import { betterAuth } from "better-auth";\n\nexport const auth = betterAuth({ secret: process.env.AUTH_SECRET });`}</code>
+							<code>{`import { betterAuth } from "shinauth";\n\nexport const auth = betterAuth({ secret: process.env.AUTH_SECRET });`}</code>
 						</pre>
 					</TabsContent>
 					<TabsContent value="js">
 						<pre className="mt-3 font-mono text-xs p-3 bg-foreground/[0.03] border border-foreground/10 overflow-x-auto">
-							<code>{`const { betterAuth } = require("better-auth");\n\nmodule.exports.auth = betterAuth({ secret: process.env.AUTH_SECRET });`}</code>
+							<code>{`const { betterAuth } = require("shinauth");\n\nmodule.exports.auth = betterAuth({ secret: process.env.AUTH_SECRET });`}</code>
 						</pre>
 					</TabsContent>
 					<TabsContent value="sh">
 						<pre className="mt-3 font-mono text-xs p-3 bg-foreground/[0.03] border border-foreground/10 overflow-x-auto">
-							<code>pnpm add better-auth</code>
+							<code>pnpm add shinauth</code>
 						</pre>
 					</TabsContent>
 				</Tabs>
@@ -798,7 +798,7 @@ function VoiceBlock() {
 	return (
 		<Subsection
 			title="Voice"
-			description="How Better Auth communicates — across docs, product copy, and marketing."
+			description="How Shinauth communicates — across docs, product copy, and marketing."
 		>
 			<div className="grid sm:grid-cols-2 gap-3">
 				{principles.map((p) => (

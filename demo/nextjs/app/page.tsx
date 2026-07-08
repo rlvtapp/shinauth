@@ -5,55 +5,55 @@ import { auth } from "@/lib/auth";
 const features: { name: string; link: string }[] = [
 	{
 		name: "Email & Password",
-		link: "https://www.better-auth.com/docs/authentication/email-password",
+		link: "https://www.shinauth.com/docs/authentication/email-password",
 	},
 	{
 		name: "Organization | Teams",
-		link: "https://www.better-auth.com/docs/plugins/organization",
+		link: "https://www.shinauth.com/docs/plugins/organization",
 	},
 	{
 		name: "Passkeys",
-		link: "https://www.better-auth.com/docs/plugins/passkey",
+		link: "https://www.shinauth.com/docs/plugins/passkey",
 	},
 	{
 		name: "Multi Factor",
-		link: "https://www.better-auth.com/docs/plugins/2fa",
+		link: "https://www.shinauth.com/docs/plugins/2fa",
 	},
 	{
 		name: "Password Reset",
-		link: "https://www.better-auth.com/docs/authentication/email-password#request-password-reset",
+		link: "https://www.shinauth.com/docs/authentication/email-password#request-password-reset",
 	},
 	{
 		name: "Email Verification",
-		link: "https://www.better-auth.com/docs/authentication/email-password#email-verification",
+		link: "https://www.shinauth.com/docs/authentication/email-password#email-verification",
 	},
 	{
 		name: "Roles & Permissions",
-		link: "https://www.better-auth.com/docs/plugins/organization#roles",
+		link: "https://www.shinauth.com/docs/plugins/organization#roles",
 	},
 	{
 		name: "Rate Limiting",
-		link: "https://www.better-auth.com/docs/reference/security#rate-limiting",
+		link: "https://www.shinauth.com/docs/reference/security#rate-limiting",
 	},
 	{
 		name: "Session Management",
-		link: "https://www.better-auth.com/docs/concepts/session-management",
+		link: "https://www.shinauth.com/docs/concepts/session-management",
 	},
 	{
 		name: "Multiple Session",
-		link: "https://www.better-auth.com/docs/plugins/multi-session",
+		link: "https://www.shinauth.com/docs/plugins/multi-session",
 	},
 	{
 		name: "Stripe Integration",
-		link: "https://www.better-auth.com/docs/plugins/stripe",
+		link: "https://www.shinauth.com/docs/plugins/stripe",
 	},
 	{
 		name: "Last Login Method",
-		link: "https://www.better-auth.com/docs/plugins/last-login-method",
+		link: "https://www.shinauth.com/docs/plugins/last-login-method",
 	},
 	{
 		name: "OAuth Provider",
-		link: "https://www.better-auth.com/docs/plugins/oauth-provider",
+		link: "https://www.shinauth.com/docs/plugins/oauth-provider",
 	},
 ];
 
@@ -72,11 +72,11 @@ export default async function Page() {
 					<p className="text-center wrap-break-word text-sm md:text-base">
 						Official demo to showcase{" "}
 						<a
-							href="https://better-auth.com"
+							href="https://shinauth.com"
 							target="_blank"
 							className="italic underline"
 						>
-							better-auth.
+							shinauth.
 						</a>{" "}
 						features and capabilities. <br />
 					</p>
@@ -86,7 +86,7 @@ export default async function Page() {
 						<div className="border p-2 border-dashed bg-secondary/70">
 							<div className="text-xs flex items-center gap-2 justify-center text-muted-foreground">
 								<span className="text-center">
-									All features on this demo are implemented with Better Auth
+									All features on this demo are implemented with Shinauth
 									without any custom backend code
 								</span>
 							</div>

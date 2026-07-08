@@ -1,17 +1,17 @@
-import type { BetterAuthPlugin } from "@better-auth/core";
+import type { BetterAuthPlugin } from "@shinauth/core";
 import type {
 	Account,
 	Session,
 	User,
 	Verification,
-} from "@better-auth/core/db";
+} from "@shinauth/core/db";
 import type {
 	Invitation,
 	Member,
 	Organization,
 	Team,
-} from "better-auth/plugins/organization";
-import { organization } from "better-auth/plugins/organization";
+} from "shinauth/plugins/organization";
+import { organization } from "shinauth/plugins/organization";
 import { expect } from "vitest";
 import { createTestSuite } from "../create-test-suite";
 
@@ -2212,7 +2212,7 @@ export const getNormalTestSuiteTests = (
 			).resolves.not.toThrow();
 		},
 		/**
-		 * @see https://github.com/better-auth/better-auth/issues/8313
+		 * @see https://github.com/rlvtapp/shinauth/issues/8313
 		 */
 		"delete - should delete by non-unique field": async () => {
 			const [verification] = await insertRandom("verification");

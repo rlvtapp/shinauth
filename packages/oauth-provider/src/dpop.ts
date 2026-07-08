@@ -1,4 +1,4 @@
-import type { GenericEndpointContext } from "@better-auth/core";
+import type { GenericEndpointContext } from "@shinauth/core";
 
 export function getDpopProofJwt(
 	ctx: Pick<GenericEndpointContext, "headers">,

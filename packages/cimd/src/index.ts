@@ -1,12 +1,12 @@
-import type { ClientDiscovery } from "@better-auth/oauth-provider";
-import { extendOAuthProvider } from "@better-auth/oauth-provider";
-import type { BetterAuthPlugin } from "better-auth";
+import type { ClientDiscovery } from "@shinauth/oauth-provider";
+import { extendOAuthProvider } from "@shinauth/oauth-provider";
+import type { BetterAuthPlugin } from "shinauth";
 import { createCimdResolver } from "./resolver";
 import type { CimdOptions } from "./types";
 import { isUrlClientId } from "./validate-metadata-document";
 import { PACKAGE_VERSION } from "./version";
 
-declare module "@better-auth/core" {
+declare module "@shinauth/core" {
 	interface BetterAuthPluginRegistry<AuthOptions, Options> {
 		cimd: {
 			creator: typeof cimd;

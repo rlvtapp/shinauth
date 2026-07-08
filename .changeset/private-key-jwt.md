@@ -1,8 +1,8 @@
 ---
-"better-auth": minor
-"@better-auth/core": minor
-"@better-auth/oauth-provider": minor
-"@better-auth/sso": minor
+"shinauth": minor
+"@shinauth/core": minor
+"@shinauth/oauth-provider": minor
+"@shinauth/sso": minor
 ---
 
 Add client authentication configuration for token endpoint requests across the stack, including `private_key_jwt` (RFC 7523).

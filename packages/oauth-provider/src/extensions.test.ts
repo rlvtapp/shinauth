@@ -1,9 +1,9 @@
-import { APIError } from "better-auth/api";
-import { createAuthClient } from "better-auth/client";
-import { CLIENT_ASSERTION_TYPE } from "better-auth/oauth2";
-import { jwt } from "better-auth/plugins/jwt";
-import { getTestInstance } from "better-auth/test";
-import type { BetterAuthPlugin, User } from "better-auth/types";
+import { APIError } from "shinauth/api";
+import { createAuthClient } from "shinauth/client";
+import { CLIENT_ASSERTION_TYPE } from "shinauth/oauth2";
+import { jwt } from "shinauth/plugins/jwt";
+import { getTestInstance } from "shinauth/test";
+import type { BetterAuthPlugin, User } from "shinauth/types";
 import { decodeJwt } from "jose";
 import { describe, expect, it } from "vitest";
 import { oauthProviderClient } from "./client";
@@ -22,13 +22,13 @@ describe("oauth-provider extensions", async () => {
 	const authServerBaseUrl = "http://localhost:3000";
 	const resource = "https://vc.example.com/credential";
 	const redirectUri = "https://client.example.com/callback";
-	const extensionGrant = "urn:better-auth:test:grant";
-	const extensionOpaqueGrant = "urn:better-auth:test:opaque-grant";
-	const extensionOpaqueBoundGrant = "urn:better-auth:test:opaque-bound-grant";
-	const extensionDriftGrant = "urn:better-auth:test:drift-grant";
+	const extensionGrant = "urn:shinauth:test:grant";
+	const extensionOpaqueGrant = "urn:shinauth:test:opaque-grant";
+	const extensionOpaqueBoundGrant = "urn:shinauth:test:opaque-bound-grant";
+	const extensionDriftGrant = "urn:shinauth:test:drift-grant";
 	const extensionAuthMethod = "test_attestation_jwt";
 	const extensionAssertionType =
-		"urn:better-auth:test:client-assertion-type:test-attestation";
+		"urn:shinauth:test:client-assertion-type:test-attestation";
 	let grantUser: User | undefined;
 	let observedCustomParam: string | undefined;
 	const clientDiscovery = {
@@ -85,7 +85,7 @@ describe("oauth-provider extensions", async () => {
 								order_probe: "grant",
 							},
 							tokenResponse: {
-								issued_token_type: "urn:better-auth:test:access_token",
+								issued_token_type: "urn:shinauth:test:access_token",
 							},
 						});
 					},
@@ -523,7 +523,7 @@ describe("oauth-provider extensions", async () => {
 		});
 		expect(tokenResponse.error).toBeNull();
 		expect(tokenResponse.data?.issued_token_type).toBe(
-			"urn:better-auth:test:access_token",
+			"urn:shinauth:test:access_token",
 		);
 		expect(tokenResponse.data?.scope).toBe("openid email vc");
 		expect(observedCustomParam).toBe("preserved");
@@ -633,7 +633,7 @@ describe("oauth-provider extensions", async () => {
 		const response = await client.$fetch("/oauth2/token", {
 			method: "POST",
 			body: new URLSearchParams({
-				grant_type: "urn:better-auth:test:missing-grant",
+				grant_type: "urn:shinauth:test:missing-grant",
 			}),
 			headers: {
 				"content-type": "application/x-www-form-urlencoded",
@@ -815,7 +815,7 @@ describe("oauth-provider extensions", async () => {
 	});
 
 	it("rejects two extensions registering the same grant type", async () => {
-		const sharedGrant = "urn:better-auth:test:shared-grant";
+		const sharedGrant = "urn:shinauth:test:shared-grant";
 		const makeExtensionPlugin = (id: string) =>
 			({
 				id,
@@ -886,15 +886,15 @@ describe("oauth-provider extensions", async () => {
 							openidConfig: true,
 						},
 					}),
-					makeAuthExtensionPlugin("auth-ext-a", "urn:better-auth:test:a"),
-					makeAuthExtensionPlugin("auth-ext-b", "urn:better-auth:test:b"),
+					makeAuthExtensionPlugin("auth-ext-a", "urn:shinauth:test:a"),
+					makeAuthExtensionPlugin("auth-ext-b", "urn:shinauth:test:b"),
 				],
 			}),
 		).rejects.toThrow("register token_endpoint_auth_method");
 	});
 
 	it("rejects two extensions registering the same assertion type", async () => {
-		const sharedAssertion = "urn:better-auth:test:shared-assertion";
+		const sharedAssertion = "urn:shinauth:test:shared-assertion";
 		const makeAssertionExtensionPlugin = (id: string, method: string) =>
 			({
 				id,
@@ -1183,7 +1183,7 @@ describe("oauth-provider extensions", async () => {
 				{
 					clientAuthentication: {
 						audience_probe_method: {
-							assertionTypes: ["urn:better-auth:test:audience-probe"],
+							assertionTypes: ["urn:shinauth:test:audience-probe"],
 							authenticate: async ({
 								expectedAudience,
 							}: {
@@ -1207,7 +1207,7 @@ describe("oauth-provider extensions", async () => {
 			body: {
 				client_id: "probe-client",
 				client_assertion: "probe-assertion",
-				client_assertion_type: "urn:better-auth:test:audience-probe",
+				client_assertion_type: "urn:shinauth:test:audience-probe",
 			},
 			request: { headers: new Headers() },
 		} as unknown as Parameters<typeof getOAuthProviderApi>[0];
@@ -1215,7 +1215,7 @@ describe("oauth-provider extensions", async () => {
 			getOAuthProviderApi(
 				ctx,
 				opts,
-				"urn:better-auth:test:grant",
+				"urn:shinauth:test:grant",
 			).authenticateClient(),
 		).rejects.toBeDefined();
 		// The audience is the endpoint serving the request, not a hardcoded token

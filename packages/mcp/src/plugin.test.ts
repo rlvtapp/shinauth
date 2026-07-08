@@ -1,14 +1,14 @@
-import { oauthProviderClient } from "@better-auth/oauth-provider/client";
-import { createAuthClient } from "better-auth/client";
-import { generateRandomString } from "better-auth/crypto";
+import { oauthProviderClient } from "@shinauth/oauth-provider/client";
+import { createAuthClient } from "shinauth/client";
+import { generateRandomString } from "shinauth/crypto";
 import {
 	authorizationCodeRequest,
 	createAuthorizationURL,
 	DPOP_SIGNING_ALGORITHMS,
 	refreshAccessTokenRequest,
-} from "better-auth/oauth2";
-import { jwt } from "better-auth/plugins/jwt";
-import { getTestInstance } from "better-auth/test";
+} from "shinauth/oauth2";
+import { jwt } from "shinauth/plugins/jwt";
+import { getTestInstance } from "shinauth/test";
 import { beforeAll, describe, expect, it, onTestFinished, vi } from "vitest";
 import { mcp, requireMcpAuth } from "./index";
 
@@ -94,7 +94,7 @@ describe("mcp plugin", async () => {
 		 * "none" id_token signing algorithm, which would let a client accept an
 		 * unsigned ID token.
 		 *
-		 * @see https://github.com/better-auth/better-auth/security/advisories/GHSA-9h47-pqcx-hjr4
+		 * @see https://github.com/rlvtapp/shinauth/security/advisories/GHSA-9h47-pqcx-hjr4
 		 */
 		it("advertises the /oauth2/* endpoints and never alg=none", async () => {
 			const response = await customFetchImpl(
@@ -128,7 +128,7 @@ describe("mcp plugin", async () => {
 
 	describe("protected resource metadata", () => {
 		/**
-		 * @see https://github.com/better-auth/better-auth/pull/9992
+		 * @see https://github.com/rlvtapp/shinauth/pull/9992
 		 */
 		it("returns RFC 9728 protected resource metadata", async () => {
 			const response = await customFetchImpl(
@@ -154,7 +154,7 @@ describe("mcp plugin", async () => {
 		});
 
 		/**
-		 * @see https://github.com/better-auth/better-auth/pull/9992
+		 * @see https://github.com/rlvtapp/shinauth/pull/9992
 		 */
 		it("advertises resource scopes without authorization-server-only scopes", async () => {
 			const resourceServerBaseUrl = "http://localhost:3010";
@@ -404,7 +404,7 @@ describe("mcp plugin", async () => {
  * wrong secret, or while disabled; it must succeed when the secret is supplied
  * via `Authorization: Basic`.
  *
- * @see https://github.com/better-auth/better-auth/security/advisories/GHSA-pw9m-5jxm-xr6h
+ * @see https://github.com/rlvtapp/shinauth/security/advisories/GHSA-pw9m-5jxm-xr6h
  */
 describe("mcp refresh_token grant client authentication", async () => {
 	const authServerBaseUrl = "http://localhost:3000";

@@ -2,8 +2,8 @@
  * Under `experimental.joins`, a `where` with `mode: "insensitive"` must fall back
  * to the SQL builder instead of silently degrading to a case-sensitive match.
  */
-import type { User } from "@better-auth/core/db";
-import { drizzleAdapter } from "@better-auth/drizzle-adapter/relations-v2";
+import type { User } from "@shinauth/core/db";
+import { drizzleAdapter } from "@shinauth/drizzle-adapter/relations-v2";
 import Database from "better-sqlite3";
 import { defineRelationsPart } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/better-sqlite3";

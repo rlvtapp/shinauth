@@ -54,7 +54,7 @@ export interface GemJobPost {
 	requisition_id: string;
 }
 
-const VANITY_URL_PATH = "better-auth";
+const VANITY_URL_PATH = "shinauth";
 const JOB_POSTS_URL = `https://api.gem.com/job_board/v0/${VANITY_URL_PATH}/job_posts/`;
 
 export async function fetchGemJobPosts(): Promise<GemJobPost[]> {

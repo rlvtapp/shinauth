@@ -1,12 +1,12 @@
-import type { BetterAuthPlugin, HookEndpointContext } from "@better-auth/core";
-import { createAuthMiddleware } from "@better-auth/core/api";
-import { getIP } from "@better-auth/core/utils/ip";
-import { base64Url } from "@better-auth/utils/base64";
-import { createHash } from "@better-auth/utils/hash";
-import { BetterAuthError } from "better-auth";
-import { APIError } from "better-auth/api";
-import { generateRandomString } from "better-auth/crypto";
-import { mergeSchema } from "better-auth/db";
+import type { BetterAuthPlugin, HookEndpointContext } from "@shinauth/core";
+import { createAuthMiddleware } from "@shinauth/core/api";
+import { getIP } from "@shinauth/core/utils/ip";
+import { base64Url } from "@shinauth/utils/base64";
+import { createHash } from "@shinauth/utils/hash";
+import { BetterAuthError } from "shinauth";
+import { APIError } from "shinauth/api";
+import { generateRandomString } from "shinauth/crypto";
+import { mergeSchema } from "shinauth/db";
 import { API_KEY_ERROR_CODES } from "./error-codes";
 import type { PredefinedApiKeyOptions } from "./routes";
 import { createApiKeyRoutes, deleteAllExpiredApiKeys } from "./routes";
@@ -16,7 +16,7 @@ import type { ApiKeyConfigurationOptions, ApiKeyOptions } from "./types";
 import { getDate } from "./utils";
 import { PACKAGE_VERSION } from "./version";
 
-declare module "@better-auth/core" {
+declare module "@shinauth/core" {
 	interface BetterAuthPluginRegistry<AuthOptions, Options> {
 		"api-key": {
 			creator: typeof apiKey;
@@ -286,7 +286,7 @@ export function apiKey(
 			 * **client:**
 			 * `authClient.apiKey.create`
 			 *
-			 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/api-key#api-method-api-key-create)
+			 * @see [Read our docs to learn more.](https://shinauth.com/docs/plugins/api-key#api-method-api-key-create)
 			 */
 			createApiKey: routes.createApiKey,
 			/**
@@ -299,7 +299,7 @@ export function apiKey(
 			 * **server:**
 			 * `auth.api.verifyApiKey`
 			 *
-			 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/api-key#api-method-api-key-verify)
+			 * @see [Read our docs to learn more.](https://shinauth.com/docs/plugins/api-key#api-method-api-key-verify)
 			 */
 			verifyApiKey: routes.verifyApiKey,
 			/**
@@ -315,7 +315,7 @@ export function apiKey(
 			 * **client:**
 			 * `authClient.apiKey.get`
 			 *
-			 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/api-key#api-method-api-key-get)
+			 * @see [Read our docs to learn more.](https://shinauth.com/docs/plugins/api-key#api-method-api-key-get)
 			 */
 			getApiKey: routes.getApiKey,
 			/**
@@ -331,7 +331,7 @@ export function apiKey(
 			 * **client:**
 			 * `authClient.apiKey.update`
 			 *
-			 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/api-key#api-method-api-key-update)
+			 * @see [Read our docs to learn more.](https://shinauth.com/docs/plugins/api-key#api-method-api-key-update)
 			 */
 			updateApiKey: routes.updateApiKey,
 			/**
@@ -347,7 +347,7 @@ export function apiKey(
 			 * **client:**
 			 * `authClient.apiKey.delete`
 			 *
-			 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/api-key#api-method-api-key-delete)
+			 * @see [Read our docs to learn more.](https://shinauth.com/docs/plugins/api-key#api-method-api-key-delete)
 			 */
 			deleteApiKey: routes.deleteApiKey,
 			/**
@@ -363,7 +363,7 @@ export function apiKey(
 			 * **client:**
 			 * `authClient.apiKey.list`
 			 *
-			 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/api-key#api-method-api-key-list)
+			 * @see [Read our docs to learn more.](https://shinauth.com/docs/plugins/api-key#api-method-api-key-list)
 			 */
 			listApiKeys: routes.listApiKeys,
 			/**
@@ -376,7 +376,7 @@ export function apiKey(
 			 * **server:**
 			 * `auth.api.deleteAllExpiredApiKeys`
 			 *
-			 * @see [Read our docs to learn more.](https://better-auth.com/docs/plugins/api-key#api-method-api-key-delete-all-expired-api-keys)
+			 * @see [Read our docs to learn more.](https://shinauth.com/docs/plugins/api-key#api-method-api-key-delete-all-expired-api-keys)
 			 */
 			deleteAllExpiredApiKeys: routes.deleteAllExpiredApiKeys,
 		},

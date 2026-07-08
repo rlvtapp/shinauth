@@ -1454,7 +1454,7 @@ describe("fetchDiscoveryDocument redirect handling", () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/10052
+	 * @see https://github.com/rlvtapp/shinauth/issues/10052
 	 */
 	it("rejects redirect responses after using manual redirect mode", async () => {
 		vi.mocked(betterFetch).mockResolvedValueOnce({

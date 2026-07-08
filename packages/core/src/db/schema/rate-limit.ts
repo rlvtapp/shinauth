@@ -23,7 +23,7 @@ export const rateLimitSchema = z.object({
 export type BaseRateLimit = z.infer<typeof rateLimitSchema>;
 
 /**
- * Rate limit schema type used by better-auth for rate limiting
+ * Rate limit schema type used by shinauth for rate limiting
  */
 export type RateLimit<
 	DBOptions extends

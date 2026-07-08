@@ -47,7 +47,7 @@ export type GenerateIdFn = (options: {
 }) => string | false;
 
 /**
- * What Better Auth is about to do with an incoming identity when
+ * What Shinauth is about to do with an incoming identity when
  * {@link BetterAuthOptions.user}'s `validateUserInfo` runs.
  *
  * - `create-user`: a brand-new user record is about to be created.
@@ -67,7 +67,7 @@ export type ValidateUserInfoAction = "create-user" | "link-account" | "sign-in";
 
 /**
  * The authentication method that produced the incoming user info. The named
- * methods cover Better Auth's built-ins; the open `string` keeps it extensible
+ * methods cover Shinauth's built-ins; the open `string` keeps it extensible
  * for plugins (for example `"scim"`).
  */
 export type ValidateUserInfoMethod =
@@ -140,7 +140,7 @@ export type ValidateUserInfoResult = {
 
 /**
  * Configuration for dynamic base URL resolution.
- * Allows Better Auth to work with multiple domains (e.g., Vercel preview deployments).
+ * Allows Shinauth to work with multiple domains (e.g., Vercel preview deployments).
  */
 export type DynamicBaseURLConfig = {
 	/**
@@ -162,7 +162,7 @@ export type DynamicBaseURLConfig = {
 
 	/**
 	 * Fallback URL to use if the derived host doesn't match any allowed host.
-	 * If not set, Better Auth will throw an error when the host doesn't match.
+	 * If not set, Shinauth will throw an error when the host doesn't match.
 	 *
 	 * @example "https://myapp.com"
 	 */
@@ -199,7 +199,7 @@ export interface BetterAuthRateLimitStorage {
 	 * concurrent-bypass gap of the separate `get`/`set` path: N simultaneous
 	 * requests can no longer all pass a stale read before any increment lands.
 	 *
-	 * Custom storages must implement this operation directly. Better Auth no
+	 * Custom storages must implement this operation directly. Shinauth no
 	 * longer accepts separate `get`/`set` rate-limit storage because that shape
 	 * cannot enforce a distributed limit under concurrent requests.
 	 */
@@ -303,7 +303,7 @@ export type BetterAuthAdvancedOptions = {
 				 * @example ["x-client-ip", "x-forwarded-for", "cf-connecting-ip"]
 				 *
 				 * @default
-				 * @link https://github.com/better-auth/better-auth/blob/main/packages/core/src/utils/ip.ts
+				 * @link https://github.com/rlvtapp/shinauth/blob/main/packages/core/src/utils/ip.ts
 				 */
 				ipAddressHeaders?: string[];
 				/**
@@ -422,7 +422,7 @@ export type BetterAuthAdvancedOptions = {
 	 *
 	 * @default
 	 * ```txt
-	 * "appName" -> which defaults to "better-auth"
+	 * "appName" -> which defaults to "shinauth"
 	 * ```
 	 */
 	cookiePrefix?: string | undefined;
@@ -514,11 +514,11 @@ export type BetterAuthOptions = {
 	 *
 	 * Can also be set via the `APP_NAME` environment variable.
 	 *
-	 * @default "Better Auth"
+	 * @default "Shinauth"
 	 */
 	appName?: string | undefined;
 	/**
-	 * Base URL for the Better Auth. This is typically the
+	 * Base URL for the Shinauth. This is typically the
 	 * root URL where your application server is hosted.
 	 *
 	 * Can be configured as:
@@ -542,9 +542,9 @@ export type BetterAuthOptions = {
 	 */
 	baseURL?: BaseURLConfig | undefined;
 	/**
-	 * Base path for the Better Auth. This is typically
+	 * Base path for the Shinauth. This is typically
 	 * the path where the
-	 * Better Auth routes are mounted.
+	 * Shinauth routes are mounted.
 	 *
 	 * @default "/api/auth"
 	 */
@@ -553,14 +553,14 @@ export type BetterAuthOptions = {
 	 * The secret to use for encryption,
 	 * signing and hashing.
 	 *
-	 * By default Better Auth will look for
+	 * By default Shinauth will look for
 	 * the following environment variables:
 	 * process.env.BETTER_AUTH_SECRET,
 	 * process.env.AUTH_SECRET
 	 * If none of these environment
 	 * variables are set,
 	 * it will default to
-	 * "better-auth-secret-123456789".
+	 * "shinauth-secret-123456789".
 	 *
 	 * on production if it's not set
 	 * it will throw an error.
@@ -890,7 +890,7 @@ export type BetterAuthOptions = {
 	 */
 	socialProviders?: SocialProviders | undefined;
 	/**
-	 * List of Better Auth plugins
+	 * List of Shinauth plugins
 	 */
 	plugins?: ([] | BetterAuthPlugin[]) | undefined;
 	/**
@@ -899,7 +899,7 @@ export type BetterAuthOptions = {
 	user?:
 		| (BetterAuthDBOptions<"user", keyof BaseUser> & {
 				/**
-				 * Gate which identities Better Auth admits. Called just before
+				 * Gate which identities Shinauth admits. Called just before
 				 * `create-user`, `link-account`, and (for OAuth) `sign-in`, across
 				 * every authentication method, including stateless setups with no
 				 * persistent database. On `sign-in` the hook receives the *fresh*
@@ -1081,7 +1081,7 @@ export type BetterAuthOptions = {
 						/**
 						 * Which signing key is used for cookie-cache JWTs.
 						 *
-						 * - `"secret"`: uses the Better Auth secret with HS256.
+						 * - `"secret"`: uses the Shinauth secret with HS256.
 						 * - `"jwt-plugin"`: uses the installed `jwt()` plugin's asymmetric signing keys.
 						 *
 						 * @default "secret"
@@ -1301,7 +1301,7 @@ export type BetterAuthOptions = {
 				 * refresh tokens, ID tokens, scopes, and token expiry.
 				 *
 				 * This is useful for database-less flows, but large provider tokens can
-				 * still hit browser or proxy cookie/header limits even though Better Auth
+				 * still hit browser or proxy cookie/header limits even though Shinauth
 				 * chunks oversized account cookies.
 				 *
 				 * @default false
@@ -1339,7 +1339,7 @@ export type BetterAuthOptions = {
 		  })
 		| undefined;
 	/**
-	 * Additional trusted origins. By default, Better Auth trusts your
+	 * Additional trusted origins. By default, Shinauth trusts your
 	 * app's {@link baseURL}. Use this option to allow additional origins
 	 * (e.g. a separate frontend domain).
 	 *
@@ -1358,8 +1358,8 @@ export type BetterAuthOptions = {
 	 * ```ts
 	 * trustedOrigins: async (request) => {
 	 *   return [
-	 *    "https://better-auth.com",
-	 *    "https://*.better-auth.com",
+	 *    "https://shinauth.com",
+	 *    "https://*.shinauth.com",
 	 *    request.headers.get("x-custom-origin")
 	 *   ];
 	 * }

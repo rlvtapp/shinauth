@@ -1,5 +1,5 @@
 ---
-"@better-auth/oauth-provider": minor
+"@shinauth/oauth-provider": minor
 ---
 
 `/oauth2/introspect` now returns the same claims for opaque and JWT access tokens, and lets a resource server introspect a token meant for it.

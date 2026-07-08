@@ -6,8 +6,8 @@ description: The `sentinel()` plugin provides comprehensive security and abuse p
 ## Installation
 
 ```tsx
-import { betterAuth } from "better-auth";
-import { sentinel } from "@better-auth/infra";
+import { betterAuth } from "shinauth";
+import { sentinel } from "@shinauth/infra";
 
 export const auth = betterAuth({
   plugins: [
@@ -26,7 +26,7 @@ export const auth = betterAuth({
 
 | Option       | Type              | Description                                                           |
 | ------------ | ----------------- | --------------------------------------------------------------------- |
-| `apiUrl`     | `string`          | Better Auth Infrastructure API URL                                    |
+| `apiUrl`     | `string`          | Shinauth Infrastructure API URL                                    |
 | `kvUrl`      | `string`          | KV store URL for rate limiting data                                   |
 | `apiKey`     | `string`          | Your API key for authentication                                       |
 | `apiTimeout` | `number`          | Timeout in ms for Infra API HTTP requests (`apiUrl`). Default: `3000` |
@@ -328,8 +328,8 @@ Higher difficulty = more computation required = slower for attackers.
 The client plugin handles device fingerprinting and automatic PoW challenge solving.
 
 ```ts
-import { createAuthClient } from "better-auth/client";
-import { sentinelClient } from "@better-auth/infra/client";
+import { createAuthClient } from "shinauth/client";
+import { sentinelClient } from "@shinauth/infra/client";
 
 export const authClient = createAuthClient({
   plugins: [
@@ -361,7 +361,7 @@ When auto-solving is enabled, solved challenges are sent via the `X-PoW-Solution
 
 ### Expo and React Native
 
-For **Expo** and **React Native** apps, use `sentinelNativeClient` from `@better-auth/infra/native` instead of using `@better-auth/infra/client`.
+For **Expo** and **React Native** apps, use `sentinelNativeClient` from `@shinauth/infra/native` instead of using `@shinauth/infra/client`.
 
 For **React Native** apps, install the following peer dependencies:
 
@@ -374,8 +374,8 @@ For **React Native** apps, install the following peer dependencies:
 #### Example
 
 ```ts
-import { createAuthClient } from "better-auth/client";
-import { dashClient, sentinelNativeClient } from "@better-auth/infra/native";
+import { createAuthClient } from "shinauth/client";
+import { dashClient, sentinelNativeClient } from "@shinauth/infra/native";
 
 export const authClient = createAuthClient({
   baseURL: "https://your-api.example.com",
@@ -401,9 +401,9 @@ expo-constants expo-device expo-crypto
 #### Example
 
 ```ts
-import { createAuthClient } from "better-auth/react";
-import { expoClient } from "@better-auth/expo/client";
-import { dashClient, sentinelNativeClient } from "@better-auth/infra/native";
+import { createAuthClient } from "shinauth/react";
+import { expoClient } from "@shinauth/expo/client";
+import { dashClient, sentinelNativeClient } from "@shinauth/infra/native";
 import * as SecureStore from "expo-secure-store";
 
 export const authClient = createAuthClient({
@@ -426,7 +426,7 @@ export const authClient = createAuthClient({
 
 | Option                | Type                            | Default                                                 | Description                                                                 |
 | --------------------- | ------------------------------- | ------------------------------------------------------- | --------------------------------------------------------------------------- |
-| `identifyUrl`         | `string`                        | `BETTER_AUTH_KV_URL`, then `https://kv.better-auth.com` | KV identify endpoint base URL                                               |
+| `identifyUrl`         | `string`                        | `BETTER_AUTH_KV_URL`, then `https://kv.shinauth.com` | KV identify endpoint base URL                                               |
 | `kvTimeout`           | `number`                        | `1000`                                                  | Timeout in ms for KV identify and related HTTP requests                     |
 | `autoSolveChallenge`  | `boolean`                       | `true`                                                  | On `423` with `X-PoW-Challenge`, solve and retry once with `X-PoW-Solution` |
 | `onChallengeReceived` | `(reason: string) => void`      | —                                                       | Called when a PoW challenge is received                                     |
@@ -457,8 +457,8 @@ These events are visible in the Security dashboard and included in audit logs.
 ## Complete Example
 
 ```ts
-import { betterAuth } from "better-auth";
-import { sentinel } from "@better-auth/infra";
+import { betterAuth } from "shinauth";
+import { sentinel } from "@shinauth/infra";
 
 export const auth = betterAuth({
   plugins: [
@@ -548,7 +548,7 @@ Make sure your API key environment variable is set correctly.
 
 If PoW challenges aren't being solved:
 
-1. Verify the correct client plugin: `sentinelClient()` for web (`@better-auth/infra/client`), or `sentinelNativeClient()` for Expo / React Native (`@better-auth/infra/native`)
+1. Verify the correct client plugin: `sentinelClient()` for web (`@shinauth/infra/client`), or `sentinelNativeClient()` for Expo / React Native (`@shinauth/infra/native`)
 2. Check that `autoSolveChallenge` is `true`
 3. Ensure the client can reach the server
 

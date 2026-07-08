@@ -1,9 +1,9 @@
-import { betterAuth } from "better-auth";
-import { memoryAdapter } from "better-auth/adapters/memory";
-import { createAuthClient } from "better-auth/client";
-import { setCookieToHeader } from "better-auth/cookies";
-import type { SecondaryStorage } from "better-auth/db";
-import { bearer, organization } from "better-auth/plugins";
+import { betterAuth } from "shinauth";
+import { memoryAdapter } from "shinauth/adapters/memory";
+import { createAuthClient } from "shinauth/client";
+import { setCookieToHeader } from "shinauth/cookies";
+import type { SecondaryStorage } from "shinauth/db";
+import { bearer, organization } from "shinauth/plugins";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { sso } from ".";
 import { ssoClient } from "./client";
@@ -327,7 +327,7 @@ describe("Domain verification", async () => {
 
 			dnsMock.resolveTxt.mockResolvedValue([
 				[
-					`_better-auth-token-saml-provider-1=${provider.domainVerificationToken}`,
+					`_shinauth-token-saml-provider-1=${provider.domainVerificationToken}`,
 				],
 			]);
 
@@ -446,7 +446,7 @@ describe("Domain verification", async () => {
 			dnsMock.resolveTxt.mockResolvedValue([
 				[`prefix-${provider.domainVerificationToken}-suffix`],
 				[
-					`_better-auth-token-saml-provider-1=${provider.domainVerificationToken}-suffix`,
+					`_shinauth-token-saml-provider-1=${provider.domainVerificationToken}-suffix`,
 				],
 			]);
 
@@ -536,7 +536,7 @@ describe("Domain verification", async () => {
 					"v=spf1 ip4:50.242.118.232/29 include:_spf.google.com include:mail.zendesk.com ~all",
 				],
 				[
-					"_better-auth-token-saml-provider-1=",
+					"_shinauth-token-saml-provider-1=",
 					provider.domainVerificationToken,
 				],
 			]);
@@ -551,7 +551,7 @@ describe("Domain verification", async () => {
 
 			expect(response.status).toBe(204);
 			expect(dnsMock.resolveTxt).toHaveBeenCalledWith(
-				"_better-auth-token-saml-provider-1.hello.com",
+				"_shinauth-token-saml-provider-1.hello.com",
 			);
 		});
 
@@ -585,7 +585,7 @@ describe("Domain verification", async () => {
 		});
 
 		/**
-		 * @see https://github.com/better-auth/better-auth/issues/8361
+		 * @see https://github.com/rlvtapp/shinauth/issues/8361
 		 */
 		it("should verify a provider domain ownership with a bare domain", async () => {
 			const { auth, getAuthHeaders } = createTestAuth();
@@ -615,7 +615,7 @@ describe("Domain verification", async () => {
 			const { domainVerificationToken } = await requestResponse.json();
 
 			dnsMock.resolveTxt.mockResolvedValue([
-				[`_better-auth-token-bare-domain-provider=${domainVerificationToken}`],
+				[`_shinauth-token-bare-domain-provider=${domainVerificationToken}`],
 			]);
 
 			const verifyResponse = await auth.api.verifyDomain({
@@ -626,7 +626,7 @@ describe("Domain verification", async () => {
 
 			expect(verifyResponse.status).toBe(204);
 			expect(dnsMock.resolveTxt).toHaveBeenCalledWith(
-				"_better-auth-token-bare-domain-provider.hello.com",
+				"_shinauth-token-bare-domain-provider.hello.com",
 			);
 		});
 
@@ -672,7 +672,7 @@ describe("Domain verification", async () => {
 
 			dnsMock.resolveTxt.mockResolvedValue([
 				[
-					`_better-auth-token-saml-provider-1=${provider.domainVerificationToken}`,
+					`_shinauth-token-saml-provider-1=${provider.domainVerificationToken}`,
 				],
 			]);
 
@@ -731,10 +731,10 @@ describe("Domain verification", async () => {
 
 			// Only attacker.com publishes the verifying record; victim.com does not.
 			dnsMock.resolveTxt.mockImplementation(async (name: string) => {
-				if (name === "_better-auth-token-multi-domain-provider.attacker.com") {
+				if (name === "_shinauth-token-multi-domain-provider.attacker.com") {
 					return [
 						[
-							`_better-auth-token-multi-domain-provider=${domainVerificationToken}`,
+							`_shinauth-token-multi-domain-provider=${domainVerificationToken}`,
 						],
 					];
 				}
@@ -755,7 +755,7 @@ describe("Domain verification", async () => {
 				code: "DOMAIN_VERIFICATION_FAILED",
 			});
 			expect(dnsMock.resolveTxt).toHaveBeenCalledWith(
-				"_better-auth-token-multi-domain-provider.victim.com",
+				"_shinauth-token-multi-domain-provider.victim.com",
 			);
 		});
 
@@ -796,16 +796,16 @@ describe("Domain verification", async () => {
 
 			expect(verifyResponse.status).toBe(204);
 			expect(dnsMock.resolveTxt).toHaveBeenCalledWith(
-				"_better-auth-token-owned-multi-domain.company.com",
+				"_shinauth-token-owned-multi-domain.company.com",
 			);
 			expect(dnsMock.resolveTxt).toHaveBeenCalledWith(
-				"_better-auth-token-owned-multi-domain.subsidiary.com",
+				"_shinauth-token-owned-multi-domain.subsidiary.com",
 			);
 		});
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/8348
+	 * @see https://github.com/rlvtapp/shinauth/issues/8348
 	 */
 	describe("with secondaryStorage (no storeInDatabase)", () => {
 		it("should request and verify domain verification via secondary storage", async () => {
@@ -857,7 +857,7 @@ describe("Domain verification", async () => {
 			// Verify domain via DNS
 			dnsMock.resolveTxt.mockResolvedValue([
 				[
-					`_better-auth-token-saml-provider-1=${provider.domainVerificationToken}`,
+					`_shinauth-token-saml-provider-1=${provider.domainVerificationToken}`,
 				],
 			]);
 

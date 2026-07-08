@@ -1,3 +1,3 @@
-# @better-auth-test/test-utils
+# @shinauth-test/test-utils
 
 ## null

@@ -1,5 +1,5 @@
 ---
-"@better-auth/sso": patch
+"@shinauth/sso": patch
 ---
 
 fix(sso): unify SAML response processing and fix provider/config bugs

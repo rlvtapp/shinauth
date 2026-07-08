@@ -1,4 +1,4 @@
-import type { GenericEndpointContext, OAuth2Tokens, User } from "better-auth";
+import type { GenericEndpointContext, OAuth2Tokens, User } from "shinauth";
 import type { SSOOptions, SSOProvider } from "../types";
 import { domainMatches } from "../utils";
 import type { NormalizedSSOProfile } from "./types";

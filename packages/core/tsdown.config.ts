@@ -26,7 +26,7 @@ export default defineConfig({
 		"./src/instrumentation/pure.index.ts",
 	],
 	deps: {
-		neverBundle: ["@better-auth/core/async_hooks"],
+		neverBundle: ["@shinauth/core/async_hooks"],
 	},
 	env: {
 		BETTER_AUTH_VERSION: packageJson.version,

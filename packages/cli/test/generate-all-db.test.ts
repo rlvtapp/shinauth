@@ -1,7 +1,7 @@
-import type { BetterAuthOptions } from "@better-auth/core";
-import { passkey } from "@better-auth/passkey";
-import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { twoFactor, username } from "better-auth/plugins";
+import type { BetterAuthOptions } from "@shinauth/core";
+import { passkey } from "@shinauth/passkey";
+import { drizzleAdapter } from "shinauth/adapters/drizzle";
+import { twoFactor, username } from "shinauth/plugins";
 import { describe, expect, it } from "vitest";
 import { generateDrizzleSchema } from "../src/generators/drizzle";
 

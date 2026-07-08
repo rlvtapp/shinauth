@@ -1,4 +1,4 @@
-import { betterAuth } from "better-auth/minimal";
+import { betterAuth } from "shinauth/minimal";
 
 const baseURL: string | undefined =
 	process.env.VERCEL === "1"

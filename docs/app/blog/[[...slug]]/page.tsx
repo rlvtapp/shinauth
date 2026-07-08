@@ -320,8 +320,8 @@ export async function generateMetadata({
 	const { slug } = await params;
 	if (!slug) {
 		return createMetadata({
-			title: "Blog - Better Auth",
-			description: "Latest updates, articles, and insights about Better Auth",
+			title: "Blog - Shinauth",
+			description: "Latest updates, articles, and insights about Shinauth",
 		});
 	}
 	const page = blogs.getPage(slug);

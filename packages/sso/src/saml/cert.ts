@@ -4,12 +4,12 @@
  * friends), and the registration validator agree on precedence and the
  * "exactly one cert source" contract.
  */
-import { APIError } from "better-auth/api";
+import { APIError } from "shinauth/api";
 import type { SAMLConfig } from "../types";
 import { SAML_ERROR_CODES } from "./error-codes";
 
 /**
- * Returns the IdP signing certificates Better Auth trusts for this provider
+ * Returns the IdP signing certificates Shinauth trusts for this provider
  * as a list. `idpMetadata.cert` wins when both are set; the top-level `cert`
  * is the fallback. Returns `undefined` when neither is set (the certs come
  * from `idpMetadata.metadata` XML instead).

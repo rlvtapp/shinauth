@@ -1,16 +1,16 @@
 {
-  "name": "@better-auth/drizzle-adapter",
+  "name": "@shinauth/drizzle-adapter",
   "version": "1.7.0-rc.1",
   "bugs": {
-    "url": "https://github.com/better-auth/better-auth/issues"
+    "url": "https://github.com/rlvtapp/shinauth/issues"
   },
-  "description": "Drizzle adapter for Better Auth",
+  "description": "Drizzle adapter for Shinauth",
   "type": "module",
   "license": "MIT",
-  "homepage": "https://www.better-auth.com/docs/adapters/drizzle",
+  "homepage": "https://www.shinauth.com/docs/adapters/drizzle",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/better-auth/better-auth.git",
+    "url": "git+https://github.com/rlvtapp/shinauth.git",
     "directory": "packages/drizzle-adapter"
   },
   "keywords": [
@@ -18,7 +18,7 @@
     "drizzle",
     "adapter",
     "typescript",
-    "better-auth"
+    "shinauth"
   ],
   "publishConfig": {
     "access": "public"
@@ -51,8 +51,8 @@
     }
   },
   "peerDependencies": {
-    "@better-auth/core": "workspace:^",
-    "@better-auth/utils": "catalog:",
+    "@shinauth/core": "workspace:^",
+    "@shinauth/utils": "catalog:",
     "drizzle-orm": "^0.45.2 || >=1.0.0-rc.1 <2.0.0"
   },
   "peerDependenciesMeta": {
@@ -61,8 +61,8 @@
     }
   },
   "devDependencies": {
-    "@better-auth/core": "workspace:*",
-    "@better-auth/utils": "catalog:",
+    "@shinauth/core": "workspace:*",
+    "@shinauth/utils": "catalog:",
     "drizzle-orm": "^0.45.2",
     "tsdown": "catalog:",
     "typescript": "catalog:"

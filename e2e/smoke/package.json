@@ -1,18 +1,18 @@
 {
-  "name": "@better-auth-test/smoke",
+  "name": "@shinauth-test/smoke",
   "private": true,
   "type": "module",
   "dependencies": {
-    "@better-auth/passkey": "workspace:*",
-    "better-auth": "workspace:*"
+    "@shinauth/passkey": "workspace:*",
+    "shinauth": "workspace:*"
   },
   "devDependencies": {
-    "@better-auth/cimd": "workspace:*",
-    "@better-auth/core": "workspace:*",
-    "@better-auth/oauth-provider": "workspace:*",
-    "@better-auth/redis-storage": "workspace:*",
-    "@better-auth/sso": "workspace:*",
-    "better-auth": "workspace:*",
+    "@shinauth/cimd": "workspace:*",
+    "@shinauth/core": "workspace:*",
+    "@shinauth/oauth-provider": "workspace:*",
+    "@shinauth/redis-storage": "workspace:*",
+    "@shinauth/sso": "workspace:*",
+    "shinauth": "workspace:*",
     "ioredis": "^5.11.1",
     "msw": "^2.14.6"
   },

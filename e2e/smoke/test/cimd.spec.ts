@@ -4,12 +4,12 @@ import { createServer } from "node:http";
 import type { AddressInfo } from "node:net";
 import { DatabaseSync } from "node:sqlite";
 import { describe, it } from "node:test";
-import { cimd } from "@better-auth/cimd";
-import { oauthProvider } from "@better-auth/oauth-provider";
-import { betterAuth } from "better-auth";
-import { getMigrations } from "better-auth/db/migration";
-import { toNodeHandler } from "better-auth/node";
-import { jwt } from "better-auth/plugins/jwt";
+import { cimd } from "@shinauth/cimd";
+import { oauthProvider } from "@shinauth/oauth-provider";
+import { betterAuth } from "shinauth";
+import { getMigrations } from "shinauth/db/migration";
+import { toNodeHandler } from "shinauth/node";
+import { jwt } from "shinauth/plugins/jwt";
 
 // Deterministic PKCE pair (challenge is base64url-encoded SHA-256 of verifier).
 const PKCE_VERIFIER = "dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk";

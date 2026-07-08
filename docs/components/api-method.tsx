@@ -908,7 +908,7 @@ function createServerBody({
 	} else if (requireHeaders) {
 		fetchOptions += `\n    // ${
 			headersComment ||
-			"Pass the current request headers so Better Auth can read and set cookies."
+			"Pass the current request headers so Shinauth can read and set cookies."
 		}\n    headers: await headers(),`;
 	}
 

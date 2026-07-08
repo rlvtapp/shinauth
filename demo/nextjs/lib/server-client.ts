@@ -1,5 +1,5 @@
-import { oauthProviderResourceClient } from "@better-auth/oauth-provider/resource-client";
-import { createAuthClient } from "better-auth/client";
+import { oauthProviderResourceClient } from "@shinauth/oauth-provider/resource-client";
+import { createAuthClient } from "shinauth/client";
 import { auth } from "./auth";
 
 export const serverClient = createAuthClient({

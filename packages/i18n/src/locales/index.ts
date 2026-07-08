@@ -2,12 +2,12 @@
  * Built-in default translations for the i18n plugin.
  *
  * Each locale exports a {@link TranslationDictionary} covering the core
- * Better Auth error codes. Additional locales can be added by following the
+ * Shinauth error codes. Additional locales can be added by following the
  * same pattern.
  *
  * @example Basic usage — enable all built-in locales
  * ```ts
- * import { i18n, locales } from "@better-auth/i18n";
+ * import { i18n, locales } from "@shinauth/i18n";
  *
  * export const auth = betterAuth({
  *   plugins: [
@@ -18,7 +18,7 @@
  *
  * @example Selective usage — only a subset of locales
  * ```ts
- * import { i18n, locales } from "@better-auth/i18n";
+ * import { i18n, locales } from "@shinauth/i18n";
  *
  * export const auth = betterAuth({
  *   plugins: [
@@ -34,7 +34,7 @@
  *
  * @example Override specific messages for a locale
  * ```ts
- * import { i18n, locales } from "@better-auth/i18n";
+ * import { i18n, locales } from "@shinauth/i18n";
  *
  * export const auth = betterAuth({
  *   plugins: [

@@ -1,4 +1,4 @@
-import { getTestInstance } from "better-auth/test";
+import { getTestInstance } from "shinauth/test";
 import { describe, expect, it } from "vitest";
 import { i18n } from ".";
 import * as locales from "./locales";
@@ -209,7 +209,7 @@ describe("i18n plugin", async () => {
 		});
 
 		/**
-		 * @see https://github.com/better-auth/better-auth/issues/7805
+		 * @see https://github.com/rlvtapp/shinauth/issues/7805
 		 */
 		it("should call getLocale callback even when request is undefined (auth.api)", async () => {
 			const { auth: authWithCallback } = await getTestInstance({

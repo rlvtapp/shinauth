@@ -10,8 +10,8 @@ This error occurs when you disable sign up in your oauth provider config and a u
 If you're using the `disableSignUp` option with stateless mode, you will see this error. Please consider using database hooks instead to handle this case.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
-import { APIError } from "better-auth/api";
+import { betterAuth } from "shinauth";
+import { APIError } from "shinauth/api";
 
 export const auth = betterAuth({
   databaseHooks: {

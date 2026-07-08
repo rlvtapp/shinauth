@@ -1,6 +1,6 @@
-import type { GenericEndpointContext } from "@better-auth/core";
-import type { User } from "@better-auth/core/db";
-import type { Organization } from "better-auth/plugins/organization";
+import type { GenericEndpointContext } from "@shinauth/core";
+import type { User } from "@shinauth/core/db";
+import type { Organization } from "shinauth/plugins/organization";
 import type Stripe from "stripe";
 import { subscriptionMetadata } from "./metadata";
 import type { CustomerType, StripeOptions, Subscription } from "./types";

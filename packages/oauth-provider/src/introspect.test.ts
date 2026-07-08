@@ -1,11 +1,11 @@
-import { createAuthClient } from "better-auth/client";
-import { generateRandomString } from "better-auth/crypto";
+import { createAuthClient } from "shinauth/client";
+import { generateRandomString } from "shinauth/crypto";
 import {
 	authorizationCodeRequest,
 	createAuthorizationURL,
-} from "better-auth/oauth2";
-import { jwt } from "better-auth/plugins/jwt";
-import { getTestInstance } from "better-auth/test";
+} from "shinauth/oauth2";
+import { jwt } from "shinauth/plugins/jwt";
+import { getTestInstance } from "shinauth/test";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import { oauthProviderClient } from "./client";
 import { oauthProvider } from "./oauth";
@@ -252,7 +252,7 @@ describe("oauth introspect", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/9949
+	 * @see https://github.com/rlvtapp/shinauth/issues/9949
 	 */
 	it("should return inactive for an unknown access token", async () => {
 		const introspection = await client.oauth2.introspect(

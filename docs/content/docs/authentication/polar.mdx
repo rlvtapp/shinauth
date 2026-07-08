@@ -34,7 +34,7 @@ description: Polar provider setup and usage.
     To configure the provider, you need to import the provider and pass it to the `socialProviders` option of the auth instance.
 
     ```ts title="auth.ts"
-    import { betterAuth } from "better-auth"
+    import { betterAuth } from "shinauth"
 
     export const auth = betterAuth({
         socialProviders: {
@@ -53,7 +53,7 @@ description: Polar provider setup and usage.
     To sign in with Polar, you can use the `signIn.social` function provided by the client, where the `provider` should be set to `polar`.
 
     ```ts title="auth-client.ts"
-    import { createAuthClient } from "better-auth/client"
+    import { createAuthClient } from "shinauth/client"
     const authClient = createAuthClient()
 
     const signIn = async () => {

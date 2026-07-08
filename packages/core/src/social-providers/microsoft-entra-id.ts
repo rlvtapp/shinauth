@@ -1,4 +1,4 @@
-import { base64 } from "@better-auth/utils/base64";
+import { base64 } from "@shinauth/utils/base64";
 import { betterFetch } from "@better-fetch/fetch";
 import { decodeJwt, importJWK } from "jose";
 import { logger } from "../env";

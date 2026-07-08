@@ -1,12 +1,12 @@
 ---
-title: Better Auth Fastify Integration Guide
-description: Learn how to seamlessly integrate Better Auth with your Fastify application.
+title: Shinauth Fastify Integration Guide
+description: Learn how to seamlessly integrate Shinauth with your Fastify application.
 ---
 
 This guide provides step-by-step instructions for configuring both essential handlers and CORS settings.
 
 <Callout type="important">
-  A configured Better Auth instance is required before proceeding. If you haven't set this up yet, please consult our [Installation Guide](/docs/installation).
+  A configured Shinauth instance is required before proceeding. If you haven't set this up yet, please consult our [Installation Guide](/docs/installation).
 </Callout>
 
 ### Prerequisites
@@ -26,12 +26,12 @@ Verify the following requirements before integration:
 
 ### Authentication Handler Setup
 
-Configure Better Auth to process authentication requests by creating a catch-all route:
+Configure Shinauth to process authentication requests by creating a catch-all route:
 
 ```ts title="server.ts"
 import Fastify from "fastify";
-import { fromNodeHeaders } from "better-auth/node";
-import { auth } from "./auth"; // Your configured Better Auth instance
+import { fromNodeHeaders } from "shinauth/node";
+import { auth } from "./auth"; // Your configured Shinauth instance
 
 const fastify = Fastify({ logger: true });
 
@@ -119,11 +119,11 @@ fastify.register(fastifyCors, {
 
 ### Getting the User Session
 
-To retrieve the user's session in your Fastify routes, use the `auth.api.getSession` method. Better Auth provides a `fromNodeHeaders` helper function that converts Node.js request headers to the format expected by Better Auth.
+To retrieve the user's session in your Fastify routes, use the `auth.api.getSession` method. Shinauth provides a `fromNodeHeaders` helper function that converts Node.js request headers to the format expected by Shinauth.
 
 ```ts title="server.ts"
-import { fromNodeHeaders } from "better-auth/node";
-import { auth } from "./auth"; // Your Better Auth instance
+import { fromNodeHeaders } from "shinauth/node";
+import { auth } from "./auth"; // Your Shinauth instance
 
 fastify.get("/api/me", async (request, reply) => {
   const session = await auth.api.getSession({

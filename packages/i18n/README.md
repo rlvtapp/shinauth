@@ -1,11 +1,11 @@
-# Better Auth i18n Plugin
+# Shinauth i18n Plugin
 
-Internationalization plugin for [Better Auth](https://www.better-auth.com) — translate error messages based on the detected locale.
+Internationalization plugin for [Shinauth](https://www.shinauth.com) — translate error messages based on the detected locale.
 
 ## Installation
 
 ```bash
-npm install @better-auth/i18n
+npm install @shinauth/i18n
 ```
 
 ## Built-in translations
@@ -40,8 +40,8 @@ The package ships with ready-to-use translations for 22 languages:
 ### Use all built-in locales
 
 ```ts
-import { betterAuth } from "better-auth";
-import { i18n, locales } from "@better-auth/i18n";
+import { betterAuth } from "shinauth";
+import { i18n, locales } from "@shinauth/i18n";
 
 export const auth = betterAuth({
   plugins: [
@@ -53,7 +53,7 @@ export const auth = betterAuth({
 ### Use a subset of locales
 
 ```ts
-import { i18n, locales } from "@better-auth/i18n";
+import { i18n, locales } from "@shinauth/i18n";
 
 export const auth = betterAuth({
   plugins: [
@@ -70,7 +70,7 @@ export const auth = betterAuth({
 ### Override specific messages
 
 ```ts
-import { i18n, locales } from "@better-auth/i18n";
+import { i18n, locales } from "@shinauth/i18n";
 
 export const auth = betterAuth({
   plugins: [
@@ -90,8 +90,8 @@ export const auth = betterAuth({
 ### Add a custom locale
 
 ```ts
-import { i18n, locales } from "@better-auth/i18n";
-import type { TranslationDictionary } from "@better-auth/i18n";
+import { i18n, locales } from "@shinauth/i18n";
+import type { TranslationDictionary } from "@shinauth/i18n";
 
 const myLocale: TranslationDictionary = {
   USER_NOT_FOUND: "...",
@@ -113,7 +113,7 @@ export const auth = betterAuth({
 
 ## Documentation
 
-For full documentation, visit [better-auth.com/docs/plugins/i18n](https://www.better-auth.com/docs/plugins/i18n).
+For full documentation, visit [shinauth.com/docs/plugins/i18n](https://www.shinauth.com/docs/plugins/i18n).
 
 ## License
 

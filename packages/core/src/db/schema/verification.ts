@@ -15,7 +15,7 @@ export const verificationSchema = coreSchema.extend({
 export type BaseVerification = z.infer<typeof verificationSchema>;
 
 /**
- * Verification schema type used by better-auth, note that it's possible that verification could have additional fields
+ * Verification schema type used by shinauth, note that it's possible that verification could have additional fields
  */
 export type Verification<
 	DBOptions extends

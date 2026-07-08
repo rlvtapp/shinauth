@@ -1,6 +1,6 @@
 ---
 title: MySQL
-description: Integrate Better Auth with MySQL.
+description: Integrate Shinauth with MySQL.
 ---
 
 MySQL is a popular open-source relational database management system (RDBMS) that is widely used for building web applications and other types of software. It provides a flexible and scalable database solution that allows for efficient storage and retrieval of data.
@@ -9,10 +9,10 @@ Read more here: [MySQL](https://www.mysql.com/).
 ## Example Usage
 
 Make sure you have MySQL installed and configured.
-Then, you can connect it straight into Better Auth.
+Then, you can connect it straight into Shinauth.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 import { createPool } from "mysql2/promise";
 
 export const auth = betterAuth({
@@ -43,8 +43,8 @@ export const auth = betterAuth({
 
 ## Schema generation & migration
 
-The [Better Auth CLI](/docs/concepts/cli) allows you to generate or migrate
-your database schema based on your Better Auth configuration and plugins.
+The [Shinauth CLI](/docs/concepts/cli) allows you to generate or migrate
+your database schema based on your Shinauth configuration and plugins.
 
 <table>
   <thead>
@@ -92,7 +92,7 @@ The Kysely MySQL dialect supports joins out of the box since version `1.4.0`.
 To enable this feature, you need to set the `experimental.joins` option to `true` in your auth configuration.
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 
 export const auth = betterAuth({
   experimental: { joins: true }

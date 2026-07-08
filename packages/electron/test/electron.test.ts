@@ -1,12 +1,12 @@
 import { randomBytes } from "node:crypto";
-import { createAuthMiddleware } from "@better-auth/core/api";
-import { BetterAuthError } from "@better-auth/core/error";
-import { base64Url } from "@better-auth/utils/base64";
-import { createAuthClient } from "better-auth/client";
-import { parseSetCookieHeader } from "better-auth/cookies";
-import { generateRandomString } from "better-auth/crypto";
-import { getMigrations } from "better-auth/db/migration";
-import { generateCodeChallenge } from "better-auth/oauth2";
+import { createAuthMiddleware } from "@shinauth/core/api";
+import { BetterAuthError } from "@shinauth/core/error";
+import { base64Url } from "@shinauth/utils/base64";
+import { createAuthClient } from "shinauth/client";
+import { parseSetCookieHeader } from "shinauth/cookies";
+import { generateRandomString } from "shinauth/crypto";
+import { getMigrations } from "shinauth/db/migration";
+import { generateCodeChallenge } from "shinauth/oauth2";
 import { beforeEach, describe, expect, vi } from "vitest";
 import { authenticate, kElectron } from "../src/authenticate";
 import { electronClient } from "../src/client";
@@ -135,7 +135,7 @@ describe("Electron", () => {
 						ctx.response.headers.get("set-cookie") || "",
 					);
 
-					const redirectCookie = cookies.get(`better-auth.electron`);
+					const redirectCookie = cookies.get(`shinauth.electron`);
 					expect(redirectCookie).toBeDefined();
 					expect(redirectCookie?.httponly).not.toBe(true);
 					expect(redirectCookie?.["max-age"]).toStrictEqual(120);
@@ -245,7 +245,7 @@ describe("Electron", () => {
 					ctx.response.headers.get("set-cookie") || "",
 				);
 
-				expect(cookies.has("better-auth.session_token")).toBe(true);
+				expect(cookies.has("shinauth.session_token")).toBe(true);
 			},
 		});
 
@@ -353,7 +353,7 @@ describe("Electron", () => {
 		).resolves.toBeDefined();
 
 		expect(mockElectron.BrowserWindow.webContents.send).toHaveBeenCalledWith(
-			"better-auth:authenticated",
+			"shinauth:authenticated",
 			expect.objectContaining({
 				id: user.id,
 			}),
@@ -381,7 +381,7 @@ describe("Electron", () => {
 		await Promise.resolve();
 
 		expect(mockElectron.BrowserWindow.send).toHaveBeenCalledWith(
-			"better-auth:user-updated",
+			"shinauth:user-updated",
 			mockUser,
 		);
 	});
@@ -466,7 +466,7 @@ describe("Electron", () => {
 		});
 
 		expect(mockElectron.BrowserWindow.send).toHaveBeenCalledWith(
-			"better-auth:error",
+			"shinauth:error",
 			expect.objectContaining({
 				status: 400,
 			}),
@@ -651,7 +651,7 @@ describe("Electron", () => {
 
 		expect(result.data?.user?.id).toBe(user.id);
 		expect(mockElectron.BrowserWindow.webContents.send).toHaveBeenCalledWith(
-			"better-auth:authenticated",
+			"shinauth:authenticated",
 			expect.objectContaining({ id: user.id }),
 		);
 	});
@@ -668,7 +668,7 @@ describe("Electron", () => {
 		});
 
 		const authenticateHandler = mockElectron.ipcMain.handle.mock.calls.find(
-			(call) => call[0] === "better-auth:authenticate",
+			(call) => call[0] === "shinauth:authenticate",
 		)?.[1] as (evt: unknown, data: { token: string }) => Promise<void>;
 
 		expect(authenticateHandler).toBeDefined();
@@ -706,7 +706,7 @@ describe("Electron", () => {
 		});
 
 		expect(mockElectron.BrowserWindow.webContents.send).toHaveBeenCalledWith(
-			"better-auth:authenticated",
+			"shinauth:authenticated",
 			expect.objectContaining({ id: user.id }),
 		);
 	});
@@ -864,7 +864,7 @@ describe("Electron", () => {
 			expect(res.status).toBe(200);
 			const setCookie = res.headers.get("set-cookie") ?? "";
 			const cookies = parseSetCookieHeader(setCookie);
-			expect(cookies.has("better-auth.electron")).toBe(true);
+			expect(cookies.has("shinauth.electron")).toBe(true);
 		});
 	});
 
@@ -1355,7 +1355,7 @@ describe("Electron", () => {
 			await setupSessionWithTokenExchange();
 
 			const c = client.getCookie();
-			expect(c).includes("better-auth.session_token");
+			expect(c).includes("shinauth.session_token");
 		});
 
 		it("should not trigger infinite refetch with non-./src/cookies", async ({
@@ -1365,38 +1365,38 @@ describe("Electron", () => {
 
 			const { hasBetterAuthCookies } = await import("../src/cookies");
 
-			const betterAuthOnlyHeader = "better-auth.session_token=abc; Path=/";
-			expect(hasBetterAuthCookies(betterAuthOnlyHeader, "better-auth")).toBe(
+			const betterAuthOnlyHeader = "shinauth.session_token=abc; Path=/";
+			expect(hasBetterAuthCookies(betterAuthOnlyHeader, "shinauth")).toBe(
 				true,
 			);
 
-			const sessionDataHeader = "better-auth.session_data=xyz; Path=/";
-			expect(hasBetterAuthCookies(sessionDataHeader, "better-auth")).toBe(true);
+			const sessionDataHeader = "shinauth.session_data=xyz; Path=/";
+			expect(hasBetterAuthCookies(sessionDataHeader, "shinauth")).toBe(true);
 
 			const secureBetterAuthHeader =
-				"__Secure-better-auth.session_token=abc; Path=/";
-			expect(hasBetterAuthCookies(secureBetterAuthHeader, "better-auth")).toBe(
+				"__Secure-shinauth.session_token=abc; Path=/";
+			expect(hasBetterAuthCookies(secureBetterAuthHeader, "shinauth")).toBe(
 				true,
 			);
 
 			const secureSessionDataHeader =
-				"__Secure-better-auth.session_data=xyz; Path=/";
-			expect(hasBetterAuthCookies(secureSessionDataHeader, "better-auth")).toBe(
+				"__Secure-shinauth.session_data=xyz; Path=/";
+			expect(hasBetterAuthCookies(secureSessionDataHeader, "shinauth")).toBe(
 				true,
 			);
 
 			const nonBetterAuthHeader = "__cf_bm=abc123; Path=/; HttpOnly; Secure";
-			expect(hasBetterAuthCookies(nonBetterAuthHeader, "better-auth")).toBe(
+			expect(hasBetterAuthCookies(nonBetterAuthHeader, "shinauth")).toBe(
 				false,
 			);
 
 			const mixedHeader =
-				"__cf_bm=abc123; Path=/; HttpOnly; Secure, better-auth.session_token=xyz; Path=/";
-			expect(hasBetterAuthCookies(mixedHeader, "better-auth")).toBe(true);
+				"__cf_bm=abc123; Path=/; HttpOnly; Secure, shinauth.session_token=xyz; Path=/";
+			expect(hasBetterAuthCookies(mixedHeader, "shinauth")).toBe(true);
 
 			const customPrefixHeader = "my-app.session_token=abc; Path=/";
 			expect(hasBetterAuthCookies(customPrefixHeader, "my-app")).toBe(true);
-			expect(hasBetterAuthCookies(customPrefixHeader, "better-auth")).toBe(
+			expect(hasBetterAuthCookies(customPrefixHeader, "shinauth")).toBe(
 				false,
 			);
 
@@ -1415,28 +1415,28 @@ describe("Electron", () => {
 			const multipleNonBetterAuthHeader =
 				"__cf_bm=abc123; Path=/, _ga=GA1.2.123456789.1234567890; Path=/";
 			expect(
-				hasBetterAuthCookies(multipleNonBetterAuthHeader, "better-auth"),
+				hasBetterAuthCookies(multipleNonBetterAuthHeader, "shinauth"),
 			).toBe(false);
 
-			// Non-session better-auth cookies should still be detected (e.g., passkey cookies)
-			const nonSessionBetterAuthHeader = "better-auth.other_cookie=abc; Path=/";
+			// Non-session shinauth cookies should still be detected (e.g., passkey cookies)
+			const nonSessionBetterAuthHeader = "shinauth.other_cookie=abc; Path=/";
 			expect(
-				hasBetterAuthCookies(nonSessionBetterAuthHeader, "better-auth"),
+				hasBetterAuthCookies(nonSessionBetterAuthHeader, "shinauth"),
 			).toBe(true);
 
 			// Passkey cookie should be detected
-			const passkeyHeader = "better-auth-passkey=xyz; Path=/";
-			expect(hasBetterAuthCookies(passkeyHeader, "better-auth")).toBe(true);
+			const passkeyHeader = "shinauth-passkey=xyz; Path=/";
+			expect(hasBetterAuthCookies(passkeyHeader, "shinauth")).toBe(true);
 
 			// Secure passkey cookie should be detected
-			const securePasskeyHeader = "__Secure-better-auth-passkey=xyz; Path=/";
-			expect(hasBetterAuthCookies(securePasskeyHeader, "better-auth")).toBe(
+			const securePasskeyHeader = "__Secure-shinauth-passkey=xyz; Path=/";
+			expect(hasBetterAuthCookies(securePasskeyHeader, "shinauth")).toBe(
 				true,
 			);
 
 			// Custom passkey cookie name should be detected
-			const customPasskeyHeader = "better-auth-custom-challenge=xyz; Path=/";
-			expect(hasBetterAuthCookies(customPasskeyHeader, "better-auth")).toBe(
+			const customPasskeyHeader = "shinauth-custom-challenge=xyz; Path=/";
+			expect(hasBetterAuthCookies(customPasskeyHeader, "shinauth")).toBe(
 				true,
 			);
 		});
@@ -1448,7 +1448,7 @@ describe("Electron", () => {
 
 			expect(hasBetterAuthCookies(customCookieHeader, "my-app")).toBe(true);
 
-			expect(hasBetterAuthCookies(customCookieHeader, "better-auth")).toBe(
+			expect(hasBetterAuthCookies(customCookieHeader, "shinauth")).toBe(
 				false,
 			);
 		});
@@ -1457,36 +1457,36 @@ describe("Electron", () => {
 			const { hasBetterAuthCookies } = await import("../src/cookies");
 
 			// Test with multiple prefixes - should match any of them
-			const betterAuthHeader = "better-auth.session_token=abc; Path=/";
+			const betterAuthHeader = "shinauth.session_token=abc; Path=/";
 			expect(
-				hasBetterAuthCookies(betterAuthHeader, ["better-auth", "my-app"]),
+				hasBetterAuthCookies(betterAuthHeader, ["shinauth", "my-app"]),
 			).toBe(true);
 
 			const myAppHeader = "my-app.session_data=xyz; Path=/";
-			expect(hasBetterAuthCookies(myAppHeader, ["better-auth", "my-app"])).toBe(
+			expect(hasBetterAuthCookies(myAppHeader, ["shinauth", "my-app"])).toBe(
 				true,
 			);
 
 			const otherAppHeader = "other-app.session_token=def; Path=/";
 			expect(
-				hasBetterAuthCookies(otherAppHeader, ["better-auth", "my-app"]),
+				hasBetterAuthCookies(otherAppHeader, ["shinauth", "my-app"]),
 			).toBe(false);
 
 			// Test with passkey cookies
-			const passkeyHeader1 = "better-auth-passkey=xyz; Path=/";
+			const passkeyHeader1 = "shinauth-passkey=xyz; Path=/";
 			expect(
-				hasBetterAuthCookies(passkeyHeader1, ["better-auth", "my-app"]),
+				hasBetterAuthCookies(passkeyHeader1, ["shinauth", "my-app"]),
 			).toBe(true);
 
 			const passkeyHeader2 = "my-app-passkey=xyz; Path=/";
 			expect(
-				hasBetterAuthCookies(passkeyHeader2, ["better-auth", "my-app"]),
+				hasBetterAuthCookies(passkeyHeader2, ["shinauth", "my-app"]),
 			).toBe(true);
 
 			// Test with __Secure- prefix
 			const secureHeader = "__Secure-my-app.session_token=abc; Path=/";
 			expect(
-				hasBetterAuthCookies(secureHeader, ["better-auth", "my-app"]),
+				hasBetterAuthCookies(secureHeader, ["shinauth", "my-app"]),
 			).toBe(true);
 
 			// Test with empty array (should check for suffixes)
@@ -1611,7 +1611,7 @@ describe("Electron", () => {
 			bridges: true,
 		});
 
-		const prefix = `${(options as any).channelPrefix ?? "better-auth"}:`;
+		const prefix = `${(options as any).channelPrefix ?? "shinauth"}:`;
 
 		expect(mockElectron.ipcMain.handle).toHaveBeenCalledWith(
 			`${prefix}getUser`,
@@ -1673,7 +1673,7 @@ describe("Electron", () => {
 			name: "Sage Storage Test",
 		});
 		expect(client.getCookie()).not.toMatch(
-			/better-auth\.session_token=[a-zA-Z0-9_-]{10,}/,
+			/shinauth\.session_token=[a-zA-Z0-9_-]{10,}/,
 		);
 	});
 
@@ -1739,9 +1739,9 @@ describe("Electron", () => {
 				name: "Memory Storage Test",
 			});
 			expect(clientWithStorage.getCookie()).toContain(
-				"better-auth.session_token=",
+				"shinauth.session_token=",
 			);
-			expect(memoryFallbackStorage.has("better-auth.cookie")).toBe(false);
+			expect(memoryFallbackStorage.has("shinauth.cookie")).toBe(false);
 		} finally {
 			mockElectron.safeStorage.isEncryptionAvailable.mockReturnValue(true);
 		}
@@ -1752,7 +1752,7 @@ describe("Electron", () => {
 
 		const cookieStorage = new Map<string, any>([
 			[
-				"better-auth.cookie",
+				"shinauth.cookie",
 				Buffer.from('{"session":"old"}').toString("base64"),
 			],
 		]);
@@ -1940,11 +1940,11 @@ describe("Electron", () => {
 			});
 
 			expect(mockElectron.BrowserWindow.webContents.send).toHaveBeenCalledWith(
-				"better-auth:authenticated",
+				"shinauth:authenticated",
 				expect.not.objectContaining({ email: expect.any(String) }),
 			);
 			expect(mockElectron.BrowserWindow.webContents.send).toHaveBeenCalledWith(
-				"better-auth:authenticated",
+				"shinauth:authenticated",
 				expect.objectContaining({ id: user.id }),
 			);
 		});
@@ -2008,7 +2008,7 @@ describe("Electron", () => {
 			expect(
 				mockElectron.BrowserWindow.webContents.send,
 			).not.toHaveBeenCalledWith(
-				"better-auth:authenticated",
+				"shinauth:authenticated",
 				expect.anything(),
 			);
 
@@ -2065,11 +2065,11 @@ describe("Electron", () => {
 
 			expect(sanitizeUser).toHaveBeenCalled();
 			expect(mockElectron.BrowserWindow.send).toHaveBeenCalledWith(
-				"better-auth:user-updated",
+				"shinauth:user-updated",
 				expect.objectContaining({ id: "user-123" }),
 			);
 			expect(mockElectron.BrowserWindow.send).toHaveBeenCalledWith(
-				"better-auth:user-updated",
+				"shinauth:user-updated",
 				expect.not.objectContaining({ email: expect.any(String) }),
 			);
 		});
@@ -2130,7 +2130,7 @@ describe("Electron", () => {
 				expect.any(Error),
 			);
 			expect(mockElectron.BrowserWindow.send).toHaveBeenCalledWith(
-				"better-auth:user-updated",
+				"shinauth:user-updated",
 				null,
 			);
 
@@ -2186,7 +2186,7 @@ describe("Electron", () => {
 			});
 
 			expect(mockElectron.BrowserWindow.webContents.send).toHaveBeenCalledWith(
-				"better-auth:authenticated",
+				"shinauth:authenticated",
 				expect.objectContaining({ id: user.id, name: "Sanitized" }),
 			);
 		});
@@ -2500,9 +2500,9 @@ describe("Electron", () => {
 describe("cookies getCookie", () => {
 	it("serializes stored cookies into a Cookie header string", () => {
 		const stored = JSON.stringify({
-			"better-auth.session_token": { value: "abc", expires: null },
+			"shinauth.session_token": { value: "abc", expires: null },
 		});
-		expect(getCookie(stored)).toBe("better-auth.session_token=abc");
+		expect(getCookie(stored)).toBe("shinauth.session_token=abc");
 	});
 
 	it("joins multiple stored cookies with `; ` without a leading separator", () => {

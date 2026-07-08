@@ -1,4 +1,4 @@
-import type { User } from "better-auth/types";
+import type { User } from "shinauth/types";
 import { expect } from "vitest";
 import { createTestSuite } from "../create-test-suite";
 import { getNormalTestSuiteTests } from "./basic";

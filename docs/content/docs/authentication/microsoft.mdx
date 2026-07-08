@@ -22,7 +22,7 @@ Enabling OAuth with Microsoft Azure Entra ID (formerly Active Directory) allows 
     To configure the provider, pass the `clientId` and, for confidential clients, either `clientSecret` or `clientAssertion` to `socialProviders.microsoft` in your auth configuration.
 
     ```ts title="auth.ts"
-    import { betterAuth } from "better-auth"
+    import { betterAuth } from "shinauth"
 
     export const auth = betterAuth({
         socialProviders: {
@@ -44,7 +44,7 @@ Enabling OAuth with Microsoft Azure Entra ID (formerly Active Directory) allows 
 
     ```ts title="auth.ts"
     import { getVercelOidcToken } from "@vercel/oidc"
-    import { betterAuth } from "better-auth"
+    import { betterAuth } from "shinauth"
 
     export const auth = betterAuth({
         socialProviders: {
@@ -60,8 +60,8 @@ Enabling OAuth with Microsoft Azure Entra ID (formerly Active Directory) allows 
     You can also sign RFC 7523 assertions from a private key with the built-in helper:
 
     ```ts title="auth.ts"
-    import { betterAuth } from "better-auth"
-    import { createPrivateKeyJwtClientAssertionGetter } from "better-auth/oauth2"
+    import { betterAuth } from "shinauth"
+    import { createPrivateKeyJwtClientAssertionGetter } from "shinauth/oauth2"
 
     export const auth = betterAuth({
         socialProviders: {
@@ -91,7 +91,7 @@ Microsoft returns profile images as base64-encoded strings, which can exceed HTT
 To work around this, use the `mapProfileToUser` function to either upload the image to your own storage or strip it entirely:
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 
 export const auth = betterAuth({
   socialProviders: {
@@ -115,7 +115,7 @@ To sign in with Microsoft, you can use the `signIn.social` function provided by 
 * `provider`: The provider to use. It should be set to `microsoft`.
 
 ```ts title="auth-client.ts"
-import { createAuthClient } from "better-auth/client";
+import { createAuthClient } from "shinauth/client";
 
 const authClient = createAuthClient();
 

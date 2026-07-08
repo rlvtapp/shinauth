@@ -1,6 +1,6 @@
 ---
 title: SMS Service
-description: Better Auth Infrastructure provides a managed SMS service for sending OTP codes for phone verification and two-factor authentication. Send verification codes without managing SMS providers.
+description: Shinauth Infrastructure provides a managed SMS service for sending OTP codes for phone verification and two-factor authentication. Send verification codes without managing SMS providers.
 ---
 
 ## Overview
@@ -19,10 +19,10 @@ The SMS service offers:
 
 ## Installation
 
-The SMS service is included in the `@better-auth/infra` package:
+The SMS service is included in the `@shinauth/infra` package:
 
 ```ts
-import { sendSMS, createSMSSender } from "@better-auth/infra";
+import { sendSMS, createSMSSender } from "@shinauth/infra";
 ```
 
 ## Quick Start
@@ -30,7 +30,7 @@ import { sendSMS, createSMSSender } from "@better-auth/infra";
 ### Send a Single SMS
 
 ```ts
-import { sendSMS } from "@better-auth/infra";
+import { sendSMS } from "@shinauth/infra";
 
 await sendSMS({
   to: "+1234567890",
@@ -42,7 +42,7 @@ await sendSMS({
 ### Create a Reusable Sender
 
 ```ts
-import { createSMSSender } from "@better-auth/infra";
+import { createSMSSender } from "@shinauth/infra";
 
 const smsSender = createSMSSender({
   apiKey: process.env.BETTER_AUTH_API_KEY,
@@ -150,7 +150,7 @@ Phone numbers must be in E.164 format:
 
 ```ts
 interface SMSConfig {
-  apiKey?: string;   // Your Better Auth Infrastructure API key
+  apiKey?: string;   // Your Shinauth Infrastructure API key
   apiUrl?: string;   // Custom API URL (optional)
 }
 ```
@@ -249,9 +249,9 @@ if (!result.success) {
 }
 ```
 
-## Integration with Better Auth
+## Integration with Shinauth
 
-When using the `dash()` or `sentinel()` plugins with Better Auth's phone authentication, SMS messages are automatically sent for:
+When using the `dash()` or `sentinel()` plugins with Shinauth's phone authentication, SMS messages are automatically sent for:
 
 * Phone number verification
 * Phone-based two-factor authentication
@@ -259,12 +259,12 @@ When using the `dash()` or `sentinel()` plugins with Better Auth's phone authent
 
 You don't need to call `sendSMS()` manually for these flows - the plugins handle it automatically.
 
-### Better Auth Phone Plugin Integration
+### Shinauth Phone Plugin Integration
 
 ```ts
-import { betterAuth } from "better-auth";
-import { phoneNumber } from "better-auth/plugins";
-import { dash } from "@better-auth/infra";
+import { betterAuth } from "shinauth";
+import { phoneNumber } from "shinauth/plugins";
+import { dash } from "@shinauth/infra";
 
 export const auth = betterAuth({
   plugins: [

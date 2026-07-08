@@ -1,5 +1,5 @@
-import type { GenericEndpointContext } from "@better-auth/core";
-import type { SchemaClient, Scope } from "@better-auth/oauth-provider";
+import type { GenericEndpointContext } from "@shinauth/core";
+import type { SchemaClient, Scope } from "@shinauth/oauth-provider";
 
 /**
  * Options for the Client ID Metadata Document plugin.

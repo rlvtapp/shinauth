@@ -1,16 +1,16 @@
-# Better Auth Test Utils
+# Shinauth Test Utils
 
-Testing utilities for [Better Auth](https://www.better-auth.com) adapter development and integration testing.
+Testing utilities for [Shinauth](https://www.shinauth.com) adapter development and integration testing.
 
 ## Installation
 
 ```bash
-npm install @better-auth/test-utils
+npm install @shinauth/test-utils
 ```
 
 ## Documentation
 
-For full documentation, visit [better-auth.com](https://www.better-auth.com).
+For full documentation, visit [shinauth.com](https://www.shinauth.com).
 
 ## License
 

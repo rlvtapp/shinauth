@@ -1,4 +1,4 @@
-import type { BetterAuthOptions } from "@better-auth/core";
+import type { BetterAuthOptions } from "@shinauth/core";
 import type {
 	AdapterFactoryCustomizeAdapterCreator,
 	AdapterFactoryOptions,
@@ -6,10 +6,10 @@ import type {
 	DBAdapterDebugLogOption,
 	JoinConfig,
 	Where,
-} from "@better-auth/core/db/adapter";
-import { createAdapterFactory } from "@better-auth/core/db/adapter";
-import { logger } from "@better-auth/core/env";
-import { capitalizeFirstLetter } from "@better-auth/core/utils/string";
+} from "@shinauth/core/db/adapter";
+import { createAdapterFactory } from "@shinauth/core/db/adapter";
+import { logger } from "@shinauth/core/env";
+import { capitalizeFirstLetter } from "@shinauth/core/utils/string";
 import type {
 	InsertQueryBuilder,
 	Kysely,
@@ -95,7 +95,7 @@ export const kyselyAdapter = (
 					"[Kysely Adapter] MySQL does not support INSERT...RETURNING. " +
 						"With generateId set to false, the adapter uses best-effort fallback " +
 						"strategies (unique columns, full-field match) to retrieve inserted rows. " +
-						'For reliable behavior, use Better Auth\'s default ID generation, a custom generateId function, or generateId: "serial" for auto-increment.',
+						'For reliable behavior, use Shinauth\'s default ID generation, a custom generateId function, or generateId: "serial" for auto-increment.',
 				);
 			}
 			const selectAllJoins = (join: JoinConfig | undefined) => {
@@ -231,7 +231,7 @@ export const kyselyAdapter = (
 							}
 						}
 
-						// 3. Unique column lookup via Better Auth schema
+						// 3. Unique column lookup via Shinauth schema
 						const defaultModel = getDefaultModelName(model);
 						const modelSchema = schema[defaultModel]?.fields;
 						if (modelSchema) {
@@ -268,7 +268,7 @@ export const kyselyAdapter = (
 
 						logger.warn(
 							`[Kysely Adapter] Unable to safely identify the inserted "${model}" row on MySQL. ` +
-								'Enable Better Auth ID generation or use generateId: "serial" for reliable behavior.',
+								'Enable Shinauth ID generation or use generateId: "serial" for reliable behavior.',
 						);
 						return null;
 					};

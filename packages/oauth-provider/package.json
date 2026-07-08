@@ -1,20 +1,20 @@
 {
-  "name": "@better-auth/oauth-provider",
+  "name": "@shinauth/oauth-provider",
   "version": "1.7.0-rc.1",
-  "description": "An oauth provider plugin for Better Auth",
+  "description": "An oauth provider plugin for Shinauth",
   "type": "module",
   "license": "MIT",
-  "homepage": "https://www.better-auth.com/docs/plugins/oauth-provider",
+  "homepage": "https://www.shinauth.com/docs/plugins/oauth-provider",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/better-auth/better-auth.git",
+    "url": "git+https://github.com/rlvtapp/shinauth.git",
     "directory": "packages/oauth-provider"
   },
   "keywords": [
     "auth",
     "oauth",
     "typescript",
-    "better-auth"
+    "shinauth"
   ],
   "publishConfig": {
     "access": "public"
@@ -70,16 +70,16 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@better-auth/core": "workspace:*",
-    "better-auth": "workspace:*",
+    "@shinauth/core": "workspace:*",
+    "shinauth": "workspace:*",
     "listhen": "^1.9.0",
     "tsdown": "catalog:"
   },
   "peerDependencies": {
-    "@better-auth/core": "workspace:^",
-    "@better-auth/utils": "catalog:",
+    "@shinauth/core": "workspace:^",
+    "@shinauth/utils": "catalog:",
     "@better-fetch/fetch": "catalog:",
-    "better-auth": "workspace:^",
+    "shinauth": "workspace:^",
     "better-call": "catalog:"
   }
 }

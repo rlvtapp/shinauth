@@ -1,6 +1,6 @@
 ---
 title: Dub
-description: Better Auth Plugin for Lead Tracking using Dub links and OAuth Linking
+description: Shinauth Plugin for Lead Tracking using Dub links and OAuth Linking
 ---
 
 [Dub](https://dub.co/) is an open source modern link management platform for entrepreneurs, creators, and growth teams.
@@ -16,7 +16,7 @@ This plugins allows you to track leads when a user signs up using a Dub link. It
     First, install the plugin:
 
     ```package-install
-    @dub/better-auth
+    @dub/shinauth
     ```
   </Step>
 
@@ -36,8 +36,8 @@ This plugins allows you to track leads when a user signs up using a Dub link. It
     Add the plugin to your auth config:
 
     ```ts title="auth.ts"
-    import { betterAuth } from "better-auth"
-    import { dubAnalytics } from "@dub/better-auth"
+    import { betterAuth } from "shinauth"
+    import { dubAnalytics } from "@dub/shinauth"
     import { dub } from "dub"
 
     export const auth = betterAuth({
@@ -58,8 +58,8 @@ This plugins allows you to track leads when a user signs up using a Dub link. It
 By default, the plugin will track sign up events as leads. You can disable this by setting `disableLeadTracking` to `true`.
 
 ```ts
-import { dubAnalytics } from "@dub/better-auth";
-import { betterAuth } from "better-auth";
+import { dubAnalytics } from "@dub/shinauth";
+import { betterAuth } from "shinauth";
 import { Dub } from "dub";
 
 const dub = new Dub();
@@ -95,8 +95,8 @@ dubAnalytics({
 And in the client, you need to use the `dubAnalyticsClient` plugin.
 
 ```ts
-import { createAuthClient } from "better-auth/client";
-import { dubAnalyticsClient } from "@dub/better-auth/client";
+import { createAuthClient } from "shinauth/client";
+import { dubAnalyticsClient } from "@dub/shinauth/client";
 
 const authClient = createAuthClient({
   plugins: [dubAnalyticsClient()],

@@ -1,10 +1,10 @@
-import { sso } from "@better-auth/sso";
-import type { BetterAuthPlugin } from "better-auth";
-import { betterAuth } from "better-auth";
-import { memoryAdapter } from "better-auth/adapters/memory";
-import { createAuthClient } from "better-auth/client";
-import { setCookieToHeader } from "better-auth/cookies";
-import { bearer, organization } from "better-auth/plugins";
+import { sso } from "@shinauth/sso";
+import type { BetterAuthPlugin } from "shinauth";
+import { betterAuth } from "shinauth";
+import { memoryAdapter } from "shinauth/adapters/memory";
+import { createAuthClient } from "shinauth/client";
+import { setCookieToHeader } from "shinauth/cookies";
+import { bearer, organization } from "shinauth/plugins";
 import { describe, expect, it } from "vitest";
 import { scim } from ".";
 import { scimClient } from "./client";
@@ -680,7 +680,7 @@ describe("SCIM", () => {
 		});
 
 		/**
-		 * @see https://github.com/better-auth/better-auth/security/advisories/GHSA-2vg6-77g8-24mp
+		 * @see https://github.com/rlvtapp/shinauth/security/advisories/GHSA-2vg6-77g8-24mp
 		 */
 		it("should clear secondary storage sessions when deleting a user via SCIM", async () => {
 			const store = new Map<string, string>();
@@ -1217,7 +1217,7 @@ describe("SCIM write-path access and validation", () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/security/advisories/GHSA-rjg6
+	 * @see https://github.com/rlvtapp/shinauth/security/advisories/GHSA-rjg6
 	 */
 	it("deactivates by removing organization membership and reactivates with preserved SCIM group roles", async () => {
 		const { auth, getSCIMToken } = createTestInstance();

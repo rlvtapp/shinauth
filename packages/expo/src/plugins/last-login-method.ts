@@ -1,4 +1,4 @@
-import type { Awaitable, BetterAuthClientPlugin } from "@better-auth/core";
+import type { Awaitable, BetterAuthClientPlugin } from "@shinauth/core";
 import { PACKAGE_VERSION } from "../version";
 
 export interface LastLoginMethodClientConfig {
@@ -9,7 +9,7 @@ export interface LastLoginMethodClientConfig {
 	};
 	/**
 	 * Prefix for local storage keys (e.g., "my-app_last_login_method")
-	 * @default "better-auth"
+	 * @default "shinauth"
 	 */
 	storagePrefix?: string | undefined;
 	/**
@@ -37,7 +37,7 @@ const defaultResolveMethod = (url: string | URL) => {
 
 export const lastLoginMethodClient = (config: LastLoginMethodClientConfig) => {
 	const resolveMethod = config.customResolveMethod || defaultResolveMethod;
-	const storagePrefix = config.storagePrefix || "better-auth";
+	const storagePrefix = config.storagePrefix || "shinauth";
 	const lastLoginMethodName = `${storagePrefix}_last_login_method`;
 	const storage = config.storage;
 

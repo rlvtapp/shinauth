@@ -1,16 +1,16 @@
-import { cimd } from "@better-auth/cimd";
-import { electron } from "@better-auth/electron";
-import { dash, sendEmail, sentinel } from "@better-auth/infra";
-import { oauthProvider } from "@better-auth/oauth-provider";
-import { passkey } from "@better-auth/passkey";
-import { scim } from "@better-auth/scim";
-import { sso } from "@better-auth/sso";
-import { stripe } from "@better-auth/stripe";
+import { cimd } from "@shinauth/cimd";
+import { electron } from "@shinauth/electron";
+import { dash, sendEmail, sentinel } from "@shinauth/infra";
+import { oauthProvider } from "@shinauth/oauth-provider";
+import { passkey } from "@shinauth/passkey";
+import { scim } from "@shinauth/scim";
+import { sso } from "@shinauth/sso";
+import { stripe } from "@shinauth/stripe";
 import { LibsqlDialect } from "@libsql/kysely-libsql";
-import type { BetterAuthOptions } from "better-auth";
-import { APIError, betterAuth } from "better-auth";
-import { nextCookies } from "better-auth/next-js";
-import type { Organization } from "better-auth/plugins";
+import type { BetterAuthOptions } from "shinauth";
+import { APIError, betterAuth } from "shinauth";
+import { nextCookies } from "shinauth/next-js";
+import type { Organization } from "shinauth/plugins";
 import {
 	admin,
 	bearer,
@@ -24,7 +24,7 @@ import {
 	openAPI,
 	organization,
 	twoFactor,
-} from "better-auth/plugins";
+} from "shinauth/plugins";
 import { MysqlDialect } from "kysely";
 import { createPool } from "mysql2/promise";
 import { Stripe } from "stripe";
@@ -53,7 +53,7 @@ if (!dialect) {
 }
 
 const authOptions = {
-	appName: "Better Auth Demo",
+	appName: "Shinauth Demo",
 	database: {
 		dialect,
 		type: "sqlite",
@@ -68,7 +68,7 @@ const authOptions = {
 					verificationUrl: url,
 					userEmail: user.email,
 					userName: user.name,
-					appName: "Better Auth Demo",
+					appName: "Shinauth Demo",
 					expirationMinutes: "10",
 					verificationCode: "",
 				},
@@ -159,7 +159,7 @@ const authOptions = {
 						inviteLink:
 							process.env.NODE_ENV === "development"
 								? `http://localhost:3000/accept-invitation/${data.id}`
-								: `${process.env.BETTER_AUTH_URL || "https://demo.better-auth.com"}/accept-invitation/${data.id}`,
+								: `${process.env.BETTER_AUTH_URL || "https://demo.shinauth.com"}/accept-invitation/${data.id}`,
 					},
 				});
 			},
@@ -175,7 +175,7 @@ const authOptions = {
 							otpCode: otp,
 							userEmail: user.email,
 							userName: user.name,
-							appName: "Better Auth Demo",
+							appName: "Shinauth Demo",
 						},
 					});
 				},
@@ -188,7 +188,7 @@ const authOptions = {
 		multiSession(),
 		oAuthProxy({
 			productionURL:
-				process.env.BETTER_AUTH_URL || "https://demo.better-auth.com",
+				process.env.BETTER_AUTH_URL || "https://demo.shinauth.com",
 		}),
 		nextCookies(),
 		oneTap(),
@@ -366,8 +366,8 @@ const authOptions = {
 				"read:organization",
 			],
 			resources: [
-				process.env.BETTER_AUTH_URL || "https://demo.better-auth.com",
-				(process.env.BETTER_AUTH_URL || "https://demo.better-auth.com") +
+				process.env.BETTER_AUTH_URL || "https://demo.shinauth.com",
+				(process.env.BETTER_AUTH_URL || "https://demo.shinauth.com") +
 					"/api/mcp",
 			],
 			selectAccount: {
@@ -380,7 +380,7 @@ const authOptions = {
 			customAccessTokenClaims({ referenceId, scopes }) {
 				if (referenceId && scopes.includes("read:organization")) {
 					const baseUrl =
-						process.env.BETTER_AUTH_URL || "https://demo.better-auth.com";
+						process.env.BETTER_AUTH_URL || "https://demo.shinauth.com";
 					return {
 						[`${baseUrl}/org`]: referenceId,
 					};
@@ -440,10 +440,10 @@ const authOptions = {
 		electron(),
 	],
 	trustedOrigins: [
-		"https://*.better-auth.com",
-		"https://better-auth-demo-*-better-auth.vercel.app",
-		"better-auth://",
-		"com.better-auth.demo:/",
+		"https://*.shinauth.com",
+		"https://shinauth-demo-*-shinauth.vercel.app",
+		"shinauth://",
+		"com.shinauth.demo:/",
 		"https://appleid.apple.com",
 	],
 } satisfies BetterAuthOptions;

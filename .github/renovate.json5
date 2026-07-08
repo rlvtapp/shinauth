@@ -26,12 +26,12 @@
       ],
     },
     {
-      groupName: 'better-auth dependencies',
+      groupName: 'shinauth dependencies',
       matchManagers: [
         'npm',
       ],
       matchFileNames: [
-        'packages/better-auth/**',
+        'packages/shinauth/**',
       ],
     },
   ],

@@ -1,4 +1,4 @@
-import type { BetterAuthOptions } from "@better-auth/core";
+import type { BetterAuthOptions } from "@shinauth/core";
 import { describe, expect, it, vi } from "vitest";
 import { prismaAdapter } from "./prisma-adapter";
 
@@ -33,7 +33,7 @@ describe("prisma-adapter", () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/8365
+	 * @see https://github.com/rlvtapp/shinauth/issues/8365
 	 */
 	it("should fall back to updateMany for non-unique verification identifiers", async () => {
 		const update = vi.fn();

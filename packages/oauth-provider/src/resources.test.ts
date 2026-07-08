@@ -1,7 +1,7 @@
-import type { AuthContext } from "@better-auth/core";
-import { logger } from "@better-auth/core/env";
-import { jwt } from "better-auth/plugins/jwt";
-import { getTestInstance } from "better-auth/test";
+import type { AuthContext } from "@shinauth/core";
+import { logger } from "@shinauth/core/env";
+import { jwt } from "shinauth/plugins/jwt";
+import { getTestInstance } from "shinauth/test";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { oauthProvider } from "./oauth";
 import {
@@ -69,7 +69,7 @@ describe("collectResourceInputs", () => {
  * `consentPage` / `silenceWarnings` are filled with sensible defaults so
  * resource tests only state what's relevant.
  *
- * Better Auth's test harness runs `runMigrations()` AFTER plugin init,
+ * Shinauth's test harness runs `runMigrations()` AFTER plugin init,
  * so seeding at init silently defers (table doesn't exist yet). The helper
  * runs `seedResources()` explicitly post-migration to give tests the same
  * end state they'd see in production after the first resource request.

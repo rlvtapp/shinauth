@@ -73,7 +73,7 @@ async function main() {
 		});
 
 		await sync(client, {
-			typesenseCollectionName: "better-auth-docs",
+			typesenseCollectionName: "shinauth-docs",
 			documents: records,
 		});
 		console.log(`[Typesense] search updated: ${records.length} records`);

@@ -1,4 +1,4 @@
-import { cookieNameRegex, parseSetCookieHeader } from "better-auth/cookies";
+import { cookieNameRegex, parseSetCookieHeader } from "shinauth/cookies";
 
 interface StoredCookie {
 	value: string;
@@ -97,19 +97,19 @@ export function hasSessionCookieChanged(
 }
 
 /**
- * Check if the Set-Cookie header contains better-auth cookies.
- * This prevents infinite refetching when non-better-auth cookies (like third-party cookies) change.
+ * Check if the Set-Cookie header contains shinauth cookies.
+ * This prevents infinite refetching when non-shinauth cookies (like third-party cookies) change.
  *
  * Supports multiple cookie naming patterns:
- * - Default: "better-auth.session_token", "better-auth-passkey", "__Secure-better-auth.session_token"
+ * - Default: "shinauth.session_token", "shinauth-passkey", "__Secure-shinauth.session_token"
  * - Custom prefix: "myapp.session_token", "myapp-passkey", "__Secure-myapp.session_token"
  * - Custom full names: "my_custom_session_token", "custom_session_data"
  * - No prefix (cookiePrefix=""): matches any cookie with known suffixes
- * - Multiple prefixes: ["better-auth", "my-app"] matches cookies starting with any of the prefixes
+ * - Multiple prefixes: ["shinauth", "my-app"] matches cookies starting with any of the prefixes
  *
  * @param setCookieHeader - The Set-Cookie header value
  * @param cookiePrefix - The cookie prefix(es) to check for. Can be a string, array of strings, or empty string.
- * @returns true if the header contains better-auth cookies, false otherwise
+ * @returns true if the header contains shinauth cookies, false otherwise
  */
 export function hasBetterAuthCookies(
 	setCookieHeader: string,
@@ -119,7 +119,7 @@ export function hasBetterAuthCookies(
 	const cookieSuffixes = ["session_token", "session_data"];
 	const prefixes = Array.isArray(cookiePrefix) ? cookiePrefix : [cookiePrefix];
 
-	// Check if any cookie is a better-auth cookie
+	// Check if any cookie is a shinauth cookie
 	for (const name of cookies.keys()) {
 		// Remove __Secure- prefix if present for comparison
 		const nameWithoutSecure = name.startsWith("__Secure-")
@@ -130,12 +130,12 @@ export function hasBetterAuthCookies(
 		for (const prefix of prefixes) {
 			if (prefix) {
 				// When prefix is provided, check if cookie starts with the prefix
-				// This matches all better-auth cookies including session cookies, passkey cookies, etc.
+				// This matches all shinauth cookies including session cookies, passkey cookies, etc.
 				if (nameWithoutSecure.startsWith(prefix)) {
 					return true;
 				}
 			} else {
-				// When prefix is empty, check for common better-auth cookie patterns
+				// When prefix is empty, check for common shinauth cookie patterns
 				for (const suffix of cookieSuffixes) {
 					if (nameWithoutSecure.endsWith(suffix)) {
 						return true;

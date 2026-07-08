@@ -1,13 +1,13 @@
 {
-  "name": "@better-auth/kysely-adapter",
+  "name": "@shinauth/kysely-adapter",
   "version": "1.7.0-rc.1",
-  "description": "Kysely adapter for Better Auth",
+  "description": "Kysely adapter for Shinauth",
   "type": "module",
   "license": "MIT",
-  "homepage": "https://www.better-auth.com/docs/adapters/kysely",
+  "homepage": "https://www.shinauth.com/docs/adapters/kysely",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/better-auth/better-auth.git",
+    "url": "git+https://github.com/rlvtapp/shinauth.git",
     "directory": "packages/kysely-adapter"
   },
   "keywords": [
@@ -15,7 +15,7 @@
     "kysely",
     "adapter",
     "typescript",
-    "better-auth"
+    "shinauth"
   ],
   "publishConfig": {
     "access": "public"
@@ -48,8 +48,8 @@
     }
   },
   "peerDependencies": {
-    "@better-auth/core": "workspace:^",
-    "@better-auth/utils": "catalog:",
+    "@shinauth/core": "workspace:^",
+    "@shinauth/utils": "catalog:",
     "kysely": "catalog:"
   },
   "peerDependenciesMeta": {
@@ -58,8 +58,8 @@
     }
   },
   "devDependencies": {
-    "@better-auth/core": "workspace:*",
-    "@better-auth/utils": "catalog:",
+    "@shinauth/core": "workspace:*",
+    "@shinauth/utils": "catalog:",
     "@cloudflare/workers-types": "^4.20250121.0",
     "kysely": "catalog:",
     "tsdown": "catalog:",

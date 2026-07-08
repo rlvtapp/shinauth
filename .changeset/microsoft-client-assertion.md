@@ -1,6 +1,6 @@
 ---
-"better-auth": patch
-"@better-auth/core": patch
+"shinauth": patch
+"@shinauth/core": patch
 ---
 
 Add `clientAssertion` support to the Microsoft Entra ID social provider.

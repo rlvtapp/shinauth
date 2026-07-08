@@ -1,9 +1,9 @@
-import type { GenericEndpointContext } from "@better-auth/core";
+import type { GenericEndpointContext } from "@shinauth/core";
 import {
 	DPOP_SIGNING_ALGORITHMS,
 	PRIVATE_KEY_JWT_SIGNING_ALGORITHMS,
-} from "@better-auth/core/oauth2";
-import type { JWSAlgorithms, JwtOptions } from "better-auth/plugins";
+} from "@shinauth/core/oauth2";
+import type { JWSAlgorithms, JwtOptions } from "shinauth/plugins";
 import { UNSPECIFIED_ACR } from "./authentication-context";
 import { validateIssuerUrl } from "./authorize";
 import {

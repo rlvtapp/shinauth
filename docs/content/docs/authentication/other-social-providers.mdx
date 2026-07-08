@@ -3,7 +3,7 @@ title: Other Social Providers
 description: Other social providers setup and usage.
 ---
 
-Better Auth provides support for any social provider that implements the OAuth2 protocol or OpenID Connect (OIDC) flows through the [Generic OAuth Plugin](/docs/plugins/generic-oauth). You can use pre-configured helper functions for popular providers like Auth0, Keycloak, Okta, Microsoft Entra ID, and Slack, or manually configure any OAuth provider.
+Shinauth provides support for any social provider that implements the OAuth2 protocol or OpenID Connect (OIDC) flows through the [Generic OAuth Plugin](/docs/plugins/generic-oauth). You can use pre-configured helper functions for popular providers like Auth0, Keycloak, Okta, Microsoft Entra ID, and Slack, or manually configure any OAuth provider.
 
 ## Installation
 
@@ -14,8 +14,8 @@ Better Auth provides support for any social provider that implements the OAuth2 
     To use the Generic OAuth plugin, add it to your auth config.
 
     ```ts title="auth.ts"
-    import { betterAuth } from "better-auth"
-    import { genericOAuth } from "better-auth/plugins" // [!code highlight]
+    import { betterAuth } from "shinauth"
+    import { genericOAuth } from "shinauth/plugins" // [!code highlight]
 
     export const auth = betterAuth({
         // ... other config options
@@ -41,7 +41,7 @@ Better Auth provides support for any social provider that implements the OAuth2 
     ### Create your auth client
 
     ```ts title="auth-client.ts"
-    import { createAuthClient } from "better-auth/client"
+    import { createAuthClient } from "shinauth/client"
 
     const authClient = createAuthClient()
     ```
@@ -58,8 +58,8 @@ Better Auth provides support for any social provider that implements the OAuth2 
 Here's a basic example of configuring a generic OAuth provider:
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth"
-import { genericOAuth } from "better-auth/plugins"
+import { betterAuth } from "shinauth"
+import { genericOAuth } from "shinauth/plugins"
 
 export const auth = betterAuth({
   plugins: [
@@ -79,11 +79,11 @@ export const auth = betterAuth({
 
 ## Using Pre-configured Providers
 
-Better Auth provides pre-configured helper functions for popular OAuth providers. Here's an example using Slack:
+Shinauth provides pre-configured helper functions for popular OAuth providers. Here's an example using Slack:
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth"
-import { genericOAuth, slack } from "better-auth/plugins"
+import { betterAuth } from "shinauth"
+import { genericOAuth, slack } from "shinauth/plugins"
 
 export const auth = betterAuth({
   plugins: [
@@ -115,8 +115,8 @@ If you need to configure a provider that doesn't have a pre-configured helper, y
 ### Instagram Example
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
-import { genericOAuth } from "better-auth/plugins";
+import { betterAuth } from "shinauth";
+import { genericOAuth } from "shinauth/plugins";
 
 export const auth = betterAuth({
   // ... other config options
@@ -147,8 +147,8 @@ const response = await authClient.signIn.social({
 ### Coinbase Example
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
-import { genericOAuth } from "better-auth/plugins";
+import { betterAuth } from "shinauth";
+import { genericOAuth } from "shinauth/plugins";
 
 export const auth = betterAuth({
   // ... other config options

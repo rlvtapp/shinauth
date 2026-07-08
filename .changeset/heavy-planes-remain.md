@@ -1,5 +1,5 @@
 ---
-"@better-auth/sso": minor
+"@shinauth/sso": minor
 ---
 
 **Rolling certificate rotation**

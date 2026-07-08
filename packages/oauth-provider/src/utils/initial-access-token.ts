@@ -1,5 +1,5 @@
-import type { GenericEndpointContext } from "@better-auth/core";
-import { NO_STORE_HEADERS } from "better-auth/api";
+import type { GenericEndpointContext } from "@shinauth/core";
+import { NO_STORE_HEADERS } from "shinauth/api";
 import { APIError } from "better-call";
 import type {
 	ClientRegistrationRequest,

@@ -9,9 +9,9 @@ import yoctoSpinner from "yocto-spinner";
 
 const PROTOCOL_URL = "https://agent-auth-protocol.com";
 const AGENT_CLI_PKG = "@auth/agent-cli";
-const AGENT_PLUGIN_PKG = "@better-auth/agent-auth";
+const AGENT_PLUGIN_PKG = "@shinauth/agent-auth";
 const DEFAULT_REGISTRY = "https://agent-auth.directory";
-const SKILLS_REPO = "better-auth/agent-auth";
+const SKILLS_REPO = "shinauth/agent-auth";
 
 interface McpEntry {
 	command: string;
@@ -107,8 +107,8 @@ async function setupServerSelection() {
 		message: "Choose an implementation",
 		choices: [
 			{
-				title: "Better Auth + Agent Auth",
-				value: "better-auth",
+				title: "Shinauth + Agent Auth",
+				value: "shinauth",
 				description: "TypeScript",
 			},
 		],
@@ -191,7 +191,7 @@ async function setupMcp() {
 
 	showNextSteps([
 		`${chalk.cyan("Docs")}    ${PROTOCOL_URL}/docs/integrate-client`,
-		`${chalk.cyan("GitHub")}  https://github.com/better-auth/agent-auth`,
+		`${chalk.cyan("GitHub")}  https://github.com/shinauth/agent-auth`,
 	]);
 
 	console.log(
@@ -407,7 +407,7 @@ async function setupCli() {
 
 	showNextSteps([
 		`${chalk.cyan("Docs")}    ${PROTOCOL_URL}/docs/integrate-client`,
-		`${chalk.cyan("GitHub")}  https://github.com/better-auth/agent-auth`,
+		`${chalk.cyan("GitHub")}  https://github.com/shinauth/agent-auth`,
 	]);
 
 	console.log(
@@ -539,7 +539,7 @@ function generateServerCode(
 		: "";
 
 	if (source === "openapi" && sourceUrl) {
-		return `import { betterAuth } from "better-auth";
+		return `import { betterAuth } from "shinauth";
 import { agentAuth } from "${AGENT_PLUGIN_PKG}";
 import { createFromOpenAPI } from "${AGENT_PLUGIN_PKG}/openapi";
 
@@ -561,7 +561,7 @@ export const auth = betterAuth({
 	}
 
 	if (source === "mcp" && sourceUrl) {
-		return `import { betterAuth } from "better-auth";
+		return `import { betterAuth } from "shinauth";
 import { agentAuth } from "${AGENT_PLUGIN_PKG}";
 
 export const auth = betterAuth({
@@ -575,7 +575,7 @@ export const auth = betterAuth({
 `;
 	}
 
-	return `import { betterAuth } from "better-auth";
+	return `import { betterAuth } from "shinauth";
 import { agentAuth } from "${AGENT_PLUGIN_PKG}";
 
 export const auth = betterAuth({
@@ -611,15 +611,15 @@ export const auth = betterAuth({
 function showServerOutro() {
 	console.log(chalk.bold.white("\nNext steps:\n"));
 	console.log(chalk.white("  1. Install dependencies:"));
-	console.log(chalk.cyan(`     npm install better-auth ${AGENT_PLUGIN_PKG}\n`));
+	console.log(chalk.cyan(`     npm install shinauth ${AGENT_PLUGIN_PKG}\n`));
 	console.log(chalk.white("  2. Configure your database:"));
 	console.log(
 		chalk.gray(
-			"     Better Auth needs a database to store agents, hosts, and grants.",
+			"     Shinauth needs a database to store agents, hosts, and grants.",
 		),
 	);
 	console.log(
-		chalk.cyan("     https://www.better-auth.com/docs/concepts/database\n"),
+		chalk.cyan("     https://www.shinauth.com/docs/concepts/database\n"),
 	);
 	console.log(chalk.white("  3. Run database migrations:"));
 	console.log(chalk.cyan("     npx auth migrate\n"));
@@ -632,7 +632,7 @@ function showServerOutro() {
 	);
 	console.log(`  ${chalk.cyan("Docs")}    ${PROTOCOL_URL}/docs/build-server`);
 	console.log(
-		`  ${chalk.cyan("GitHub")}  https://github.com/better-auth/agent-auth`,
+		`  ${chalk.cyan("GitHub")}  https://github.com/shinauth/agent-auth`,
 	);
 
 	console.log(

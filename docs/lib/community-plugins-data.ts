@@ -11,8 +11,8 @@ export interface CommunityPlugin {
 
 export const communityPlugins: CommunityPlugin[] = [
 	{
-		name: "@dymo-api/better-auth",
-		url: "https://github.com/TPEOficial/dymo-api-better-auth",
+		name: "@dymo-api/shinauth",
+		url: "https://github.com/TPEOficial/dymo-api-shinauth",
 		description:
 			"Sign Up Protection and validation of disposable emails (the world's largest database with nearly 14 million entries).",
 		author: {
@@ -33,8 +33,8 @@ export const communityPlugins: CommunityPlugin[] = [
 		},
 	},
 	{
-		name: "validation-better-auth",
-		url: "https://github.com/Daanish2003/validation-better-auth",
+		name: "validation-shinauth",
+		url: "https://github.com/Daanish2003/validation-shinauth",
 		description:
 			"Validate API request using any validation library (e.g., Zod, Yup)",
 		author: {
@@ -44,10 +44,10 @@ export const communityPlugins: CommunityPlugin[] = [
 		},
 	},
 	{
-		name: "better-auth-localization",
-		url: "https://github.com/marcellosso/better-auth-localization",
+		name: "shinauth-localization",
+		url: "https://github.com/marcellosso/shinauth-localization",
 		description:
-			"Localize and customize better-auth messages with easy translation and message override support.",
+			"Localize and customize shinauth messages with easy translation and message override support.",
 		author: {
 			name: "marcellosso",
 			github: "marcellosso",
@@ -55,9 +55,9 @@ export const communityPlugins: CommunityPlugin[] = [
 		},
 	},
 	{
-		name: "better-auth-attio-plugin",
-		url: "https://github.com/tobimori/better-auth-attio-plugin",
-		description: "Sync your products Better Auth users & workspaces with Attio",
+		name: "shinauth-attio-plugin",
+		url: "https://github.com/tobimori/shinauth-attio-plugin",
+		description: "Sync your products Shinauth users & workspaces with Attio",
 		author: {
 			name: "tobimori",
 			github: "tobimori",
@@ -65,8 +65,8 @@ export const communityPlugins: CommunityPlugin[] = [
 		},
 	},
 	{
-		name: "better-auth-cloudflare",
-		url: "https://github.com/zpg6/better-auth-cloudflare",
+		name: "shinauth-cloudflare",
+		url: "https://github.com/zpg6/shinauth-cloudflare",
 		description:
 			"Seamlessly integrate with Cloudflare Workers, D1, Hyperdrive, KV, R2, and geolocation services. Includes CLI for project generation, automated resource provisioning on Cloudflare, and database migrations. Supports Next.js, Hono, and more!",
 		author: {
@@ -76,10 +76,10 @@ export const communityPlugins: CommunityPlugin[] = [
 		},
 	},
 	{
-		name: "expo-better-auth-passkey",
-		url: "https://github.com/kevcube/expo-better-auth-passkey",
+		name: "expo-shinauth-passkey",
+		url: "https://github.com/kevcube/expo-shinauth-passkey",
 		description:
-			"Better-auth client plugin for using passkeys on mobile platforms in expo apps. Supports iOS, macOS, Android (and web!) by wrapping the existing better-auth passkey client plugin.",
+			"Better-auth client plugin for using passkeys on mobile platforms in expo apps. Supports iOS, macOS, Android (and web!) by wrapping the existing shinauth passkey client plugin.",
 		author: {
 			name: "kevcube",
 			github: "kevcube",
@@ -87,9 +87,9 @@ export const communityPlugins: CommunityPlugin[] = [
 		},
 	},
 	{
-		name: "better-auth-credentials-plugin",
-		url: "https://github.com/erickweil/better-auth-credentials-plugin",
-		description: "LDAP authentication plugin for Better Auth.",
+		name: "shinauth-credentials-plugin",
+		url: "https://github.com/erickweil/shinauth-credentials-plugin",
+		description: "LDAP authentication plugin for Shinauth.",
 		author: {
 			name: "erickweil",
 			github: "erickweil",
@@ -97,8 +97,8 @@ export const communityPlugins: CommunityPlugin[] = [
 		},
 	},
 	{
-		name: "better-auth-opaque",
-		url: "https://github.com/TheUntraceable/better-auth-opaque",
+		name: "shinauth-opaque",
+		url: "https://github.com/TheUntraceable/shinauth-opaque",
 		description:
 			"Provides database-breach resistant authentication using the zero-knowledge OPAQUE protocol.",
 		author: {
@@ -108,10 +108,10 @@ export const communityPlugins: CommunityPlugin[] = [
 		},
 	},
 	{
-		name: "better-auth-firebase-auth",
-		url: "https://github.com/yultyyev/better-auth-firebase-auth",
+		name: "shinauth-firebase-auth",
+		url: "https://github.com/yultyyev/shinauth-firebase-auth",
 		description:
-			"Firebase Authentication plugin for Better Auth with built-in email service, Google Sign-In, and password reset functionality.",
+			"Firebase Authentication plugin for Shinauth with built-in email service, Google Sign-In, and password reset functionality.",
 		author: {
 			name: "yultyyev",
 			github: "yultyyev",
@@ -119,8 +119,8 @@ export const communityPlugins: CommunityPlugin[] = [
 		},
 	},
 	{
-		name: "better-auth-university",
-		url: "https://github.com/LuyxLLC/better-auth-university",
+		name: "shinauth-university",
+		url: "https://github.com/LuyxLLC/shinauth-university",
 		description:
 			"University plugin for allowing only specific email domains to be passed through. Includes a University model with name and domain.",
 		author: {
@@ -130,10 +130,10 @@ export const communityPlugins: CommunityPlugin[] = [
 		},
 	},
 	{
-		name: "@alexasomba/better-auth-paystack",
-		url: "https://github.com/alexasomba/better-auth-paystack",
+		name: "@alexasomba/shinauth-paystack",
+		url: "https://github.com/alexasomba/shinauth-paystack",
 		description:
-			"Paystack plugin for Better Auth — integrates Paystack transactions, webhooks, and subscription flows.",
+			"Paystack plugin for Shinauth — integrates Paystack transactions, webhooks, and subscription flows.",
 		author: {
 			name: "alexasomba",
 			github: "alexasomba",
@@ -141,8 +141,8 @@ export const communityPlugins: CommunityPlugin[] = [
 		},
 	},
 	{
-		name: "better-auth-lark",
-		url: "https://github.com/uselark/better-auth-lark",
+		name: "shinauth-lark",
+		url: "https://github.com/uselark/shinauth-lark",
 		description:
 			"Lark billing plugin that automatically creates customers and subscribes them to free plans on signup.",
 		author: {
@@ -152,8 +152,8 @@ export const communityPlugins: CommunityPlugin[] = [
 		},
 	},
 	{
-		name: "stargate-better-auth",
-		url: "https://github.com/neiii/stargate-better-auth",
+		name: "stargate-shinauth",
+		url: "https://github.com/neiii/stargate-shinauth",
 		description:
 			"Gate access to resources based on whether the user has starred a repository",
 		author: {
@@ -163,8 +163,8 @@ export const communityPlugins: CommunityPlugin[] = [
 		},
 	},
 	{
-		name: "@sequenzy/better-auth",
-		url: "https://github.com/Sequenzy/sequenzy-better-auth",
+		name: "@sequenzy/shinauth",
+		url: "https://github.com/Sequenzy/sequenzy-shinauth",
 		description:
 			"Automatically add users to Sequenzy mailing lists on signup for seamless email marketing integration.",
 		author: {
@@ -174,9 +174,9 @@ export const communityPlugins: CommunityPlugin[] = [
 		},
 	},
 	{
-		name: "better-auth-nostr",
-		url: "https://github.com/leon-wbr/better-auth-nostr",
-		description: "Nostr authentication plugin for Better Auth (NIP-98).",
+		name: "shinauth-nostr",
+		url: "https://github.com/leon-wbr/shinauth-nostr",
+		description: "Nostr authentication plugin for Shinauth (NIP-98).",
 		author: {
 			name: "leon-wbr",
 			github: "leon-wbr",
@@ -184,8 +184,8 @@ export const communityPlugins: CommunityPlugin[] = [
 		},
 	},
 	{
-		name: "@ramiras123/better-auth-strapi",
-		url: "https://github.com/Ramiras123/better-auth-strapi",
+		name: "@ramiras123/shinauth-strapi",
+		url: "https://github.com/Ramiras123/shinauth-strapi",
 		description: "Plugin for authorization via strapi",
 		author: {
 			name: "Ramiras123",
@@ -194,10 +194,10 @@ export const communityPlugins: CommunityPlugin[] = [
 		},
 	},
 	{
-		name: "better-auth-razorpay",
-		url: "https://github.com/iamjasonkendrick/better-auth-razorpay",
+		name: "shinauth-razorpay",
+		url: "https://github.com/iamjasonkendrick/shinauth-razorpay",
 		description:
-			"Razorpay payment plugin for Better Auth — integrates Razorpay payments, webhooks, and subscription flows.",
+			"Razorpay payment plugin for Shinauth — integrates Razorpay payments, webhooks, and subscription flows.",
 		author: {
 			name: "iamjasonkendrick",
 			github: "iamjasonkendrick",
@@ -205,10 +205,10 @@ export const communityPlugins: CommunityPlugin[] = [
 		},
 	},
 	{
-		name: "better-auth-payu",
-		url: "https://github.com/iamjasonkendrick/better-auth-payu",
+		name: "shinauth-payu",
+		url: "https://github.com/iamjasonkendrick/shinauth-payu",
 		description:
-			"PayU payment plugin for Better Auth — integrates PayU payments, webhooks, and subscription flows.",
+			"PayU payment plugin for Shinauth — integrates PayU payments, webhooks, and subscription flows.",
 		author: {
 			name: "iamjasonkendrick",
 			github: "iamjasonkendrick",
@@ -227,10 +227,10 @@ export const communityPlugins: CommunityPlugin[] = [
 		},
 	},
 	{
-		name: "better-auth-usos",
-		url: "https://github.com/qamarq/better-auth-usos",
+		name: "shinauth-usos",
+		url: "https://github.com/qamarq/shinauth-usos",
 		description:
-			"USOS plugin for Better Auth - allows students to authenticate using their university credentials via the USOS API. Using oauth 1a.",
+			"USOS plugin for Shinauth - allows students to authenticate using their university credentials via the USOS API. Using oauth 1a.",
 		author: {
 			name: "qamarq",
 			github: "qamarq",
@@ -238,10 +238,10 @@ export const communityPlugins: CommunityPlugin[] = [
 		},
 	},
 	{
-		name: "better-auth-devtools",
-		url: "https://github.com/C-W-D-Harshit/better-auth-devtools",
+		name: "shinauth-devtools",
+		url: "https://github.com/C-W-D-Harshit/shinauth-devtools",
 		description:
-			"A devtools panel for Better Auth that lets you create managed test users from templates, switch between sessions instantly, inspect live session data, and edit fields like roles on the fly. All from a floating React UI that only runs in development.",
+			"A devtools panel for Shinauth that lets you create managed test users from templates, switch between sessions instantly, inspect live session data, and edit fields like roles on the fly. All from a floating React UI that only runs in development.",
 		author: {
 			name: "C-W-D-Harshit",
 			github: "C-W-D-Harshit",
@@ -249,10 +249,10 @@ export const communityPlugins: CommunityPlugin[] = [
 		},
 	},
 	{
-		name: "better-auth-audit-logs",
-		url: "https://github.com/ejirocodes/better-auth-audit-logs",
+		name: "shinauth-audit-logs",
+		url: "https://github.com/ejirocodes/shinauth-audit-logs",
 		description:
-			"Audit log plugin for Better Auth. Auto-captures auth events with severity inference, PII redaction, custom storage backends, and retention policies.",
+			"Audit log plugin for Shinauth. Auto-captures auth events with severity inference, PII redaction, custom storage backends, and retention policies.",
 		author: {
 			name: "ejirocodes",
 			github: "ejirocodes",
@@ -271,8 +271,8 @@ export const communityPlugins: CommunityPlugin[] = [
 		},
 	},
 	{
-		name: "ton-better-auth",
-		url: "https://github.com/mhbdev/ton-better-auth",
+		name: "ton-shinauth",
+		url: "https://github.com/mhbdev/ton-shinauth",
 		description: "Sign in with Ton Connect",
 		author: {
 			name: "mhbdev",
@@ -281,8 +281,8 @@ export const communityPlugins: CommunityPlugin[] = [
 		},
 	},
 	{
-		name: "@dbsc-toolkit/better-auth",
-		url: "https://www.npmjs.com/package/@dbsc-toolkit/better-auth",
+		name: "@dbsc-toolkit/shinauth",
+		url: "https://www.npmjs.com/package/@dbsc-toolkit/shinauth",
 		description:
 			"Device Bound Session Credentials (DBSC) — binds sessions to a device-resident key so a stolen cookie can't be replayed from another machine. Native binding via TPM or Secure Enclave on Chromium 145+, with a Web Crypto polyfill for Firefox, Safari, and older Chromium.",
 		author: {

@@ -3,18 +3,18 @@
  * (`resolveAccessTokenClaims`) and the introspection authorization model
  * (RFC 7662 §2.1/§4, issue #8267).
  *
- * Each `describe` boots its own in-memory better-auth instance and runs a real
+ * Each `describe` boots its own in-memory shinauth instance and runs a real
  * authorization-code grant, then introspects the issued token. The opaque path
  * (`disableJwtPlugin: true`) exercises the introspection re-derive branch; the
  * JWT path covers the same `isIntrospectionAuthorized` gate at mint-aware
  * verification.
  */
-import type { AuthContext } from "@better-auth/core";
-import { createAuthClient } from "better-auth/client";
-import { generateRandomString } from "better-auth/crypto";
-import { createAuthorizationURL } from "better-auth/oauth2";
-import { jwt } from "better-auth/plugins/jwt";
-import { getTestInstance } from "better-auth/test";
+import type { AuthContext } from "@shinauth/core";
+import { createAuthClient } from "shinauth/client";
+import { generateRandomString } from "shinauth/crypto";
+import { createAuthorizationURL } from "shinauth/oauth2";
+import { jwt } from "shinauth/plugins/jwt";
+import { getTestInstance } from "shinauth/test";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { oauthProviderClient } from "./client";
 import { oauthProvider } from "./oauth";
@@ -277,7 +277,7 @@ describe("opaque introspection — per-resource customClaims parity", async () =
 });
 
 /**
- * @see https://github.com/better-auth/better-auth/issues/8267
+ * @see https://github.com/rlvtapp/shinauth/issues/8267
  */
 describe("introspection authorization (#8267)", async () => {
 	// RFC 7662 §2.1/§4: the introspecting client need not be the issuer. A
@@ -415,7 +415,7 @@ describe("opaque introspection — resource lifecycle", async () => {
 });
 
 /**
- * @see https://github.com/better-auth/better-auth/issues/8267
+ * @see https://github.com/rlvtapp/shinauth/issues/8267
  */
 describe("introspection authorization (#8267) — opaque tokens", async () => {
 	// The audience-scoped gate runs on the opaque re-derive path, not only the

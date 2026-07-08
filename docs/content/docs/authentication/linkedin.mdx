@@ -26,7 +26,7 @@ description: LinkedIn Provider
     To configure the provider, you need to import the provider and pass it to the `socialProviders` option of the auth instance.
 
     ```ts title="auth.ts"
-    import { betterAuth } from "better-auth"
+    import { betterAuth } from "shinauth"
 
     export const auth = betterAuth({
         socialProviders: {
@@ -51,7 +51,7 @@ description: LinkedIn Provider
     * `provider`: The provider to use. It should be set to `linkedin`.
 
     ```ts title="auth-client.ts"
-    import { createAuthClient } from "better-auth/client"
+    import { createAuthClient } from "shinauth/client"
     const authClient =  createAuthClient()
 
     const signIn = async () => {

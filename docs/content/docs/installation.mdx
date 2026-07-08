@@ -1,20 +1,20 @@
 ---
 title: Installation
-description: Learn how to configure Better Auth in your project.
+description: Learn how to configure Shinauth in your project.
 ---
 
 <Steps>
   <Step>
     ### Install the Package
 
-    Let's start by adding Better Auth to your project:
+    Let's start by adding Shinauth to your project:
 
     ```package-install
-    better-auth
+    shinauth
     ```
 
     <Callout type="info">
-      If you're using a separate client and server setup, make sure to install Better Auth in both parts of your project.
+      If you're using a separate client and server setup, make sure to install Shinauth in both parts of your project.
     </Callout>
   </Step>
 
@@ -45,7 +45,7 @@ description: Learn how to configure Better Auth in your project.
   </Step>
 
   <Step>
-    ### Create A Better Auth Instance
+    ### Create A Shinauth Instance
 
     Create a file named `auth.ts` in one of these locations:
 
@@ -55,10 +55,10 @@ description: Learn how to configure Better Auth in your project.
 
     You can also nest any of these folders under `src/`, `app/` or `server/` folder. (e.g. `src/lib/auth.ts`, `app/lib/auth.ts`).
 
-    And in this file, import Better Auth and create your auth instance. Make sure to export the auth instance with the variable name `auth` or as a `default` export.
+    And in this file, import Shinauth and create your auth instance. Make sure to export the auth instance with the variable name `auth` or as a `default` export.
 
     ```ts title="auth.ts"
-    import { betterAuth } from "better-auth";
+    import { betterAuth } from "shinauth";
 
     export const auth = betterAuth({
       //...
@@ -69,17 +69,17 @@ description: Learn how to configure Better Auth in your project.
   <Step>
     ### Configure Database
 
-    Better Auth requires a database to store user data.
-    You can easily configure Better Auth to use SQLite, PostgreSQL, or MySQL, and more!
+    Shinauth requires a database to store user data.
+    You can easily configure Shinauth to use SQLite, PostgreSQL, or MySQL, and more!
 
     <Callout>
-      You can also configure Better Auth to work in a stateless mode if you don't configure a database. See [Stateless Session Management](/docs/concepts/session-management#stateless-session-management) for more information. Note that most plugins will require a database.
+      You can also configure Shinauth to work in a stateless mode if you don't configure a database. See [Stateless Session Management](/docs/concepts/session-management#stateless-session-management) for more information. Note that most plugins will require a database.
     </Callout>
 
     <Tabs items={["sqlite", "postgres", "mysql"]}>
       <Tab value="sqlite">
         ```ts title="auth.ts"
-        import { betterAuth } from "better-auth";
+        import { betterAuth } from "shinauth";
         import Database from "better-sqlite3";
 
         export const auth = betterAuth({
@@ -90,7 +90,7 @@ description: Learn how to configure Better Auth in your project.
 
       <Tab value="postgres">
         ```ts title="auth.ts"
-        import { betterAuth } from "better-auth";
+        import { betterAuth } from "shinauth";
         import { Pool } from "pg";
 
         export const auth = betterAuth({
@@ -103,7 +103,7 @@ description: Learn how to configure Better Auth in your project.
 
       <Tab value="mysql">
         ```ts title="auth.ts"
-        import { betterAuth } from "better-auth";
+        import { betterAuth } from "shinauth";
         import { createPool } from "mysql2/promise";
 
         export const auth = betterAuth({
@@ -120,8 +120,8 @@ description: Learn how to configure Better Auth in your project.
     <Tabs items={["drizzle", "prisma", "mongodb"]}>
       <Tab value="drizzle">
         ```ts title="auth.ts"
-        import { betterAuth } from "better-auth";
-        import { drizzleAdapter } from "better-auth/adapters/drizzle";
+        import { betterAuth } from "shinauth";
+        import { drizzleAdapter } from "shinauth/adapters/drizzle";
         import { db } from "@/db"; // your drizzle instance
 
         export const auth = betterAuth({
@@ -134,8 +134,8 @@ description: Learn how to configure Better Auth in your project.
 
       <Tab value="prisma">
         ```ts title="auth.ts"
-        import { betterAuth } from "better-auth";
-        import { prismaAdapter } from "better-auth/adapters/prisma";
+        import { betterAuth } from "shinauth";
+        import { prismaAdapter } from "shinauth/adapters/prisma";
         // If your Prisma file is located elsewhere, you can change the path
         import { PrismaClient } from "@/generated/prisma/client";
 
@@ -150,8 +150,8 @@ description: Learn how to configure Better Auth in your project.
 
       <Tab value="mongodb">
         ```ts title="auth.ts"
-        import { betterAuth } from "better-auth";
-        import { mongodbAdapter } from "better-auth/adapters/mongodb";
+        import { betterAuth } from "shinauth";
+        import { mongodbAdapter } from "shinauth/adapters/mongodb";
         import { client } from "@/db"; // your mongodb client
 
         export const auth = betterAuth({
@@ -167,7 +167,7 @@ description: Learn how to configure Better Auth in your project.
 
     <Callout>
       If you’re using a database adapter (Drizzle, Prisma, MongoDB, or a community adapter),
-      consider importing `betterAuth` from `better-auth/minimal` instead of `better-auth` to reduce bundle size.
+      consider importing `betterAuth` from `shinauth/minimal` instead of `shinauth` to reduce bundle size.
       See [Bundle Size Optimization](/docs/guides/optimizing-for-performance#bundle-size-optimization) for more information.
     </Callout>
   </Step>
@@ -175,7 +175,7 @@ description: Learn how to configure Better Auth in your project.
   <Step>
     ### Create Database Tables
 
-    Better Auth includes a CLI tool to help manage the schema required by the library.
+    Shinauth includes a CLI tool to help manage the schema required by the library.
 
     * **Generate**: This command generates an ORM schema or SQL migration file.
 
@@ -203,10 +203,10 @@ description: Learn how to configure Better Auth in your project.
   <Step>
     ### Authentication Methods
 
-    Configure the authentication methods you want to use. Better Auth comes with built-in support for email/password, and social sign-on providers.
+    Configure the authentication methods you want to use. Shinauth comes with built-in support for email/password, and social sign-on providers.
 
     ```ts title="auth.ts"
-    import { betterAuth } from "better-auth";
+    import { betterAuth } from "shinauth";
 
     export const auth = betterAuth({
       //...other options // [!code highlight]
@@ -235,7 +235,7 @@ description: Learn how to configure Better Auth in your project.
     Create a new file or route in your framework's designated catch-all route handler. This route should handle requests for the path `/api/auth/*` (unless you've configured a different base path).
 
     <Callout>
-      Better Auth supports any backend framework with standard Request and Response
+      Shinauth supports any backend framework with standard Request and Response
       objects and offers helper functions for popular frameworks.
     </Callout>
 
@@ -243,7 +243,7 @@ description: Learn how to configure Better Auth in your project.
       <Tab value="next-js-app-router">
         ```ts title="/app/api/auth/[...all]/route.ts"
         import { auth } from "@/lib/auth"; // path to your auth file
-        import { toNextJsHandler } from "better-auth/next-js";
+        import { toNextJsHandler } from "shinauth/next-js";
 
         export const { POST, GET } = toNextJsHandler(auth);
         ```
@@ -252,7 +252,7 @@ description: Learn how to configure Better Auth in your project.
       <Tab value="next-js-pages-router">
         ```ts title="/pages/api/auth/[...all].ts"
         import { auth } from "@/lib/auth"; // path to your auth file
-        import { toNodeHandler } from "better-auth/node";
+        import { toNodeHandler } from "shinauth/node";
 
         // Disallow body parsing, we will parse it manually
         export const config = { api: { bodyParser: false } };
@@ -273,7 +273,7 @@ description: Learn how to configure Better Auth in your project.
       <Tab value="svelte-kit">
         ```ts title="hooks.server.ts"
         import { auth } from "$lib/auth"; // path to your auth file
-        import { svelteKitHandler } from "better-auth/svelte-kit";
+        import { svelteKitHandler } from "shinauth/svelte-kit";
         import { building } from '$app/environment'
 
         export async function handle({ event, resolve }) {
@@ -300,7 +300,7 @@ description: Learn how to configure Better Auth in your project.
       <Tab value="solid-start">
         ```ts title="/routes/api/auth/*all.ts"
         import { auth } from "~/lib/auth"; // path to your auth file
-        import { toSolidStartHandler } from "better-auth/solid-start";
+        import { toSolidStartHandler } from "shinauth/solid-start";
 
         export const { GET, POST } = toSolidStartHandler(auth);
         ```
@@ -341,7 +341,7 @@ description: Learn how to configure Better Auth in your project.
         ```
 
         <Callout type="info">
-          **Node.js AsyncLocalStorage Support**: Better Auth uses AsyncLocalStorage for async context tracking. To enable this in Cloudflare Workers, add the `nodejs_compat` flag to your `wrangler.toml`:
+          **Node.js AsyncLocalStorage Support**: Shinauth uses AsyncLocalStorage for async context tracking. To enable this in Cloudflare Workers, add the `nodejs_compat` flag to your `wrangler.toml`:
 
           ```toml title="wrangler.toml"
           compatibility_flags = ["nodejs_compat"]
@@ -374,7 +374,7 @@ description: Learn how to configure Better Auth in your project.
 
         ```ts title="server.ts"
         import express from "express";
-        import { toNodeHandler } from "better-auth/node";
+        import { toNodeHandler } from "shinauth/node";
         import { auth } from "./auth";
 
         const app = express();
@@ -382,12 +382,12 @@ description: Learn how to configure Better Auth in your project.
 
         app.all("/api/auth/*", toNodeHandler(auth));
 
-        // Mount express json middleware after Better Auth handler
-        // or only apply it to routes that don't interact with Better Auth
+        // Mount express json middleware after Shinauth handler
+        // or only apply it to routes that don't interact with Shinauth
         app.use(express.json());
 
         app.listen(port, () => {
-            console.log(`Better Auth app listening on port ${port}`);
+            console.log(`Shinauth app listening on port ${port}`);
         });
         ```
 
@@ -452,13 +452,13 @@ description: Learn how to configure Better Auth in your project.
         ```
 
         <Callout type="info">
-          When you call functions that need to set cookies (like `signInEmail` or `signUpEmail`), you'll need to handle cookie setting for TanStack Start. Better Auth provides a `tanstackStartCookies` plugin to automatically handle this for you.
+          When you call functions that need to set cookies (like `signInEmail` or `signUpEmail`), you'll need to handle cookie setting for TanStack Start. Shinauth provides a `tanstackStartCookies` plugin to automatically handle this for you.
 
           For React (TanStack Start with React):
 
           ```ts title="src/lib/auth.ts"
-          import { betterAuth } from "better-auth";
-          import { tanstackStartCookies } from "better-auth/tanstack-start";
+          import { betterAuth } from "shinauth";
+          import { tanstackStartCookies } from "shinauth/tanstack-start";
 
           export const auth = betterAuth({
               //...your config
@@ -469,8 +469,8 @@ description: Learn how to configure Better Auth in your project.
           For Solid.js (TanStack Start with Solid):
 
           ```ts title="src/lib/auth.ts"
-          import { betterAuth } from "better-auth";
-          import { tanstackStartCookies } from "better-auth/tanstack-start/solid";
+          import { betterAuth } from "shinauth";
+          import { tanstackStartCookies } from "shinauth/tanstack-start/solid";
 
           export const auth = betterAuth({
               //...your config
@@ -496,9 +496,9 @@ description: Learn how to configure Better Auth in your project.
   <Step>
     ### Create Client Instance
 
-    The client-side library helps you interact with the auth server. Better Auth comes with a client for all the popular web frameworks, including vanilla JavaScript.
+    The client-side library helps you interact with the auth server. Shinauth comes with a client for all the popular web frameworks, including vanilla JavaScript.
 
-    1. Import `createAuthClient` from the package for your framework (e.g., "better-auth/react" for React).
+    1. Import `createAuthClient` from the package for your framework (e.g., "shinauth/react" for React).
     2. Call the function to create your client.
     3. Pass the base URL of your auth server. (If the auth server is running on the same domain as your client, you can skip this step.)
 
@@ -515,7 +515,7 @@ description: Learn how to configure Better Auth in your project.
     >
       <Tab value="vanilla">
         ```ts title="lib/auth-client.ts"
-        import { createAuthClient } from "better-auth/client"
+        import { createAuthClient } from "shinauth/client"
         export const authClient = createAuthClient({
             /** The base URL of the server (optional if you're using the same domain) */ // [!code highlight]
             baseURL: "http://localhost:3000" // [!code highlight]
@@ -525,7 +525,7 @@ description: Learn how to configure Better Auth in your project.
 
       <Tab value="react" title="lib/auth-client.ts">
         ```ts title="lib/auth-client.ts"
-        import { createAuthClient } from "better-auth/react"
+        import { createAuthClient } from "shinauth/react"
         export const authClient = createAuthClient({
             /** The base URL of the server (optional if you're using the same domain) */ // [!code highlight]
             baseURL: "http://localhost:3000" // [!code highlight]
@@ -535,7 +535,7 @@ description: Learn how to configure Better Auth in your project.
 
       <Tab value="vue" title="lib/auth-client.ts">
         ```ts title="lib/auth-client.ts"
-        import { createAuthClient } from "better-auth/vue"
+        import { createAuthClient } from "shinauth/vue"
         export const authClient = createAuthClient({
             /** The base URL of the server (optional if you're using the same domain) */ // [!code highlight]
             baseURL: "http://localhost:3000" // [!code highlight]
@@ -545,7 +545,7 @@ description: Learn how to configure Better Auth in your project.
 
       <Tab value="svelte" title="lib/auth-client.ts">
         ```ts title="lib/auth-client.ts"
-        import { createAuthClient } from "better-auth/svelte"
+        import { createAuthClient } from "shinauth/svelte"
         export const authClient = createAuthClient({
             /** The base URL of the server (optional if you're using the same domain) */ // [!code highlight]
             baseURL: "http://localhost:3000" // [!code highlight]
@@ -555,7 +555,7 @@ description: Learn how to configure Better Auth in your project.
 
       <Tab value="solid" title="lib/auth-client.ts">
         ```ts title="lib/auth-client.ts"
-        import { createAuthClient } from "better-auth/solid"
+        import { createAuthClient } from "shinauth/solid"
         export const authClient = createAuthClient({
             /** The base URL of the server (optional if you're using the same domain) */ // [!code highlight]
             baseURL: "http://localhost:3000" // [!code highlight]
@@ -576,6 +576,6 @@ description: Learn how to configure Better Auth in your project.
   <Step>
     ### 🎉 That's it!
 
-    That's it! You're now ready to use better-auth in your application. Continue to [basic usage](/docs/basic-usage) to learn how to use the auth instance to sign in users.
+    That's it! You're now ready to use shinauth in your application. Continue to [basic usage](/docs/basic-usage) to learn how to use the auth instance to sign in users.
   </Step>
 </Steps>

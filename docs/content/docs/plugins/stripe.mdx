@@ -1,9 +1,9 @@
 ---
 title: Stripe
-description: Stripe plugin for Better Auth to manage subscriptions and payments.
+description: Stripe plugin for Shinauth to manage subscriptions and payments.
 ---
 
-The Stripe plugin integrates Stripe's payment and subscription functionality with Better Auth. Since payment and authentication are often tightly coupled, this plugin simplifies the integration of Stripe into your application, handling customer creation, subscription management, and webhook processing.
+The Stripe plugin integrates Stripe's payment and subscription functionality with Shinauth. Since payment and authentication are often tightly coupled, this plugin simplifies the integration of Stripe into your application, handling customer creation, subscription management, and webhook processing.
 
 ## Features
 
@@ -26,7 +26,7 @@ The Stripe plugin integrates Stripe's payment and subscription functionality wit
     First, install the plugin:
 
     ```package-install
-    @better-auth/stripe
+    @shinauth/stripe
     ```
 
     <Callout>
@@ -48,8 +48,8 @@ The Stripe plugin integrates Stripe's payment and subscription functionality wit
     ### Add the plugin to your auth config
 
     ```ts title="auth.ts"
-    import { betterAuth } from "better-auth"
-    import { stripe } from "@better-auth/stripe"
+    import { betterAuth } from "shinauth"
+    import { stripe } from "@shinauth/stripe"
     import Stripe from "stripe"
 
     const stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -77,8 +77,8 @@ The Stripe plugin integrates Stripe's payment and subscription functionality wit
     ### Add the client plugin
 
     ```ts title="auth-client.ts"
-    import { createAuthClient } from "better-auth/client"
-    import { stripeClient } from "@better-auth/stripe/client"
+    import { createAuthClient } from "shinauth/client"
+    import { stripeClient } from "@shinauth/stripe/client"
 
     export const authClient = createAuthClient({
         // ... your existing config
@@ -983,8 +983,8 @@ await stripeClient.customers.update(organization.stripeCustomerId, {
 Organizations with active subscriptions are blocked from deletion automatically, but users are not. To mirror the same behavior on user deletion, throw from the [`beforeDelete`](/docs/concepts/users-accounts#callbacks) callback when a subscription is active:
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
-import { APIError } from "better-auth/api";
+import { betterAuth } from "shinauth";
+import { APIError } from "shinauth/api";
 
 export const auth = betterAuth({
     user: {

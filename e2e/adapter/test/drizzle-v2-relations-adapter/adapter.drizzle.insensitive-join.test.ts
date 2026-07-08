@@ -3,7 +3,7 @@
  * falling back to the non-relational path. Under `experimental.joins` that
  * returned empty joins, so insensitive conditions are now routed through `RAW`.
  */
-import { drizzleAdapter } from "@better-auth/drizzle-adapter/relations-v2";
+import { drizzleAdapter } from "@shinauth/drizzle-adapter/relations-v2";
 import Database from "better-sqlite3";
 import { defineRelationsPart } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/better-sqlite3";

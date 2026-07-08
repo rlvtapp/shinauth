@@ -1,14 +1,14 @@
-import { createAuthClient } from "better-auth/client";
-import { generateRandomString } from "better-auth/crypto";
+import { createAuthClient } from "shinauth/client";
+import { generateRandomString } from "shinauth/crypto";
 import {
 	authorizationCodeRequest,
 	createAuthorizationURL,
 	deriveDpopAth,
 	deriveDpopJkt,
 	refreshAccessTokenRequest,
-} from "better-auth/oauth2";
-import { jwt } from "better-auth/plugins/jwt";
-import { getTestInstance } from "better-auth/test";
+} from "shinauth/oauth2";
+import { jwt } from "shinauth/plugins/jwt";
+import { getTestInstance } from "shinauth/test";
 import type { APIError } from "better-call";
 import type { JWK } from "jose";
 import { exportJWK, generateKeyPair, SignJWT } from "jose";
@@ -241,7 +241,7 @@ describe("oauth userinfo", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/issues/9949
+	 * @see https://github.com/rlvtapp/shinauth/issues/9949
 	 */
 	it("should return an invalid_token challenge for an unknown bearer token", async () => {
 		let wwwAuthenticate = "";
@@ -396,7 +396,7 @@ describe("oauth userinfo", async () => {
 	 * Programmatic callers have no `ctx.request`, so userinfo must resolve the
 	 * bearer token from `ctx.headers` for both transports.
 	 *
-	 * @see https://github.com/better-auth/better-auth/issues/8806
+	 * @see https://github.com/rlvtapp/shinauth/issues/8806
 	 */
 	it("should return userinfo via auth.api with headers only (no Request)", async () => {
 		const tokens = await getTokens();

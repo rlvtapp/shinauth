@@ -1,1 +1,1 @@
-export { NodeSqliteDialect } from "@better-auth/kysely-adapter/node-sqlite-dialect";
+export { NodeSqliteDialect } from "@shinauth/kysely-adapter/node-sqlite-dialect";

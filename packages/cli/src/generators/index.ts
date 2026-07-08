@@ -1,5 +1,5 @@
-import type { BetterAuthOptions } from "@better-auth/core";
-import type { DBAdapter } from "@better-auth/core/db/adapter";
+import type { BetterAuthOptions } from "@shinauth/core";
+import type { DBAdapter } from "@shinauth/core/db/adapter";
 import { generateDrizzleSchema } from "./drizzle";
 import { generateKyselySchema } from "./kysely";
 import { generatePrismaSchema } from "./prisma";

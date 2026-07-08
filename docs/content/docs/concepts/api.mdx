@@ -1,18 +1,18 @@
 ---
 title: API
-description: Learn how to call Better Auth API endpoints on the server, pass body, headers, and query parameters, retrieve response headers, and handle errors.
+description: Learn how to call Shinauth API endpoints on the server, pass body, headers, and query parameters, retrieve response headers, and handle errors.
 ---
 
-When you create a new Better Auth instance, it provides you with an `api` object. This object exposes every endpoint that exists in your Better Auth instance. And you can use this to interact with Better Auth server side.
+When you create a new Shinauth instance, it provides you with an `api` object. This object exposes every endpoint that exists in your Shinauth instance. And you can use this to interact with Shinauth server side.
 
-Any endpoint added to Better Auth, whether from plugins or the core, will be accessible through the `api` object.
+Any endpoint added to Shinauth, whether from plugins or the core, will be accessible through the `api` object.
 
 ## Calling API Endpoints on the Server
 
 To call an API endpoint on the server, import your `auth` instance and call the endpoint using the `api` object.
 
 ```ts title="server.ts"
-import { betterAuth } from "better-auth";
+import { betterAuth } from "shinauth";
 import { headers } from "next/headers";
 
 export const auth = betterAuth({
@@ -52,7 +52,7 @@ await auth.api.verifyEmail({
 ```
 
 <Callout>
-  Better Auth API endpoints are built on top of [better-call](https://github.com/bekacru/better-call), a tiny web framework that lets you call REST API endpoints as if they were regular functions and allows us to easily infer client types from the server.
+  Shinauth API endpoints are built on top of [better-call](https://github.com/bekacru/better-call), a tiny web framework that lets you call REST API endpoints as if they were regular functions and allows us to easily infer client types from the server.
 </Callout>
 
 ### Getting `headers` and `Response` Object
@@ -107,7 +107,7 @@ When you call an API endpoint on the server, it will throw an error if the reque
 
 ```ts title="server.ts"
 import { auth } from "@/lib/auth"
-import { APIError, isAPIError } from "better-auth/api";
+import { APIError, isAPIError } from "shinauth/api";
 
 try {
     await auth.api.signInEmail({

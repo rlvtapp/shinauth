@@ -1,6 +1,6 @@
 ---
 title: Autumn Billing
-description: Better Auth Plugin for Autumn Billing
+description: Shinauth Plugin for Autumn Billing
 ---
 
 import { HomeIcon } from "lucide-react";
@@ -60,7 +60,7 @@ import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
     <Tabs items={["User", "Organization", "User & Organization", "Custom"]}>
       <Tab value="User">
         ```ts title="auth.ts"
-        import { autumn } from "autumn-js/better-auth";
+        import { autumn } from "autumn-js/shinauth";
 
         export const auth = betterAuth({
           // ...
@@ -71,8 +71,8 @@ import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 
       <Tab value="Organization">
         ```ts title="auth.ts"
-        import { autumn } from "autumn-js/better-auth";
-        import { organization } from "better-auth/plugins";
+        import { autumn } from "autumn-js/shinauth";
+        import { organization } from "shinauth/plugins";
 
         export const auth = betterAuth({
           // ...
@@ -83,8 +83,8 @@ import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 
       <Tab value="User & Organization">
         ```ts title="auth.ts"
-        import { autumn } from "autumn-js/better-auth";
-        import { organization } from "better-auth/plugins";
+        import { autumn } from "autumn-js/shinauth";
+        import { organization } from "shinauth/plugins";
 
         export const auth = betterAuth({
           // ...
@@ -98,8 +98,8 @@ import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 
       <Tab value="Custom">
         ```ts title="auth.ts"
-        import { autumn } from "autumn-js/better-auth";
-        import { organization } from "better-auth/plugins";
+        import { autumn } from "autumn-js/shinauth";
+        import { organization } from "shinauth/plugins";
 
         export const auth = betterAuth({
           // ...

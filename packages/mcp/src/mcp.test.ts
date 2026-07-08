@@ -1,12 +1,12 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { logger } from "@better-auth/core/env";
-import type { OAuthClient } from "@better-auth/oauth-provider";
+import { logger } from "@shinauth/core/env";
+import type { OAuthClient } from "@shinauth/oauth-provider";
 import {
 	oauthProvider,
 	raiseResourceServerChallenge,
-} from "@better-auth/oauth-provider";
-import { oauthProviderClient } from "@better-auth/oauth-provider/client";
-import { oauthProviderResourceClient } from "@better-auth/oauth-provider/resource-client";
+} from "@shinauth/oauth-provider";
+import { oauthProviderClient } from "@shinauth/oauth-provider/client";
+import { oauthProviderResourceClient } from "@shinauth/oauth-provider/resource-client";
 import type { OAuthClientProvider } from "@modelcontextprotocol/sdk/client/auth.js";
 import { UnauthorizedError } from "@modelcontextprotocol/sdk/client/auth.js";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
@@ -16,11 +16,11 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import type { OAuthTokens } from "@modelcontextprotocol/sdk/shared/auth.js";
 import type { Implementation } from "@modelcontextprotocol/sdk/types.js";
-import { createAuthClient } from "better-auth/client";
-import { generateRandomString } from "better-auth/crypto";
-import { toNodeHandler } from "better-auth/node";
-import { jwt } from "better-auth/plugins/jwt";
-import { getTestInstance } from "better-auth/test";
+import { createAuthClient } from "shinauth/client";
+import { generateRandomString } from "shinauth/crypto";
+import { toNodeHandler } from "shinauth/node";
+import { jwt } from "shinauth/plugins/jwt";
+import { getTestInstance } from "shinauth/test";
 import { APIError } from "better-call";
 import type { JWTPayload } from "jose";
 import { decodeJwt } from "jose";
@@ -39,7 +39,7 @@ describe("mcp", async () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/pull/9992
+	 * @see https://github.com/rlvtapp/shinauth/pull/9992
 	 */
 	it.for([
 		{

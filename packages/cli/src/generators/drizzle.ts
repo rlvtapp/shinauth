@@ -1,9 +1,9 @@
 import { existsSync } from "node:fs";
-import { toSnakeCase } from "@better-auth/core/utils/string";
-import { initGetFieldName, initGetModelName } from "better-auth/adapters";
-import type { BetterAuthDBSchema, DBFieldAttribute } from "better-auth/db";
-import { getAuthTables } from "better-auth/db";
-import type { BetterAuthOptions } from "better-auth/types";
+import { toSnakeCase } from "@shinauth/core/utils/string";
+import { initGetFieldName, initGetModelName } from "shinauth/adapters";
+import type { BetterAuthDBSchema, DBFieldAttribute } from "shinauth/db";
+import { getAuthTables } from "shinauth/db";
+import type { BetterAuthOptions } from "shinauth/types";
 import prettier from "prettier";
 import type { SchemaGenerator } from "./types";
 
@@ -42,7 +42,7 @@ export const generateDrizzleSchema: SchemaGenerator = async ({
 
 	if (!databaseType) {
 		throw new Error(
-			`Database provider type is undefined during Drizzle schema generation. Please define a \`provider\` in the Drizzle adapter config. Read more at https://better-auth.com/docs/adapters/drizzle`,
+			`Database provider type is undefined during Drizzle schema generation. Please define a \`provider\` in the Drizzle adapter config. Read more at https://shinauth.com/docs/adapters/drizzle`,
 		);
 	}
 	const fileExist = existsSync(filePath);
@@ -104,7 +104,7 @@ export const generateDrizzleSchema: SchemaGenerator = async ({
 			// Not possible to reach, it's here to make typescript happy
 			if (!databaseType) {
 				throw new Error(
-					`Database provider type is undefined during Drizzle schema generation. Please define a \`provider\` in the Drizzle adapter config. Read more at https://better-auth.com/docs/adapters/drizzle`,
+					`Database provider type is undefined during Drizzle schema generation. Please define a \`provider\` in the Drizzle adapter config. Read more at https://shinauth.com/docs/adapters/drizzle`,
 				);
 			}
 			name = convertToSnakeCase(name, adapter.options?.camelCase);

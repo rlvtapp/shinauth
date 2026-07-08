@@ -1,6 +1,6 @@
-# Better Auth Expo Plugin
+# Shinauth Expo Plugin
 
-This plugin integrates Better Auth with Expo, allowing you to easily add
+This plugin integrates Shinauth with Expo, allowing you to easily add
 authentication to your Expo (React Native) applications.
 It supports both Expo native and web apps.
 
@@ -10,16 +10,16 @@ To get started, install the necessary packages:
 
 ```bash
 # Using npm
-npm install better-auth @better-auth/expo
+npm install shinauth @shinauth/expo
 
 # Using yarn
-yarn add better-auth @better-auth/expo
+yarn add shinauth @shinauth/expo
 
 # Using pnpm
-pnpm add better-auth @better-auth/expo
+pnpm add shinauth @shinauth/expo
 
 # Using bun
-bun add better-auth @better-auth/expo
+bun add shinauth @shinauth/expo
 ```
 
 You will also need to install `expo-secure-store` for secure session and cookie
@@ -37,21 +37,21 @@ bun add expo-secure-store
 
 ## Basic Usage
 
-### Configure the Better Auth Backend
+### Configure the Shinauth Backend
 
-Ensure you have a Better Auth backend set up.
+Ensure you have a Shinauth backend set up.
 You can follow the main [Installation Guide][].
 
-Then, add the Expo plugin to your Better Auth server configuration (e.g., in
+Then, add the Expo plugin to your Shinauth server configuration (e.g., in
 your `auth.ts` or `lib/auth.ts` file):
 
 ```typescript
 // lib/auth.ts
-import { betterAuth } from 'better-auth';
-import { expo } from '@better-auth/expo'; // Import the server plugin
+import { betterAuth } from 'shinauth';
+import { expo } from '@shinauth/expo'; // Import the server plugin
 
 export const auth = betterAuth({
-  // ...your other Better Auth options
+  // ...your other Shinauth options
   baseURL: 'http://localhost:8081', // The base URL of your application server where the routes are mounted.
   plugins: [expo()], // Add the Expo server plugin
   emailAndPassword: {
@@ -62,18 +62,18 @@ export const auth = betterAuth({
 });
 ```
 
-### Initialize the Better Auth Client in Expo
+### Initialize the Shinauth Client in Expo
 
 In your Expo app, initialize the client (e.g., in `lib/auth-client.ts`):
 
 ```typescript
 // lib/auth-client.ts
-import { createAuthClient } from 'better-auth/react';
-import { expoClient } from '@better-auth/expo/client'; // Import the client plugin
+import { createAuthClient } from 'shinauth/react';
+import { expoClient } from '@shinauth/expo/client'; // Import the client plugin
 import * as SecureStore from 'expo-secure-store';
 
 export const authClient = createAuthClient({
-  baseURL: 'http://localhost:8081', // Your Better Auth backend URL
+  baseURL: 'http://localhost:8081', // Your Shinauth backend URL
   plugins: [
     expoClient({
       scheme: 'myapp', // Your app's scheme (defined in app.json)
@@ -94,13 +94,13 @@ Make sure your app’s scheme (e.g., “myapp”) is defined in your `app.json`.
 For more detailed information and advanced configurations, please refer to the
 documentation:
 
-* **Main Better Auth Installation:** [Installation Guide][]
+* **Main Shinauth Installation:** [Installation Guide][]
 * **Expo Integration Guide:** [Expo Integration Guide][]
 
 ## License
 
 MIT
 
-[expo integration guide]: https://www.better-auth.com/docs/integrations/expo
+[expo integration guide]: https://www.shinauth.com/docs/integrations/expo
 
-[installation guide]: https://www.better-auth.com/docs/installation
+[installation guide]: https://www.shinauth.com/docs/installation

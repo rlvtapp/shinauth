@@ -1,21 +1,21 @@
-import type { BetterAuthOptions } from "@better-auth/core";
+import type { BetterAuthOptions } from "@shinauth/core";
 import type {
 	Account,
 	Session,
 	User,
 	Verification,
-} from "@better-auth/core/db";
-import { getAuthTables } from "@better-auth/core/db";
-import type { DBAdapter } from "@better-auth/core/db/adapter";
+} from "@shinauth/core/db";
+import { getAuthTables } from "@shinauth/core/db";
+import type { DBAdapter } from "@shinauth/core/db/adapter";
 import {
 	createAdapterFactory,
 	deepmerge,
 	initGetDefaultModelName,
-} from "@better-auth/core/db/adapter";
-import { TTY_COLORS } from "@better-auth/core/env";
-import { generateId } from "@better-auth/core/utils/id";
-import type { Auth } from "better-auth";
-import { betterAuth } from "better-auth";
+} from "@shinauth/core/db/adapter";
+import { TTY_COLORS } from "@shinauth/core/env";
+import { generateId } from "@shinauth/core/utils/id";
+import type { Auth } from "shinauth";
+import { betterAuth } from "shinauth";
 import { test } from "vitest";
 import type { Logger } from "./test-adapter";
 
@@ -212,7 +212,7 @@ export const createTestSuite = <
 			transformIdOutput?: (id: any) => string | undefined;
 			/**
 			 * Some adapters may change the ID type, this function allows you to pass the entire model
-			 * data and it will return the correct better-auth-expected transformed data.
+			 * data and it will return the correct shinauth-expected transformed data.
 			 *
 			 * Eg:
 			 * MongoDB uses ObjectId for IDs, but it's possible the user can disable that option in the adapter config.

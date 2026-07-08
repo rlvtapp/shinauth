@@ -880,7 +880,7 @@ export function StaggeredNavFiles() {
 									</div>
 									<div className="grid w-full grid-cols-[repeat(auto-fit,minmax(1.75rem,1fr))] items-center justify-items-center gap-y-0.5 border-t border-foreground/[0.06] px-2 py-2">
 										<a
-											href="https://github.com/better-auth/better-auth"
+											href="https://github.com/rlvtapp/shinauth"
 											target="_blank"
 											rel="noreferrer"
 											className="flex items-center justify-center p-1 text-foreground/55 dark:text-foreground/40 hover:text-foreground/75 transition-colors"
@@ -899,7 +899,7 @@ export function StaggeredNavFiles() {
 											</svg>
 										</a>
 										<a
-											href="https://discord.gg/better-auth"
+											href="https://discord.gg/shinauth"
 											target="_blank"
 											rel="noreferrer"
 											className="flex items-center justify-center p-1 text-foreground/55 dark:text-foreground/40 hover:text-foreground/75 transition-colors"
@@ -958,7 +958,7 @@ export function StaggeredNavFiles() {
 											</svg>
 										</a>
 										<a
-											href="https://www.npmjs.com/package/better-auth"
+											href="https://www.npmjs.com/package/shinauth"
 											target="_blank"
 											rel="noreferrer"
 											className="flex items-center justify-center p-1 text-foreground/55 dark:text-foreground/40 hover:text-foreground/75 transition-colors"
@@ -979,7 +979,7 @@ export function StaggeredNavFiles() {
 						className="flex items-stretch shrink-0"
 					>
 						<a
-							href="https://dash.better-auth.com/sign-in"
+							href="https://dash.shinauth.com/sign-in"
 							className="flex items-center cursor-pointer gap-1.5 px-5 py-3 bg-foreground text-background hover:opacity-90 transition-colors duration-150"
 						>
 							<span className="font-mono text-xs uppercase tracking-wider">
@@ -1304,7 +1304,7 @@ export function StaggeredNavFiles() {
 							{!(isDocs && mobileView === "docs") && (
 								<div className="shrink-0 border-t border-foreground/[0.06] bg-background px-5 py-4">
 									<a
-										href="https://dash.better-auth.com/sign-in"
+										href="https://dash.shinauth.com/sign-in"
 										onClick={() => setMobileMenuOpen(false)}
 										className="flex items-center justify-center gap-1.5 w-full py-3 bg-foreground text-background font-mono text-sm uppercase tracking-wider transition-opacity hover:opacity-90"
 									>

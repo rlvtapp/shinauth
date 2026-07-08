@@ -1,5 +1,5 @@
-import type { User } from "@better-auth/core/db";
-import { createTestSuite } from "@better-auth/test-utils/adapter";
+import type { User } from "@shinauth/core/db";
+import { createTestSuite } from "@shinauth/test-utils/adapter";
 import { expect } from "vitest";
 
 /**

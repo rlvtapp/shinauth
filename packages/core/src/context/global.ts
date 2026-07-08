@@ -1,4 +1,4 @@
-import type { AsyncLocalStorage } from "@better-auth/core/async_hooks";
+import type { AsyncLocalStorage } from "@shinauth/core/async_hooks";
 
 interface BetterAuthGlobal {
 	/**
@@ -17,7 +17,7 @@ interface BetterAuthGlobal {
 	context: Record<string, AsyncLocalStorage<unknown>>;
 }
 
-const symbol = Symbol.for("better-auth:global");
+const symbol = Symbol.for("shinauth:global");
 let bind: BetterAuthGlobal | null = null;
 
 const __context: Record<string, AsyncLocalStorage<unknown>> = {};

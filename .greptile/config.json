@@ -16,9 +16,9 @@
   "ignorePatterns": "**/pnpm-lock.yaml\n**/__snapshots__/**\n.changeset/*.md\n**/drizzle/meta/**",
   "context": {
     "repos": [
-      "better-auth/better-call",
-      "better-auth/better-fetch",
-      "better-auth/utils"
+      "shinauth/better-call",
+      "shinauth/better-fetch",
+      "shinauth/utils"
     ]
   }
 }

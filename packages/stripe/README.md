@@ -1,16 +1,16 @@
-# Better Auth Stripe Plugin
+# Shinauth Stripe Plugin
 
-Stripe plugin for [Better Auth](https://www.better-auth.com) — integrate Stripe billing with your authentication system.
+Stripe plugin for [Shinauth](https://www.shinauth.com) — integrate Stripe billing with your authentication system.
 
 ## Installation
 
 ```bash
-npm install @better-auth/stripe
+npm install @shinauth/stripe
 ```
 
 ## Documentation
 
-For full documentation, visit [better-auth.com/docs/plugins/stripe](https://www.better-auth.com/docs/plugins/stripe).
+For full documentation, visit [shinauth.com/docs/plugins/stripe](https://www.shinauth.com/docs/plugins/stripe).
 
 ## License
 

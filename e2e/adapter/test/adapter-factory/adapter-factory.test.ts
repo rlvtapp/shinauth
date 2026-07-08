@@ -1,14 +1,14 @@
-import type { BetterAuthOptions } from "@better-auth/core";
-import type { User } from "@better-auth/core/db";
+import type { BetterAuthOptions } from "@shinauth/core";
+import type { User } from "@shinauth/core/db";
 import type {
 	AdapterFactoryConfig,
 	AdapterFactoryCustomizeAdapterCreator,
 	CleanedWhere,
 	DBAdapter,
 	Where,
-} from "@better-auth/core/db/adapter";
-import { createAdapterFactory } from "@better-auth/core/db/adapter";
-import { betterAuth } from "better-auth";
+} from "@shinauth/core/db/adapter";
+import { createAdapterFactory } from "@shinauth/core/db/adapter";
+import { betterAuth } from "shinauth";
 import { describe, expect, test } from "vitest";
 
 /*

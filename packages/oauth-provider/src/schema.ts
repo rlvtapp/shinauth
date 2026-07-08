@@ -1,4 +1,4 @@
-import type { BetterAuthPluginDBSchema } from "@better-auth/core/db";
+import type { BetterAuthPluginDBSchema } from "@shinauth/core/db";
 
 export const schema = {
 	oauthClient: {
@@ -256,7 +256,7 @@ export const schema = {
 	 * Composite uniqueness on `(clientId, resourceId)` is load-bearing — the
 	 * `enforcePerClientResources` linkage check assumes one row per pair.
 	 *
-	 * Better Auth's schema layer doesn't expose composite-UNIQUE syntax (no
+	 * Shinauth's schema layer doesn't expose composite-UNIQUE syntax (no
 	 * way to declare `UNIQUE(clientId, resourceId)` at the column level). To
 	 * enforce it at the database level for free, we set the row's `id` to a
 	 * deterministic `${clientId}::${resourceId}` value at write time and let
@@ -407,7 +407,7 @@ export const schema = {
 	 * An opaque access token sent when there is no resource audience claim
 	 * to assigned to the JWT.
 	 *
-	 * Access tokens are linked to a session, better-auth
+	 * Access tokens are linked to a session, shinauth
 	 * authors SHALL always check for valid session!
 	 *
 	 * AccessTokens SHALL only be created at refresh,

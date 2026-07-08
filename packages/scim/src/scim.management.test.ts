@@ -1,10 +1,10 @@
-import { sso } from "@better-auth/sso";
-import { APIError, betterAuth } from "better-auth";
-import { memoryAdapter } from "better-auth/adapters/memory";
-import { createAuthClient } from "better-auth/client";
-import { setCookieToHeader } from "better-auth/cookies";
-import type { OrganizationOptions } from "better-auth/plugins";
-import { bearer, organization } from "better-auth/plugins";
+import { sso } from "@shinauth/sso";
+import { APIError, betterAuth } from "shinauth";
+import { memoryAdapter } from "shinauth/adapters/memory";
+import { createAuthClient } from "shinauth/client";
+import { setCookieToHeader } from "shinauth/cookies";
+import type { OrganizationOptions } from "shinauth/plugins";
+import { bearer, organization } from "shinauth/plugins";
 import { describe, expect, it, vi } from "vitest";
 import { scim } from ".";
 import { scimClient } from "./client";
@@ -855,7 +855,7 @@ describe("SCIM provider management", () => {
 
 	describe("role-based authorization", () => {
 		/**
-		 * @see https://github.com/better-auth/better-auth/security/advisories/GHSA-2g28-66mv-wghh
+		 * @see https://github.com/rlvtapp/shinauth/security/advisories/GHSA-2g28-66mv-wghh
 		 */
 		it("should deny org-scoped token generation for a regular member", async () => {
 			const { auth, getAuthCookieHeaders, registerOrganization } =
@@ -893,7 +893,7 @@ describe("SCIM provider management", () => {
 		});
 
 		/**
-		 * @see https://github.com/better-auth/better-auth/security/advisories/GHSA-2g28-66mv-wghh
+		 * @see https://github.com/rlvtapp/shinauth/security/advisories/GHSA-2g28-66mv-wghh
 		 */
 		it("should allow org-scoped token generation for an admin", async () => {
 			const { auth, getAuthCookieHeaders, registerOrganization } =

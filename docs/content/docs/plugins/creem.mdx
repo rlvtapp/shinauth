@@ -1,9 +1,9 @@
 ---
 title: Creem
-description: Better Auth Plugin for Payment and Subscriptions using Creem
+description: Shinauth Plugin for Payment and Subscriptions using Creem
 ---
 
-[Creem](https://creem.io) is a financial OS that enables teams and individuals selling software globally to split revenue and collaborate on financial workflows without any tax compliance headaches. This plugin integrates Creem with Better Auth, bringing payment processing and subscription management directly into your authentication layer.
+[Creem](https://creem.io) is a financial OS that enables teams and individuals selling software globally to split revenue and collaborate on financial workflows without any tax compliance headaches. This plugin integrates Creem with Shinauth, bringing payment processing and subscription management directly into your authentication layer.
 
 <Callout>
   This plugin is maintained by the Creem team. For bugs, issues or feature requests,
@@ -24,7 +24,7 @@ description: Better Auth Plugin for Payment and Subscriptions using Creem
 * **Subscription Management** - Cancel, retrieve, and track subscription details for authenticated users or manually for unauthenticated users
 * **Transaction History** - Search and filter transaction records for authenticated users or manually for unauthenticated users
 * **Webhook Processing** - Handle Creem webhooks securely with signature verification
-* **Flexible Architecture** - Use Better Auth endpoints or direct server-side functions
+* **Flexible Architecture** - Use Shinauth endpoints or direct server-side functions
 * **Trial Abuse Prevention** - Users can only get one trial per account across all plans (when using database mode)
 
 ## Installation
@@ -34,7 +34,7 @@ description: Better Auth Plugin for Payment and Subscriptions using Creem
     ### Install the plugin
 
     ```package-install
-    @creem_io/better-auth
+    @creem_io/shinauth
     ```
 
     <Callout>
@@ -62,12 +62,12 @@ description: Better Auth Plugin for Payment and Subscriptions using Creem
 
 ### Server Configuration
 
-Configure Better Auth with the Creem plugin:
+Configure Shinauth with the Creem plugin:
 
 ```typescript
 // lib/auth.ts
-import { betterAuth } from "better-auth";
-import { creem } from "@creem_io/better-auth";
+import { betterAuth } from "shinauth";
+import { creem } from "@creem_io/shinauth";
 
 export const auth = betterAuth({
   database: {
@@ -91,8 +91,8 @@ export const auth = betterAuth({
 
 ```typescript
 // lib/auth-client.ts
-import { createAuthClient } from "better-auth/react";
-import { creemClient } from "@creem_io/better-auth/client";
+import { createAuthClient } from "shinauth/react";
+import { creemClient } from "@creem_io/shinauth/client";
 
 export const authClient = createAuthClient({
   baseURL: process.env.NEXT_PUBLIC_APP_URL,
@@ -106,8 +106,8 @@ For improved TypeScript IntelliSense and autocomplete:
 
 ```typescript
 // lib/auth-client.ts
-import { createCreemAuthClient } from "@creem_io/better-auth/create-creem-auth-client";
-import { creemClient } from "@creem_io/better-auth/client";
+import { createCreemAuthClient } from "@creem_io/shinauth/create-creem-auth-client";
+import { creemClient } from "@creem_io/shinauth/client";
 
 export const authClient = createCreemAuthClient({
   baseURL: process.env.NEXT_PUBLIC_APP_URL,
@@ -138,7 +138,7 @@ If you're using database persistence (`persistSubscriptions: true`), generate an
 </Tabs>
 
 <Callout type="info">
-  Depending on your database adapter, additional setup steps may be required. Refer to the [Better Auth adapter documentation](https://www.better-auth.com/docs/adapters/mysql) for details.
+  Depending on your database adapter, additional setup steps may be required. Refer to the [Shinauth adapter documentation](https://www.shinauth.com/docs/adapters/mysql) for details.
 </Callout>
 
 ### Webhook Setup
@@ -153,7 +153,7 @@ If you're using database persistence (`persistSubscriptions: true`), generate an
     https://your-domain.com/api/auth/creem/webhook
     ```
 
-    (`/api/auth` is the default Better Auth server path)
+    (`/api/auth` is the default Shinauth server path)
 
     <Callout type="info">
       Check step 3 if local development.
@@ -370,8 +370,8 @@ These handlers provide the simplest and most powerful way to manage user access.
 
 ```typescript
 // lib/auth.ts
-import { betterAuth } from "better-auth";
-import { creem } from "@creem_io/better-auth";
+import { betterAuth } from "shinauth";
+import { creem } from "@creem_io/shinauth";
 
 export const auth = betterAuth({
   database: {
@@ -456,8 +456,8 @@ Handle individual webhook events with all properties flattened for easy access:
 
 ```typescript
 // lib/auth.ts
-import { betterAuth } from "better-auth";
-import { creem } from "@creem_io/better-auth";
+import { betterAuth } from "shinauth";
+import { creem } from "@creem_io/shinauth";
 
 export const auth = betterAuth({
   database: {
@@ -511,7 +511,7 @@ Create your own webhook endpoint with signature verification:
 
 ```typescript
 // app/api/webhooks/custom/route.ts
-import { validateWebhookSignature } from "@creem_io/better-auth/server";
+import { validateWebhookSignature } from "@creem_io/shinauth/server";
 
 export async function POST(req: Request) {
   const payload = await req.text();
@@ -536,7 +536,7 @@ export async function POST(req: Request) {
 
 ## Server-Side Functions
 
-Use these utilities directly in Server Components, Server Actions, or API routes without going through Better Auth endpoints.
+Use these utilities directly in Server Components, Server Actions, or API routes without going through Shinauth endpoints.
 
 ### Import Server Utilities
 
@@ -552,13 +552,13 @@ import {
   formatCreemDate,
   getDaysUntilRenewal,
   validateWebhookSignature,
-} from "@creem_io/better-auth/server";
+} from "@creem_io/shinauth/server";
 ```
 
 ### Server Component Example
 
 ```typescript
-import { checkSubscriptionAccess } from "@creem_io/better-auth/server";
+import { checkSubscriptionAccess } from "@creem_io/shinauth/server";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -602,7 +602,7 @@ export default async function DashboardPage() {
 ```typescript
 "use server";
 
-import { createCheckout } from "@creem_io/better-auth/server";
+import { createCheckout } from "@creem_io/shinauth/server";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -636,7 +636,7 @@ export async function startCheckout(productId: string) {
 Protect routes based on subscription status:
 
 ```typescript
-import { checkSubscriptionAccess } from "@creem_io/better-auth/server";
+import { checkSubscriptionAccess } from "@creem_io/shinauth/server";
 import { auth } from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -679,7 +679,7 @@ import {
   isActiveSubscription,
   formatCreemDate,
   getDaysUntilRenewal,
-} from "@creem_io/better-auth/server";
+} from "@creem_io/shinauth/server";
 
 // Check if status grants access
 if (isActiveSubscription(subscription.status)) {
@@ -841,7 +841,7 @@ To use these features, either enable database mode or implement custom logic usi
 
 * [Creem Documentation](https://docs.creem.io)
 * [Creem Dashboard](https://creem.io/dashboard)
-* [Better Auth Documentation](https://better-auth.com)
+* [Shinauth Documentation](https://shinauth.com)
 * [Plugin GitHub Repository Additional Documentation](https://github.com/armitage-labs/creem-betterauth)
 
 ## Support

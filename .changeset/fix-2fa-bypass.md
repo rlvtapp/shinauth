@@ -1,5 +1,5 @@
 ---
-"better-auth": patch
+"shinauth": patch
 ---
 
 fix(two-factor): enforce 2FA on all sign-in paths

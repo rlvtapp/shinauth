@@ -3,14 +3,14 @@ import { ImageResponse } from "@vercel/og";
 export const runtime = "edge";
 
 /**
- * Dedicated OG cover for the "Better Auth is joining Vercel" announcement.
+ * Dedicated OG cover for the "Shinauth is joining Vercel" announcement.
  * Reuses the visual language of the generated blog covers (Geist, dark
- * radial gradient, specks, rotated outline) but adds a Better Auth × Vercel
+ * radial gradient, specks, rotated outline) but adds a Shinauth × Vercel
  * logo lockup above the title. Rendered live and referenced from the post's
  * `image` frontmatter.
  */
 
-const TITLE = "Better Auth is joining Vercel";
+const TITLE = "Shinauth is joining Vercel";
 const DATE = "June 28, 2026";
 
 const colors = {
@@ -33,7 +33,7 @@ const specks: Array<{ top: string; left: string; size: number }> = [
 	{ top: "31%", left: "88%", size: 3 },
 ];
 
-// Better Auth mark (viewBox 0 0 400 300) recolored for the dark cover.
+// Shinauth mark (viewBox 0 0 400 300) recolored for the dark cover.
 const baMarkSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><path fill="${colors.logo}" d="M200 0h200v300H200V200h100V100H200zM0 0h100v100h100v100H100v100H0z"/></svg>`;
 
 export async function GET() {
@@ -90,9 +90,9 @@ export async function GET() {
 					tw="flex flex-col justify-center w-full h-full"
 					style={{ padding: "0 200px 40px 96px" }}
 				>
-					{/* Logo lockup: Better Auth × Vercel */}
+					{/* Logo lockup: Shinauth × Vercel */}
 					<div tw="flex items-center" style={{ marginBottom: "52px" }}>
-						<img src={baMarkUri} width={61} height={46} alt="Better Auth" />
+						<img src={baMarkUri} width={61} height={46} alt="Shinauth" />
 						<div
 							tw="flex"
 							style={{
@@ -103,7 +103,7 @@ export async function GET() {
 								color: colors.logo,
 							}}
 						>
-							Better Auth
+							Shinauth
 						</div>
 						<div
 							tw="flex"

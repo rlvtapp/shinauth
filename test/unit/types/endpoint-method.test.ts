@@ -1,10 +1,10 @@
-import type { BetterAuthOptions, BetterAuthPlugin } from "@better-auth/core";
-import { createAuthEndpoint } from "@better-auth/core/api";
-import type { Auth } from "better-auth";
-import { createAuthClient, InferPlugin } from "better-auth/client";
-import { customSession } from "better-auth/plugins/custom-session";
-import type { GenericOAuthUserInfo } from "better-auth/plugins/generic-oauth";
-import { genericOAuth } from "better-auth/plugins/generic-oauth";
+import type { BetterAuthOptions, BetterAuthPlugin } from "@shinauth/core";
+import { createAuthEndpoint } from "@shinauth/core/api";
+import type { Auth } from "shinauth";
+import { createAuthClient, InferPlugin } from "shinauth/client";
+import { customSession } from "shinauth/plugins/custom-session";
+import type { GenericOAuthUserInfo } from "shinauth/plugins/generic-oauth";
+import { genericOAuth } from "shinauth/plugins/generic-oauth";
 import { describe, expectTypeOf, test } from "vitest";
 
 describe("Endpoint method types", () => {

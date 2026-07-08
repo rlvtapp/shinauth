@@ -1,6 +1,6 @@
-import { createAuthMiddleware } from "@better-auth/core/api";
-import { APIError } from "@better-auth/core/error";
-import { sessionMiddleware } from "better-auth/api";
+import { createAuthMiddleware } from "@shinauth/core/api";
+import { APIError } from "@shinauth/core/error";
+import { sessionMiddleware } from "shinauth/api";
 import { STRIPE_ERROR_CODES } from "./error-codes";
 import type {
 	AuthorizeReferenceAction,

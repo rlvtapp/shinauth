@@ -1,4 +1,4 @@
-import type { BetterAuthClientPlugin } from "better-auth/client";
+import type { BetterAuthClientPlugin } from "shinauth/client";
 import { STRIPE_ERROR_CODES } from "./error-codes";
 import type { StripePlan, stripe } from "./index";
 import { PACKAGE_VERSION } from "./version";

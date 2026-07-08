@@ -1,5 +1,5 @@
-import type { PrivateKeyJwtSigningAlgorithm } from "@better-auth/core/oauth2";
-import type { JWSAlgorithms } from "better-auth/plugins";
+import type { PrivateKeyJwtSigningAlgorithm } from "@shinauth/core/oauth2";
+import type { JWSAlgorithms } from "shinauth/plugins";
 import type { Prompt } from ".";
 
 /**
@@ -205,7 +205,7 @@ export interface AuthServerMetadata {
 	 * [Client ID Metadata Documents](https://datatracker.ietf.org/doc/draft-ietf-oauth-client-id-metadata-document/)
 	 * (an HTTPS URL as `client_id`).
 	 *
-	 * Set at runtime by the `@better-auth/cimd` plugin (or any other
+	 * Set at runtime by the `@shinauth/cimd` plugin (or any other
 	 * `ClientDiscovery` that contributes this field via
 	 * {@link ClientDiscovery.discoveryMetadata}). oauth-provider never sets
 	 * it on its own.
@@ -260,7 +260,7 @@ export interface OIDCMetadata extends AuthServerMetadata {
 	/**
 	 * Authentication Context Class Reference values supported.
 	 *
-	 * Better Auth does not advertise this field by default because it does not
+	 * Shinauth does not advertise this field by default because it does not
 	 * currently evaluate requested Authentication Context Class References.
 	 *
 	 * @default

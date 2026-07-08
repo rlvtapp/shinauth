@@ -1,6 +1,6 @@
 import Database from "bun:sqlite";
-import { betterAuth } from "better-auth";
-import { getMigrations } from "better-auth/db/migration";
+import { betterAuth } from "shinauth";
+import { getMigrations } from "shinauth/db/migration";
 
 const database = new Database(":memory:");
 

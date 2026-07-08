@@ -1,6 +1,6 @@
-import type { BetterAuthOptions } from "@better-auth/core";
-import { prismaAdapter } from "@better-auth/prisma-adapter";
-import { testAdapter } from "@better-auth/test-utils/adapter";
+import type { BetterAuthOptions } from "@shinauth/core";
+import { prismaAdapter } from "@shinauth/prisma-adapter";
+import { testAdapter } from "@shinauth/test-utils/adapter";
 import {
 	authFlowTestSuite,
 	caseInsensitiveTestSuite,

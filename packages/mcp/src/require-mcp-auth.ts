@@ -1,18 +1,18 @@
-import type { Awaitable } from "@better-auth/core";
+import type { Awaitable } from "@shinauth/core";
 import {
 	ResourceUriSchema,
 	raiseResourceServerChallenge,
-} from "@better-auth/oauth-provider";
+} from "@shinauth/oauth-provider";
 import type {
 	DpopReplayReservations,
 	DpopReplayStore,
-} from "better-auth/oauth2";
+} from "shinauth/oauth2";
 import {
 	createDpopReplayStore,
 	requestToResourceInput,
 	verifyAccessTokenRequest,
-} from "better-auth/oauth2";
-import type { BetterAuthOptions } from "better-auth/types";
+} from "shinauth/oauth2";
+import type { BetterAuthOptions } from "shinauth/types";
 import { APIError } from "better-call";
 import type { JWTPayload } from "jose";
 

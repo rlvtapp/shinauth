@@ -1,7 +1,7 @@
-import type { GenericEndpointContext, User } from "better-auth";
-import { betterAuth } from "better-auth";
-import { memoryAdapter } from "better-auth/adapters/memory";
-import { organization } from "better-auth/plugins";
+import type { GenericEndpointContext, User } from "shinauth";
+import { betterAuth } from "shinauth";
+import { memoryAdapter } from "shinauth/adapters/memory";
+import { organization } from "shinauth/plugins";
 import { describe, expect, it } from "vitest";
 import { sso } from "..";
 import { assignOrganizationByDomain } from "./org-assignment";

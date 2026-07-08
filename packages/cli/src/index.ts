@@ -22,7 +22,7 @@ process.on("SIGTERM", () => process.exit(0));
 export let cliVersion = "1.1.2";
 
 async function main() {
-	const program = new Command("better-auth");
+	const program = new Command("shinauth");
 
 	let packageInfo: Record<string, any> = {};
 	try {
@@ -44,13 +44,13 @@ async function main() {
 		.addCommand(mcp)
 		.addCommand(upgrade)
 		.version(cliVersion)
-		.description("Better Auth CLI")
+		.description("Shinauth CLI")
 		.action(() => program.help());
 
 	program.parse();
 }
 
 main().catch((error) => {
-	console.error("Error running Better Auth CLI:", error);
+	console.error("Error running Shinauth CLI:", error);
 	process.exit(1);
 });

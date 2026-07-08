@@ -23,7 +23,7 @@ description: Kakao provider setup and usage.
     </Callout>
 
     ```ts title="auth.ts"
-    import { betterAuth } from "better-auth"
+    import { betterAuth } from "shinauth"
 
     export const auth = betterAuth({
         socialProviders: {
@@ -44,7 +44,7 @@ description: Kakao provider setup and usage.
     * `provider`: The provider to use. It should be set to `kakao`.
 
     ```ts title="auth-client.ts"
-    import { createAuthClient } from "better-auth/client"
+    import { createAuthClient } from "shinauth/client"
     const authClient =  createAuthClient()
 
     const signIn = async () => {

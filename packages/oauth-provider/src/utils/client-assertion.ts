@@ -1,11 +1,11 @@
-import type { GenericEndpointContext } from "@better-auth/core";
+import type { GenericEndpointContext } from "@shinauth/core";
 import {
 	CLIENT_ASSERTION_TYPE,
 	PRIVATE_KEY_JWT_SIGNING_ALGORITHMS,
-} from "@better-auth/core/oauth2";
-import { isPublicRoutableHost } from "@better-auth/core/utils/host";
-import { base64Url } from "@better-auth/utils/base64";
-import { createHash } from "@better-auth/utils/hash";
+} from "@shinauth/core/oauth2";
+import { isPublicRoutableHost } from "@shinauth/core/utils/host";
+import { base64Url } from "@shinauth/utils/base64";
+import { createHash } from "@shinauth/utils/hash";
 import { APIError } from "better-call";
 import type { JSONWebKeySet } from "jose";
 import {

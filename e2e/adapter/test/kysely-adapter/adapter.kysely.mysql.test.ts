@@ -1,6 +1,6 @@
-import { kyselyAdapter } from "@better-auth/kysely-adapter";
-import { testAdapter } from "@better-auth/test-utils/adapter";
-import { getMigrations } from "better-auth/db/migration";
+import { kyselyAdapter } from "@shinauth/kysely-adapter";
+import { testAdapter } from "@shinauth/test-utils/adapter";
+import { getMigrations } from "shinauth/db/migration";
 import { Kysely, MysqlDialect } from "kysely";
 import { createPool } from "mysql2/promise";
 import { assert } from "vitest";

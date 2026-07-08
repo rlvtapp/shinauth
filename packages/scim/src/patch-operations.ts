@@ -1,4 +1,4 @@
-import type { User } from "better-auth";
+import type { User } from "shinauth";
 import { getUserFullName } from "./mappings";
 
 type Operation = {

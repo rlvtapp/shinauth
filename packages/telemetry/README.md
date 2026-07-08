@@ -1,16 +1,16 @@
-# Better Auth Telemetry
+# Shinauth Telemetry
 
-Telemetry package for [Better Auth](https://www.better-auth.com) — anonymous usage analytics to help improve the framework.
+Telemetry package for [Shinauth](https://www.shinauth.com) — anonymous usage analytics to help improve the framework.
 
 ## Installation
 
 ```bash
-npm install @better-auth/telemetry
+npm install @shinauth/telemetry
 ```
 
 ## Documentation
 
-For full documentation, visit [better-auth.com](https://www.better-auth.com).
+For full documentation, visit [shinauth.com](https://www.shinauth.com).
 
 ## License
 

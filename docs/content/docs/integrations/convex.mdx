@@ -1,9 +1,9 @@
 ---
 title: Convex Integration
-description: Integrate Better Auth with Convex.
+description: Integrate Shinauth with Convex.
 ---
 
-In this guide, we'll walk through the steps to integrate Better Auth with [Convex](https://www.convex.dev).
+In this guide, we'll walk through the steps to integrate Shinauth with [Convex](https://www.convex.dev).
 
 <Steps>
   <Step>
@@ -11,7 +11,7 @@ In this guide, we'll walk through the steps to integrate Better Auth with [Conve
 
     ### Create a Convex project
 
-    To use Better Auth with Convex, you need a Convex project. If you don’t have one, run the following command to create a new project. For more details, see the [Convex documentation](https://docs.convex.dev/home).
+    To use Shinauth with Convex, you need a Convex project. If you don’t have one, run the following command to create a new project. For more details, see the [Convex documentation](https://docs.convex.dev/home).
 
     ```package-install
     npm create convex@latest
@@ -33,14 +33,14 @@ In this guide, we'll walk through the steps to integrate Better Auth with [Conve
   <Step>
     ## Install packages
 
-    Install Better Auth and the Convex component for Better Auth, and make sure you are using the latest version of Convex.
+    Install Shinauth and the Convex component for Shinauth, and make sure you are using the latest version of Convex.
 
     ```package-install
-    npm install better-auth @convex-dev/better-auth
+    npm install shinauth @convex-dev/shinauth
     ```
 
     <Callout type="info">
-      [`@convex-dev/better-auth`](https://github.com/get-convex/better-auth) is maintained by Convex.
+      [`@convex-dev/shinauth`](https://github.com/get-convex/shinauth) is maintained by Convex.
     </Callout>
   </Step>
 
@@ -90,7 +90,7 @@ In this guide, we'll walk through the steps to integrate Better Auth with [Conve
     ```
 
     <Callout type="info">
-      Since the Better Auth instance runs on Convex, environment variables used by the auth instance should be configured through the Convex CLI or dashboard, not in `.env.local`.
+      Since the Shinauth instance runs on Convex, environment variables used by the auth instance should be configured through the Convex CLI or dashboard, not in `.env.local`.
 
       e.g. `BETTER_AUTH_SECRET`, `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` ...
     </Callout>
@@ -99,10 +99,10 @@ In this guide, we'll walk through the steps to integrate Better Auth with [Conve
   <Step>
     ## Add Convex auth config
 
-    Add a `convex/auth.config.ts` file to configure Better Auth as an authentication provider.
+    Add a `convex/auth.config.ts` file to configure Shinauth as an authentication provider.
 
     ```ts title="convex/auth.config.ts"
-    import { getAuthConfigProvider } from "@convex-dev/better-auth/auth-config";
+    import { getAuthConfigProvider } from "@convex-dev/shinauth/auth-config";
     import type { AuthConfig } from "convex/server";
 
     export default {
@@ -112,9 +112,9 @@ In this guide, we'll walk through the steps to integrate Better Auth with [Conve
   </Step>
 
   <Step>
-    ## Create the Better Auth Convex Component
+    ## Create the Shinauth Convex Component
 
-    Convex components can be installed from NPM or a local folder. While the [NPM version](https://labs.convex.dev/better-auth) is available, this guide uses a local folder setup to unlock the full potential of Better Auth.
+    Convex components can be installed from NPM or a local folder. While the [NPM version](https://labs.convex.dev/shinauth) is available, this guide uses a local folder setup to unlock the full potential of Shinauth.
 
     ### Create the component definition
 
@@ -130,7 +130,7 @@ In this guide, we'll walk through the steps to integrate Better Auth with [Conve
 
     ### Register the component
 
-    Register the Better Auth component in your Convex project.
+    Register the Shinauth component in your Convex project.
 
     ```ts title="convex/convex.config.ts"
     import { defineApp } from "convex/server";
@@ -143,9 +143,9 @@ In this guide, we'll walk through the steps to integrate Better Auth with [Conve
     export default app;
     ```
 
-    ### Create a Better Auth instance
+    ### Create a Shinauth instance
 
-    Create a Better Auth instance and initialize the component.
+    Create a Shinauth instance and initialize the component.
 
     <Callout type="info">
       * This file is not yet complete before the next step.
@@ -153,17 +153,17 @@ In this guide, we'll walk through the steps to integrate Better Auth with [Conve
     </Callout>
 
     ```ts title="convex/betterAuth/auth.ts"
-    import { createClient } from "@convex-dev/better-auth";
-    import { convex } from "@convex-dev/better-auth/plugins";
-    import type { GenericCtx } from "@convex-dev/better-auth/utils";
-    import type { BetterAuthOptions } from "better-auth";
-    import { betterAuth } from "better-auth";
+    import { createClient } from "@convex-dev/shinauth";
+    import { convex } from "@convex-dev/shinauth/plugins";
+    import type { GenericCtx } from "@convex-dev/shinauth/utils";
+    import type { BetterAuthOptions } from "shinauth";
+    import { betterAuth } from "shinauth";
     import { components } from "../_generated/api";
     import type { DataModel } from "../_generated/dataModel";
     import authConfig from "../auth.config";
     import schema from "./schema";
 
-    // Better Auth Component
+    // Shinauth Component
     export const authComponent = createClient<DataModel, typeof schema>(
       components.betterAuth,
       {
@@ -172,7 +172,7 @@ In this guide, we'll walk through the steps to integrate Better Auth with [Conve
       },
     );
 
-    // Better Auth Options
+    // Shinauth Options
     export const createAuthOptions = (ctx: GenericCtx<DataModel>) => {
       return {
         appName: "My App",
@@ -189,7 +189,7 @@ In this guide, we'll walk through the steps to integrate Better Auth with [Conve
     // For `auth` CLI
     export const options = createAuthOptions({} as GenericCtx<DataModel>);
 
-    // Better Auth Instance
+    // Shinauth Instance
     export const createAuth = (ctx: GenericCtx<DataModel>) => {
       return betterAuth(createAuthOptions(ctx));
     };
@@ -197,22 +197,22 @@ In this guide, we'll walk through the steps to integrate Better Auth with [Conve
 
     ### Generate the schema
 
-    After configuring your Better Auth instance, run the command below to generate `convex/betterAuth/schema.ts`.
+    After configuring your Shinauth instance, run the command below to generate `convex/betterAuth/schema.ts`.
 
     ```package-install
     npx auth generate --config ./convex/betterAuth/auth.ts --output ./convex/betterAuth/schema.ts
     ```
 
     <Callout type="info">
-      If you need to modify your Better Auth instance, use this command to update the schema.
+      If you need to modify your Shinauth instance, use this command to update the schema.
     </Callout>
 
     ### Export adapter functions
 
-    Export adapter functions for the Better Auth component.
+    Export adapter functions for the Shinauth component.
 
     ```ts title="convex/betterAuth/adapter.ts"
-    import { createApi } from "@convex-dev/better-auth";
+    import { createApi } from "@convex-dev/shinauth";
     import { createAuthOptions } from "./auth";
     import schema from "./schema";
 
@@ -229,13 +229,13 @@ In this guide, we'll walk through the steps to integrate Better Auth with [Conve
   </Step>
 
   <Step>
-    ## Create the Better Auth client instance
+    ## Create the Shinauth client instance
 
-    Create the Better Auth client instance for interacting with the Better Auth server from your client.
+    Create the Shinauth client instance for interacting with the Shinauth server from your client.
 
     ```ts title="lib/auth-client.ts"
-    import { convexClient } from "@convex-dev/better-auth/client/plugins";
-    import { createAuthClient } from "better-auth/react";
+    import { convexClient } from "@convex-dev/shinauth/client/plugins";
+    import { createAuthClient } from "shinauth/react";
 
     export const authClient = createAuthClient({
       plugins: [convexClient()],
@@ -249,7 +249,7 @@ In this guide, we'll walk through the steps to integrate Better Auth with [Conve
     Configure a set of helper functions for authenticated SSR, server functions, and route handlers.
 
     ```ts title="lib/auth-server.ts"
-    import { convexBetterAuthNextJs } from "@convex-dev/better-auth/nextjs";
+    import { convexBetterAuthNextJs } from "@convex-dev/shinauth/nextjs";
 
     export const {
       handler,
@@ -269,7 +269,7 @@ In this guide, we'll walk through the steps to integrate Better Auth with [Conve
   <Step>
     ## Mount handlers
 
-    Register Better Auth route handlers on your Convex deployment.
+    Register Shinauth route handlers on your Convex deployment.
 
     ```ts title="convex/http.ts"
     import { httpRouter } from "convex/server";
@@ -299,7 +299,7 @@ In this guide, we'll walk through the steps to integrate Better Auth with [Conve
     ```tsx title="components/ConvexClientProvider.tsx"
     "use client";
 
-    import { ConvexBetterAuthProvider } from "@convex-dev/better-auth/react";
+    import { ConvexBetterAuthProvider } from "@convex-dev/shinauth/react";
     import { ConvexReactClient } from "convex/react";
     import { authClient } from "@/lib/auth-client";
 
@@ -352,7 +352,7 @@ In this guide, we'll walk through the steps to integrate Better Auth with [Conve
 
 ## Done 🎉
 
-You're now ready to start using Better Auth with Convex.
+You're now ready to start using Shinauth with Convex.
 
 ***
 
@@ -360,7 +360,7 @@ You're now ready to start using Better Auth with Convex.
 
 ### Create your functions
 
-Better Auth's `auth.api` methods would normally run in your server, but with Convex being your backend, these methods need to run in a Convex function. The Convex function can then be called from the client via hooks like `useMutation` or in server functions and other server code using one of the auth-server utilities like `fetchAuthMutation`.
+Shinauth's `auth.api` methods would normally run in your server, but with Convex being your backend, these methods need to run in a Convex function. The Convex function can then be called from the client via hooks like `useMutation` or in server functions and other server code using one of the auth-server utilities like `fetchAuthMutation`.
 
 Convex has a convention of creating functions in the `convex/` directory. For example, you can create auth-related functions in the `convex/auth.ts` file like this:
 
@@ -378,9 +378,9 @@ export const getCurrentUser = query({
 // ... other functions
 ```
 
-### Using the Better Auth client
+### Using the Shinauth client
 
-You can use the `authClient` like the Better Auth client normally.
+You can use the `authClient` like the Shinauth client normally.
 
 ```tsx title="app/sign-in/page.tsx"
 "use client";
@@ -495,7 +495,7 @@ export default Page;
 ```tsx title="app/landing/header.tsx"
 "use client";
 
-import { usePreloadedAuthQuery } from "@convex-dev/better-auth/nextjs/client";
+import { usePreloadedAuthQuery } from "@convex-dev/shinauth/nextjs/client";
 import type { Preloaded } from "convex/react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -528,5 +528,5 @@ export default Header;
 ## Additional Resources
 
 * [Convex Documentation](https://docs.convex.dev/home)
-* [`@convex-dev/better-auth` Documentation](https://labs.convex.dev/better-auth)
-* [`@convex-dev/better-auth` GitHub Repository](https://github.com/get-convex/better-auth)
+* [`@convex-dev/shinauth` Documentation](https://labs.convex.dev/shinauth)
+* [`@convex-dev/shinauth` GitHub Repository](https://github.com/get-convex/shinauth)

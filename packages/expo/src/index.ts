@@ -1,5 +1,5 @@
-import type { BetterAuthPlugin } from "@better-auth/core";
-import { createAuthMiddleware } from "@better-auth/core/api";
+import type { BetterAuthPlugin } from "@shinauth/core";
+import { createAuthMiddleware } from "@shinauth/core/api";
 import { expoAuthorizationProxy } from "./routes";
 import { PACKAGE_VERSION } from "./version";
 
@@ -11,7 +11,7 @@ export interface ExpoOptions {
 	disableOriginOverride?: boolean | undefined;
 }
 
-declare module "@better-auth/core" {
+declare module "@shinauth/core" {
 	interface BetterAuthPluginRegistry<AuthOptions, Options> {
 		expo: {
 			creator: typeof expo;

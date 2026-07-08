@@ -23,7 +23,7 @@
     "@ai-sdk/openai": "^3.0.73",
     "@ai-sdk/openai-compatible": "^2.0.51",
     "@ai-sdk/react": "^3.0.210",
-    "@better-auth/utils": "catalog:",
+    "@shinauth/utils": "catalog:",
     "@better-fetch/fetch": "catalog:",
     "@hookform/resolvers": "^5.4.0",
     "@openrouter/ai-sdk-provider": "^2.9.1",

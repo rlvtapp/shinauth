@@ -1,5 +1,5 @@
-import { expo } from "@better-auth/expo";
-import { betterAuth } from "better-auth";
+import { expo } from "@shinauth/expo";
+import { betterAuth } from "shinauth";
 import { Pool } from "pg";
 
 export const auth = betterAuth({
@@ -24,5 +24,5 @@ export const auth = betterAuth({
 	// `exp://` development scheme automatically when NODE_ENV is development;
 	// trusting it in production could leak the session cookie to a deep link
 	// the app does not control.
-	trustedOrigins: ["better-auth://"],
+	trustedOrigins: ["shinauth://"],
 });

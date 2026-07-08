@@ -1,5 +1,5 @@
 ---
-"@better-auth/oauth-provider": minor
+"@shinauth/oauth-provider": minor
 ---
 
 ID tokens now report `acr: "0"` instead of the InCommon Bronze URI. The default OpenID discovery document no longer advertises `acr_values_supported`, since the provider does not support requestable ACR classes yet.

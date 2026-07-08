@@ -1,13 +1,13 @@
 {
-  "name": "@better-auth/cimd",
+  "name": "@shinauth/cimd",
   "version": "1.7.0-rc.1",
-  "description": "Client ID Metadata Document plugin for Better Auth",
+  "description": "Client ID Metadata Document plugin for Shinauth",
   "type": "module",
   "license": "MIT",
-  "homepage": "https://www.better-auth.com/docs/plugins/cimd",
+  "homepage": "https://www.shinauth.com/docs/plugins/cimd",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/better-auth/better-auth.git",
+    "url": "git+https://github.com/rlvtapp/shinauth.git",
     "directory": "packages/cimd"
   },
   "keywords": [
@@ -19,7 +19,7 @@
     "oauth2",
     "oidc",
     "typescript",
-    "better-auth"
+    "shinauth"
   ],
   "publishConfig": {
     "access": "public"
@@ -55,16 +55,16 @@
     }
   },
   "devDependencies": {
-    "@better-auth/core": "workspace:*",
-    "@better-auth/oauth-provider": "workspace:*",
-    "better-auth": "workspace:*",
+    "@shinauth/core": "workspace:*",
+    "@shinauth/oauth-provider": "workspace:*",
+    "shinauth": "workspace:*",
     "listhen": "^1.9.0",
     "tsdown": "catalog:"
   },
   "peerDependencies": {
-    "@better-auth/core": "workspace:^",
-    "@better-auth/oauth-provider": "workspace:^",
-    "better-auth": "workspace:^",
+    "@shinauth/core": "workspace:^",
+    "@shinauth/oauth-provider": "workspace:^",
+    "shinauth": "workspace:^",
     "better-call": "catalog:"
   }
 }

@@ -1,8 +1,8 @@
-import type { BetterAuthClientPlugin } from "better-auth/client";
-import { adminClient, inferAdditionalFields } from "better-auth/client/plugins";
-import { createAccessControl } from "better-auth/plugins/access";
-import { defaultStatements } from "better-auth/plugins/admin/access";
-import { createAuthClient } from "better-auth/react";
+import type { BetterAuthClientPlugin } from "shinauth/client";
+import { adminClient, inferAdditionalFields } from "shinauth/client/plugins";
+import { createAccessControl } from "shinauth/plugins/access";
+import { defaultStatements } from "shinauth/plugins/admin/access";
+import { createAuthClient } from "shinauth/react";
 import { atom } from "nanostores";
 
 const statement = {
@@ -49,7 +49,7 @@ const fixtureAtomClient = () =>
 	}) satisfies BetterAuthClientPlugin;
 
 /**
- * @see https://github.com/better-auth/better-auth/issues/9189
+ * @see https://github.com/rlvtapp/shinauth/issues/9189
  */
 export const authClient = createAuthClient({
 	baseURL: "http://localhost:3000",

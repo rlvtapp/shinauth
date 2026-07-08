@@ -3,9 +3,9 @@ title: i18n
 description: Internationalization plugin for translating error messages
 ---
 
-The i18n plugin allows you to translate error messages returned by Better Auth based on the user's locale. It supports multiple locale detection strategies including HTTP headers, cookies, session data, and custom callbacks.
+The i18n plugin allows you to translate error messages returned by Shinauth based on the user's locale. It supports multiple locale detection strategies including HTTP headers, cookies, session data, and custom callbacks.
 
-Better Auth already provides English error messages by default, so you only need to provide translations for other languages.
+Shinauth already provides English error messages by default, so you only need to provide translations for other languages.
 
 ## Installation
 
@@ -14,7 +14,7 @@ Better Auth already provides English error messages by default, so you only need
     ### Install the plugin
 
     ```package-install
-    @better-auth/i18n
+    @shinauth/i18n
     ```
   </Step>
 
@@ -22,8 +22,8 @@ Better Auth already provides English error messages by default, so you only need
     ### Add the plugin to your **auth** config
 
     ```ts title="auth.ts"
-    import { betterAuth } from "better-auth"
-    import { i18n } from "@better-auth/i18n"
+    import { betterAuth } from "shinauth"
+    import { i18n } from "@shinauth/i18n"
 
     export const auth = betterAuth({
         plugins: [
@@ -49,7 +49,7 @@ Better Auth already provides English error messages by default, so you only need
 
 ## Built-in Translations
 
-The package ships with ready-to-use translations for 22 languages, so you don't need to write translations from scratch. Import `locales` from `@better-auth/i18n` to use them.
+The package ships with ready-to-use translations for 22 languages, so you don't need to write translations from scratch. Import `locales` from `@shinauth/i18n` to use them.
 
 | Code | Language             |
 | ---- | -------------------- |
@@ -79,8 +79,8 @@ The package ships with ready-to-use translations for 22 languages, so you don't 
 ### Use all built-in locales
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth"
-import { i18n, locales } from "@better-auth/i18n"
+import { betterAuth } from "shinauth"
+import { i18n, locales } from "@shinauth/i18n"
 
 export const auth = betterAuth({
     plugins: [
@@ -94,8 +94,8 @@ export const auth = betterAuth({
 To keep your bundle lean, you can import only the locales you need:
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth"
-import { i18n, locales } from "@better-auth/i18n"
+import { betterAuth } from "shinauth"
+import { i18n, locales } from "@shinauth/i18n"
 
 export const auth = betterAuth({
     plugins: [
@@ -114,8 +114,8 @@ export const auth = betterAuth({
 You can spread a built-in locale and override only the messages you want to customize:
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth"
-import { i18n, locales } from "@better-auth/i18n"
+import { betterAuth } from "shinauth"
+import { i18n, locales } from "@shinauth/i18n"
 
 export const auth = betterAuth({
     plugins: [
@@ -137,9 +137,9 @@ export const auth = betterAuth({
 You can mix built-in locales with your own custom ones:
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth"
-import { i18n, locales } from "@better-auth/i18n"
-import type { TranslationDictionary } from "@better-auth/i18n"
+import { betterAuth } from "shinauth"
+import { i18n, locales } from "@shinauth/i18n"
+import type { TranslationDictionary } from "@shinauth/i18n"
 
 const myLocale: TranslationDictionary = {
     USER_NOT_FOUND: "...",
@@ -278,7 +278,7 @@ Common error codes include:
 
 **Required:** Yes
 
-A dictionary of translations keyed by locale code. Each locale contains a mapping of error codes to translated messages. Since Better Auth already provides English messages, you typically only need to provide translations for other languages.
+A dictionary of translations keyed by locale code. Each locale contains a mapping of error codes to translated messages. Since Shinauth already provides English messages, you typically only need to provide translations for other languages.
 
 ```ts
 translations: {

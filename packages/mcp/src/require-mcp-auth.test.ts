@@ -10,8 +10,8 @@ const { verifyAccessTokenRequest } = vi.hoisted(() => ({
 // Partial mock: only `verifyAccessTokenRequest` is stubbed. The real exports
 // (e.g. `DPOP_SIGNING_ALGORITHMS`, used by the DPoP challenge builder) stay so
 // the resource-server challenge path works.
-vi.mock("better-auth/oauth2", async (importOriginal) => {
-	const actual = await importOriginal<typeof import("better-auth/oauth2")>();
+vi.mock("shinauth/oauth2", async (importOriginal) => {
+	const actual = await importOriginal<typeof import("shinauth/oauth2")>();
 	return { ...actual, verifyAccessTokenRequest };
 });
 
@@ -181,7 +181,7 @@ describe("requireMcpAuth", () => {
 	});
 
 	/**
-	 * @see https://github.com/better-auth/better-auth/pull/9992
+	 * @see https://github.com/rlvtapp/shinauth/pull/9992
 	 */
 	it("preserves a resource query in the metadata URL", async () => {
 		verifyAccessTokenRequest.mockRejectedValue(

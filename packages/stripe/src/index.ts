@@ -1,6 +1,6 @@
-import type { BetterAuthPlugin, User } from "better-auth";
-import { APIError } from "better-auth";
-import type { Organization } from "better-auth/plugins/organization";
+import type { BetterAuthPlugin, User } from "shinauth";
+import { APIError } from "shinauth";
+import type { Organization } from "shinauth/plugins/organization";
 import { defu } from "defu";
 import type Stripe from "stripe";
 import { STRIPE_ERROR_CODES } from "./error-codes";
@@ -24,7 +24,7 @@ import type {
 import { escapeStripeSearchValue, getPlans, isActiveOrTrialing } from "./utils";
 import { PACKAGE_VERSION } from "./version";
 
-declare module "@better-auth/core" {
+declare module "@shinauth/core" {
 	interface BetterAuthPluginRegistry<AuthOptions, Options> {
 		stripe: {
 			creator: typeof stripe;

@@ -1,10 +1,10 @@
-import type { Awaitable, OAuth2Tokens, User } from "better-auth";
+import type { Awaitable, OAuth2Tokens, User } from "shinauth";
 import type {
 	DBFieldAttribute,
 	FieldAttributeToObject,
 	InferAdditionalFieldsFromPluginOptions,
 	RemoveFieldsWithReturnedFalse,
-} from "better-auth/db";
+} from "shinauth/db";
 import type { AlgorithmValidationOptions } from "./saml/algorithms";
 
 export interface OIDCMapping {
@@ -456,7 +456,7 @@ export interface SSOOptions {
 		 * infrastructure subdomain conventions (RFC 8552), so do
 		 * not include a leading underscore.
 		 *
-		 * @default "better-auth-token"
+		 * @default "shinauth-token"
 		 */
 		tokenPrefix?: string;
 	};

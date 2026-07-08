@@ -1,6 +1,6 @@
 ---
 title: Email Service
-description: Better Auth Infrastructure provides a managed transactional email service with pre-built templates for common authentication flows. Send verification emails, password resets, invitations, and more without managing email infrastructure.
+description: Shinauth Infrastructure provides a managed transactional email service with pre-built templates for common authentication flows. Send verification emails, password resets, invitations, and more without managing email infrastructure.
 ---
 
 ## Overview
@@ -15,10 +15,10 @@ The email service offers:
 
 ## Installation
 
-The email service is included in the `@better-auth/infra` package:
+The email service is included in the `@shinauth/infra` package:
 
 ```ts
-import { sendEmail, createEmailSender } from "@better-auth/infra";
+import { sendEmail, createEmailSender } from "@shinauth/infra";
 ```
 
 ## Quick Start
@@ -26,7 +26,7 @@ import { sendEmail, createEmailSender } from "@better-auth/infra";
 ### Send a Single Email
 
 ```ts
-import { sendEmail } from "@better-auth/infra";
+import { sendEmail } from "@shinauth/infra";
 
 await sendEmail({
   template: "verify-email",
@@ -43,7 +43,7 @@ await sendEmail({
 ### Create a Reusable Sender
 
 ```ts
-import { createEmailSender } from "@better-auth/infra";
+import { createEmailSender } from "@shinauth/infra";
 
 const emailSender = createEmailSender({
   apiKey: process.env.BETTER_AUTH_API_KEY,
@@ -312,7 +312,7 @@ await sendEmail({
 
 ```ts
 interface EmailConfig {
-  apiKey?: string;   // Your Better Auth Infrastructure API key
+  apiKey?: string;   // Your Shinauth Infrastructure API key
   apiUrl?: string;   // Custom API URL (optional)
 }
 ```
@@ -365,14 +365,14 @@ if (result.success) {
 
 Transactional email is available on Pro plans and above.
 
-## Integration with Better Auth
+## Integration with Shinauth
 
-The email service integrates seamlessly with Better Auth's authentication flows. Here's a complete example:
+The email service integrates seamlessly with Shinauth's authentication flows. Here's a complete example:
 
 ```ts title="auth.ts"
-import { betterAuth } from "better-auth";
-import { organization } from "better-auth/plugins";
-import { sendEmail } from "@better-auth/infra";
+import { betterAuth } from "shinauth";
+import { organization } from "shinauth/plugins";
+import { sendEmail } from "@shinauth/infra";
 
 export const auth = betterAuth({
   emailAndPassword: {

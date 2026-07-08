@@ -1,5 +1,5 @@
 ---
-"@better-auth/oauth-provider": minor
+"@shinauth/oauth-provider": minor
 ---
 
 Revoking a JWT access token that still verifies for this server now returns `400 unsupported_token_type` at `/oauth2/revoke` instead of a misleading `200`. A JWT is self-contained and is never stored, so the server cannot revoke it; the previous success response implied otherwise while the token kept working until expiry. An already-expired JWT or a JWT with an audience rejected by the OAuth resource model fails verification and still returns a successful `200` no-op.

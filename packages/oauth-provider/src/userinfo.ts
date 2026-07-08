@@ -1,13 +1,13 @@
-import type { GenericEndpointContext } from "@better-auth/core";
-import { APIError } from "better-auth/api";
+import type { GenericEndpointContext } from "@shinauth/core";
+import { APIError } from "shinauth/api";
 import {
 	createDpopReplayStore,
 	enforceDpopBinding,
 	getDpopJktFromPayload,
 	isDpopBindingError,
 	parseAccessTokenAuthorization,
-} from "better-auth/oauth2";
-import type { User } from "better-auth/types";
+} from "shinauth/oauth2";
+import type { User } from "shinauth/types";
 import { getDpopProofJwt, getEndpointUrl } from "./dpop";
 import {
 	collectExtensionUserInfoClaims,

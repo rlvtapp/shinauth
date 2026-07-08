@@ -45,7 +45,7 @@ describe("info command", () => {
 				name: "test-project",
 				version: "1.0.0",
 				dependencies: {
-					"better-auth": "^1.0.0",
+					"shinauth": "^1.0.0",
 				},
 			}),
 		);
@@ -67,7 +67,7 @@ describe("info command", () => {
 		expect(output.packageManager).toHaveProperty("name");
 		expect(output.packageManager).toHaveProperty("version");
 
-		// Better Auth config should have an error since no auth file exists
+		// Shinauth config should have an error since no auth file exists
 		expect(output.betterAuth).toHaveProperty("version");
 		expect(output.betterAuth.config).toBeNull();
 	});
@@ -80,7 +80,7 @@ describe("info command", () => {
 				name: "test-project",
 				version: "1.0.0",
 				dependencies: {
-					"better-auth": "^1.0.0",
+					"shinauth": "^1.0.0",
 					next: "^14.0.0",
 					react: "^18.0.0",
 				},
@@ -90,7 +90,7 @@ describe("info command", () => {
 		// Create auth.ts with sensitive data - using in-memory database to avoid adapter errors
 		await fs.writeFile(
 			path.join(tmpDir, "auth.ts"),
-			`import { betterAuth } from "better-auth";
+			`import { betterAuth } from "shinauth";
 
 			export const auth = betterAuth({
 				secret: "super-secret-key-123",
@@ -148,14 +148,14 @@ describe("info command", () => {
 				name: "test-project",
 				version: "1.0.0",
 				dependencies: {
-					"better-auth": "^1.0.0",
+					"shinauth": "^1.0.0",
 				},
 			}),
 		);
 
 		await fs.writeFile(
 			path.join(tmpDir, "auth.ts"),
-			`import { betterAuth } from "better-auth";
+			`import { betterAuth } from "shinauth";
 
 			export const auth = betterAuth({
 				secrets: [
@@ -187,7 +187,7 @@ describe("info command", () => {
 				name: "test-project",
 				version: "1.0.0",
 				dependencies: {
-					"better-auth": "^1.0.0",
+					"shinauth": "^1.0.0",
 					next: "^14.0.0",
 					react: "^18.0.0",
 				},
@@ -229,7 +229,7 @@ describe("info command", () => {
 				name: "test-project",
 				version: "1.0.0",
 				dependencies: {
-					"better-auth": "^1.0.0",
+					"shinauth": "^1.0.0",
 					"@prisma/client": "^5.0.0",
 					kysely: "^0.26.0",
 				},
@@ -271,7 +271,7 @@ describe("info command", () => {
 				name: "test-project",
 				version: "1.0.0",
 				dependencies: {
-					"better-auth": "^1.0.0",
+					"shinauth": "^1.0.0",
 				},
 			}),
 		);
@@ -283,7 +283,7 @@ describe("info command", () => {
 		// Create auth config in custom location
 		await fs.writeFile(
 			path.join(customPath, "auth.config.ts"),
-			`import { betterAuth } from "better-auth";
+			`import { betterAuth } from "shinauth";
 
 			export const auth = betterAuth({
 				secret: "my-secret",
@@ -318,7 +318,7 @@ describe("info command", () => {
 				name: "test-project",
 				version: "1.0.0",
 				dependencies: {
-					"better-auth": "^1.0.0",
+					"shinauth": "^1.0.0",
 				},
 			}),
 		);
@@ -326,8 +326,8 @@ describe("info command", () => {
 		// Create auth.ts with plugins
 		await fs.writeFile(
 			path.join(tmpDir, "auth.ts"),
-			`import { betterAuth } from "better-auth";
-			import { twoFactor, organization } from "better-auth/plugins";
+			`import { betterAuth } from "shinauth";
+			import { twoFactor, organization } from "shinauth/plugins";
 
 			export const auth = betterAuth({
 				plugins: [

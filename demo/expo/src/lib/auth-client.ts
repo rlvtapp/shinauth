@@ -1,5 +1,5 @@
-import { expoClient } from "@better-auth/expo/client";
-import { createAuthClient } from "better-auth/client";
+import { expoClient } from "@shinauth/expo/client";
+import { createAuthClient } from "shinauth/client";
 import * as SecureStore from "expo-secure-store";
 
 export const authClient = createAuthClient({
@@ -7,7 +7,7 @@ export const authClient = createAuthClient({
 	disableDefaultFetchPlugins: true,
 	plugins: [
 		expoClient({
-			scheme: "better-auth",
+			scheme: "shinauth",
 			storage: SecureStore,
 		}),
 	],

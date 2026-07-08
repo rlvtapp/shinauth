@@ -3,7 +3,7 @@
 import {
 	isLoopbackHost,
 	isPublicRoutableHost,
-} from "@better-auth/core/utils/host";
+} from "@shinauth/core/utils/host";
 
 const DOT_SEGMENT_RE = /\/(?:\.|%2e)(?:\.|%2e)?(?:\/|$|#|\?)/i;
 
