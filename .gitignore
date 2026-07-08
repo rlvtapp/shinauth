@@ -190,7 +190,11 @@ dist
 *.sqlite
 *.db
 
+.moon/cache/
+.moon/docker/
+/cache/
 .turbo/
+**/.turbo/
 .tsup
 .todo
 
@@ -201,8 +205,6 @@ android/
 
 .vercel
 .vinxi
-# Turborepo
-.turbo
 
 playwright-report/
 test-results/

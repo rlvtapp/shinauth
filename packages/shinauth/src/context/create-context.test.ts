@@ -19,7 +19,20 @@ describe("base context creation", () => {
 		return createAuthContext(adapter, opts, getDatabaseType);
 	};
 
-	it("should infer BASE_URL from env", async () => {
+	it("should infer baseURL from SHINAUTH_URL env", async () => {
+		vi.stubEnv("SHINAUTH_URL", "http://localhost:5147");
+
+		const opts: BetterAuthOptions = {};
+		const adapter = await getAdapter(opts);
+		const getDatabaseType = () => "memory";
+		const res = await createAuthContext(adapter, opts, getDatabaseType);
+
+		expect(res.options.baseURL).toBe("http://localhost:5147");
+		expect(res.baseURL).toBe("http://localhost:5147/api/auth");
+		vi.unstubAllEnvs();
+	});
+
+	it("should infer baseURL from BETTER_AUTH_URL env", async () => {
 		vi.stubEnv("BETTER_AUTH_URL", "http://localhost:5147");
 
 		const opts: BetterAuthOptions = {};
@@ -234,14 +247,52 @@ describe("base context creation", () => {
 	describe("secret management", () => {
 		it("should use options.secret as highest priority", async () => {
 			vi.stubEnv(
+				"SHINAUTH_SECRET",
+				"shinauth-env-secret-that-is-long-enough-for-validation",
+			);
+			vi.stubEnv(
 				"BETTER_AUTH_SECRET",
-				"env-secret-that-is-long-enough-for-validation-test",
+				"better-auth-env-secret-that-is-long-enough-for-validation",
 			);
 			const res = await initBase({
 				secret: "options-secret-that-is-long-enough-for-validation",
 			});
 			expect(res.secret).toBe(
 				"options-secret-that-is-long-enough-for-validation",
+			);
+			vi.unstubAllEnvs();
+		});
+
+		it("should use SHINAUTH_SECRET from env", async () => {
+			vi.stubEnv(
+				"SHINAUTH_SECRET",
+				"shinauth-secret-that-is-long-enough-for-validation",
+			);
+			const opts: BetterAuthOptions = {};
+			const adapter = await getAdapter(opts);
+			const getDatabaseType = () => "memory";
+			const res = await createAuthContext(adapter, opts, getDatabaseType);
+			expect(res.secret).toBe(
+				"shinauth-secret-that-is-long-enough-for-validation",
+			);
+			vi.unstubAllEnvs();
+		});
+
+		it("should prefer SHINAUTH_SECRET over BETTER_AUTH_SECRET", async () => {
+			vi.stubEnv(
+				"SHINAUTH_SECRET",
+				"shinauth-secret-that-is-long-enough-for-validation",
+			);
+			vi.stubEnv(
+				"BETTER_AUTH_SECRET",
+				"better-auth-secret-that-is-long-enough-for-validation",
+			);
+			const opts: BetterAuthOptions = {};
+			const adapter = await getAdapter(opts);
+			const getDatabaseType = () => "memory";
+			const res = await createAuthContext(adapter, opts, getDatabaseType);
+			expect(res.secret).toBe(
+				"shinauth-secret-that-is-long-enough-for-validation",
 			);
 			vi.unstubAllEnvs();
 		});
@@ -1024,6 +1075,17 @@ describe("base context creation", () => {
 	});
 
 	describe("trusted origins - environment variables", () => {
+		it("should include origins from SHINAUTH_TRUSTED_ORIGINS env", async () => {
+			vi.stubEnv("SHINAUTH_TRUSTED_ORIGINS", "http://app1.com,http://app2.com");
+			const res = await initBase({
+				baseURL: "http://localhost:3000",
+			});
+			expect(res.trustedOrigins).toContain("http://app1.com");
+			expect(res.trustedOrigins).toContain("http://app2.com");
+			expect(res.trustedOrigins).toContain("http://localhost:3000");
+			vi.unstubAllEnvs();
+		});
+
 		it("should include origins from BETTER_AUTH_TRUSTED_ORIGINS env", async () => {
 			vi.stubEnv(
 				"BETTER_AUTH_TRUSTED_ORIGINS",
@@ -1541,6 +1603,7 @@ describe("base context creation", () => {
 
 	describe("secret validation", () => {
 		it("should allow default secret in test environment", async () => {
+			vi.stubEnv("SHINAUTH_SECRET", "");
 			vi.stubEnv("BETTER_AUTH_SECRET", "");
 			vi.stubEnv("AUTH_SECRET", "");
 
@@ -1556,6 +1619,7 @@ describe("base context creation", () => {
 		});
 
 		it("should throw error when default secret is set in production environment", async () => {
+			vi.stubEnv("SHINAUTH_SECRET", "");
 			vi.stubEnv("BETTER_AUTH_SECRET", "");
 			vi.stubEnv("AUTH_SECRET", "");
 			const originalNodeEnv = process.env.NODE_ENV;
@@ -1563,7 +1627,7 @@ describe("base context creation", () => {
 			const { DEFAULT_SECRET } = await import("../utils/constants");
 
 			const expectedErrorMessage =
-				"You are using the default secret. Please set `BETTER_AUTH_SECRET` in your environment variables or pass `secret` in your auth config.";
+				"You are using the default secret. Please set `SHINAUTH_SECRET` in your environment variables or pass `secret` in your auth config.";
 
 			vi.doMock("@shinauth/core/env", async () => {
 				const actual = await vi.importActual("@shinauth/core/env");
@@ -1604,6 +1668,7 @@ describe("base context creation", () => {
 		});
 
 		it("should log a warning when secret is too short", async () => {
+			vi.stubEnv("SHINAUTH_SECRET", "");
 			vi.stubEnv("BETTER_AUTH_SECRET", "");
 			vi.stubEnv("AUTH_SECRET", "");
 			const originalNodeEnv = process.env.NODE_ENV;
@@ -1663,6 +1728,7 @@ describe("base context creation", () => {
 		});
 
 		it("should fallback to default secret when secret is empty", async () => {
+			vi.stubEnv("SHINAUTH_SECRET", "");
 			vi.stubEnv("BETTER_AUTH_SECRET", "");
 			vi.stubEnv("AUTH_SECRET", "");
 

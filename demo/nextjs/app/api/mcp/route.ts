@@ -4,7 +4,10 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import * as z from "zod";
 
-const baseUrl = process.env.BETTER_AUTH_URL || "https://demo.shinauth.com";
+const baseUrl =
+	process.env.SHINAUTH_URL ||
+	process.env.BETTER_AUTH_URL ||
+	"http://localhost:3000";
 
 /**
  * Example derived from https://www.npmjs.com/package/mcp-handler
@@ -30,7 +33,9 @@ const handler = mcpHandler(
 					},
 					async ({ message }) => {
 						const baseUrl =
-							process.env.BETTER_AUTH_URL || "https://demo.shinauth.com";
+							process.env.SHINAUTH_URL ||
+							process.env.BETTER_AUTH_URL ||
+							"http://localhost:3000";
 						const org = jwt?.[baseUrl + "/org"];
 						return {
 							content: [

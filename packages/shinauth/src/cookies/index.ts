@@ -601,10 +601,11 @@ export const getCookieCache = async <
 		const jwtSigningKey = config?.jwt?.signingKey ?? "secret";
 
 		if (strategy === "jwe") {
-			const secret = config?.secret || env.BETTER_AUTH_SECRET;
+			const secret =
+				config?.secret || env.SHINAUTH_SECRET || env.BETTER_AUTH_SECRET;
 			if (!secret) {
 				throw new BetterAuthError(
-					"getCookieCache requires a secret to be provided. Either pass it as an option or set the BETTER_AUTH_SECRET environment variable",
+					"getCookieCache requires a secret to be provided. Either pass it as an option or set the SHINAUTH_SECRET or BETTER_AUTH_SECRET environment variable",
 				);
 			}
 			// Use JWE strategy (encrypted)

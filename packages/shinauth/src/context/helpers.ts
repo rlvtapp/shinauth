@@ -152,7 +152,8 @@ export async function getTrustedOrigins(
 			trustedOrigins.push(...validOrigins);
 		}
 	}
-	const envTrustedOrigins = env.BETTER_AUTH_TRUSTED_ORIGINS;
+	const envTrustedOrigins =
+		env.SHINAUTH_TRUSTED_ORIGINS || env.BETTER_AUTH_TRUSTED_ORIGINS;
 	if (envTrustedOrigins) {
 		trustedOrigins.push(...envTrustedOrigins.split(","));
 	}

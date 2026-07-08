@@ -526,7 +526,8 @@ export type BetterAuthOptions = {
 	 * - A dynamic config with allowed hosts for multi-domain deployments
 	 *
 	 * If not explicitly set, the system will check environment variables:
-	 * `BETTER_AUTH_URL`, `NEXT_PUBLIC_BETTER_AUTH_URL`, etc.
+	 * `SHINAUTH_URL`, `NEXT_PUBLIC_SHINAUTH_URL`, etc. Legacy
+	 * `BETTER_AUTH_*` variables are still supported as migration aliases.
 	 *
 	 * @example
 	 * ```ts
@@ -555,6 +556,7 @@ export type BetterAuthOptions = {
 	 *
 	 * By default Shinauth will look for
 	 * the following environment variables:
+	 * process.env.SHINAUTH_SECRET,
 	 * process.env.BETTER_AUTH_SECRET,
 	 * process.env.AUTH_SECRET
 	 * If none of these environment
@@ -579,8 +581,9 @@ export type BetterAuthOptions = {
 	 * First entry is the current key used for new encryption.
 	 * Remaining entries are decryption-only (previous rotations).
 	 *
-	 * Can also be set via BETTER_AUTH_SECRETS env var:
-	 * `BETTER_AUTH_SECRETS=2:base64secret,1:base64secret`
+	 * Can also be set via SHINAUTH_SECRETS env var:
+	 * `SHINAUTH_SECRETS=2:base64secret,1:base64secret`
+	 * Legacy `BETTER_AUTH_SECRETS` is still supported as a migration alias.
 	 *
 	 * When set, `secret` is only used as legacy fallback
 	 * for decrypting bare-hex payloads that predate the envelope format.

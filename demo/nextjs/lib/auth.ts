@@ -159,7 +159,7 @@ const authOptions = {
 						inviteLink:
 							process.env.NODE_ENV === "development"
 								? `http://localhost:3000/accept-invitation/${data.id}`
-								: `${process.env.BETTER_AUTH_URL || "https://demo.shinauth.com"}/accept-invitation/${data.id}`,
+								: `${process.env.SHINAUTH_URL || process.env.BETTER_AUTH_URL || "http://localhost:3000"}/accept-invitation/${data.id}`,
 					},
 				});
 			},
@@ -188,7 +188,9 @@ const authOptions = {
 		multiSession(),
 		oAuthProxy({
 			productionURL:
-				process.env.BETTER_AUTH_URL || "https://demo.shinauth.com",
+				process.env.SHINAUTH_URL ||
+				process.env.BETTER_AUTH_URL ||
+				"http://localhost:3000",
 		}),
 		nextCookies(),
 		oneTap(),
@@ -350,7 +352,7 @@ const authOptions = {
 		lastLoginMethod(),
 		jwt({
 			jwt: {
-				issuer: process.env.BETTER_AUTH_URL,
+				issuer: process.env.SHINAUTH_URL || process.env.BETTER_AUTH_URL,
 			},
 		}),
 		oauthProvider({
@@ -366,9 +368,12 @@ const authOptions = {
 				"read:organization",
 			],
 			resources: [
-				process.env.BETTER_AUTH_URL || "https://demo.shinauth.com",
-				(process.env.BETTER_AUTH_URL || "https://demo.shinauth.com") +
-					"/api/mcp",
+				process.env.SHINAUTH_URL ||
+					process.env.BETTER_AUTH_URL ||
+					"http://localhost:3000",
+				(process.env.SHINAUTH_URL ||
+					process.env.BETTER_AUTH_URL ||
+					"http://localhost:3000") + "/api/mcp",
 			],
 			selectAccount: {
 				page: "/oauth/select-account",
@@ -380,7 +385,9 @@ const authOptions = {
 			customAccessTokenClaims({ referenceId, scopes }) {
 				if (referenceId && scopes.includes("read:organization")) {
 					const baseUrl =
-						process.env.BETTER_AUTH_URL || "https://demo.shinauth.com";
+						process.env.SHINAUTH_URL ||
+						process.env.BETTER_AUTH_URL ||
+						"http://localhost:3000";
 					return {
 						[`${baseUrl}/org`]: referenceId,
 					};

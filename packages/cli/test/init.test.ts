@@ -262,9 +262,10 @@ describe("initAction", () => {
 			const line = envContent
 				.toString()
 				.split("\n")
-				.find((l) => l.startsWith("BETTER_AUTH_SECRET="));
+				.find((l) => l.startsWith("SHINAUTH_SECRET="));
 
 			expect(line).toBeDefined();
+			expect(envContent).toContain("BETTER_AUTH_SECRET=");
 
 			const secret = line!.split("=")[1]?.replaceAll('"', "").trim();
 
@@ -808,7 +809,7 @@ describe("initAction", () => {
 			);
 			await fs.writeFile(
 				path.join(tmp, ".env"),
-				"BETTER_AUTH_SECRET=test\nBETTER_AUTH_URL=http://localhost:3000",
+				"SHINAUTH_SECRET=test\nSHINAUTH_URL=http://localhost:3000\nBETTER_AUTH_SECRET=test\nBETTER_AUTH_URL=http://localhost:3000",
 			);
 
 			mockPrompts.mockImplementation(async (questions: any) => {

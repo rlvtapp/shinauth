@@ -136,6 +136,8 @@
       "!**/.next",
       "!**/.svelte-kit",
       "!**/.contentlayer",
+      "!**/.moon/cache",
+      "!**/cache",
       "!**/.turbo",
       "!**/.nuxt",
       "!**/.source",

@@ -96,14 +96,23 @@ export function getBooleanEnvVar(key: string, fallback = true): boolean {
  * Common environment variables used in Shinauth
  */
 export const ENV = Object.freeze({
+	get SHINAUTH_SECRET() {
+		return getEnvVar("SHINAUTH_SECRET");
+	},
 	get BETTER_AUTH_SECRET() {
 		return getEnvVar("BETTER_AUTH_SECRET");
 	},
 	get AUTH_SECRET() {
 		return getEnvVar("AUTH_SECRET");
 	},
+	get SHINAUTH_TELEMETRY() {
+		return getEnvVar("SHINAUTH_TELEMETRY");
+	},
 	get BETTER_AUTH_TELEMETRY() {
 		return getEnvVar("BETTER_AUTH_TELEMETRY");
+	},
+	get SHINAUTH_TELEMETRY_ID() {
+		return getEnvVar("SHINAUTH_TELEMETRY_ID");
 	},
 	get BETTER_AUTH_TELEMETRY_ID() {
 		return getEnvVar("BETTER_AUTH_TELEMETRY_ID");
@@ -113,6 +122,12 @@ export const ENV = Object.freeze({
 	},
 	get PACKAGE_VERSION() {
 		return getEnvVar("PACKAGE_VERSION", "0.0.0");
+	},
+	get SHINAUTH_TELEMETRY_ENDPOINT(): string | undefined {
+		return getEnvVar(
+			"SHINAUTH_TELEMETRY_ENDPOINT",
+			import.meta.env.SHINAUTH_TELEMETRY_ENDPOINT,
+		);
 	},
 	get BETTER_AUTH_TELEMETRY_ENDPOINT(): string | undefined {
 		return getEnvVar(

@@ -1,0 +1,90 @@
+fileGroups:
+  sources:
+    - src/**/*
+  tests:
+    - test/**/*
+    - tests/**/*
+    - '*.test.*'
+    - '*.spec.*'
+  configs:
+    - package.json
+    - tsconfig.json
+    - tsconfig.*.json
+    - tsdown.config.*
+    - vitest.config.*
+
+implicitInputs:
+  - /tsconfig.json
+  - /tsconfig.base.json
+  - /pnpm-workspace.yaml
+
+tasks:
+  build:
+    command: pnpm run build
+    deps:
+      - '^:build'
+    inputs:
+      - '@group(sources)'
+      - '@group(configs)'
+    outputs:
+      - dist/**/*
+      - node_modules/.cache/ts/**/*
+
+  dev:
+    command: pnpm run dev
+    options:
+      cache: false
+      persistent: true
+
+  clean:
+    script: rm -rf dist node_modules/.cache/ts
+    options:
+      cache: false
+
+  lintTypes:
+    command: pnpm run --if-present lint:types
+    deps:
+      - '^:build'
+      - build
+    inputs:
+      - dist/**/*
+      - package.json
+    outputs: []
+
+  lintPackage:
+    command: pnpm run --if-present lint:package
+    deps:
+      - '^:build'
+      - build
+    inputs:
+      - dist/**/*
+      - package.json
+    outputs: []
+
+  test:
+    command: pnpm run --if-present test
+    deps:
+      - '^:build'
+      - build
+    inputs:
+      - '@group(sources)'
+      - '@group(tests)'
+      - '@group(configs)'
+    outputs:
+      - .vitest/**/*
+      - coverage/**/*
+      - test-results/**/*
+
+  coverage:
+    command: pnpm run --if-present coverage
+    deps:
+      - '^:build'
+      - build
+    inputs:
+      - '@group(sources)'
+      - '@group(tests)'
+      - '@group(configs)'
+    outputs:
+      - coverage/**/*
+      - coverage-final.json
+      - .nyc_output/**/*

@@ -477,6 +477,8 @@ export async function initAction(opts: any) {
 
 				const secret = providedSecret || generateSecretHash();
 				const envs = [
+					`SHINAUTH_SECRET="${secret}"`,
+					`SHINAUTH_URL="${providedURL}"`,
 					`BETTER_AUTH_SECRET="${secret}"`,
 					`BETTER_AUTH_URL="${providedURL}"`,
 				];
@@ -488,8 +490,8 @@ export async function initAction(opts: any) {
 
 		// Check for missing ENV variables (basic ones only - social providers handled later)
 		const missingEnvVars = await getMissingEnvVars(envFiles, [
-			"BETTER_AUTH_SECRET",
-			"BETTER_AUTH_URL",
+			"SHINAUTH_SECRET",
+			"SHINAUTH_URL",
 		]);
 
 		if (!missingEnvVars.length) {
@@ -512,7 +514,7 @@ export async function initAction(opts: any) {
 				const envs: string[] = [];
 
 				for (const v of missingVars) {
-					if (v === "BETTER_AUTH_SECRET") {
+					if (v === "SHINAUTH_SECRET") {
 						const { providedSecret } = await prompts({
 							type: "text",
 							name: "providedSecret",
@@ -522,10 +524,10 @@ export async function initAction(opts: any) {
 							cancel("✋ Operation cancelled.");
 							process.exit(0);
 						}
-						envs.push(
-							`BETTER_AUTH_SECRET="${providedSecret || generateSecretHash()}"`,
-						);
-					} else if (v === "BETTER_AUTH_URL") {
+						const secret = providedSecret || generateSecretHash();
+						envs.push(`SHINAUTH_SECRET="${secret}"`);
+						envs.push(`BETTER_AUTH_SECRET="${secret}"`);
+					} else if (v === "SHINAUTH_URL") {
 						const { providedURL } = await prompts({
 							type: "text",
 							name: "providedURL",
@@ -536,6 +538,7 @@ export async function initAction(opts: any) {
 							cancel("✋ Operation cancelled.");
 							process.exit(0);
 						}
+						envs.push(`SHINAUTH_URL="${providedURL}"`);
 						envs.push(`BETTER_AUTH_URL="${providedURL}"`);
 					}
 				}
@@ -564,11 +567,17 @@ export async function initAction(opts: any) {
 				const envs = missingEnvVars
 					.find((x) => x.file === file)!
 					.var.map((v) => {
-						if (v === "BETTER_AUTH_SECRET") {
-							return `BETTER_AUTH_SECRET="${secretHash}"`;
+						if (v === "SHINAUTH_SECRET") {
+							return [
+								`SHINAUTH_SECRET="${secretHash}"`,
+								`BETTER_AUTH_SECRET="${secretHash}"`,
+							].join("\n");
 						}
-						if (v === "BETTER_AUTH_URL") {
-							return 'BETTER_AUTH_URL="http://localhost:3000"';
+						if (v === "SHINAUTH_URL") {
+							return [
+								'SHINAUTH_URL="http://localhost:3000"',
+								'BETTER_AUTH_URL="http://localhost:3000"',
+							].join("\n");
 						}
 						return `${v}=${v}`;
 					});

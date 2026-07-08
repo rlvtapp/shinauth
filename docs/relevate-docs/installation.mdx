@@ -1,0 +1,646 @@
+---
+title: "Installation"
+---
+
+### Install the Package
+
+    Let's start by adding Shinauth to your project:
+
+    ```bash
+    shinauth
+    ```
+
+
+**Note:**
+
+      If you're using a separate client and server setup, make sure to install Shinauth in both parts of your project.
+
+
+
+
+    ### Set Environment Variables
+
+    Create a `.env` file in the root of your project and add the following environment variables:
+
+    1. **Secret Key**
+
+    A secret value used for encryption and hashing. It must be at least 32 characters and generated with high entropy. Click the button below to generate one. You can also use `openssl rand -base64 32` to generate one.
+
+    ```txt title=".env"
+    BETTER_AUTH_SECRET=
+    ```
+
+
+
+
+**Note:**
+
+      Need to rotate your secret later? You can use `BETTER_AUTH_SECRETS` (plural) to roll over to a new secret without invalidating existing data. See the [`secrets` option](/reference/options#secrets) for details.
+
+
+    2. **Set Base URL**
+
+    ```txt title=".env"
+    BETTER_AUTH_URL=http://localhost:3000 # Base URL of your app
+    ```
+
+
+
+    ### Create A Shinauth Instance
+
+    Create a file named `auth.ts` in one of these locations:
+
+    * Project root
+    * `lib/` folder
+    * `utils/` folder
+
+    You can also nest any of these folders under `src/`, `app/` or `server/` folder. (e.g. `src/lib/auth.ts`, `app/lib/auth.ts`).
+
+    And in this file, import Shinauth and create your auth instance. Make sure to export the auth instance with the variable name `auth` or as a `default` export.
+
+    ```ts title="auth.ts"
+    import { shinAuth } from "shinauth";
+
+    export const auth = shinAuth({
+      //...
+    });
+    ```
+
+
+
+    ### Configure Database
+
+    Shinauth requires a database to store user data.
+    You can easily configure Shinauth to use SQLite, PostgreSQL, or MySQL, and more!
+
+
+**Note:**
+
+      You can also configure Shinauth to work in a stateless mode if you don't configure a database. See [Stateless Session Management](/concepts/session-management#stateless-session-management) for more information. Note that most plugins will require a database.
+
+
+
+
+#### sqlite
+
+        ```ts title="auth.ts"
+        import { shinAuth } from "shinauth";
+        import Database from "better-sqlite3";
+
+        export const auth = shinAuth({
+            database: new Database("./sqlite.db"),
+        })
+        ```
+
+
+
+#### postgres
+
+        ```ts title="auth.ts"
+        import { shinAuth } from "shinauth";
+        import { Pool } from "pg";
+
+        export const auth = shinAuth({
+            database: new Pool({
+                // connection options
+            }),
+        })
+        ```
+
+
+
+#### mysql
+
+        ```ts title="auth.ts"
+        import { shinAuth } from "shinauth";
+        import { createPool } from "mysql2/promise";
+
+        export const auth = shinAuth({
+            database: createPool({
+                // connection options
+            }),
+        })
+        ```
+
+
+
+    Alternatively, if you prefer to use an ORM, you can use one of the built-in adapters.
+
+
+
+#### drizzle
+
+        ```ts title="auth.ts"
+        import { shinAuth } from "shinauth";
+        import { drizzleAdapter } from "shinauth/adapters/drizzle";
+        import { db } from "@/db"; // your drizzle instance
+
+        export const auth = shinAuth({
+            database: drizzleAdapter(db, {
+                provider: "pg", // or "mysql", "sqlite"
+            }),
+        });
+        ```
+
+
+
+#### prisma
+
+        ```ts title="auth.ts"
+        import { shinAuth } from "shinauth";
+        import { prismaAdapter } from "shinauth/adapters/prisma";
+        // If your Prisma file is located elsewhere, you can change the path
+        import { PrismaClient } from "@/generated/prisma/client";
+
+        const prisma = new PrismaClient();
+        export const auth = shinAuth({
+            database: prismaAdapter(prisma, {
+                provider: "sqlite", // or "mysql", "postgresql", ...etc
+            }),
+        });
+        ```
+
+
+
+#### mongodb
+
+        ```ts title="auth.ts"
+        import { shinAuth } from "shinauth";
+        import { mongodbAdapter } from "shinauth/adapters/mongodb";
+        import { client } from "@/db"; // your mongodb client
+
+        export const auth = shinAuth({
+            database: mongodbAdapter(client),
+        });
+        ```
+
+
+
+    If your database is not listed above, check out our other supported
+    [databases](/adapters/other-relational-databases) for more information,
+    or use one of the supported ORMs.
+
+
+**Note:**
+
+      If you’re using a database adapter (Drizzle, Prisma, MongoDB, or a community adapter),
+      consider importing `shinAuth` from `shinauth/minimal` instead of `shinauth` to reduce bundle size.
+      See [Bundle Size Optimization](/guides/optimizing-for-performance#bundle-size-optimization) for more information.
+
+
+
+
+    ### Create Database Tables
+
+    Shinauth includes a CLI tool to help manage the schema required by the library.
+
+    * **Generate**: This command generates an ORM schema or SQL migration file.
+
+
+**Note:**
+
+      If you're using Kysely, you can apply the migration directly with `migrate` command below. Use `generate` only if you plan to apply the migration manually.
+
+
+    ```bash
+    pnpm dlx @shinauth/cli generate
+    ```
+
+    * **Migrate**: This command creates the required tables directly in the database. (Available only for the built-in Kysely adapter)
+
+      ```bash
+      pnpm dlx @shinauth/cli migrate
+      ```
+
+    see the [CLI documentation](/concepts/cli) for more information.
+
+
+**Note:**
+
+      If you instead want to create the schema manually, you can find the core schema required in the [database section](/concepts/database#core-schema).
+
+
+
+
+    ### Authentication Methods
+
+    Configure the authentication methods you want to use. Shinauth comes with built-in support for email/password, and social sign-on providers.
+
+    ```ts title="auth.ts"
+    import { shinAuth } from "shinauth";
+
+    export const auth = shinAuth({
+      //...other options
+      emailAndPassword: {
+        enabled: true,
+      },
+      socialProviders: {
+        github: {
+          clientId: process.env.GITHUB_CLIENT_ID as string,
+          clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+        },
+      },
+    });
+    ```
+
+
+**Note:**
+
+      You can use even more authentication methods like [passkey](/plugins/passkey), [username](/plugins/username), [magic link](/plugins/magic-link) and more through plugins.
+
+
+
+
+    ### Mount Handler
+
+    To handle API requests, you need to set up a route handler on your server.
+
+    Create a new file or route in your framework's designated catch-all route handler. This route should handle requests for the path `/api/auth/*` (unless you've configured a different base path).
+
+
+**Note:**
+
+      Shinauth supports any backend framework with standard Request and Response
+      objects and offers helper functions for popular frameworks.
+
+
+
+
+#### next-js-app-router
+
+        ```ts title="/app/api/auth/[...all]/route.ts"
+        import { auth } from "@/lib/auth"; // path to your auth file
+        import { toNextJsHandler } from "shinauth/next-js";
+
+        export const { POST, GET } = toNextJsHandler(auth);
+        ```
+
+
+
+#### next-js-pages-router
+
+        ```ts title="/pages/api/auth/[...all].ts"
+        import { auth } from "@/lib/auth"; // path to your auth file
+        import { toNodeHandler } from "shinauth/node";
+
+        // Disallow body parsing, we will parse it manually
+        export const config = { api: { bodyParser: false } };
+        export default toNodeHandler(auth.handler);
+        ```
+
+
+
+#### nuxt
+
+        ```ts title="/server/api/auth/[...all].ts"
+        import { auth } from "~/utils/auth"; // path to your auth file
+
+        export default defineEventHandler((event) => {
+            return auth.handler(toWebRequest(event));
+        });
+        ```
+
+
+
+#### svelte-kit
+
+        ```ts title="hooks.server.ts"
+        import { auth } from "$lib/auth"; // path to your auth file
+        import { svelteKitHandler } from "shinauth/svelte-kit";
+        import { building } from '$app/environment'
+
+        export async function handle({ event, resolve }) {
+            return svelteKitHandler({ event, resolve, auth, building });
+        }
+        ```
+
+
+
+#### react-router
+
+        ```ts title="/app/routes/api.auth.$.ts"
+        import { auth } from '~/lib/auth.server' // Adjust the path as necessary
+        import type { LoaderFunctionArgs, ActionFunctionArgs } from "react-router" // or "@remix-run/node"
+
+        export async function loader({ request }: LoaderFunctionArgs) {
+            return auth.handler(request)
+        }
+
+        export async function action({ request }: ActionFunctionArgs) {
+            return auth.handler(request)
+        }
+        ```
+
+
+
+#### solid-start
+
+        ```ts title="/routes/api/auth/*all.ts"
+        import { auth } from "~/lib/auth"; // path to your auth file
+        import { toSolidStartHandler } from "shinauth/solid-start";
+
+        export const { GET, POST } = toSolidStartHandler(auth);
+        ```
+
+
+
+#### hono
+
+        ```ts title="src/index.ts"
+        import { Hono } from "hono";
+        import { auth } from "./auth"; // path to your auth file
+        import { serve } from "@hono/node-server";
+        import { cors } from "hono/cors";
+
+        const app = new Hono();
+
+        app.on(["POST", "GET"], "/api/auth/*", (c) => auth.handler(c.req.raw));
+
+        serve(app);
+        ```
+
+
+
+#### cloudflare-workers
+
+        ```ts title="src/index.ts"
+        import { auth } from "./auth"; // path to your auth file
+
+        export default {
+            async fetch(request: Request) {
+                const url = new URL(request.url);
+
+                // Handle auth routes
+                if (url.pathname.startsWith("/api/auth")) {
+                    return auth.handler(request);
+                }
+
+                // Handle other routes
+                return new Response("Not found", { status: 404 });
+            },
+        };
+        ```
+
+
+**Note:**
+
+          **Node.js AsyncLocalStorage Support**: Shinauth uses AsyncLocalStorage for async context tracking. To enable this in Cloudflare Workers, add the `nodejs_compat` flag to your `wrangler.toml`:
+
+          ```toml title="wrangler.toml"
+          compatibility_flags = ["nodejs_compat"]
+          compatibility_date = "2024-09-23"
+          ```
+
+          Alternatively, if you only need AsyncLocalStorage support:
+
+          ```toml title="wrangler.toml"
+          compatibility_flags = ["nodejs_als"]
+          ```
+
+          In the next major release, we will assume AsyncLocalStorage support by default, so this configuration will be necessary.
+
+
+
+
+#### express
+
+
+**Warning:**
+
+          ExpressJS v5 introduced breaking changes to route path matching by switching to `path-to-regexp@6`. Wildcard routes like `*` should now be written using the new named syntax, e.g. `/{*any}`, to properly capture catch-all patterns. This ensures compatibility and predictable behavior across routing scenarios.
+          See the [Express v5 migration guide](https://expressjs.com/en/guide/migrating-5.html) for details.
+
+          As a result, the implementation in ExpressJS v5 should look like this:
+
+          ```ts
+          app.all('/api/auth/{*any}', toNodeHandler(auth));
+          ```
+
+          *The name any is arbitrary and can be replaced with any identifier you prefer.*
+
+
+        ```ts title="server.ts"
+        import express from "express";
+        import { toNodeHandler } from "shinauth/node";
+        import { auth } from "./auth";
+
+        const app = express();
+        const port = 8000;
+
+        app.all("/api/auth/*", toNodeHandler(auth));
+
+        // Mount express json middleware after Shinauth handler
+        // or only apply it to routes that don't interact with Shinauth
+        app.use(express.json());
+
+        app.listen(port, () => {
+            console.log(`Shinauth app listening on port ${port}`);
+        });
+        ```
+
+        This will also work for any other node server framework like express, fastify, hapi, etc., but may require some modifications. See [fastify guide](/integrations/fastify). Note that CommonJS (cjs) isn't supported.
+
+
+
+#### astro
+
+        ```ts title="/pages/api/auth/[...all].ts"
+        import type { APIRoute } from "astro";
+        import { auth } from "@/auth"; // path to your auth file
+
+        export const GET: APIRoute = async (ctx) => {
+            return auth.handler(ctx.request);
+        };
+
+        export const POST: APIRoute = async (ctx) => {
+            return auth.handler(ctx.request);
+        };
+        ```
+
+
+
+#### elysia
+
+        ```ts
+        import { Elysia, Context } from "elysia";
+        import { auth } from "./auth";
+
+        const betterAuthView = (context: Context) => {
+            const BETTER_AUTH_ACCEPT_METHODS = ["POST", "GET"]
+            // validate request method
+            if(BETTER_AUTH_ACCEPT_METHODS.includes(context.request.method)) {
+                return auth.handler(context.request);
+            } else {
+                context.error(405)
+            }
+        }
+
+        const app = new Elysia().all("/api/auth/*", betterAuthView).listen(3000);
+
+        console.log(
+        `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
+        );
+        ```
+
+
+
+#### tanstack-start
+
+        ```ts title="src/routes/api/auth/$.ts"
+        import { auth } from '@/lib/auth'
+        import { createFileRoute } from '@tanstack/react-router'
+
+        export const Route = createFileRoute('/api/auth/$')({
+            server: {
+                handlers: {
+                    GET: async ({ request }:{ request: Request }) => {
+                        return await auth.handler(request)
+                    },
+                    POST: async ({ request }:{ request: Request }) => {
+                        return await auth.handler(request)
+                    },
+                },
+            },
+        })
+        ```
+
+
+**Note:**
+
+          When you call functions that need to set cookies (like `signInEmail` or `signUpEmail`), you'll need to handle cookie setting for TanStack Start. Shinauth provides a `tanstackStartCookies` plugin to automatically handle this for you.
+
+          For React (TanStack Start with React):
+
+          ```ts title="src/lib/auth.ts"
+          import { shinAuth } from "shinauth";
+          import { tanstackStartCookies } from "shinauth/tanstack-start";
+
+          export const auth = shinAuth({
+              //...your config
+              plugins: [tanstackStartCookies()] // make sure this is the last plugin in the array
+          })
+          ```
+
+          For Solid.js (TanStack Start with Solid):
+
+          ```ts title="src/lib/auth.ts"
+          import { shinAuth } from "shinauth";
+          import { tanstackStartCookies } from "shinauth/tanstack-start/solid";
+
+          export const auth = shinAuth({
+              //...your config
+              plugins: [tanstackStartCookies()] // make sure this is the last plugin in the array
+          })
+          ```
+
+          Now, when you call functions that set cookies, they will be automatically set using TanStack Start's cookie handling system.
+
+
+
+
+#### expo
+
+        ```ts title="app/api/auth/[...all]+api.ts"
+        import { auth } from '@/lib/server/auth'; // path to your auth file
+
+        const handler = auth.handler;
+        export { handler as GET, handler as POST };
+        ```
+
+
+
+
+
+    ### Create Client Instance
+
+    The client-side library helps you interact with the auth server. Shinauth comes with a client for all the popular web frameworks, including vanilla JavaScript.
+
+    1. Import `createAuthClient` from the package for your framework (e.g., "shinauth/react" for React).
+    2. Call the function to create your client.
+    3. Pass the base URL of your auth server. (If the auth server is running on the same domain as your client, you can skip this step.)
+
+
+**Note:**
+
+      If you're using a different base path other than `/api/auth` make sure to pass
+      the whole URL including the path. (e.g.
+      `http://localhost:3000/custom-path/auth`)
+
+
+
+
+#### vanilla
+
+        ```ts title="lib/auth-client.ts"
+        import { createAuthClient } from "shinauth/client"
+        export const authClient = createAuthClient({
+            /** The base URL of the server (optional if you're using the same domain) */
+            baseURL: "http://localhost:3000"
+        })
+        ```
+
+
+
+#### lib/auth-client.ts
+
+        ```ts title="lib/auth-client.ts"
+        import { createAuthClient } from "shinauth/react"
+        export const authClient = createAuthClient({
+            /** The base URL of the server (optional if you're using the same domain) */
+            baseURL: "http://localhost:3000"
+        })
+        ```
+
+
+
+#### lib/auth-client.ts
+
+        ```ts title="lib/auth-client.ts"
+        import { createAuthClient } from "shinauth/vue"
+        export const authClient = createAuthClient({
+            /** The base URL of the server (optional if you're using the same domain) */
+            baseURL: "http://localhost:3000"
+        })
+        ```
+
+
+
+#### lib/auth-client.ts
+
+        ```ts title="lib/auth-client.ts"
+        import { createAuthClient } from "shinauth/svelte"
+        export const authClient = createAuthClient({
+            /** The base URL of the server (optional if you're using the same domain) */
+            baseURL: "http://localhost:3000"
+        })
+        ```
+
+
+
+#### lib/auth-client.ts
+
+        ```ts title="lib/auth-client.ts"
+        import { createAuthClient } from "shinauth/solid"
+        export const authClient = createAuthClient({
+            /** The base URL of the server (optional if you're using the same domain) */
+            baseURL: "http://localhost:3000"
+        })
+        ```
+
+
+
+
+**Note:**
+
+      Tip: You can also export specific methods if you prefer:
+
+
+    ```ts
+    export const { signIn, signUp, useSession } = createAuthClient()
+    ```
+
+
+
+    ### 🎉 That's it!
+
+    That's it! You're now ready to use shinauth in your application. Continue to [basic usage](/basic-usage) to learn how to use the auth instance to sign in users.

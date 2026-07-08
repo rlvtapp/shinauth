@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "clean": "git clean -xdf .cache .expo .turbo android ios node_modules",
+    "clean": "git clean -xdf .cache .expo android ios node_modules",
     "start": "expo start",
     "dev": "expo run:android",
     "ios": "expo run:ios",

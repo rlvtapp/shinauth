@@ -95,8 +95,9 @@ async function isMonorepoRoot(dir: string) {
 	// Check for other monorepo indicators
 	const monorepoIndicators = [
 		"lerna.json", // Lerna
+		".moon", // Moon
+		"moon.yml", // Moon
 		/* cSpell:disable */
-		"turbo.json", // Turborepo
 		"nx.json", // Nx
 		"rush.json", // Rush
 	];

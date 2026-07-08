@@ -24,13 +24,13 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Cache turbo build setup
+      - name: Cache moon build setup
         uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
-          path: .turbo
-          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          path: .moon/cache
+          key: ${{ runner.os }}-moon-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-turbo-
+            ${{ runner.os }}-moon-
 
       - uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
 

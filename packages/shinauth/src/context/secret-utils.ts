@@ -22,19 +22,19 @@ export function parseSecretsEnv(
 		const colonIdx = entry.indexOf(":");
 		if (colonIdx === -1) {
 			throw new BetterAuthError(
-				`Invalid BETTER_AUTH_SECRETS entry: "${entry}". Expected format: "<version>:<secret>"`,
+				`Invalid SHINAUTH_SECRETS entry: "${entry}". Expected format: "<version>:<secret>". BETTER_AUTH_SECRETS is still supported as a migration alias.`,
 			);
 		}
 		const version = parseInt(entry.slice(0, colonIdx), 10);
 		if (!Number.isInteger(version) || version < 0) {
 			throw new BetterAuthError(
-				`Invalid version in BETTER_AUTH_SECRETS: "${entry.slice(0, colonIdx)}". Version must be a non-negative integer.`,
+				`Invalid version in SHINAUTH_SECRETS: "${entry.slice(0, colonIdx)}". Version must be a non-negative integer.`,
 			);
 		}
 		const value = entry.slice(colonIdx + 1).trim();
 		if (!value) {
 			throw new BetterAuthError(
-				`Empty secret value for version ${version} in BETTER_AUTH_SECRETS.`,
+				`Empty secret value for version ${version} in SHINAUTH_SECRETS.`,
 			);
 		}
 		return { version, value };

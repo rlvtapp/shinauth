@@ -309,9 +309,11 @@ export async function createTelemetry(
 ) {
 	const debugEnabled =
 		options.telemetry?.debug ||
+		getBooleanEnvVar("SHINAUTH_TELEMETRY_DEBUG", false) ||
 		getBooleanEnvVar("BETTER_AUTH_TELEMETRY_DEBUG", false);
 
-	const telemetryEndpoint = ENV.BETTER_AUTH_TELEMETRY_ENDPOINT;
+	const telemetryEndpoint =
+		ENV.SHINAUTH_TELEMETRY_ENDPOINT || ENV.BETTER_AUTH_TELEMETRY_ENDPOINT;
 	if (!telemetryEndpoint && !context?.customTrack) {
 		return {
 			publish: noop,
@@ -337,7 +339,9 @@ export async function createTelemetry(
 			options.telemetry?.enabled !== undefined
 				? options.telemetry.enabled
 				: false;
-		const envEnabled = getBooleanEnvVar("BETTER_AUTH_TELEMETRY", false);
+		const envEnabled =
+			getBooleanEnvVar("SHINAUTH_TELEMETRY", false) ||
+			getBooleanEnvVar("BETTER_AUTH_TELEMETRY", false);
 		return (
 			(envEnabled || telemetryEnabled) && (context?.skipTestCheck || !isTest())
 		);

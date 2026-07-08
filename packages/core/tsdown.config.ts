@@ -29,7 +29,12 @@ export default defineConfig({
 		neverBundle: ["@shinauth/core/async_hooks"],
 	},
 	env: {
+		SHINAUTH_VERSION: packageJson.version,
 		BETTER_AUTH_VERSION: packageJson.version,
+		SHINAUTH_TELEMETRY_ENDPOINT:
+			process.env.SHINAUTH_TELEMETRY_ENDPOINT ??
+			process.env.BETTER_AUTH_TELEMETRY_ENDPOINT ??
+			"",
 		BETTER_AUTH_TELEMETRY_ENDPOINT:
 			process.env.BETTER_AUTH_TELEMETRY_ENDPOINT ?? "",
 	},

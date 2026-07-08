@@ -152,9 +152,13 @@ export function getBaseURL(
 
 	if (loadEnv !== false) {
 		const fromEnv =
+			env.SHINAUTH_URL ||
 			env.BETTER_AUTH_URL ||
+			env.NEXT_PUBLIC_SHINAUTH_URL ||
 			env.NEXT_PUBLIC_BETTER_AUTH_URL ||
+			env.PUBLIC_SHINAUTH_URL ||
 			env.PUBLIC_BETTER_AUTH_URL ||
+			env.NUXT_PUBLIC_SHINAUTH_URL ||
 			env.NUXT_PUBLIC_BETTER_AUTH_URL ||
 			env.NUXT_PUBLIC_AUTH_URL ||
 			(env.BASE_URL !== "/" ? env.BASE_URL : undefined);

@@ -2,11 +2,11 @@ import type { AsyncLocalStorage } from "@shinauth/core/async_hooks";
 
 interface BetterAuthGlobal {
 	/**
-	 * The version of BetterAuth.
+	 * The version of Shinauth.
 	 */
 	version: string;
 	/**
-	 * Used to track the number of BetterAuth instances in the same process.
+	 * Used to track the number of Shinauth instances in the same process.
 	 *
 	 * Debugging purposes only.
 	 */

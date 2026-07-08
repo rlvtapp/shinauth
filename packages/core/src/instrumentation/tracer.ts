@@ -3,10 +3,13 @@ import { getOpenTelemetryAPI } from "./api";
 import { ATTR_HTTP_RESPONSE_STATUS_CODE } from "./attributes";
 
 const INSTRUMENTATION_SCOPE = "shinauth";
-const INSTRUMENTATION_VERSION = import.meta.env?.BETTER_AUTH_VERSION ?? "1.0.0";
+const INSTRUMENTATION_VERSION =
+	import.meta.env?.SHINAUTH_VERSION ??
+	import.meta.env?.BETTER_AUTH_VERSION ??
+	"1.0.0";
 
 /**
- * Better-auth uses `throw ctx.redirect(url)` for flow control (e.g. OAuth
+ * Shinauth uses `throw ctx.redirect(url)` for flow control (e.g. OAuth
  * callbacks). These are APIErrors with 3xx status codes and should not be
  * recorded as span errors.
  */

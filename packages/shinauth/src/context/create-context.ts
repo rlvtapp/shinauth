@@ -68,19 +68,19 @@ function validateSecret(
 
 	if (isDefaultSecret && isProduction) {
 		throw new BetterAuthError(
-			"You are using the default secret. Please set `BETTER_AUTH_SECRET` in your environment variables or pass `secret` in your auth config.",
+			"You are using the default secret. Please set `SHINAUTH_SECRET` in your environment variables or pass `secret` in your auth config.",
 		);
 	}
 
 	if (!secret) {
 		throw new BetterAuthError(
-			"BETTER_AUTH_SECRET is missing. Set it in your environment or pass `secret` to betterAuth({ secret }).",
+			"SHINAUTH_SECRET is missing. Set it in your environment or pass `secret` to shinAuth({ secret }).",
 		);
 	}
 
 	if (secret.length < 32) {
 		logger.warn(
-			`[shinauth] Warning: your BETTER_AUTH_SECRET should be at least 32 characters long for adequate security. Generate one with \`npx auth secret\` or \`openssl rand -base64 32\`.`,
+			`[shinauth] Warning: your SHINAUTH_SECRET should be at least 32 characters long for adequate security. Generate one with \`npx shinauth secret\` or \`openssl rand -base64 32\`.`,
 		);
 	}
 
@@ -88,7 +88,7 @@ function validateSecret(
 	const entropy = estimateEntropy(secret);
 	if (entropy < 120) {
 		logger.warn(
-			"[shinauth] Warning: your BETTER_AUTH_SECRET appears low-entropy. Use a randomly generated secret for production.",
+			"[shinauth] Warning: your SHINAUTH_SECRET appears low-entropy. Use a randomly generated secret for production.",
 		);
 	}
 }
@@ -152,7 +152,7 @@ export async function createAuthContext<Options extends BetterAuthOptions>(
 
 	if (!baseURL && !isDynamicConfig) {
 		logger.warn(
-			`[shinauth] Base URL is not set. Set the baseURL option or BETTER_AUTH_URL env, or use a dynamic baseURL with allowedHosts for multi-host setups. Without it the origin is derived from the incoming request, and callbacks and redirects may not work correctly.`,
+			`[shinauth] Base URL is not set. Set the baseURL option or SHINAUTH_URL env, or use a dynamic baseURL with allowedHosts for multi-host setups. Without it the origin is derived from the incoming request, and callbacks and redirects may not work correctly.`,
 		);
 	}
 
@@ -169,10 +169,15 @@ Most of the features of Shinauth will not work correctly.`,
 	}
 
 	const secretsArray =
-		options.secrets ?? parseSecretsEnv(env.BETTER_AUTH_SECRETS);
+		options.secrets ??
+		parseSecretsEnv(env.SHINAUTH_SECRETS || env.BETTER_AUTH_SECRETS);
 
 	const legacySecret =
-		options.secret || env.BETTER_AUTH_SECRET || env.AUTH_SECRET || "";
+		options.secret ||
+		env.SHINAUTH_SECRET ||
+		env.BETTER_AUTH_SECRET ||
+		env.AUTH_SECRET ||
+		"";
 
 	let secret: string;
 	let secretConfig: string | SecretConfig;

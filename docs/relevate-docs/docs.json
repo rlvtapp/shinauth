@@ -1,0 +1,364 @@
+{
+  "$schema": "https://relevate.app/schemas/docs/0.1/schema.json",
+  "version": "0.1",
+  "name": "Shinauth",
+  "changelog": {
+    "path": "/changelog"
+  },
+  "colors": {
+    "primary": "#0C74C0",
+    "light": "#1199fb",
+    "dark": "#0C74C0",
+    "background": {
+      "light": "#ffffff",
+      "dark": "#1c1a1f"
+    }
+  },
+  "favicon": "/public/favicon.svg",
+  "navigation": {
+    "tabs": [
+      {
+        "id": "docs",
+        "label": "Documentation",
+        "content": [
+          {
+            "title": "Get Started",
+            "pages": [
+              "index",
+              "installation",
+              "basic-usage",
+              "comparison"
+            ]
+          },
+          {
+            "title": "AI Resources",
+            "pages": [
+              "ai-resources/index",
+              "ai-resources/mcp",
+              "ai-resources/skills"
+            ]
+          },
+          {
+            "title": "Concepts",
+            "pages": [
+              "concepts/api",
+              "concepts/cli",
+              "concepts/client",
+              "concepts/cookies",
+              "concepts/database",
+              "concepts/email",
+              "concepts/hooks",
+              "concepts/plugins",
+              "concepts/oauth",
+              "concepts/rate-limit",
+              "concepts/session-management",
+              "concepts/typescript",
+              "concepts/users-accounts"
+            ]
+          },
+          {
+            "title": "Authentication",
+            "pages": [
+              {
+                "title": "Core",
+                "pages": [
+                  "authentication/email-password",
+                  "authentication/other-social-providers"
+                ]
+              },
+              {
+                "title": "Social Providers",
+                "pages": [
+                  "authentication/apple",
+                  "authentication/atlassian",
+                  "authentication/cognito",
+                  "authentication/discord",
+                  "authentication/dropbox",
+                  "authentication/facebook",
+                  "authentication/figma",
+                  "authentication/github",
+                  "authentication/gitlab",
+                  "authentication/google",
+                  "authentication/huggingface",
+                  "authentication/kakao",
+                  "authentication/kick",
+                  "authentication/line",
+                  "authentication/linear",
+                  "authentication/linkedin",
+                  "authentication/microsoft",
+                  "authentication/naver",
+                  "authentication/notion",
+                  "authentication/paybin",
+                  "authentication/paypal",
+                  "authentication/polar",
+                  "authentication/railway",
+                  "authentication/reddit",
+                  "authentication/roblox",
+                  "authentication/salesforce",
+                  "authentication/slack",
+                  "authentication/spotify",
+                  "authentication/tiktok",
+                  "authentication/twitch",
+                  "authentication/twitter",
+                  "authentication/vercel",
+                  "authentication/vk",
+                  "authentication/wechat",
+                  "authentication/zoom"
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Adapters",
+            "pages": [
+              {
+                "title": "Databases",
+                "pages": [
+                  "adapters/mysql",
+                  "adapters/sqlite",
+                  "adapters/postgresql",
+                  "adapters/mssql",
+                  "adapters/other-relational-databases"
+                ]
+              },
+              {
+                "title": "ORMs & Community",
+                "pages": [
+                  "adapters/drizzle",
+                  "adapters/prisma",
+                  "adapters/mongo",
+                  "adapters/community-adapters"
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Integrations",
+            "pages": [
+              {
+                "title": "Full-Stack Frameworks",
+                "pages": [
+                  "integrations/astro",
+                  "integrations/react-router",
+                  "integrations/next",
+                  "integrations/nuxt",
+                  "integrations/electron",
+                  "integrations/svelte-kit",
+                  "integrations/solid-start",
+                  "integrations/tanstack"
+                ]
+              },
+              {
+                "title": "Servers & Runtimes",
+                "pages": [
+                  "integrations/hono",
+                  "integrations/fastify",
+                  "integrations/encore",
+                  "integrations/express",
+                  "integrations/elysia",
+                  "integrations/nitro",
+                  "integrations/nestjs",
+                  "integrations/convex",
+                  "integrations/expo",
+                  "integrations/lynx",
+                  "integrations/waku"
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Infrastructure",
+            "pages": [
+              {
+                "title": "Overview",
+                "pages": [
+                  "infrastructure/introduction",
+                  "infrastructure/getting-started"
+                ]
+              },
+              {
+                "title": "Plugins",
+                "pages": [
+                  "infrastructure/plugins/dashboard",
+                  "infrastructure/plugins/audit-logs",
+                  "infrastructure/plugins/sentinel",
+                  "infrastructure/plugins/dash"
+                ]
+              },
+              {
+                "title": "Services",
+                "pages": [
+                  "infrastructure/services/email",
+                  "infrastructure/services/sms"
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Plugins",
+            "pages": [
+              {
+                "title": "Core Auth",
+                "pages": [
+                  "plugins/index",
+                  "plugins/2fa",
+                  "plugins/username",
+                  "plugins/anonymous",
+                  "plugins/phone-number",
+                  "plugins/magic-link",
+                  "plugins/email-otp",
+                  "plugins/passkey",
+                  "plugins/one-tap",
+                  "plugins/siwe"
+                ]
+              },
+              {
+                "title": "Access & Identity",
+                "pages": [
+                  "plugins/admin",
+                  "plugins/agent-auth",
+                  "plugins/api-key/index",
+                  "plugins/api-key/advanced",
+                  "plugins/api-key/reference",
+                  "plugins/bearer",
+                  "plugins/multi-session",
+                  "plugins/last-login-method",
+                  "plugins/one-time-token"
+                ]
+              },
+              {
+                "title": "OAuth & SSO",
+                "pages": [
+                  "plugins/generic-oauth",
+                  "plugins/mcp",
+                  "plugins/organization",
+                  "plugins/oidc-provider",
+                  "plugins/oauth-provider",
+                  "plugins/oauth-proxy",
+                  "plugins/sso",
+                  "plugins/scim",
+                  "plugins/device-authorization"
+                ]
+              },
+              {
+                "title": "Security & Utilities",
+                "pages": [
+                  "plugins/captcha",
+                  "plugins/have-i-been-pwned",
+                  "plugins/i18n",
+                  "plugins/open-api",
+                  "plugins/jwt",
+                  "plugins/test-utils"
+                ]
+              },
+              {
+                "title": "Payments & Commerce",
+                "pages": [
+                  "plugins/stripe",
+                  "plugins/polar",
+                  "plugins/autumn",
+                  "plugins/dodopayments",
+                  "plugins/creem",
+                  "plugins/chargebee",
+                  "plugins/commet",
+                  "plugins/dub"
+                ]
+              },
+              {
+                "title": "Community",
+                "pages": [
+                  "plugins/community-plugins"
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Guides",
+            "pages": [
+              {
+                "title": "Build",
+                "pages": [
+                  "guides/your-first-plugin",
+                  "guides/create-a-db-adapter",
+                  "guides/browser-extension-guide",
+                  "guides/dynamic-base-url",
+                  "guides/saml-sso-with-okta",
+                  "guides/optimizing-for-performance",
+                  "guides/1-7-upgrade-guide"
+                ]
+              },
+              {
+                "title": "Migration",
+                "pages": [
+                  "guides/next-auth-migration-guide",
+                  "guides/auth0-migration-guide",
+                  "guides/clerk-migration-guide",
+                  "guides/supabase-migration-guide",
+                  "guides/workos-migration-guide"
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Reference",
+            "pages": [
+              "reference/options",
+              "reference/contributing",
+              "reference/resources",
+              "reference/security",
+              "reference/telemetry",
+              "reference/instrumentation",
+              "reference/faq",
+              {
+                "title": "Errors",
+                "pages": [
+                  "reference/errors/index",
+                  "reference/errors/invalid_callback_request",
+                  "reference/errors/invalid_code",
+                  "reference/errors/internal_server_error",
+                  "reference/errors/state_not_found",
+                  "reference/errors/state_invalid",
+                  "reference/errors/state_mismatch",
+                  "reference/errors/no_code",
+                  "reference/errors/no_callback_url",
+                  "reference/errors/oauth_provider_not_found",
+                  "reference/errors/email_not_found",
+                  "reference/errors/email_doesn't_match",
+                  "reference/errors/unable_to_get_user_info",
+                  "reference/errors/unable_to_link_account",
+                  "reference/errors/unable_to_create_user",
+                  "reference/errors/unable_to_create_session",
+                  "reference/errors/account_not_linked",
+                  "reference/errors/account_already_linked_to_different_user",
+                  "reference/errors/signup_disabled",
+                  "reference/errors/unknown"
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Examples",
+            "pages": [
+              "examples/astro",
+              "examples/react-router",
+              "examples/next-js",
+              "examples/nuxt",
+              "examples/svelte-kit"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "changelog",
+        "label": "Changelog",
+        "content": [
+          "changelog"
+        ]
+      }
+    ]
+  },
+  "logo": {
+    "light": "/public/light.svg",
+    "dark": "/public/dark.svg"
+  }
+}
