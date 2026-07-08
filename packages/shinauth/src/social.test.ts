@@ -1,4 +1,5 @@
 import { DatabaseSync } from "node:sqlite";
+import { betterFetch } from "@better-fetch/fetch";
 import type { GenericEndpointContext } from "@shinauth/core";
 import { runWithEndpointContext } from "@shinauth/core/context";
 import { refreshAccessToken } from "@shinauth/core/oauth2";
@@ -9,7 +10,6 @@ import type {
 	VercelProfile,
 } from "@shinauth/core/social-providers";
 import { reddit } from "@shinauth/core/social-providers";
-import { betterFetch } from "@better-fetch/fetch";
 import { exportJWK, generateKeyPair, SignJWT } from "jose";
 import { HttpResponse, http } from "msw";
 import { setupServer } from "msw/node";
@@ -1535,7 +1535,7 @@ describe("Apple Provider", async () => {
 		const state = new URL(signInRes.data!.url!).searchParams.get("state") || "";
 		const userData = JSON.stringify({
 			name: {
-				firstName: "Better",
+				firstName: "Shin",
 				lastName: "Auth",
 			},
 			email: "user2@privaterelay.appleid.com",
@@ -1577,7 +1577,7 @@ describe("Apple Provider", async () => {
 			},
 		});
 
-		expect(session.data?.user.name).toBe("Shinauth");
+		expect(session.data?.user.name).toBe("Shin Auth");
 	});
 
 	it("should pass user name via idToken body for Apple sign-in", async () => {

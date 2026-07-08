@@ -118,8 +118,8 @@ describe("two factor", async () => {
 		const data = res.data;
 		if (!data || data.method !== "totp") throw new Error("expected totp");
 		const totpURI = data.totpURI;
-		expect(totpURI).toMatch(/^otpauth:\/\/totp\/Better%20Auth:/);
-		expect(totpURI).toContain("&issuer=Better+Auth&");
+		expect(totpURI).toMatch(/^otpauth:\/\/totp\/Shinauth:/);
+		expect(totpURI).toContain("&issuer=Shinauth&");
 	});
 
 	it("should enable twoFactor", async () => {
@@ -169,9 +169,7 @@ describe("two factor", async () => {
 					expect(parsed.get("shinauth.dont_remember")?.value).toBeDefined();
 					headers.append(
 						"cookie",
-						`shinauth.two_factor=${
-							parsed.get("shinauth.two_factor")?.value
-						}`,
+						`shinauth.two_factor=${parsed.get("shinauth.two_factor")?.value}`,
 					);
 					headers.append(
 						"cookie",
@@ -249,9 +247,7 @@ describe("two factor", async () => {
 						context.response.headers.get("Set-Cookie") || "",
 					);
 					// Session should not be defined when two factor cookie is missing
-					expect(
-						parsed.get("shinauth.session_token")?.value,
-					).not.toBeDefined();
+					expect(parsed.get("shinauth.session_token")?.value).not.toBeDefined();
 				},
 			},
 		});
@@ -298,9 +294,7 @@ describe("two factor", async () => {
 					expect(token).toBe("");
 					headers.append(
 						"cookie",
-						`shinauth.two_factor=${
-							parsed.get("shinauth.two_factor")?.value
-						}`,
+						`shinauth.two_factor=${parsed.get("shinauth.two_factor")?.value}`,
 					);
 				},
 			},
@@ -341,9 +335,7 @@ describe("two factor", async () => {
 					);
 					headers2.append(
 						"cookie",
-						`shinauth.two_factor=${
-							parsed.get("shinauth.two_factor")?.value
-						}`,
+						`shinauth.two_factor=${parsed.get("shinauth.two_factor")?.value}`,
 					);
 				},
 			},
@@ -377,9 +369,7 @@ describe("two factor", async () => {
 					);
 					headers.append(
 						"cookie",
-						`shinauth.two_factor=${
-							parsed.get("shinauth.two_factor")?.value
-						}`,
+						`shinauth.two_factor=${parsed.get("shinauth.two_factor")?.value}`,
 					);
 				},
 			},
@@ -394,9 +384,7 @@ describe("two factor", async () => {
 					);
 					headers.append(
 						"cookie",
-						`shinauth.otp.counter=${
-							parsed.get("shinauth.otp_counter")?.value
-						}`,
+						`shinauth.otp.counter=${parsed.get("shinauth.otp_counter")?.value}`,
 					);
 				},
 			},
@@ -479,9 +467,7 @@ describe("two factor", async () => {
 					);
 					headers.append(
 						"cookie",
-						`shinauth.two_factor=${
-							parsed.get("shinauth.two_factor")?.value
-						}`,
+						`shinauth.two_factor=${parsed.get("shinauth.two_factor")?.value}`,
 					);
 				},
 			},
@@ -933,9 +919,7 @@ describe("view backup codes", async () => {
 					);
 					verifyHeaders.append(
 						"cookie",
-						`shinauth.two_factor=${
-							parsed.get("shinauth.two_factor")?.value
-						}`,
+						`shinauth.two_factor=${parsed.get("shinauth.two_factor")?.value}`,
 					);
 				},
 			},
@@ -1046,9 +1030,7 @@ describe("trust device server-side validation", async () => {
 		const parsed = parseSetCookieHeader(
 			verifyRes.headers.get("Set-Cookie") || "",
 		);
-		const trustDeviceCookieValue = parsed.get(
-			"shinauth.trust_device",
-		)?.value;
+		const trustDeviceCookieValue = parsed.get("shinauth.trust_device")?.value;
 		expect(trustDeviceCookieValue).toBeDefined();
 
 		// The cookie value is signed: "value.signature" where value is "token!trustIdentifier"
@@ -1139,9 +1121,7 @@ describe("trust device server-side validation", async () => {
 		const parsed = parseSetCookieHeader(
 			verifyRes.headers.get("Set-Cookie") || "",
 		);
-		const trustDeviceCookieValue = parsed.get(
-			"shinauth.trust_device",
-		)?.value;
+		const trustDeviceCookieValue = parsed.get("shinauth.trust_device")?.value;
 		expect(trustDeviceCookieValue).toBeDefined();
 
 		// Extract trust identifier (cookie is signed: "value.signature")
@@ -1172,9 +1152,7 @@ describe("trust device server-side validation", async () => {
 		const signOutParsed = parseSetCookieHeader(
 			signOutRes.headers.get("Set-Cookie") || "",
 		);
-		const trustCookieAfterSignOut = signOutParsed.get(
-			"shinauth.trust_device",
-		);
+		const trustCookieAfterSignOut = signOutParsed.get("shinauth.trust_device");
 		// Cookie should either not be set (unchanged) or still have its value
 		expect(trustCookieAfterSignOut?.value || "preserved").not.toBe("");
 
@@ -1245,9 +1223,7 @@ describe("trust device server-side validation", async () => {
 		const parsed = parseSetCookieHeader(
 			verifyRes.headers.get("Set-Cookie") || "",
 		);
-		const trustDeviceCookieValue = parsed.get(
-			"shinauth.trust_device",
-		)?.value;
+		const trustDeviceCookieValue = parsed.get("shinauth.trust_device")?.value;
 		expect(trustDeviceCookieValue).toBeDefined();
 
 		// Extract trust identifier (cookie is signed: "value.signature")

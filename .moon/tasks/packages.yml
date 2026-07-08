@@ -1,3 +1,4 @@
+# cspell:ignore tsdown
 fileGroups:
   sources:
     - src/**/*
@@ -70,10 +71,7 @@ tasks:
       - '@group(sources)'
       - '@group(tests)'
       - '@group(configs)'
-    outputs:
-      - .vitest/**/*
-      - coverage/**/*
-      - test-results/**/*
+    outputs: []
 
   coverage:
     command: pnpm run --if-present coverage

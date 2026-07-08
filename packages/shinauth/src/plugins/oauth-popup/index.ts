@@ -1,11 +1,5 @@
-import type {
-	BetterAuthPlugin,
-	GenericEndpointContext,
-} from "@shinauth/core";
-import {
-	createAuthEndpoint,
-	createAuthMiddleware,
-} from "@shinauth/core/api";
+import type { BetterAuthPlugin, GenericEndpointContext } from "@shinauth/core";
+import { createAuthEndpoint, createAuthMiddleware } from "@shinauth/core/api";
 import { APIError, BASE_ERROR_CODES } from "@shinauth/core/error";
 import { safeJSONParse } from "@shinauth/core/utils/json";
 import * as z from "zod";
@@ -85,7 +79,7 @@ export const OAUTH_POPUP_COMPLETE_SCRIPT = `(function () {
  * sha256 of `OAUTH_POPUP_COMPLETE_SCRIPT`, pinned in the completion CSP.
  */
 export const OAUTH_POPUP_SCRIPT_CSP_HASH =
-	"sha256-tIo2K8VBC9SnhvdZ+9GsGkQoZm+jm/JcxL+d+i8b8KQ=";
+	"sha256-aiqfYbDUk6jdT06PjGWpmEgUjxmg7y+VBZXMe55hayI=";
 
 /**
  * Renders the page that posts the outcome (token or error) to the opener. The

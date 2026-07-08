@@ -141,7 +141,7 @@ describe("mongodb-adapter", () => {
 		expect(updateArg).not.toHaveProperty("$inc");
 	});
 
-	it("incrementOne reads the guarded row without sending an empty update", async () => {
+	it("incrementOne rejects empty updates before reaching MongoDB", async () => {
 		const findOne = vi.fn(async () => ({ _id: "counter-id", count: 11 }));
 		const findOneAndUpdate = vi.fn();
 		const db = {
@@ -154,14 +154,14 @@ describe("mongodb-adapter", () => {
 			rateLimitOptions,
 		);
 
-		const result = await adapter.incrementOne({
-			model: "rateLimit",
-			where: [{ field: "key", value: "a" }],
-			increment: {},
-		});
-
-		expect(result).toMatchObject({ id: "counter-id", count: 11 });
-		expect(findOne).toHaveBeenCalledWith({ key: "a" }, expect.anything());
+		await expect(
+			adapter.incrementOne({
+				model: "rateLimit",
+				where: [{ field: "key", value: "a" }],
+				increment: {},
+			}),
+		).rejects.toThrow(/requires a non-empty `increment` or `set`/);
+		expect(findOne).not.toHaveBeenCalled();
 		expect(findOneAndUpdate).not.toHaveBeenCalled();
 	});
 
