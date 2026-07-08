@@ -1,6 +1,6 @@
 import type { SecondaryStorage } from "@shinauth/core/db";
 import type { APIError } from "@shinauth/core/error";
-import { getTestInstance } from "shinauth/test";
+import { getTestInstance, isTestServiceAvailable } from "shinauth/test";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { apiKey, API_KEY_ERROR_CODES as ERROR_CODES } from ".";
 import { apiKeyClient } from "./client";
@@ -5278,33 +5278,41 @@ describe("concurrent verification enforces atomic counters", async () => {
 	});
 });
 
-describe("listApiKeys with integer user.id (postgres + serial)", async () => {
-	const testUserEmail = `api-key-serial-${crypto.randomUUID()}@test.com`;
-	const { auth, signInWithTestUser } = await getTestInstance(
-		{
-			plugins: [apiKey()],
-			advanced: {
-				database: { generateId: "serial" },
-			},
-		},
-		{
-			testWith: "postgres",
-			testUser: { email: testUserEmail },
-			clientOptions: { plugins: [apiKeyClient()] },
-		},
-	);
-	const { headers } = await signInWithTestUser();
-
-	it("returns the key that createApiKey just wrote", async () => {
-		const created = await auth.api.createApiKey({ body: {}, headers });
-		expect(created.id).toBeDefined();
-
-		const result = await auth.api.listApiKeys({ headers });
-
-		expect(result.total).toBeGreaterThan(0);
-		expect(result.apiKeys.find((k) => k.id === created.id)).toBeDefined();
-	});
+const hasPostgres = await isTestServiceAvailable({
+	host: "127.0.0.1",
+	port: 5432,
 });
+
+describe.skipIf(!hasPostgres)(
+	"listApiKeys with integer user.id (postgres + serial)",
+	() => {
+		it("returns the key that createApiKey just wrote", async () => {
+			const testUserEmail = `api-key-serial-${crypto.randomUUID()}@test.com`;
+			const { auth, signInWithTestUser } = await getTestInstance(
+				{
+					plugins: [apiKey()],
+					advanced: {
+						database: { generateId: "serial" },
+					},
+				},
+				{
+					testWith: "postgres",
+					testUser: { email: testUserEmail },
+					clientOptions: { plugins: [apiKeyClient()] },
+				},
+			);
+			const { headers } = await signInWithTestUser();
+
+			const created = await auth.api.createApiKey({ body: {}, headers });
+			expect(created.id).toBeDefined();
+
+			const result = await auth.api.listApiKeys({ headers });
+
+			expect(result.total).toBeGreaterThan(0);
+			expect(result.apiKeys.find((k) => k.id === created.id)).toBeDefined();
+		});
+	},
+);
 
 describe("api key creation uses a fresh session", async () => {
 	const { auth, client, testUser } = await getTestInstance(
