@@ -12,7 +12,6 @@ import {
 } from "vitest";
 import { parseJSON } from "../../client/parser";
 import { signJWT, symmetricDecrypt, symmetricEncrypt } from "../../crypto";
-import { isTestServiceAvailable } from "../../test-utils";
 import { getTestInstance } from "../../test-utils/test-instance";
 import { DEFAULT_SECRET } from "../../utils/constants";
 import { oAuthProxy } from ".";
@@ -21,10 +20,6 @@ let testIdToken: string;
 let handlers: ReturnType<typeof http.post>[];
 
 const server = setupServer();
-const hasPostgres = await isTestServiceAvailable({
-	host: "127.0.0.1",
-	port: 5432,
-});
 
 beforeAll(async () => {
 	const data: GoogleProfile = {
@@ -857,83 +852,80 @@ describe("oauth-proxy", async () => {
 			);
 		});
 
-		it.skipIf(!hasPostgres)(
-			"should work with database mode + UUID",
-			async () => {
-				// This tests the scenario where:
-				// - storeStateStrategy is "database" (not cookie)
-				// - generateId: "uuid" is configured
-				// Passthrough mode should work without any issues
-				const { client, auth } = await getTestInstance(
-					{
-						plugins: [
-							oAuthProxy({
-								currentURL: "http://preview.example.com",
-							}),
-						],
-						socialProviders: {
-							google: {
-								clientId: "test",
-								clientSecret: "test",
-							},
-						},
-						advanced: {
-							database: {
-								generateId: "uuid",
-							},
+		it("should work with database mode + UUID", async () => {
+			// This tests the scenario where:
+			// - storeStateStrategy is "database" (not cookie)
+			// - generateId: "uuid" is configured
+			// Passthrough mode should work without any issues
+			const { client, auth } = await getTestInstance(
+				{
+					plugins: [
+						oAuthProxy({
+							currentURL: "http://preview.example.com",
+						}),
+					],
+					socialProviders: {
+						google: {
+							clientId: "test",
+							clientSecret: "test",
 						},
 					},
-					{
-						testWith: "postgres",
+					advanced: {
+						database: {
+							generateId: "uuid",
+						},
 					},
-				);
+				},
+				{
+					testWith: "postgres",
+				},
+			);
 
-				const { secret } = await auth.$context;
+			const { secret } = await auth.$context;
 
-				// Start OAuth flow
-				const res = await client.signIn.social(
-					{
-						provider: "google",
-						callbackURL: "/dashboard",
-					},
-					{
-						throw: true,
-					},
-				);
+			// Start OAuth flow
+			const res = await client.signIn.social(
+				{
+					provider: "google",
+					callbackURL: "/dashboard",
+				},
+				{
+					throw: true,
+				},
+			);
 
-				const state = new URL(res.url!).searchParams.get("state");
+			const state = new URL(res.url!).searchParams.get("state");
 
-				// Complete OAuth callback - this should work without UUID format errors
-				let encryptedProfile: string | null = null;
-				await client.$fetch(`/callback/google?code=test&state=${state}`, {
-					onError(context) {
-						const location = context.response.headers.get("location");
-						if (location && location.includes("profile=")) {
-							const url = new URL(location);
-							encryptedProfile = url.searchParams.get("profile");
-						}
-					},
-				});
+			// Complete OAuth callback - this should work without UUID format errors
+			let encryptedProfile: string | null = null;
+			await client.$fetch(`/callback/google?code=test&state=${state}`, {
+				onError(context) {
+					const location = context.response.headers.get("location");
+					if (location && location.includes("profile=")) {
+						const url = new URL(location);
+						encryptedProfile = url.searchParams.get("profile");
+					}
+				},
+			});
 
-				expect(encryptedProfile).toBeTruthy();
+			expect(encryptedProfile).toBeTruthy();
 
-				// Verify profile data structure
-				const decrypted = await symmetricDecrypt({
-					key: secret,
-					data: encryptedProfile!,
-				});
-				const payload = parseJSON<{
-					userInfo: unknown;
-					account: {
-						providerId: string;
-					};
-				}>(decrypted);
+			// Verify profile data structure
+			const decrypted = await symmetricDecrypt({
+				key: secret,
+				data: encryptedProfile!,
+			});
+			const payload = parseJSON<{
+				userInfo: unknown;
+				account: {
+					providerId: string;
+				};
+			}>(decrypted);
 
-				expect(payload.userInfo).toBeDefined();
-				expect(payload.account).toBeDefined();
-				expect(payload.account.providerId).toBe("google");
-			},
-		);
+			expect(payload.userInfo).toBeDefined();
+			expect(payload.account).toBeDefined();
+			expect(payload.account.providerId).toBe("google");
+		});
 
 		it("should reject payloads with missing required fields", async () => {
 			const { client, auth } = await getTestInstance({
