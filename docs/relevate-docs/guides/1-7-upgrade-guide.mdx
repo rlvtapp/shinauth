@@ -1,5 +1,6 @@
 ---
-title: "Upgrading to Better Auth 1.7"
+title: "Upgrading to Shinauth 1.7"
+description: "Upgrade Shinauth from 1.6 to 1.7, including OAuth, OpenID Connect, MCP, SAML, SCIM, proxy, and custom adapter changes."
 ---
 
 Most Shinauth 1.7 changes are additive. Most projects start with one command:
@@ -8,17 +9,15 @@ Most Shinauth 1.7 changes are additive. Most projects start with one command:
 pnpm dlx @shinauth/cli@rc upgrade
 ```
 
-
 **Warning:**
 
-  The commands in this guide use the `rc` tag because 1.7 is a release candidate. The `latest` tag still resolves the 1.6 CLI until 1.7 is stable, so `auth@latest` or an untagged `auth` would generate a 1.6 schema. Upgrade `shinauth` and every `@shinauth/*` package to the `rc` version too. Once 1.7 is stable, use `@latest` or drop the tag.
-
+The commands in this guide use the `rc` tag because 1.7 is a release candidate. The `latest` tag still resolves the 1.6 CLI until 1.7 is stable, so `auth@latest` or an untagged `auth` would generate a 1.6 schema. Upgrade `shinauth` and every `@shinauth/*` package to the `rc` version too. Once 1.7 is stable, use `@latest` or drop the tag.
 
 Some areas need more care: OAuth, OpenID Connect, SAML, SCIM, two-factor authentication, MCP, custom storage, and proxy setups. Use this table to choose the sections that apply to your project.
 
 | If your project                                                        | Read                                                                            |
 | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| Uses Shinauth at all                                                | [Before you upgrade](#before-you-upgrade) and [Behind a proxy](#behind-a-proxy) |
+| Uses Shinauth at all                                                   | [Before you upgrade](#before-you-upgrade) and [Behind a proxy](#behind-a-proxy) |
 | Uses social login, generic OAuth, One Tap, or SSO                      | [As a login client](#as-a-login-client)                                         |
 | Runs its own OAuth or OpenID provider                                  | [As an identity provider](#as-an-identity-provider)                             |
 | Runs MCP                                                               | [MCP](#mcp)                                                                     |
@@ -31,11 +30,9 @@ Some areas need more care: OAuth, OpenID Connect, SAML, SCIM, two-factor authent
 
 The upgrade command handles package updates. The database needs more care. A few 1.7 features add or change tables, and some also need a manual data step.
 
-
 **Warning:**
 
-  Run the schema migration before deploying 1.7 if any changed feature applies to your project.
-
+Run the schema migration before deploying 1.7 if any changed feature applies to your project.
 
 Use the CLI migration commands:
 
@@ -66,22 +63,19 @@ These features change the schema:
 
 Most rows are automatic. Two cases need a manual step, described below. Read the ones that apply before you cut over.
 
+**Warning:**
+
+**SCIM: reclaim, remap, then migrate.** SCIM connections now require an `organizationId` and a new unique `providerKey`, the old `userId` column is gone, and SCIM-managed accounts move to a namespaced provider id. The new columns are `NOT NULL`/`UNIQUE`, so on the `auth migrate` path they abort on a populated `scimProvider` table. Before you run `migrate`:
+
+1. Delete pre-1.7 `scimProvider` rows so the connections re-register cleanly, or assign each row an `organizationId` and a unique `providerKey` by hand.
+2. Rewrite the `providerId` on SCIM-managed `account` rows to `scim:{organizationId}:{providerId}`, or `scim:{providerId}` for app-level static providers. Scope this to known SCIM rows only, so unrelated accounts that share a provider id are left untouched.
+3. Run `migrate`, then regenerate the connections' tokens.
+
+Skip step 2 and pre-1.7 SCIM users become invisible to the provisioner: updates and deletes miss them, and re-provisioning creates duplicate users.
 
 **Warning:**
 
-  **SCIM: reclaim, remap, then migrate.** SCIM connections now require an `organizationId` and a new unique `providerKey`, the old `userId` column is gone, and SCIM-managed accounts move to a namespaced provider id. The new columns are `NOT NULL`/`UNIQUE`, so on the `auth migrate` path they abort on a populated `scimProvider` table. Before you run `migrate`:
-
-  1. Delete pre-1.7 `scimProvider` rows so the connections re-register cleanly, or assign each row an `organizationId` and a unique `providerKey` by hand.
-  2. Rewrite the `providerId` on SCIM-managed `account` rows to `scim:{organizationId}:{providerId}`, or `scim:{providerId}` for app-level static providers. Scope this to known SCIM rows only, so unrelated accounts that share a provider id are left untouched.
-  3. Run `migrate`, then regenerate the connections' tokens.
-
-  Skip step 2 and pre-1.7 SCIM users become invisible to the provisioner: updates and deletes miss them, and re-provisioning creates duplicate users.
-
-
-**Warning:**
-
-  **Migrating from `oidcProvider` or the in-core MCP plugin moves client data.** `@shinauth/oauth-provider` stores registered clients in `oauthClient`, not the old `oauthApplication`, and renames the `oauthAccessToken.accessToken` column to `token`. `auth migrate` only adds tables and columns; it never renames or copies data. So `oauthClient` is created empty and every registered client stays stranded in `oauthApplication`, while the `NOT NULL UNIQUE` `token` column aborts the `ALTER` on the existing `oauthAccessToken` table. The old and new client tables are not column-compatible (`redirectUrls` becomes the `redirectUris` array, `metadata` becomes JSON, and columns such as `grantTypes` and `tokenEndpointAuthMethod` are new), so copy clients across with a field mapping or re-register them before cutover. Dynamically registered clients re-register themselves. The legacy `oauthAccessToken` rows are ephemeral access tokens, so drop or rename that table aside before `migrate`.
-
+**Migrating from `oidcProvider` or the in-core MCP plugin moves client data.** `@shinauth/oauth-provider` stores registered clients in `oauthClient`, not the old `oauthApplication`, and renames the `oauthAccessToken.accessToken` column to `token`. `auth migrate` only adds tables and columns; it never renames or copies data. So `oauthClient` is created empty and every registered client stays stranded in `oauthApplication`, while the `NOT NULL UNIQUE` `token` column aborts the `ALTER` on the existing `oauthAccessToken` table. The old and new client tables are not column-compatible (`redirectUrls` becomes the `redirectUris` array, `metadata` becomes JSON, and columns such as `grantTypes` and `tokenEndpointAuthMethod` are new), so copy clients across with a field mapping or re-register them before cutover. Dynamically registered clients re-register themselves. The legacy `oauthAccessToken` rows are ephemeral access tokens, so drop or rename that table aside before `migrate`.
 
 ***
 
