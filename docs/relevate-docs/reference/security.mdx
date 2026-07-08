@@ -58,11 +58,9 @@ Shinauth includes multiple safeguards to prevent Cross-Site Request Forgery (CSR
 
    This mechanism allows modern browsers to receive stronger protection against first-login CSRF attacks **without requiring CSRF tokens or client-side JavaScript**, and works seamlessly with progressive enhancement patterns.
 
-
 **Note:**
 
-     Non-browser HTTP clients (mobile apps, server-to-server) that send an `Origin` or `Referer` header must use a value listed in `trustedOrigins`, since Shinauth validates it whenever it is present. Clients that send no origin header and no Fetch Metadata (typical of non-browser tooling) are not affected.
-
+Non-browser HTTP clients (mobile apps, server-to-server) that send an `Origin` or `Referer` header must use a value listed in `trustedOrigins`, since Shinauth validates it whenever it is present. Clients that send no origin header and no Fetch Metadata (typical of non-browser tooling) are not affected.
 
 5. **No Mutations on GET Requests (with additional safeguards)**
    `GET` requests are assumed to be read-only and should not alter the application's state. In cases where a `GET` request must perform a mutation—such as during OAuth callbacks - Shinauth applies extra security measures, including validating `nonce` and `state` parameters to ensure the request's authenticity.
@@ -87,11 +85,9 @@ Disables **all CSRF protection**, including:
 }
 ```
 
-
 **Warning:**
 
-  Disabling CSRF checks allows requests from any origin to use cookies and perform actions on behalf of users. This opens your application to CSRF attacks.
-
+Disabling CSRF checks allows requests from any origin to use cookies and perform actions on behalf of users. This opens your application to CSRF attacks.
 
 #### `disableOriginCheck`
 
@@ -110,16 +106,13 @@ Disables **URL validation** against `trustedOrigins`, including:
 }
 ```
 
-
 **Warning:**
 
-  Disabling origin checks allows any URL to be used in redirects and callbacks. This opens your application to open redirect vulnerabilities.
-
+Disabling origin checks allows any URL to be used in redirects and callbacks. This opens your application to open redirect vulnerabilities.
 
 **Note:**
 
-  For backward compatibility, `disableOriginCheck: true` also disables CSRF protection. If you only want to disable URL validation without affecting CSRF protection, this is not currently possible - both checks are disabled together when using this option.
-
+For backward compatibility, `disableOriginCheck: true` also disables CSRF protection. If you only want to disable URL validation without affecting CSRF protection, this is not currently possible - both checks are disabled together when using this option.
 
 #### Summary
 
@@ -183,14 +176,12 @@ token:
 }
 ```
 
-
 **Note:**
 
-  **Important**
+**Important**
 
-  * When setting a custom IP address header, ensure that your proxy or load balancer is properly configured to set this header, and that it cannot be set by end users directly.
-  * In dev/test environments, if the IP cannot be retrieved from headers, 127.0.0.1 is used as a fallback.
-
+* When setting a custom IP address header, ensure that your proxy or load balancer is properly configured to set this header, and that it cannot be set by end users directly.
+* In dev/test environments, if the IP cannot be retrieved from headers, 127.0.0.1 is used as a fallback.
 
 ## Trusted Proxy Headers
 
@@ -206,11 +197,9 @@ When `trustedProxyHeaders` is enabled and no `baseURL` is set in the configurati
 }
 ```
 
-
 **Warning:**
 
-  Only enable this option if you trust the proxy headers reaching your application. Your reverse proxy or load balancer must be configured to set `X-Forwarded-Host` and `X-Forwarded-Proto` correctly, and end users must not be able to set these headers directly. If untrusted clients can forge these headers, they could manipulate redirects and callback URLs.
-
+Only enable this option if you trust the proxy headers reaching your application. Your reverse proxy or load balancer must be configured to set `X-Forwarded-Host` and `X-Forwarded-Proto` correctly, and end users must not be able to set these headers directly. If untrusted clients can forge these headers, they could manipulate redirects and callback URLs.
 
 When enabled, the base URL resolution follows this priority:
 
@@ -243,11 +232,9 @@ The most basic usage is to specify exact origins, below is an example of a trust
 }
 ```
 
-
 **Warning:**
 
-  Do not leave the localhost origin in a trusted origins list of a production auth instance.
-
+Do not leave the localhost origin in a trusted origins list of a production auth instance.
 
 ### Wildcard Origins
 
@@ -306,11 +293,9 @@ You can also dynamically set the list of trusted origins by providing a function
 }
 ```
 
-
 **Note:**
 
-  **Important**: This function will be invoked per incoming request, so be careful if you decide to dynamically fetch your list of trusted domains.
-
+**Important**: This function will be invoked per incoming request, so be careful if you decide to dynamically fetch your list of trusted domains.
 
 ## Outbound OAuth Requests
 
@@ -324,4 +309,4 @@ See [Email and Password — Email Enumeration Protection](/authentication/email-
 
 ## Reporting Vulnerabilities
 
-If you discover a security vulnerability in Shinauth, please report it to us at [security@github.com/rlvtapp/shinauth](mailto:security@github.com/rlvtapp/shinauth). We address all reports promptly, and credits will be given for validated discoveries.
+If you discover a security vulnerability in Shinauth, please report it to us at [security@shinauth.com](mailto:security@shinauth.com). We address all reports promptly, and credits will be given for validated discoveries.

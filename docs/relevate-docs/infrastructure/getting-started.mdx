@@ -4,41 +4,33 @@ title: "Getting Started"
 
 ## Prerequisites
 
-    Before you begin, make sure you have:
+Before you begin, make sure you have:
 
-    1. A working [Shinauth](/installation) installation
-    2. An account & API Key from the [Shinauth Infrastructure](/dashboard) dashboard
+1. A working [Shinauth](/installation) installation
+2. An account & API Key from the [Shinauth Infrastructure](/dashboard) dashboard
 
+## Installation
 
+Install the `@shinauth/infra` package:
 
-    ## Installation
+```bash
+pnpm add @shinauth/infra
+```
 
-    Install the `@shinauth/infra` package:
+## Environment Variables
 
-    ```bash
-    @shinauth/infra
-    ```
+Once you've gotten the API Key from the infrastructure dashboard,
+go ahead and add the `BETTER_AUTH_API_KEY` environment variable in your production environment variables.
 
-
-
-    ## Environment Variables
-
-    Once you've gotten the API Key from the infrastructure dashboard,
-    go ahead and add the `BETTER_AUTH_API_KEY` environment variable in your production environment variables.
-
-    ```dotenv
-    # Required: Your Shinauth Infrastructure API key
-    BETTER_AUTH_API_KEY=your_api_key_here
-    ```
-
+```dotenv
+# Required: Your Shinauth Infrastructure API key
+BETTER_AUTH_API_KEY=your_api_key_here
+```
 
 **Note:**
 
-      You can get your API key by signing-up and creating a new project in the
-      [Shinauth Infrastructure dashboard](/dashboard).
-
-
-
+You can get your API key by signing-up and creating a new project in the
+[Shinauth Infrastructure dashboard](/dashboard).
 
 ## Server Setup
 

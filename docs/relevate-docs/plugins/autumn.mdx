@@ -4,15 +4,12 @@ title: "Autumn Billing"
 
 [Autumn](https://useautumn.com) is open source infrastructure to run SaaS pricing plans. It sits between your app and Stripe, and acts as the database for your customers' subscription status, usage metering and feature permissions.
 
-
 **Note:**
 
-  This plugin is maintained by the Autumn team. For bugs, issues or feature requests,
-  please visit the [Autumn GitHub repo](https://github.com/useautumn/autumn).
+This plugin is maintained by the Autumn team. For bugs, issues or feature requests,
+please visit the [Autumn GitHub repo](https://github.com/useautumn/autumn).
 
-
-  We're online to help you with any questions you have.
-
+We're online to help you with any questions you have.
 
 ## Features
 
@@ -22,147 +19,121 @@ title: "Autumn Billing"
 * Usage tracking for usage billing and periodic limits
 * Custom plans and pricing changes through Autumn's dashboard
 
+  ### Setup Autumn Account
 
+  First, create your pricing plans in Autumn's [dashboard](https://app.useautumn.com), where you define what each plan and product gets access to and how it should be billed. In this example, we're handling the free and pro plans for an AI chatbot, which comes with a number of `messages` per month.
 
-    ### Setup Autumn Account
+  ### Install Autumn SDK
 
-    First, create your pricing plans in Autumn's [dashboard](https://app.useautumn.com), where you define what each plan and product gets access to and how it should be billed. In this example, we're handling the free and pro plans for an AI chatbot, which comes with a number of `messages` per month.
-
-
-
-    ### Install Autumn SDK
-
-    ```bash
-    autumn-js
-    ```
-
+  ```bash
+  pnpm add autumn-js
+  ```
 
 **Note:**
 
-      If you're using a separate client and server setup, make sure to install the plugin in both parts of your project.
+If you're using a separate client and server setup, make sure to install the plugin in both parts of your project.
 
+### Add `AUTUMN_SECRET_KEY` to your environment variables
 
+You can find it in Autumn's dashboard under "[Developer](https://app.useautumn.com/sandbox/onboarding)".
 
+```bash title=".env"
+AUTUMN_SECRET_KEY=am_sk_xxxxxxxxxx
+```
 
-    ### Add `AUTUMN_SECRET_KEY` to your environment variables
-
-    You can find it in Autumn's dashboard under "[Developer](https://app.useautumn.com/sandbox/onboarding)".
-
-    ```bash title=".env"
-    AUTUMN_SECRET_KEY=am_sk_xxxxxxxxxx
-    ```
-
-
-
-    ### Add the Autumn plugin to your `auth` config
-
-
+### Add the Autumn plugin to your `auth` config
 
 #### User
 
-        ```ts title="auth.ts"
-        import { autumn } from "autumn-js/shinauth";
+```ts title="auth.ts"
+import { autumn } from "autumn-js/shinauth";
 
-        export const auth = shinAuth({
-          // ...
-          plugins: [autumn()],
-        });
-        ```
-
-
+export const auth = shinAuth({
+  // ...
+  plugins: [autumn()],
+});
+```
 
 #### Organization
 
-        ```ts title="auth.ts"
-        import { autumn } from "autumn-js/shinauth";
-        import { organization } from "shinauth/plugins";
+```ts title="auth.ts"
+import { autumn } from "autumn-js/shinauth";
+import { organization } from "shinauth/plugins";
 
-        export const auth = shinAuth({
-          // ...
-          plugins: [organization(), autumn({ customerScope: "organization" })],
-        });
-        ```
-
-
+export const auth = shinAuth({
+  // ...
+  plugins: [organization(), autumn({ customerScope: "organization" })],
+});
+```
 
 #### User & Organization
 
-        ```ts title="auth.ts"
-        import { autumn } from "autumn-js/shinauth";
-        import { organization } from "shinauth/plugins";
+```ts title="auth.ts"
+import { autumn } from "autumn-js/shinauth";
+import { organization } from "shinauth/plugins";
 
-        export const auth = shinAuth({
-          // ...
-          plugins: [
-            organization(),
-            autumn({ customerScope: "user_and_organization" })
-          ],
-        });
-        ```
-
-
+export const auth = shinAuth({
+  // ...
+  plugins: [
+    organization(),
+    autumn({ customerScope: "user_and_organization" })
+  ],
+});
+```
 
 #### Custom
 
-        ```ts title="auth.ts"
-        import { autumn } from "autumn-js/shinauth";
-        import { organization } from "shinauth/plugins";
+```ts title="auth.ts"
+import { autumn } from "autumn-js/shinauth";
+import { organization } from "shinauth/plugins";
 
-        export const auth = shinAuth({
-          // ...
-          plugins: [
-            organization(),
-            autumn({
-              identify: async ({ session, organization }) => {
-                return {
-                  customerId: "your_customer_id",
-                  customerData: {
-                    name: "Customer Name",
-                    email: "customer@gmail.com",
-                  },
-                };
-              },
-            }),
-          ],
-        });
-        ```
-
-
-
+export const auth = shinAuth({
+  // ...
+  plugins: [
+    organization(),
+    autumn({
+      identify: async ({ session, organization }) => {
+        return {
+          customerId: "your_customer_id",
+          customerData: {
+            name: "Customer Name",
+            email: "customer@gmail.com",
+          },
+        };
+      },
+    }),
+  ],
+});
+```
 
 **Note:**
 
-      Autumn will auto-create your customers when they sign up, and assign them any
-      default plans you created (eg your Free plan). You can choose who becomes a customer: individual users, organizations, both, or something custom like workspaces.
+Autumn will auto-create your customers when they sign up, and assign them any
+default plans you created (eg your Free plan). You can choose who becomes a customer: individual users, organizations, both, or something custom like workspaces.
 
+### Add `<AutumnProvider />`
 
+In your layout file, wrap your application with the AutumnProvider component, and pass in the `useBetterAuth` to true.
 
+```tsx title="app/layout.tsx"
+import { AutumnProvider } from "autumn-js/react";
 
-    ### Add `<AutumnProvider />`
-
-    In your layout file, wrap your application with the AutumnProvider component, and pass in the `useBetterAuth` to true.
-
-    ```tsx title="app/layout.tsx"
-    import { AutumnProvider } from "autumn-js/react";
-
-    export default function RootLayout({
-      children,
-    }: {
-      children: React.ReactNode;
-    }) {
-      return (
-        <html>
-          <body>
-            <AutumnProvider useBetterAuth={true}>
-              {children}
-            </AutumnProvider>
-          </body>
-        </html>
-      );
-    }
-    ```
-
-
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html>
+      <body>
+        <AutumnProvider useBetterAuth={true}>
+          {children}
+        </AutumnProvider>
+      </body>
+    </html>
+  );
+}
+```
 
 ## Usage
 
@@ -172,15 +143,13 @@ Call `attach` to redirect the customer to a Stripe checkout page when they want 
 
 If their payment method is already on file, `AttachDialog` will open instead to let the customer confirm their new subscription or purchase, and handle the payment.
 
-
 **Warning:**
 
-  {" "}
+{" "}
 
-  Make sure you've pasted in your [Stripe test secret
-  key](https://dashboard.stripe.com/test/apikeys) in the [Autumn
-  dashboard](https://app.useautumn.com/integrations/stripe).
-
+Make sure you've pasted in your [Stripe test secret
+key](https://dashboard.stripe.com/test/apikeys) in the [Autumn
+dashboard](https://app.useautumn.com/integrations/stripe).
 
 ```tsx
 import { useCustomer, AttachDialog } from "autumn-js/react";
@@ -216,66 +185,60 @@ Integrate your client and server pricing tiers logic with the following function
 
 Server-side, you can access Autumn's functions through the `auth` object.
 
-
-
 #### Client
 
-    ```jsx
-    import { useCustomer } from "autumn-js/react";
+```jsx
+import { useCustomer } from "autumn-js/react";
 
-    export default function SendChatMessage() {
-      const { customer, allowed, refetch } = useCustomer();
+export default function SendChatMessage() {
+  const { customer, allowed, refetch } = useCustomer();
 
-      return (
-        <>
-          <button
-            onClick={async () => {
-              if (allowed({ featureId: "messages" })) {
-                //... send chatbot message server-side, then
-                await refetch(); // refetch customer usage data
-                alert(
-                  "Remaining messages: " + customer?.features.messages?.balance
-                );
-              } else {
-                alert("You're out of messages");
-              }
-            }}
-          >
-            Send Message
-          </button>
-        </>
-      );
-    }
-    ```
-
-
+  return (
+    <>
+      <button
+        onClick={async () => {
+          if (allowed({ featureId: "messages" })) {
+            //... send chatbot message server-side, then
+            await refetch(); // refetch customer usage data
+            alert(
+              "Remaining messages: " + customer?.features.messages?.balance
+            );
+          } else {
+            alert("You're out of messages");
+          }
+        }}
+      >
+        Send Message
+      </button>
+    </>
+  );
+}
+```
 
 #### Server
 
-    ```typescript Server
-    import { auth } from "@/lib/auth";
+```typescript Server
+import { auth } from "@/lib/auth";
 
-    // check on the backend if the customer can send a message
-    const { allowed } = await auth.api.check({
-      headers: await headers(), // pass the request headers
-      body: {
-        featureId: "messages",
-      },
-    });
+// check on the backend if the customer can send a message
+const { allowed } = await auth.api.check({
+  headers: await headers(), // pass the request headers
+  body: {
+    featureId: "messages",
+  },
+});
 
-    // server-side function to send the message
+// server-side function to send the message
 
-    // then track the usage
-    await auth.api.track({
-      headers: await headers(),
-      body: {
-        featureId: "messages",
-        value: 2,
-      },
-    });
-    ```
-
-
+// then track the usage
+await auth.api.track({
+  headers: await headers(),
+  body: {
+    featureId: "messages",
+    value: 2,
+  },
+});
+```
 
 ### Additional Functions
 

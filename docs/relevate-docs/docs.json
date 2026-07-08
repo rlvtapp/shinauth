@@ -23,12 +23,7 @@
         "content": [
           {
             "title": "Get Started",
-            "pages": [
-              "index",
-              "installation",
-              "basic-usage",
-              "comparison"
-            ]
+            "pages": ["index", "installation", "basic-usage", "comparison"]
           },
           {
             "title": "AI Resources",
@@ -232,8 +227,8 @@
                   "plugins/generic-oauth",
                   "plugins/mcp",
                   "plugins/organization",
-                  "plugins/oidc-provider",
                   "plugins/oauth-provider",
+                  "plugins/cimd",
                   "plugins/oauth-proxy",
                   "plugins/sso",
                   "plugins/scim",
@@ -266,9 +261,7 @@
               },
               {
                 "title": "Community",
-                "pages": [
-                  "plugins/community-plugins"
-                ]
+                "pages": ["plugins/community-plugins"]
               }
             ]
           },
@@ -351,9 +344,7 @@
       {
         "id": "changelog",
         "label": "Changelog",
-        "content": [
-          "changelog"
-        ]
+        "content": ["changelog"]
       }
     ]
   },

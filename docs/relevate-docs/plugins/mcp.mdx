@@ -4,111 +4,100 @@ title: "MCP"
 
 `OAuth` `MCP`
 
+The **MCP** plugin lets your app act as an OAuth authorization server for [Model Context Protocol](https://modelcontextprotocol.io) clients. It is built on the [OAuth 2.1 Provider](/plugins/oauth-provider), so MCP clients discover your endpoints, register dynamically, and obtain access tokens through standard OAuth discovery.
 
-**Warning:**
-
-  This plugin will soon be deprecated in favor of the [OAuth Provider Plugin](/plugins/oauth-provider).
-
-
-The **MCP** plugin lets your app act as an OAuth provider for MCP clients. It handles authentication and makes it easy to issue and manage access tokens for MCP applications.
-
-
-**Warning:**
-
-  This plugin is based on OIDC Provider plugin. It'll be moved to the OAuth Provider Plugin in the future.
-
-
-## Installation
-
-
-
-    ### Add the Plugin
-
-    Add the MCP plugin to your auth configuration and specify the login page path.
-
-    ```ts title="auth.ts"
-    import { shinAuth } from "shinauth";
-    import { mcp } from "shinauth/plugins";
-
-    export const auth = shinAuth({
-        plugins: [
-            mcp({
-                loginPage: "/sign-in" // path to your login page
-            })
-        ]
-    });
-    ```
-
+`mcp()` configures the OAuth provider with MCP-appropriate defaults (dynamic registration for self-registering clients, PKCE for public clients) and serves the [RFC 9728](https://datatracker.ietf.org/doc/html/rfc9728) protected resource metadata.
 
 **Note:**
 
-      This doesn't have a client plugin, so you don't need to make any changes to your authClient.
+`mcp()` ships in the `@shinauth/mcp` package. Install it with `pnpm add @shinauth/mcp`.
 
+## Installation
 
+### Add the Plugin
 
+Add the MCP plugin to your auth configuration alongside the [JWT plugin](/plugins/jwt). The JWT plugin is required: it provides the stable signing key used for ID tokens and access tokens, and exposes the `/jwks` endpoint that resource servers use to verify them.
 
-    ### Generate Schema
+```ts title="auth.ts"
+import { shinAuth } from "shinauth";
+import { jwt } from "shinauth/plugins";
+import { mcp } from "@shinauth/mcp";
 
-    Run the migration or generate the schema to add the necessary fields and tables to the database.
+export const auth = shinAuth({
+    plugins: [
+        jwt(),
+        mcp({
+            loginPage: "/sign-in", // path to your login page
+            consentPage: "/consent", // path to your consent page
+            resource: "https://api.example.com/mcp" // protected resource identifier
+        })
+    ]
+});
+```
 
+**Note:**
 
+`mcp()` is the OAuth provider. Do not also register a separate `oauthProvider()` plugin in the same app.
+
+### Generate Schema
+
+Run the migration or generate the schema to add the necessary tables to the database.
 
 #### migrate
 
-        ```bash
-        pnpm dlx @shinauth/cli migrate
-        ```
-
-
+```bash
+pnpm dlx @shinauth/cli migrate
+```
 
 #### generate
 
-        ```bash
-        pnpm dlx @shinauth/cli generate
-        ```
+```bash
+pnpm dlx @shinauth/cli generate
+```
 
+The MCP plugin uses the same schema as the OAuth Provider plugin (`oauthClient`, `oauthAccessToken`, `oauthRefreshToken`, `oauthConsent`, `oauthClientAssertion`). See the [OAuth Provider Schema](/plugins/oauth-provider#schema) section for details.
 
+## Endpoints
 
-    The MCP plugin uses the same schema as the OIDC Provider plugin. See the [OIDC Provider Schema](/plugins/oidc-provider#schema) section for details.
+`mcp()` serves the standard OAuth 2.1 endpoints under `/oauth2/*`:
 
+| Endpoint             | Path                |
+| -------------------- | ------------------- |
+| Authorization        | `/oauth2/authorize` |
+| Token                | `/oauth2/token`     |
+| Dynamic registration | `/oauth2/register`  |
+| UserInfo             | `/oauth2/userinfo`  |
 
+Discovery follows OAuth 2.0 Authorization Server Metadata ([RFC 8414](https://datatracker.ietf.org/doc/html/rfc8414)) and Protected Resource Metadata ([RFC 9728](https://datatracker.ietf.org/doc/html/rfc9728)). The well-known URLs are derived from the issuer, so a server with a base path serves them at the issuer-inserted location rather than the bare root. Spec-compliant MCP clients locate the authorization, token, and registration endpoints through discovery, so they need no hardcoded paths.
 
 ## Usage
 
-### OAuth Discovery Metadata
+### Protected Resource Metadata
 
-Shinauth already handles the `/api/auth/.well-known/oauth-authorization-server` route automatically but some client may fail to parse the `WWW-Authenticate` header and default to `/.well-known/oauth-authorization-server` (this can happen, for example, if your CORS configuration doesn't expose the `WWW-Authenticate`). For this reason it's better to add a route to expose OAuth metadata for MCP clients:
+The [RFC 9728](https://datatracker.ietf.org/doc/html/rfc9728) `/.well-known/oauth-protected-resource` document is served automatically at the well-known root (and the resource-path-inserted alias). It tells MCP clients which authorization server protects the resource, which scopes it supports, which `resource` identifier their access tokens must be bound to, and which DPoP proof algorithms are supported.
 
-```ts title=".well-known/oauth-authorization-server/route.ts"
-import { oAuthDiscoveryMetadata } from "shinauth/plugins";
-import { auth } from "../../../lib/auth";
+Set `resource` to the protected resource identifier MCP clients request and access tokens carry as `aud`:
 
-export const GET = oAuthDiscoveryMetadata(auth);
-```
-
-### OAuth Protected Resource Metadata
-
-Shinauth already handles the `/api/auth/.well-known/oauth-protected-resource` route automatically but some client may fail to parse the `WWW-Authenticate` header and default to `/.well-known/oauth-protected-resource` (this can happen, for example, if your CORS configuration doesn't expose the `WWW-Authenticate`). For this reason it's better to add a route to expose OAuth metadata for MCP clients:
-
-```ts title="/.well-known/oauth-protected-resource/route.ts"
-import { oAuthProtectedResourceMetadata } from "shinauth/plugins";
-import { auth } from "@/lib/auth";
-
-export const GET = oAuthProtectedResourceMetadata(auth);
+```ts title="auth.ts"
+mcp({
+    loginPage: "/sign-in",
+    consentPage: "/consent",
+    resource: "https://api.example.com/mcp"
+})
 ```
 
 ### MCP Session Handling
 
-You can use the helper function `withMcpAuth` to get the session and handle unauthenticated calls automatically.
+Use `requireMcpAuth` to protect an MCP route. It reads the `Authorization` header, verifies Bearer access tokens against the authorization server's JWKS (signature, issuer, audience, and expiry), and enforces [RFC 9449](https://datatracker.ietf.org/doc/html/rfc9449) DPoP proofs when the access token is DPoP-bound. Unauthenticated requests receive a JSON-RPC `401` with the RFC 9728 `WWW-Authenticate` header, so MCP clients can start the authorization flow.
 
 ```ts title="api/[transport]/route.ts"
 import { auth } from "@/lib/auth";
 import { createMcpHandler } from "@vercel/mcp-adapter";
-import { withMcpAuth } from "shinauth/plugins";
+import { requireMcpAuth } from "@shinauth/mcp";
 import { z } from "zod";
 
-const handler = withMcpAuth(auth, (req, session) => {
-    // session contains the access token record with scopes and user ID
+const handler = requireMcpAuth(auth, (req, claims) => {
+    // claims holds the verified JWT payload: sub, scope, client_id, ...
     return createMcpHandler(
         (server) => {
             server.tool(
@@ -143,245 +132,55 @@ const handler = withMcpAuth(auth, (req, session) => {
 export { handler as GET, handler as POST, handler as DELETE };
 ```
 
-You can also use `auth.api.getMcpSession` to get the session using the access token sent from the MCP client:
+The second argument is the verified JWT payload, not a database record. `requireMcpAuth` never exposes a refresh token; the access token is checked locally against the JWKS without a database round trip. DPoP-bound tokens must be sent as `Authorization: DPoP <access_token>` with a matching `DPoP` proof header. DPoP proof replay is rejected through your auth instance's database adapter by default, so anti-replay holds across multiple server instances; pass `dpop.replayStore` only to use a different store.
 
-```ts title="api/[transport]/route.ts"
-import { auth } from "@/lib/auth";
-import { createMcpHandler } from "@vercel/mcp-adapter";
-import { z } from "zod";
+By default `requireMcpAuth` reads the server's resolved base URL from the auth context and uses it as both the expected token issuer and protected resource identifier, with the JWKS at that base URL. This matches what the provider issues, so no configuration is needed for the common case. Override any value when the resource differs or `jwt.issuer` is custom:
 
-const handler = async (req: Request) => {
-     // session contains the access token record with scopes and user ID
-    const session = await auth.api.getMcpSession({
-        headers: req.headers
-    })
-    if(!session){
-        //this is important and you must return 401
-        return new Response(null, {
-            status: 401
-        })
-    }
-    return createMcpHandler(
-        (server) => {
-            server.tool(
-                "echo",
-                "Echo a message",
-                { message: z.string() },
-                async ({ message }) => {
-                    return {
-                        content: [{ type: "text", text: `Tool echo: ${message}` }],
-                    };
-                },
-            );
-        },
-        {
-            capabilities: {
-                tools: {
-                    echo: {
-                        description: "Echo a message",
-                    },
-                },
-            },
-        },
-        {
-            redisUrl: process.env.REDIS_URL,
-            basePath: "/api",
-            verboseLogs: true,
-            maxDuration: 60,
-        },
-    )(req);
-}
-
-export { handler as GET, handler as POST, handler as DELETE };
+```ts
+requireMcpAuth(auth, handler, {
+    resource: "https://api.example.com/mcp", // protected resource identifier
+    issuer: "https://auth.example.com", // override when jwt.issuer is custom
+    jwksUrl: "https://auth.example.com/api/auth/jwks",
+    scope: "openid profile" // advertised in the 401 challenge
+})
 ```
 
 ## Configuration
 
-The MCP plugin accepts the following configuration options:
+`mcp()` extends the [OAuth Provider](/plugins/oauth-provider#configuration) options. All OAuth provider options are passed flat (there is no nested `oidcConfig`). The required MCP-specific option is `resource`.
 
-
-See the source types for the complete option reference.
-
-
-### OIDC Configuration
-
-The plugin supports additional OIDC configuration options through the `oidcConfig` parameter:
-
+For native/public MCP clients, `mcp()` defaults `refreshTokenReuseInterval` to 30 seconds. This lets a client retry a refresh with the old token and receive the same rotated token response when another local session already consumed that refresh token. Set `refreshTokenReuseInterval: 0` to keep strict OAuth Provider replay handling.
 
 See the source types for the complete option reference.
 
+The most commonly tuned OAuth provider options are below. See the [OAuth Provider Configuration](/plugins/oauth-provider#configuration) for the full list.
 
-## Remote MCP Client
+See the source types for the complete option reference.
 
-The examples above use `withMcpAuth` which requires the Shinauth instance to be in the **same process** as the MCP server. If your MCP server runs as a separate service (different repo, different runtime, different language), you can use the **MCP Client** — a lightweight, framework-agnostic HTTP client that validates Bearer tokens against a remote Shinauth server.
+## Remote MCP Server
 
+`requireMcpAuth` verifies tokens against your Shinauth server's JWKS, so the MCP route can run anywhere as long as it can reach that JWKS URL. When the resource server runs separately from the authorization server, or uses a dynamic `baseURL`, use `mcpHandler` with explicit verification options instead of `requireMcpAuth`.
 
-**Note:**
+```ts title="mcp-server.ts"
+import { mcpHandler } from "@shinauth/mcp";
 
-  No additional packages needed — the MCP Client is included in `shinauth`.
-
-
-### Setup
-
-
-
-    ### Create the client
-
-    Point it at your Shinauth server's URL (the same `baseURL` + `basePath` from your auth config):
-
-    ```ts title="mcp-server.ts"
-    import { createMcpAuthClient } from "shinauth/plugins/mcp/client"
-
-    const mcpAuth = createMcpAuthClient({
-        authURL: "http://localhost:3000/api/auth"
-    })
-    ```
-
-
-
-    ### Protect your MCP routes
-
-    Use the `handler` wrapper for Web Standard `Request`/`Response` (works with Deno, Bun, Cloudflare Workers, etc.):
-
-    ```ts title="mcp-server.ts"
-    const handler = mcpAuth.handler(async (req, session) => {
-        // session.userId, session.scopes, session.clientId
+const handler = mcpHandler(
+    {
+        verifyOptions: {
+            issuer: "https://auth.example.com",
+            audience: "https://api.example.com/mcp",
+        },
+        jwksUrl: "https://auth.example.com/api/auth/jwks",
+    },
+    async (req, claims) => {
+        // claims holds the verified JWT payload
         return new Response(JSON.stringify({
             jsonrpc: "2.0",
-            result: { userId: session.userId },
+            result: { sub: claims.sub },
             id: 1
         }))
-    })
+    }
+)
+```
 
-    Deno.serve(handler)
-    ```
-
-
-
-    ### Mount discovery endpoints
-
-    MCP clients need to discover your OAuth server. Mount these at the root of your MCP server:
-
-    ```ts title="mcp-server.ts"
-    const discovery = mcpAuth.discoveryHandler()
-    const protectedResource = mcpAuth.protectedResourceHandler("http://localhost:4000")
-
-    // GET /.well-known/oauth-authorization-server → proxied from Shinauth
-    // GET /.well-known/oauth-protected-resource → points MCP clients to Shinauth
-    ```
-
-    These proxy and cache the metadata from your Shinauth server, so MCP clients can discover the authorization, token, and registration endpoints automatically.
-
-
-
-### Framework Adapters
-
-
-
-#### Hono
-
-    ```ts title="mcp-server.ts"
-    import { Hono } from "hono"
-    import { mcpAuthHono } from "shinauth/plugins/mcp/client/adapters"
-
-    const app = new Hono()
-    const { middleware, discoveryRoutes } = mcpAuthHono({
-        authURL: "http://localhost:3000/api/auth"
-    })
-
-    // Mount OAuth discovery endpoints (required by MCP spec)
-    discoveryRoutes(app, "http://localhost:4000")
-
-    // Protect MCP routes
-    app.use("/mcp/*", middleware)
-
-    app.post("/mcp", (c) => {
-        const session = c.get("mcpSession")
-        // session.userId, session.scopes, etc.
-    })
-    ```
-
-
-
-#### Express
-
-    ```ts title="mcp-server.ts"
-    import express from "express"
-    import { createMcpAuthClient } from "shinauth/plugins/mcp/client"
-
-    const app = express()
-    const mcpAuth = createMcpAuthClient({
-        authURL: "http://localhost:3000/api/auth"
-    })
-
-    app.use("/mcp", mcpAuth.middleware())
-
-    app.post("/mcp", (req, res) => {
-        const session = req.mcpSession
-        // session.userId, session.scopes, etc.
-    })
-    ```
-
-
-
-#### Official MCP SDK
-
-    ```ts title="mcp-server.ts"
-    import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
-    import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js"
-    import { mcpAuthOfficial } from "shinauth/plugins/mcp/client/adapters"
-
-    const auth = mcpAuthOfficial({
-        authURL: "http://localhost:3000/api/auth"
-    })
-
-    const mcpServer = new McpServer({ name: "my-server", version: "1.0.0" })
-    const app = express() // your HTTP framework
-
-    app.post("/mcp", auth.handler(async (req, session) => {
-        const transport = new StreamableHTTPServerTransport({
-            sessionIdGenerator: () => crypto.randomUUID()
-        })
-        await mcpServer.connect(transport)
-        return transport.handleRequest(req)
-    }))
-    ```
-
-
-
-#### mcp-use
-
-    Drop-in replacement for `oauthWorkOSProvider`, `oauthSupabaseProvider`, etc.:
-
-    ```ts title="mcp-server.ts"
-    import { MCPServer } from "mcp-use/server"
-    import { mcpAuthMcpUse } from "shinauth/plugins/mcp/client/adapters"
-
-    const server = new MCPServer({
-        name: "my-server",
-        version: "1.0.0",
-        oauth: mcpAuthMcpUse({
-            authURL: "http://localhost:3000/api/auth"
-        })
-    })
-    ```
-
-
-
-### Options
-
-
-See the source types for the complete option reference.
-
-
-### Session Object
-
-The session object returned by `verifyToken` and passed to handlers contains:
-
-
-See the source types for the complete option reference.
-
-
-## Schema
-
-The MCP plugin uses the same schema as the OIDC Provider plugin. See the [OIDC Provider Schema](/plugins/oidc-provider#schema) section for details.
+`mcpHandler` returns the same RFC 9728 `WWW-Authenticate` response for unauthenticated requests. For resources whose identifier is not a URL (for example a URN), pass `resourceMetadataMappings` to map each resource to its metadata URL.

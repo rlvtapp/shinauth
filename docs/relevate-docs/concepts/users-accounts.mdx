@@ -48,12 +48,10 @@ export const auth = shinAuth({
 })
 ```
 
-
 **Warning:**
 
-  Avoid awaiting the email sending to prevent
-  timing attacks. On serverless platforms, use `waitUntil` or similar to ensure the email is sent.
-
+Avoid awaiting the email sending to prevent
+timing attacks. On serverless platforms, use `waitUntil` or similar to ensure the email is sent.
 
 By default, when a user requests to change their email, a verification email is sent to the **new** email address.
 The email is only updated after the user verifies the new email.
@@ -101,11 +99,9 @@ export const auth = shinAuth({
 })
 ```
 
-
 **Warning:**
 
-  If `updateEmailWithoutVerification` is false (default), the email will not be updated until the new email is verified, even if the current email is unverified.
-
+If `updateEmailWithoutVerification` is false (default), the email will not be updated until the new email is verified, even if the current email is unverified.
 
 #### Client Usage
 
@@ -124,26 +120,24 @@ await authClient.changeEmail({
 
 A user's password isn't stored in the user table. Instead, it's stored in the account table. To change the password of a user, you can use one of the following approaches:
 
-
 ### POST /change-password
 
-  ```ts
-  type changePassword = {
-      /**
-       * The new password to set
-       */
-      newPassword: string = "newpassword1234"
-      /**
-       * The current user password
-       */
-      currentPassword: string = "oldpassword1234"
-      /**
-       * When set to true, all other active sessions for this user will be invalidated
-       */
-      revokeOtherSessions?: boolean = true
-  }
-  ```
-
+```ts
+type changePassword = {
+    /**
+     * The new password to set
+     */
+    newPassword: string = "newpassword1234"
+    /**
+     * The current user password
+     */
+    currentPassword: string = "oldpassword1234"
+    /**
+     * When set to true, all other active sessions for this user will be invalidated
+     */
+    revokeOtherSessions?: boolean = true
+}
+```
 
 ### Set Password
 
@@ -175,11 +169,9 @@ await auth.api.verifyPassword({
 });
 ```
 
-
 **Note:**
 
-  For OAuth users who don't have passwords, consider using email verification or fresh session checks for sensitive operations instead.
-
+For OAuth users who don't have passwords, consider using email verification or fresh session checks for sensitive operations instead.
 
 ## Delete User
 
@@ -275,11 +267,9 @@ await authClient.deleteUser({
 
 The user must have a `fresh` session token, meaning the user must have signed in recently. This is checked if the password is not provided.
 
-
 **Warning:**
 
-  By default `session.freshAge` is set to `60 * 60 * 24` (1 day). You can change this value by passing the `session` object to the `auth` configuration. If it is set to `0`, the freshness check is disabled. It is recommended not to disable this check if you are not using email verification for deleting the account.
-
+By default `session.freshAge` is set to `60 * 60 * 24` (1 day). You can change this value by passing the `session` object to the `auth` configuration. If it is set to `0`, the freshness check is disabled. It is recommended not to disable this check if you are not using email verification for deleting the account.
 
 ```ts
 import { authClient } from "@/lib/auth-client"
@@ -309,6 +299,45 @@ await authClient.deleteUser({
 ```
 
 ### Callbacks
+
+**validateUserInfo**: A gate that decides which identities Shinauth admits. It fires just before a user is created (`create-user`) or a new provider account is linked (`link-account`), for every authentication method (OAuth, OIDC SSO, SAML SSO, email/password, magic link, email OTP, anonymous, SIWE, phone number, admin-created users, and SCIM), including stateless setups with no persistent database, so policy lives in one place instead of per provider.
+
+It also fires when an existing **OAuth or SSO** user signs in again (`sign-in`), and there it receives the *fresh* provider email and profile rather than the stored row. That lets a domain or org policy reject a user whose provider identity moved out of bounds (for example, an email that left the allowed domain). Non-provider returning sign-ins are not re-validated, because their stored row has not changed since `create-user` gated it; use the admin plugin's ban controls or a `databaseHooks.session.create.before` hook to block those.
+
+`source.action` is `"create-user"`, `"link-account"`, or `"sign-in"`, and `source.method` is the authentication method. For OAuth, `source.oauth` carries the provider id and raw provider profile. For OIDC and SAML SSO, `source.sso` carries the SSO provider id and raw provider claims or assertion attributes.
+
+Return nothing to allow provisioning. Return an object with `error` to reject it: browser/redirect flows send the rejection to the configured error URL, while programmatic flows return a `403` API error. Avoid putting sensitive details in `errorDescription` because it is returned to the client.
+
+```ts title="auth.ts"
+import { shinAuth } from "shinauth";
+
+export const auth = shinAuth({
+    user: {
+        validateUserInfo: ({ user, source }) => {
+            if (!user.email?.endsWith("@example.com")) {
+                return {
+                    error: "email_not_allowed",
+                    errorDescription: "Use your example.com email to sign in",
+                };
+            }
+
+            if (
+                source.oauth?.providerId === "company-oauth" &&
+                source.oauth?.profile?.hd !== "example.com"
+            ) {
+                return {
+                    error: "invalid_organization",
+                    errorDescription: "Use your company OAuth account",
+                };
+            }
+        },
+    },
+});
+```
+
+**Note:**
+
+`validateUserInfo` is the high-level policy gate. The lower-level `databaseHooks.user.create.before` still runs afterward for data shaping and can also abort a write; reach for it when you need to mutate the record rather than accept or reject the identity.
 
 **beforeDelete**: This callback is called before the user is deleted. You can use this callback to perform any cleanup or additional checks before deleting the user.
 
@@ -419,7 +448,7 @@ Then whenever you retrieve back the account make sure to decrypt the tokens befo
 
 ### Account Linking
 
-Account linking is [enabled by default](https://www.github.com/rlvtapp/shinauth/docs/reference/options#accountlinking) and lets users associate multiple authentication methods with a single account. With Shinauth, users can connect additional social sign-ons or OAuth providers to their existing accounts if the provider confirms the user's email as verified.
+Account linking is [enabled by default](https://www.shinauth.com/docs/reference/options#accountlinking) and lets users associate multiple authentication methods with a single account. With Shinauth, users can connect additional social sign-ons or OAuth providers to their existing accounts if the provider confirms the user's email as verified.
 
 If account linking is disabled, no accounts can be linked, regardless of the provider or email verification status.
 
@@ -501,57 +530,61 @@ Users already signed in can manually link their account to additional social pro
   });
   ```
 
-  You can also link accounts using ID tokens directly, without redirecting to the provider's OAuth flow:
+**Note:**
 
-  ```ts
-  import { authClient } from "@/lib/auth-client"
+Newly granted scopes are merged into `account.scope`, so prior grants survive incremental authorization. Sign-in re-authentication and refresh-token responses do not modify `account.scope`.
 
-  await authClient.linkSocial({
-      provider: "google",
-      idToken: {
-          token: "id_token_from_provider",
-          nonce: "nonce_used_for_token", // Optional
-          accessToken: "access_token", // Optional, may be required by some providers
-          refreshToken: "refresh_token" // Optional
-      }
-  });
-  ```
+You can also link accounts using ID tokens directly, without redirecting to the provider's OAuth flow:
 
-  This is useful when you already have valid tokens from the provider, for example:
+```ts
+import { authClient } from "@/lib/auth-client"
 
-  * After signing in with a native SDK
-  * When using a mobile app that handles authentication
-  * When implementing custom OAuth flows
+await authClient.linkSocial({
+    provider: "google",
+    idToken: {
+        token: "id_token_from_provider",
+        nonce: "nonce_used_for_token", // Optional
+        accessToken: "access_token", // Optional, may be required by some providers
+        refreshToken: "refresh_token" // Optional
+    }
+});
+```
 
-  The ID token must be valid and the provider must support ID token verification.
+This is useful when you already have valid tokens from the provider, for example:
 
-  If you want your users to be able to link a social account with a different email address than the user, or if you want to use a provider that does not return email addresses, you will need to enable this in the account linking settings.
+* After signing in with a native SDK
+* When using a mobile app that handles authentication
+* When implementing custom OAuth flows
 
-  ```ts title="auth.ts"
-  import { shinAuth } from "shinauth";
+The ID token must be valid and the provider must support ID token verification.
 
-  export const auth = shinAuth({
-      account: {
-          accountLinking: {
-              allowDifferentEmails: true
-          }
-      },
-  });
-  ```
+If you want your users to be able to link a social account with a different email address than the user, or if you want to use a provider that does not return email addresses, you will need to enable this in the account linking settings.
 
-  By default, linking an account leaves the existing user profile untouched. Enable `updateUserInfoOnLink` to copy the provider's profile onto the user each time an account is linked. The synced fields are the same ones persisted on sign-up (`name`, `image`, and any input-allowed fields your `mapProfileToUser` adds). The user's `email` and `emailVerified` are never changed on a link, so linking a provider can't rebind the account's identity.
+```ts title="auth.ts"
+import { shinAuth } from "shinauth";
 
-  ```ts title="auth.ts"
-  import { shinAuth } from "shinauth";
+export const auth = shinAuth({
+    account: {
+        accountLinking: {
+            allowDifferentEmails: true
+        }
+    },
+});
+```
 
-  export const auth = shinAuth({
-      account: {
-          accountLinking: {
-              updateUserInfoOnLink: true
-          }
-      },
-  });
-  ```
+By default, linking an account leaves the existing user profile untouched. Enable `updateUserInfoOnLink` to copy the provider's profile onto the user each time an account is linked. The synced fields are the same ones persisted on sign-up (`name`, `image`, and any input-allowed fields your `mapProfileToUser` adds). The user's `email` and `emailVerified` are never changed on a link, so linking a provider can't rebind the account's identity.
+
+```ts title="auth.ts"
+import { shinAuth } from "shinauth";
+
+export const auth = shinAuth({
+    account: {
+        accountLinking: {
+            updateUserInfoOnLink: true
+        }
+    },
+});
+```
 
 * **Linking Credential-Based Accounts:** To link a credential-based account (e.g., email and password), users can initiate a "forgot password" flow, or you can call the `setPassword` method on the server.
 
@@ -566,11 +599,9 @@ Users already signed in can manually link their account to additional social pro
   });
   ```
 
-
 **Note:**
 
-  `setPassword` can't be called from the client for security reasons.
-
+`setPassword` can't be called from the client for security reasons.
 
 ### Account Unlinking
 

@@ -16,67 +16,54 @@ npm i shinauth
 
 Import `createAuthClient` from the package for your framework (e.g., "shinauth/react" for React). Call the function to create your client. Pass the base URL of your auth server. If the auth server is running on the same domain as your client, you can skip this step.
 
-
 **Note:**
 
-  If your auth server uses a different base path other than `/api/auth`, you can either pass the full URL including the path (e.g., `http://localhost:3000/custom-path/auth`), or use the `basePath` option separately.
-
-
+If your auth server uses a different base path other than `/api/auth`, you can either pass the full URL including the path (e.g., `http://localhost:3000/custom-path/auth`), or use the `basePath` option separately.
 
 #### vanilla
 
-    ```ts title="lib/auth-client.ts"
-    import { createAuthClient } from "shinauth/client"
-    export const authClient = createAuthClient({
-        baseURL: "http://localhost:3000" // The base URL of your auth server
-    })
-    ```
-
-
+```ts title="lib/auth-client.ts"
+import { createAuthClient } from "shinauth/client"
+export const authClient = createAuthClient({
+    baseURL: "http://localhost:3000" // The base URL of your auth server
+})
+```
 
 #### lib/auth-client.ts
 
-    ```ts title="lib/auth-client.ts"
-    import { createAuthClient } from "shinauth/react"
-    export const authClient = createAuthClient({
-        baseURL: "http://localhost:3000" // The base URL of your auth server
-    })
-    ```
-
-
+```ts title="lib/auth-client.ts"
+import { createAuthClient } from "shinauth/react"
+export const authClient = createAuthClient({
+    baseURL: "http://localhost:3000" // The base URL of your auth server
+})
+```
 
 #### lib/auth-client.ts
 
-    ```ts title="lib/auth-client.ts"
-    import { createAuthClient } from "shinauth/vue"
-    export const authClient = createAuthClient({
-        baseURL: "http://localhost:3000" // The base URL of your auth server
-    })
-    ```
-
-
+```ts title="lib/auth-client.ts"
+import { createAuthClient } from "shinauth/vue"
+export const authClient = createAuthClient({
+    baseURL: "http://localhost:3000" // The base URL of your auth server
+})
+```
 
 #### lib/auth-client.ts
 
-    ```ts title="lib/auth-client.ts"
-    import { createAuthClient } from "shinauth/svelte"
-    export const authClient = createAuthClient({
-        baseURL: "http://localhost:3000" // The base URL of your auth server
-    })
-    ```
-
-
+```ts title="lib/auth-client.ts"
+import { createAuthClient } from "shinauth/svelte"
+export const authClient = createAuthClient({
+    baseURL: "http://localhost:3000" // The base URL of your auth server
+})
+```
 
 #### lib/auth-client.ts
 
-    ```ts title="lib/auth-client.ts"
-    import { createAuthClient } from "shinauth/solid"
-    export const authClient = createAuthClient({
-        baseURL: "http://localhost:3000" // The base URL of your auth server
-    })
-    ```
-
-
+```ts title="lib/auth-client.ts"
+import { createAuthClient } from "shinauth/solid"
+export const authClient = createAuthClient({
+    baseURL: "http://localhost:3000" // The base URL of your auth server
+})
+```
 
 ## Usage
 
@@ -100,121 +87,111 @@ In addition to the standard methods, the client provides hooks to easily access 
 
 **Example: useSession**
 
-
-
 #### React
 
-    ```tsx title="user.tsx"
-    //make sure you're using the react client
-    import { createAuthClient } from "shinauth/react"
-    const { useSession } = createAuthClient()
+```tsx title="user.tsx"
+//make sure you're using the react client
+import { createAuthClient } from "shinauth/react"
+const { useSession } = createAuthClient()
 
-    export function User() {
-        const {
-            data: session,
-            isPending, //loading state
-            error, //error object
-            refetch //refetch the session
-        } = useSession()
-        return (
-            //...
-        )
-    }
-    ```
-
-
+export function User() {
+    const {
+        data: session,
+        isPending, //loading state
+        error, //error object
+        refetch //refetch the session
+    } = useSession()
+    return (
+        //...
+    )
+}
+```
 
 #### Vue
 
-    ```vue title="user.vue"
-    <script lang="ts" setup>
-    import { authClient } from '@/lib/auth-client'
-    const session = authClient.useSession()
-    </script>
-    <template>
+```vue title="user.vue"
+<script lang="ts" setup>
+import { authClient } from '@/lib/auth-client'
+const session = authClient.useSession()
+</script>
+<template>
+    <div>
+        <button v-if="!session.data" @click="() => authClient.signIn.social({
+            provider: 'github'
+        })">
+            Continue with GitHub
+        </button>
         <div>
-            <button v-if="!session.data" @click="() => authClient.signIn.social({
-                provider: 'github'
-            })">
-                Continue with GitHub
+            <pre>{{ session.data }}</pre>
+            <button v-if="session.data" @click="authClient.signOut()">
+                Sign out
             </button>
-            <div>
-                <pre>{{ session.data }}</pre>
-                <button v-if="session.data" @click="authClient.signOut()">
-                    Sign out
-                </button>
-            </div>
         </div>
-    </template>
-    ```
-
-
+    </div>
+</template>
+```
 
 #### Svelte
 
-    ```svelte title="user.svelte"
-    <script lang="ts">
-    import { authClient } from "$lib/auth-client";
-    const session = authClient.useSession();
-    </script>
+```svelte title="user.svelte"
+<script lang="ts">
+import { authClient } from "$lib/auth-client";
+const session = authClient.useSession();
+</script>
 
-    <div
-        style="display: flex; flex-direction: column; gap: 10px; border-radius: 10px; border: 1px solid #4B453F; padding: 20px; margin-top: 10px;"
-    >
+<div
+    style="display: flex; flex-direction: column; gap: 10px; border-radius: 10px; border: 1px solid #4B453F; padding: 20px; margin-top: 10px;"
+>
+    <div>
+    {#if $session.data}
         <div>
-        {#if $session.data}
-            <div>
-            <p>
-                {$session.data.user.name}
-            </p>
-            <p>
-                {$session.data.user.email}
-            </p>
-            <button
-                onclick={async () => {
-                await authClient.signOut();
-                }}
-            >
-                Signout
-            </button>
-            </div>
-        {:else}
-            <button
+        <p>
+            {$session.data.user.name}
+        </p>
+        <p>
+            {$session.data.user.email}
+        </p>
+        <button
             onclick={async () => {
-                await authClient.signIn.social({
-                provider: "github",
-                });
+            await authClient.signOut();
             }}
-            >
-            Continue with GitHub
-            </button>
-        {/if}
+        >
+            Signout
+        </button>
         </div>
+    {:else}
+        <button
+        onclick={async () => {
+            await authClient.signIn.social({
+            provider: "github",
+            });
+        }}
+        >
+        Continue with GitHub
+        </button>
+    {/if}
     </div>
-    ```
-
-
+</div>
+```
 
 #### Solid
 
-    ```tsx title="user.tsx"
-    import { authClient } from "~/lib/auth-client";
-    import { Show } from 'solid-js';
+```tsx title="user.tsx"
+import { authClient } from "~/lib/auth-client";
+import { Show } from 'solid-js';
 
-    export default function Home() {
-        const session = authClient.useSession()
-        return (
-            <Show
-                when={session()}
-                fallback={<button onClick={toggle}>Log in</button>}
-            >
-                <button onClick={toggle}>Log out</button>
-            </Show>
-        );
-    }
-    ```
-
-
+export default function Home() {
+    const session = authClient.useSession()
+    return (
+        <Show
+            when={session()}
+            fallback={<button onClick={toggle}>Log in</button>}
+        >
+            <button onClick={toggle}>Log out</button>
+        </Show>
+    );
+}
+```
 
 ### Fetch Options
 
@@ -289,9 +266,7 @@ const authClient = createAuthClient({
 })
 ```
 
-
 See the source types for the complete option reference.
-
 
 ### Disable Default Fetch Plugins
 
@@ -456,6 +431,47 @@ if(error?.code){
     alert(getErrorMessage(error.code, "en"));
 }
 ```
+
+### SSR Hydration
+
+With SSR frameworks like Next.js, Nuxt, or SvelteKit, `useSession` fetches the session on the client, causing a loading flash. Pass the server-fetched session to `hydrateSession` and use it as a fallback so the first render has data on both the server and the client:
+
+```tsx title="page.tsx (server component)"
+import { auth } from "@/lib/auth"
+import { headers } from "next/headers"
+import { SessionCard } from "./session-card"
+
+export default async function Page() {
+    const session = await auth.api.getSession({
+        headers: await headers(),
+    })
+    return <SessionCard initialSession={session} />
+}
+```
+
+```tsx title="session-card.tsx (client component)"
+"use client"
+
+import { authClient } from "@/lib/auth-client"
+
+type Props = {
+    initialSession: typeof authClient.$Infer.Session | null
+}
+
+export function SessionCard({ initialSession }: Props) {
+    authClient.hydrateSession(initialSession)
+    const { data, isPending, isRefetching } = authClient.useSession()
+    const session = isPending && !isRefetching ? initialSession : data
+
+    if (!session) return <p>Not signed in</p>
+    return <pre>{JSON.stringify(session, null, 2)}</pre>
+}
+```
+
+**Note:**
+
+* Only the first non-null call to `hydrateSession` takes effect.
+* Passing `null` is safe. It will be ignored and `useSession` will fetch as usual.
 
 ### Plugins
 

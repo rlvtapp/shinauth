@@ -6,79 +6,61 @@ title: "Single Sign-On (SSO)"
 
 Single Sign-On (SSO) allows users to authenticate with multiple applications using a single set of credentials. This plugin supports OpenID Connect (OIDC), OAuth2 providers, and SAML 2.0.
 
-
 **Note:**
 
-  Need self-service SSO where your customers can configure their own SSO connections? [Contact us for enterprise](/enterprise).
-
+Need self-service SSO where your customers can configure their own SSO connections? [Contact us for enterprise](/enterprise).
 
 ## Installation
 
+### Install the plugin
 
+```bash
+pnpm add @shinauth/sso
+```
 
-    ### Install the plugin
+### Add Plugin to the server
 
-    ```bash
-    @shinauth/sso
-    ```
+```ts title="auth.ts"
+import { shinAuth } from "shinauth"
+import { sso } from "@shinauth/sso";
 
+const auth = shinAuth({
+    plugins: [
+        sso()
+    ]
+})
+```
 
+### Migrate the database
 
-    ### Add Plugin to the server
-
-    ```ts title="auth.ts"
-    import { shinAuth } from "shinauth"
-    import { sso } from "@shinauth/sso";
-
-    const auth = shinAuth({
-        plugins: [
-            sso()
-        ]
-    })
-    ```
-
-
-
-    ### Migrate the database
-
-    Run the migration or generate the schema to add the necessary fields and tables to the database.
-
-
+Run the migration or generate the schema to add the necessary fields and tables to the database.
 
 #### migrate
 
-        ```bash
-        pnpm dlx @shinauth/cli migrate
-        ```
-
-
+```bash
+pnpm dlx @shinauth/cli migrate
+```
 
 #### generate
 
-        ```bash
-        pnpm dlx @shinauth/cli generate
-        ```
+```bash
+pnpm dlx @shinauth/cli generate
+```
 
+See the [Schema](#schema) section to add the fields manually.
 
+### Add the client plugin
 
-    See the [Schema](#schema) section to add the fields manually.
+```ts title="auth-client.ts"
+import { createAuthClient } from "shinauth/client"
+import { ssoClient } from "@shinauth/sso/client"
 
-
-
-    ### Add the client plugin
-
-    ```ts title="auth-client.ts"
-    import { createAuthClient } from "shinauth/client"
-    import { ssoClient } from "@shinauth/sso/client"
-
-    const authClient = createAuthClient({
-        plugins: [
-            ssoClient()
-        ]
-    })
-    ```
-
-
+const authClient = createAuthClient({
+    plugins: [
+        ssoClient()
+    ]
+})
+```
 
 ## Usage
 
@@ -88,34 +70,62 @@ To register an OIDC provider, use the `registerSSOProvider` endpoint and provide
 
 A redirect URL will be automatically generated using the provider ID. For instance, if the provider ID is `hydra`, the redirect URL would be `{baseURL}/api/auth/sso/callback/hydra`. Note that `/api/auth` may vary depending on your base path configuration.
 
+**Note:**
+
+If you need all providers to share a single callback URL (e.g., when migrating from another auth provider), see [Shared Redirect URI](#shared-redirect-uri).
 
 **Note:**
 
-  If you need all providers to share a single callback URL (e.g., when migrating from another auth provider), see [Shared Redirect URI](#shared-redirect-uri).
-
-
-**Note:**
-
-  When you register an OIDC provider, Shinauth automatically fetches and validates the IdP's [OIDC discovery document](#oidc-discovery). Most endpoint fields are optional — see [OIDC Discovery](#oidc-discovery) for details on auto-discovered fields and possible registration errors.
-
+When you register an OIDC provider, Shinauth automatically fetches and validates the IdP's [OIDC discovery document](#oidc-discovery). Most endpoint fields are optional — see [OIDC Discovery](#oidc-discovery) for details on auto-discovered fields and possible registration errors.
 
 #### Example
 
-
-
 #### client
 
-    ```ts title="register-oidc-provider.ts"
-    import { authClient } from "@/lib/auth-client";
+```ts title="register-oidc-provider.ts"
+import { authClient } from "@/lib/auth-client";
 
-    // Register with OIDC configuration
-    await authClient.sso.register({
+// Register with OIDC configuration
+await authClient.sso.register({
+    providerId: "example-provider",
+    issuer: "https://idp.example.com",
+    domain: "example.com",
+    oidcConfig: {
+        clientId: "client-id",
+        clientSecret: "client-secret",
+        authorizationEndpoint: "https://idp.example.com/authorize",
+        tokenEndpoint: "https://idp.example.com/token",
+        jwksEndpoint: "https://idp.example.com/jwks",
+        discoveryEndpoint: "https://idp.example.com/.well-known/openid-configuration",
+        scopes: ["openid", "email", "profile"],
+        pkce: true,
+        mapping: {
+            id: "sub",
+            email: "email",
+            emailVerified: "email_verified",
+            name: "name",
+            image: "picture",
+            extraFields: {
+                department: "department",
+                role: "role"
+            }
+        }
+    }
+});
+```
+
+#### server
+
+```ts title="register-oidc-provider.ts"
+const { headers } = await signInWithTestUser();
+await auth.api.registerSSOProvider({
+    body: {
         providerId: "example-provider",
         issuer: "https://idp.example.com",
         domain: "example.com",
         oidcConfig: {
-            clientId: "client-id",
-            clientSecret: "client-secret",
+            clientId: "your-client-id",
+            clientSecret: "your-client-secret",
             authorizationEndpoint: "https://idp.example.com/authorize",
             tokenEndpoint: "https://idp.example.com/token",
             jwksEndpoint: "https://idp.example.com/jwks",
@@ -134,47 +144,10 @@ A redirect URL will be automatically generated using the provider ID. For instan
                 }
             }
         }
-    });
-    ```
-
-
-
-#### server
-
-    ```ts title="register-oidc-provider.ts"
-    const { headers } = await signInWithTestUser();
-    await auth.api.registerSSOProvider({
-        body: {
-            providerId: "example-provider",
-            issuer: "https://idp.example.com",
-            domain: "example.com",
-            oidcConfig: {
-                clientId: "your-client-id",
-                clientSecret: "your-client-secret",
-                authorizationEndpoint: "https://idp.example.com/authorize",
-                tokenEndpoint: "https://idp.example.com/token",
-                jwksEndpoint: "https://idp.example.com/jwks",
-                discoveryEndpoint: "https://idp.example.com/.well-known/openid-configuration",
-                scopes: ["openid", "email", "profile"],
-                pkce: true,
-                mapping: {
-                    id: "sub",
-                    email: "email",
-                    emailVerified: "email_verified",
-                    name: "name",
-                    image: "picture",
-                    extraFields: {
-                        department: "department",
-                        role: "role"
-                    }
-                }
-            }
-        },
-        headers,
-    });
-    ```
-
-
+    },
+    headers,
+});
+```
 
 ### OIDC Discovery
 
@@ -186,45 +159,43 @@ Shinauth automatically fetches and validates the provider's [OpenID Connect Disc
 
 This allows most endpoint-related fields in `oidcConfig` to be **optional** — they will be hydrated automatically from the Identity Provider (IdP).
 
-
 ### POST /sso/register
 
-  ```ts
-  type registerSSOProvider = {
-      /**
-       * Unique identifier for the provider.
-       *
-       * Must not collide with a configured social provider, an
-       * `accountLinking.trustedProviders` entry, or a reserved built-in id
-       * (e.g. `credential`). Registration is rejected (422) otherwise, since
-       * SSO provider ids share the account-linking provider namespace and a
-       * collision could otherwise inherit trust meant for that provider.
-       */
-      providerId: string = "okta"
-      /**
-       * The OIDC issuer URL. Discovery document is fetched from `{issuer}/.well-known/openid-configuration`
-       */
-      issuer: string = "https://your-org.okta.com"
-      /**
-       * Bare email domain, or comma-separated bare email domains, for this provider
-       */
-      domain: string = "yourcompany.com"
-      /**
-       * OIDC configuration (most fields are auto-discovered)
-       */
-      oidcConfig: {
-          /**
-           * OAuth client ID from your IdP
-           */
-          clientId: string = "your-client-id"
-          /**
-           * OAuth client secret from your IdP
-           */
-          clientSecret: string = "your-client-secret"
-      }
-  }
-  ```
-
+```ts
+type registerSSOProvider = {
+    /**
+     * Unique identifier for the provider.
+     *
+     * Must not collide with a configured social provider, an
+     * `accountLinking.trustedProviders` entry, or a reserved built-in id
+     * (e.g. `credential`). Registration is rejected (422) otherwise, since
+     * SSO provider ids share the account-linking provider namespace and a
+     * collision could otherwise inherit trust meant for that provider.
+     */
+    providerId: string = "okta"
+    /**
+     * The OIDC issuer URL. Discovery document is fetched from `{issuer}/.well-known/openid-configuration`
+     */
+    issuer: string = "https://your-org.okta.com"
+    /**
+     * Bare email domain, or comma-separated bare email domains, for this provider
+     */
+    domain: string = "yourcompany.com"
+    /**
+     * OIDC configuration (most fields are auto-discovered)
+     */
+    oidcConfig: {
+        /**
+         * OAuth client ID from your IdP
+         */
+        clientId: string = "your-client-id"
+        /**
+         * OAuth client secret from your IdP
+         */
+        clientSecret: string = "your-client-secret"
+    }
+}
+```
 
 #### Fields Automatically Discovered
 
@@ -251,12 +222,10 @@ Example of relative endpoint and issuer with base path:
 * `token_endpoint`: `"/tokens"`
 * normalized `token_endpoint`: `"https://your-org.okta.com/v1/tokens"`
 
-
 **Note:**
 
-  If you explicitly set these fields in `oidcConfig`, your values override the discovered ones.
-  This is useful when you need to override the IdP's advertised metadata or when using incomplete mock servers.
-
+If you explicitly set these fields in `oidcConfig`, your values override the discovered ones.
+This is useful when you need to override the IdP's advertised metadata or when using incomplete mock servers.
 
 #### Trusted origins
 
@@ -303,16 +272,20 @@ trustedOrigins: async (request) => {
 
 See the [`trustedOrigins`](/reference/security#trusted-origins) docs for more information.
 
+#### Redirecting OIDC endpoints
+
+Shinauth does not follow redirects for server-side OIDC requests. Configure the final canonical URL for the discovery, token, userinfo, and JWKS endpoints.
+
+If one of those endpoints returns a `3xx` response, registration or sign-in fails with `oidc_endpoint_redirect`. This keeps endpoint validation tied to the exact URL that Shinauth fetches.
+
 #### Why Discovery Can Fail
 
 Shinauth validates that the IdP's metadata is correct and complete **before** allowing registration. This prevents subtle runtime failures during sign-in or token validation.
 
-
 **Note:**
 
-  Shinauth does **not** support implicit-only OIDC flows.
-  For this reason, `token_endpoint` and `jwks_uri` are required even though the OIDC spec allows implicit-only providers to omit `token_endpoint`.
-
+Shinauth does **not** support implicit-only OIDC flows.
+For this reason, `token_endpoint` and `jwks_uri` are required even though the OIDC spec allows implicit-only providers to omit `token_endpoint`.
 
 #### Discovery Errors
 
@@ -327,28 +300,27 @@ If the Identity Provider is misconfigured or unreachable, registration will fail
 | `discovery_invalid_url`         | The discovery URL is malformed or uses an unsupported protocol                                                                      |
 | `discovery_untrusted_origin`    | The discovery URL or one of the URLs discovered as part of this process was not trusted by your app's trusted origins configuration |
 | `discovery_invalid_json`        | The discovery response is empty or not valid JSON                                                                                   |
-| `unsupported_token_auth_method` | The IdP only supports token auth methods that Shinauth doesn't support                                                           |
+| `oidc_endpoint_redirect`        | The discovery, token, userinfo, or JWKS endpoint returned a redirect; configure the final endpoint URL instead                      |
+| `unsupported_token_auth_method` | The IdP only supports token auth methods that Shinauth doesn't support                                                              |
 
 **Supported token auth methods:**
 
 * `client_secret_basic`
 * `client_secret_post`
 
-
 **Warning:**
 
-  If your IdP advertises only unsupported methods (e.g., `private_key_jwt`, `tls_client_auth`, or `"none"` for public clients), you can explicitly override the method:
+If your IdP advertises only unsupported methods (e.g., `private_key_jwt`, `tls_client_auth`, or `"none"` for public clients), you can explicitly override the method:
 
-  ```ts
-  oidcConfig: {
-      clientId: "your-client-id",
-      clientSecret: "your-client-secret",
-      tokenEndpointAuthentication: "client_secret_basic", // Override discovery
-  }
-  ```
+```ts
+oidcConfig: {
+    clientId: "your-client-id",
+    clientSecret: "your-client-secret",
+    tokenEndpointAuthentication: "client_secret_basic", // Override discovery
+}
+```
 
-  This is especially common with mock OIDC servers or development IdPs that only advertise `"none"` as the supported method.
-
+This is especially common with mock OIDC servers or development IdPs that only advertise `"none"` as the supported method.
 
 #### Summary
 
@@ -363,21 +335,66 @@ If the Identity Provider is misconfigured or unreachable, registration will fail
 
 To register a SAML provider, use the `registerSSOProvider` endpoint with SAML configuration details. The provider will act as a Service Provider (SP) and integrate with your Identity Provider (IdP).
 
-
-
 #### client
 
-    ```ts title="register-saml-provider.ts"
-    import { authClient } from "@/lib/auth-client";
+```ts title="register-saml-provider.ts"
+import { authClient } from "@/lib/auth-client";
 
-    await authClient.sso.register({
+await authClient.sso.register({
+    providerId: "saml-provider",
+    issuer: "https://idp.example.com",
+    domain: "example.com",
+    samlConfig: {
+        entryPoint: "https://idp.example.com/sso",
+        audience: "https://yourapp.com",
+        wantAssertionsSigned: true,
+        signatureAlgorithm: "sha256",
+        digestAlgorithm: "sha256",
+        identifierFormat: "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress",
+        idpMetadata: {
+            metadata: "<!-- IdP Metadata XML -->",
+            privateKey: "-----BEGIN RSA PRIVATE KEY-----\n...\n-----END RSA PRIVATE KEY-----",
+            privateKeyPass: "your-private-key-password",
+            isAssertionEncrypted: true,
+            encPrivateKey: "-----BEGIN RSA PRIVATE KEY-----\n...\n-----END RSA PRIVATE KEY-----",
+            encPrivateKeyPass: "your-encryption-key-password"
+        },
+        spMetadata: {
+            metadata: "<!-- SP Metadata XML -->",
+            binding: "post",
+            privateKey: "-----BEGIN RSA PRIVATE KEY-----\n...\n-----END RSA PRIVATE KEY-----",
+            privateKeyPass: "your-sp-private-key-password",
+            isAssertionEncrypted: true,
+            encPrivateKey: "-----BEGIN RSA PRIVATE KEY-----\n...\n-----END RSA PRIVATE KEY-----",
+            encPrivateKeyPass: "your-sp-encryption-key-password"
+        },
+        mapping: {
+            id: "nameID",
+            email: "email",
+            name: "displayName",
+            firstName: "givenName",
+            lastName: "surname",
+            emailVerified: "email_verified",
+            extraFields: {
+                department: "department",
+                role: "role"
+            }
+        }
+    }
+});
+```
+
+#### server
+
+```ts title="register-saml-provider.ts"
+const { headers } = await signInWithTestUser();
+await auth.api.registerSSOProvider({
+    body: {
         providerId: "saml-provider",
         issuer: "https://idp.example.com",
         domain: "example.com",
         samlConfig: {
             entryPoint: "https://idp.example.com/sso",
-            cert: "-----BEGIN CERTIFICATE-----\n...\n-----END CERTIFICATE-----",
-            callbackUrl: "https://yourapp.com/api/auth/sso/saml2/sp/acs/saml-provider",
             audience: "https://yourapp.com",
             wantAssertionsSigned: true,
             signatureAlgorithm: "sha256",
@@ -413,91 +430,38 @@ To register a SAML provider, use the `registerSSOProvider` endpoint with SAML co
                 }
             }
         }
-    });
-    ```
-
-
-
-#### server
-
-    ```ts title="register-saml-provider.ts"
-    const { headers } = await signInWithTestUser();
-    await auth.api.registerSSOProvider({
-        body: {
-            providerId: "saml-provider",
-            issuer: "https://idp.example.com",
-            domain: "example.com",
-            samlConfig: {
-                entryPoint: "https://idp.example.com/sso",
-                cert: "-----BEGIN CERTIFICATE-----\n...\n-----END CERTIFICATE-----",
-                callbackUrl: "https://yourapp.com/api/auth/sso/saml2/sp/acs/saml-provider",
-                audience: "https://yourapp.com",
-                wantAssertionsSigned: true,
-                signatureAlgorithm: "sha256",
-                digestAlgorithm: "sha256",
-                identifierFormat: "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress",
-                idpMetadata: {
-                    metadata: "<!-- IdP Metadata XML -->",
-                    privateKey: "-----BEGIN RSA PRIVATE KEY-----\n...\n-----END RSA PRIVATE KEY-----",
-                    privateKeyPass: "your-private-key-password",
-                    isAssertionEncrypted: true,
-                    encPrivateKey: "-----BEGIN RSA PRIVATE KEY-----\n...\n-----END RSA PRIVATE KEY-----",
-                    encPrivateKeyPass: "your-encryption-key-password"
-                },
-                spMetadata: {
-                    metadata: "<!-- SP Metadata XML -->",
-                    binding: "post",
-                    privateKey: "-----BEGIN RSA PRIVATE KEY-----\n...\n-----END RSA PRIVATE KEY-----",
-                    privateKeyPass: "your-sp-private-key-password",
-                    isAssertionEncrypted: true,
-                    encPrivateKey: "-----BEGIN RSA PRIVATE KEY-----\n...\n-----END RSA PRIVATE KEY-----",
-                    encPrivateKeyPass: "your-sp-encryption-key-password"
-                },
-                mapping: {
-                    id: "nameID",
-                    email: "email",
-                    name: "displayName",
-                    firstName: "givenName",
-                    lastName: "surname",
-                    emailVerified: "email_verified",
-                    extraFields: {
-                        department: "department",
-                        role: "role"
-                    }
-                }
-            }
-        },
-        headers,
-    });
-    ```
-
-
+    },
+    headers,
+});
+```
 
 ### IdP-Initiated SSO
 
+For OIDC providers that initiate logins without sending a `state` parameter, set `allowIdpInitiated: true` on the provider's `oidcConfig`. When a stateless callback arrives at `/sso/callback/:providerId`, the IdP-issued code is discarded and a new OAuth flow is started server-side with a fresh `state` and PKCE verifier. CSRF protection remains in effect. This flag defaults to `false`.
+
+**Warning:**
+
+Set the global `baseURL` option when enabling `allowIdpInitiated` on an OIDC provider. IdP-initiated callbacks carry no initiating request body, so the bounce uses `baseURL` as the post-login destination. If `baseURL` is unset, the bounce fails with `CALLBACK_URL_REQUIRED`.
+
 For IdP-initiated flows (e.g., via Okta dashboard), your framework may require an explicit route handler to manage the redirect if the default handler doesn't support the `GET` request following the SAML POST.
-
-
 
 #### next-js-app-router
 
-    Create this file to prevent 404 errors:
+Create this file to prevent 404 errors:
 
-    ```ts title="app/api/auth/sso/saml2/callback/[providerId]/route.ts"
-    import { auth } from "@/lib/auth";
-    import { NextResponse } from "next/server";
+```ts title="app/api/auth/sso/saml2/sp/acs/[providerId]/route.ts"
+import { auth } from "@/lib/auth";
+import { NextResponse } from "next/server";
 
-    export async function POST(req: Request) {
-        return auth.handler(req);
-    }
+export async function POST(req: Request) {
+    return auth.handler(req);
+}
 
-    export async function GET(req: Request) {
-        // Required: IdP-initiated flows redirect to this URL after POST
-        return NextResponse.redirect(new URL("/", req.url));
-    }
-    ```
-
-
+export async function GET(req: Request) {
+    // Required: IdP-initiated flows redirect to this URL after POST
+    return NextResponse.redirect(new URL("/", req.url));
+}
+```
 
 ### Get Service Provider Metadata
 
@@ -590,54 +554,52 @@ const res = await auth.api.signInSSO({
 
 #### Full method
 
-
 ### POST /sign-in/sso
 
-  ```ts
-  type signInSSO = {
-      /**
-       * The email address to sign in with. This is used to identify the issuer to sign in with. It's optional if the issuer is provided.
-       */
-      email?: string = "john@example.com"
-      /**
-       * The slug of the organization to sign in with.
-       */
-      organizationSlug?: string = "example-org"
-      /**
-       * The ID of the provider to sign in with. This can be provided instead of email or issuer.
-       */
-      providerId?: string = "example-provider"
-      /**
-       * The domain of the provider.
-       */
-      domain?: string = "example.com"
-      /**
-       * The URL to redirect to after login.
-       */
-      callbackURL: string = "https://example.com/callback"
-      /**
-       * The URL to redirect to after login.
-       */
-      errorCallbackURL?: string = "https://example.com/callback"
-      /**
-       * The URL to redirect to after login if the user is new.
-       */
-      newUserCallbackURL?: string = "https://example.com/new-user"
-      /**
-       * Scopes to request from the provider.
-       */
-      scopes?: string[] = ["openid", "email", "profile", "offline_access"]
-      /**
-       * Login hint to send to the identity provider (e.g., email or identifier).
-       */
-      loginHint?: string = "user@example.com"
-      /**
-       * Explicitly request sign-up. Useful when disableImplicitSignUp is true for this provider.
-       */
-      requestSignUp?: boolean = true
-  }
-  ```
-
+```ts
+type signInSSO = {
+    /**
+     * The email address to sign in with. This is used to identify the issuer to sign in with. It's optional if the issuer is provided.
+     */
+    email?: string = "john@example.com"
+    /**
+     * The slug of the organization to sign in with.
+     */
+    organizationSlug?: string = "example-org"
+    /**
+     * The ID of the provider to sign in with. This can be provided instead of email or issuer.
+     */
+    providerId?: string = "example-provider"
+    /**
+     * The domain of the provider.
+     */
+    domain?: string = "example.com"
+    /**
+     * The URL to redirect to after login.
+     */
+    callbackURL: string = "https://example.com/callback"
+    /**
+     * The URL to redirect to after login.
+     */
+    errorCallbackURL?: string = "https://example.com/callback"
+    /**
+     * The URL to redirect to after login if the user is new.
+     */
+    newUserCallbackURL?: string = "https://example.com/new-user"
+    /**
+     * Scopes to request from the provider.
+     */
+    scopes?: string[] = ["openid", "email", "profile", "offline_access"]
+    /**
+     * Login hint to send to the identity provider (e.g., email or identifier).
+     */
+    loginHint?: string = "user@example.com"
+    /**
+     * Explicitly request sign-up. Useful when disableImplicitSignUp is true for this provider.
+     */
+    requestSignUp?: boolean = true
+}
+```
 
 Note: If email is provided and loginHint is not specified, email will be sent as the login\_hint to OIDC providers automatically. SAML flows do not support login\_hint.
 
@@ -793,11 +755,9 @@ const auth = shinAuth({
 
 When registering an SSO provider, you can link it to a specific organization:
 
-
 **Note:**
 
-  When the `organization` plugin is enabled and `organizationId` is supplied, the caller must be an organization `owner` or `admin`. Regular members receive a `403 FORBIDDEN`. SSO deployments without the `organization` plugin keep the prior behavior (membership lookup only).
-
+When the `organization` plugin is enabled and `organizationId` is supplied, the caller must be an organization `owner` or `admin`. Regular members receive a `403 FORBIDDEN`. SSO deployments without the `organization` plugin keep the prior behavior (membership lookup only).
 
 ```ts title="register-org-provider.ts"
 import { auth } from "@/lib/auth"
@@ -820,12 +780,12 @@ Now when users from `acmecorp.com` sign in through this provider, they'll automa
 
 #### Self-Service SSO Dashboard
 
-If you're using [Shinauth Infrastructure](https://dash.github.com/rlvtapp/shinauth/sign-in), you get access to a self-service SSO dashboard that simplifies onboarding enterprise customers. Instead of manually exchanging SAML metadata and certificates, organization admins can generate a shareable onboarding link that guides enterprise IT teams through configuring their identity provider.
+If you're using [Shinauth Infrastructure](https://dash.shinauth.com/sign-in), you get access to a self-service SSO dashboard that simplifies onboarding enterprise customers. Instead of manually exchanging SAML metadata and certificates, organization admins can generate a shareable onboarding link that guides enterprise IT teams through configuring their identity provider.
 
 The dashboard is available at:
 
 ```
-https://dash.github.com/rlvtapp/shinauth/[project]/organization/[orgId]/enterprise
+https://dash.shinauth.com/[project]/organization/[orgId]/enterprise
 ```
 
 From the dashboard you can:
@@ -949,7 +909,6 @@ const auth = shinAuth({
                         issuer: "https://your-app.com",
                         entryPoint: "https://idp.example.com/sso",
                         cert: "-----BEGIN CERTIFICATE-----\n...\n-----END CERTIFICATE-----",
-                        callbackUrl: "http://localhost:3000/api/auth/sso/saml2/sp/acs/default-saml",
                         spMetadata: {
                             entityID: "http://localhost:3000/api/auth/sso/saml2/sp/metadata",
                             metadata: "<!-- Your SP Metadata XML -->",
@@ -1007,6 +966,30 @@ You also need to provide Identity Provider (IdP) configuration:
 * **encPrivateKey**: Private key for IdP assertion decryption
 * **encPrivateKeyPass**: Password for the IdP decryption key
 
+### Signing Certificates and Rotation
+
+When your IdP rotates its signing certificate, list both the old and the new PEM under `idpMetadata.cert` as an array. Shinauth accepts SAML responses signed by either, so users keep signing in while the rotation completes.
+
+```ts
+samlConfig: {
+    entryPoint: "https://idp.example.com/sso",
+    idpMetadata: {
+        entityID: "https://idp.example.com",
+        singleSignOnService: [
+            { Binding: "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST", Location: "https://idp.example.com/sso" },
+        ],
+        cert: [
+            "-----BEGIN CERTIFICATE-----\n<current>\n-----END CERTIFICATE-----",
+            "-----BEGIN CERTIFICATE-----\n<next>\n-----END CERTIFICATE-----",
+        ],
+    },
+}
+```
+
+Both `samlConfig.cert` and `samlConfig.idpMetadata.cert` accept either a single PEM string or an array. When both are set, `idpMetadata.cert` wins.
+
+If your IdP publishes a metadata XML document, pass it as `idpMetadata.metadata` instead and leave `cert` unset. The certificates come from the document and rotation happens when the IdP republishes it. If a config supplies neither `cert` nor `idpMetadata.metadata`, registration fails with `CERT_SOURCE_MISSING`, since samlify has nothing to verify SAML responses against.
+
 ### SAML Attribute Mapping
 
 Configure how SAML attributes map to user fields:
@@ -1038,11 +1021,9 @@ You can enable InResponseTo validation for SP-initiated SAML flows. When enabled
 * **Replay attacks**: Reusing old SAML responses
 * **Cross-provider injection**: Responses meant for a different provider
 
-
 **Note:**
 
-  This feature is **opt-in** to ensure backward compatibility. Enable it explicitly for enhanced security.
-
+This feature is **opt-in** to ensure backward compatibility. Enable it explicitly for enhanced security.
 
 #### Enabling Validation (Single Instance)
 
@@ -1088,11 +1069,9 @@ When InResponseTo validation fails, users are redirected with an error query par
 
 The SSO plugin includes assertion replay protection to prevent attackers from capturing and resubmitting valid SAML responses. Each SAML Assertion ID is tracked and rejected if reused.
 
-
 **Note:**
 
-  Replay protection is **always enabled**. This is a critical security feature that prevents attackers from reusing intercepted SAML responses.
-
+Replay protection is **always enabled**. This is a critical security feature that prevents attackers from reusing intercepted SAML responses.
 
 #### How It Works
 
@@ -1101,16 +1080,11 @@ The SSO plugin includes assertion replay protection to prevent attackers from ca
 3. If it's a new assertion, it's stored in the database until its `NotOnOrAfter` expiration
 4. If it's a duplicate (replay attack), the request is rejected
 
-**Both SAML endpoints are protected:**
-
-* `/sso/saml2/callback/:providerId`
-* `/sso/saml2/sp/acs/:providerId`
-
+The SAML ACS endpoint (`/sso/saml2/sp/acs/:providerId`) is protected against assertion replay.
 
 **Note:**
 
-  Replay protection uses the database verification table, so it works correctly in multi-instance deployments without additional configuration.
-
+Replay protection uses the database verification table, so it works correctly in multi-instance deployments without additional configuration.
 
 #### Error Handling
 
@@ -1169,11 +1143,9 @@ const auth = shinAuth({
 
 #### When to Enable `requireTimestamps`
 
-
 **Note:**
 
-  **Recommendation**: Enable `requireTimestamps: true` for enterprise and high-security deployments.
-
+**Recommendation**: Enable `requireTimestamps: true` for enterprise and high-security deployments.
 
 Enable `requireTimestamps: true` when:
 
@@ -1278,11 +1250,9 @@ sso({
 })
 ```
 
-
 **Note:**
 
-  For true early rejection of oversized payloads (before they reach your application), configure size limits at your infrastructure level (nginx `client_max_body_size`, CDN settings, load balancer).
-
+For true early rejection of oversized payloads (before they reach your application), configure size limits at your infrastructure level (nginx `client_max_body_size`, CDN settings, load balancer).
 
 ## Shared Redirect URI
 
@@ -1313,21 +1283,17 @@ sso({ redirectURI: "https://login.example.com/callback" })
 
 The provider ID is stored in the OAuth state so the callback can identify which provider initiated the flow.
 
+**Note:**
+
+When using a full URL, make sure it routes to your Shinauth instance.
 
 **Note:**
 
-  When using a full URL, make sure it routes to your Shinauth instance.
-
-
-**Note:**
-
-  This option only affects OIDC providers. SAML providers use a separate ACS endpoint that is configured automatically.
-
+This option only affects OIDC providers. SAML providers use a separate ACS endpoint that is configured automatically.
 
 **Note:**
 
-  Both the shared endpoint (`/sso/callback`) and the per-provider endpoints (`/sso/callback/:providerId`) are always registered for backward compatibility, so existing integrations continue to work regardless of this setting.
-
+Both the shared endpoint (`/sso/callback`) and the per-provider endpoints (`/sso/callback/:providerId`) are always registered for backward compatibility, so existing integrations continue to work regardless of this setting.
 
 ## Domain verification
 
@@ -1336,62 +1302,50 @@ by automatically validating ownership via the associated domain.
 
 When a provider's domain is verified, it is also trusted for **automatic account linking**. This means that if a user signs in with an SSO provider (OIDC or SAML) and an existing account with the same email exists, the accounts will be linked automatically — as long as the user's email domain matches the provider's verified domain.
 
-
-
 #### client
 
-    ```ts title="auth-client.ts"
-    const authClient = createAuthClient({
-        plugins: [
-            ssoClient({
-                domainVerification: {
-                    enabled: true
-                }
-            })
-        ]
-    })
-    ```
-
-
+```ts title="auth-client.ts"
+const authClient = createAuthClient({
+    plugins: [
+        ssoClient({
+            domainVerification: {
+                enabled: true
+            }
+        })
+    ]
+})
+```
 
 #### server
 
-    ```ts title="auth.ts"
-    import { shinAuth } from "shinauth";
-    import { sso } from "@shinauth/sso";
+```ts title="auth.ts"
+import { shinAuth } from "shinauth";
+import { sso } from "@shinauth/sso";
 
-    const auth = shinAuth({
-        plugins: [
-            sso({
-                domainVerification: {
-                    enabled: true
-                }
-            })
-        ]
-    });
-    ```
-
-
+const auth = shinAuth({
+    plugins: [
+        sso({
+            domainVerification: {
+                enabled: true
+            }
+        })
+    ]
+});
+```
 
 Once enabled, make sure you migrate the database schema (again).
 
-
-
 #### migrate
 
-    ```bash
-    pnpm dlx @shinauth/cli migrate
-    ```
-
-
+```bash
+pnpm dlx @shinauth/cli migrate
+```
 
 #### generate
 
-    ```bash
-    pnpm dlx @shinauth/cli generate
-    ```
-
-
+```bash
+pnpm dlx @shinauth/cli generate
+```
 
 See the [Schema](#if-you-have-enabled-domain-verification) section to add the fields manually.
 
@@ -1402,33 +1356,25 @@ This means that new sign-ups or sign-ins will not be allowed until domain owners
 
 To verify your ownership over a domain, follow these steps:
 
+#### Acquire verification token
 
+When an SSO provider is registered, a **verification token** will be issued to the provider (it will be returned as part of the response).
+You can use this token to prove ownership over the domain.
 
-    #### Acquire verification token
+#### Create `TXT` DNS record
 
-    When an SSO provider is registered, a **verification token** will be issued to the provider (it will be returned as part of the response).
-    You can use this token to prove ownership over the domain.
+To do this, you'll need to add a `TXT` record to your domain's DNS settings:
 
+* **Host:** `_shinauth-token-{your-provider-id}` (**Note:** An underscore is automatically prepended to follow DNS infrastructure subdomain conventions. The `shinauth-token` part can be customized through the `domainVerification.tokenPrefix` option)
+* **Value:** The verification token you were given.
 
+If the SSO provider lists multiple comma-separated domains, add this `TXT` record under every listed domain. For example, a provider with `domain: "company.com,subsidiary.com"` must publish the record for both `company.com` and `subsidiary.com`.
 
-    #### Create `TXT` DNS record
+**Save the record and wait for it to propagate.** This can take up to 48 hours, but it's usually much faster.
 
-    To do this, you'll need to add a `TXT` record to your domain's DNS settings:
+#### Submit a validation request
 
-    * **Host:** `_better-auth-token-{your-provider-id}` (**Note:** An underscore is automatically prepended to follow DNS infrastructure subdomain conventions. The `shinauth-token` part can be customized through the `domainVerification.tokenPrefix` option)
-    * **Value:** The verification token you were given.
-
-    If the SSO provider lists multiple comma-separated domains, add this `TXT` record under every listed domain. For example, a provider with `domain: "company.com,subsidiary.com"` must publish the record for both `company.com` and `subsidiary.com`.
-
-    **Save the record and wait for it to propagate.** This can take up to 48 hours, but it's usually much faster.
-
-
-
-    #### Submit a validation request
-
-    **Once the DNS record has propagated**, you can submit a validation request (See below)
-
-
+**Once the DNS record has propagated**, you can submit a validation request (See below)
 
 ### Domain validation request
 
@@ -1436,18 +1382,16 @@ Once you have configured your domain, you can use your `auth` instance to submit
 This request will either result in a rejection (could not prove your ownership over the domain)
 or if the verification is successful, your SSO provider domain will be marked as verified.
 
-
 ### POST /sso/verify-domain
 
-  ```ts
-  type verifyDomain = {
-    /**
-    * The provider id
-    */
-    providerId: string = "acme-corp"
-  }
-  ```
-
+```ts
+type verifyDomain = {
+  /**
+  * The provider id
+  */
+  providerId: string = "acme-corp"
+}
+```
 
 ### Creating a new verification token
 
@@ -1457,34 +1401,32 @@ or the moment when the SSO provider was registered.
 After that time, the token will expire and cannot longer be used. When that happens,
 you can create a new verification token:
 
-
 ### POST /sso/request-domain-verification
 
-  ```ts
-  type requestDomainVerification = {
-    /**
-    * The provider id
-    */
-    providerId: string = "acme-corp"
-  }
-  ```
-
+```ts
+type requestDomainVerification = {
+  /**
+  * The provider id
+  */
+  providerId: string = "acme-corp"
+}
+```
 
 ### SAML Endpoints
 
 The plugin automatically creates the following SAML endpoints:
 
 * **SP Metadata**: `/api/auth/sso/saml2/sp/metadata?providerId={providerId}`
-* **SAML Callback**: `/api/auth/sso/saml2/callback/{providerId}` (supports both GET and POST)
+* **SAML ACS (Assertion Consumer Service)**: `/api/auth/sso/saml2/sp/acs/{providerId}` (supports both GET and POST)
 
 ### SAML Callback URL Configuration
 
-The SAML callback endpoint (`/api/auth/sso/saml2/callback/{providerId}`) handles both **SP-initiated** and **IdP-initiated** SSO flows:
+The SAML ACS endpoint (`/api/auth/sso/saml2/sp/acs/{providerId}`) handles both **SP-initiated** and **IdP-initiated** SSO flows:
 
 * **SP-initiated**: User clicks "Sign in with SSO" in your app → redirects to IdP → IdP POSTs SAMLResponse to callback
 * **IdP-initiated**: User clicks app icon in IdP dashboard (Okta, Azure AD, etc.) → IdP POSTs SAMLResponse to callback
 
-**Important**: `callbackUrl` in your SAML configuration is used as the Assertion Consumer Service (ACS) URL. Set it to the SAML callback route for your provider (e.g., `https://yourapp.com/api/auth/sso/saml2/sp/acs/my-provider`). If omitted, Shinauth derives it automatically from your `baseURL` and `providerId`.
+Shinauth derives the ACS URL automatically from your `baseURL` and `providerId`, so no SP-side configuration is required.
 
 Your IdP must include an `AudienceRestriction` for this SP. The accepted audience is the SP entity ID, or the explicit `audience` value in `samlConfig` when you need to match an IdP-specific SP identifier. Shinauth also checks bearer `Recipient` and response `Destination` values against this provider's ACS endpoints.
 
@@ -1499,21 +1441,61 @@ await authClient.signIn.sso({
 
 The callback route supports both GET and POST methods automatically, so you don't need to create any additional route handlers in your framework.
 
+### Additional Provider Fields
+
+You can add custom columns to the `ssoProvider` table with `schema.ssoProvider.additionalFields`. These fields can be used to store provider metadata, such as a display name shown when an organization has multiple SSO providers.
+
+```ts title="auth.ts"
+import { shinAuth } from "shinauth";
+import { sso } from "@shinauth/sso";
+
+export const auth = shinAuth({
+  plugins: [
+    sso({
+      schema: {
+        ssoProvider: {
+          additionalFields: {
+            displayName: {
+              type: "string",
+              required: true,
+            },
+          },
+        },
+      },
+    }),
+  ],
+});
+```
+
+Then include the field when registering or updating a provider:
+
+```ts
+await auth.api.registerSSOProvider({
+  body: {
+    providerId: "okta-main",
+    displayName: "Okta",
+    issuer: "https://idp.example.com",
+    domain: "example.com",
+    oidcConfig: {
+      clientId: "client-id",
+      clientSecret: "client-secret",
+    },
+  },
+  headers,
+});
+```
+
 ## Schema
 
 The plugin requires additional fields in the `ssoProvider` table to store the provider's configuration.
 
-
 See the generated schema for the complete table definition.
-
 
 ### If you have enabled domain verification:
 
 The `ssoProvider` schema is extended as follows:
 
-
 See the generated schema for the complete table definition.
-
 
 ### IdP-Initiated SAML SSO
 
@@ -1522,27 +1504,23 @@ Shinauth supports **IdP-initiated SSO flows**, where users access your applicati
 **How it works:**
 
 1. User clicks your app icon in the IdP dashboard
-2. IdP POSTs SAMLResponse to `/api/auth/sso/saml2/callback/{providerId}`
+2. IdP POSTs SAMLResponse to `/api/auth/sso/saml2/sp/acs/{providerId}`
 3. Shinauth processes the assertion, creates a session, and redirects to your application
 4. Browser follows the redirect with a GET request (handled automatically)
 
 **No additional configuration required** - the callback route automatically handles both GET and POST requests.
 
-
 **Warning:**
 
-  IdP-initiated flows do not carry a RelayState, so the post-login redirect falls back to your application's base URL. To control where users land after SP-initiated SSO, pass the destination via `callbackURL` in the `signIn.sso()` call.
-
-
-**Note:**
-
-  If you previously created a manual GET handler for the SAML callback route as a workaround, you can remove it after upgrading. Shinauth now handles GET requests automatically.
-
+IdP-initiated flows do not carry a RelayState, so the post-login redirect falls back to your application's base URL. To control where users land after SP-initiated SSO, pass the destination via `callbackURL` in the `signIn.sso()` call.
 
 **Note:**
 
-  **Security:** Shinauth validates all redirect URLs to prevent open redirect attacks. Only relative paths (e.g., `/dashboard`) and URLs matching your configured `trustedOrigins` are allowed. Malicious URLs like `https://evil.com` or protocol-relative URLs (`//evil.com`) are automatically blocked.
+If you previously created a manual GET handler for the SAML callback route as a workaround, you can remove it after upgrading. Shinauth now handles GET requests automatically.
 
+**Note:**
+
+**Security:** Shinauth validates all redirect URLs to prevent open redirect attacks. Only relative paths (e.g., `/dashboard`) and URLs matching your configured `trustedOrigins` are allowed. Malicious URLs like `https://evil.com` or protocol-relative URLs (`//evil.com`) are automatically blocked.
 
 For a detailed guide on setting up SAML SSO with examples for Okta and testing with DummyIDP, see our [SAML SSO with Okta](/guides/saml-sso-with-okta).
 
@@ -1561,6 +1539,5 @@ For a detailed guide on setting up SAML SSO with examples for Okta and testing w
 **disableImplicitSignUp**: Disable implicit sign up for new users.
 
 If you want to allow account linking for specific trusted providers, enable the `accountLinking` option in your auth config and specify those providers in the `trustedProviders` list.
-
 
 See the source types for the complete option reference.

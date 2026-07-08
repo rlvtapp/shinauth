@@ -19,7 +19,7 @@ Starting with this release, the self-service SSO dashboard — which lets your e
 
 And soon, you’ll be able to host your Shinauth instance on our infrastructure as well, so you can own your auth at scale without worrying about infrastructure needs.
 
-Sign up now: [https://dash.github.com/rlvtapp/shinauth/sign-in](https://dash.github.com/rlvtapp/shinauth/sign-in) 🚀
+Sign up now: [https://dash.shinauth.com/sign-in](https://dash.shinauth.com/sign-in) 🚀
 
 To upgrade, run:
 
@@ -60,7 +60,7 @@ pnpm dlx @shinauth/cli generate --adapter drizzle
 
 The MCP plugin now ships a framework-agnostic remote auth client. If your MCP server is separate from your Shinauth instance, you can verify tokens and protect resources without duplicating auth logic.
 
-[👉 Read more about MCP authentication](https://www.github.com/rlvtapp/shinauth/docs/plugins/mcp)
+[👉 Read more about MCP authentication](https://www.shinauth.com/docs/plugins/mcp)
 
 ```tsx
 import { createMcpAuthClient } from "shinauth/plugins/mcp/client";
@@ -93,7 +93,7 @@ const middleware = mcpAuthHono(mcpAuth);
 
 The new `@shinauth/oauth-provider` plugin turns your Shinauth instance into a full OAuth 2.1 authorization server with OIDC compatibility. Issue access tokens, manage client registrations, and let third-party apps authenticate against your API — including MCP agents.
 
-[👉 Read more about the OAuth Provider](https://www.github.com/rlvtapp/shinauth/docs/plugins/oauth-provider)
+[👉 Read more about the OAuth Provider](https://www.shinauth.com/docs/plugins/oauth-provider)
 
 ```tsx
 import { shinAuth } from "shinauth";
@@ -121,11 +121,9 @@ Key features:
 * **Token introspection & revocation**: RFC 7662 and RFC 7009 compliant endpoints.
 * **Per-endpoint rate limiting**: Configurable rate limits for each OAuth endpoint.
 
-
 **Note:**
 
-  The OAuth 2.1 Provider replaces the previous OIDC Provider plugin, which will be deprecated in a future release. The MCP plugin will also transition to use the OAuth 2.1 Provider as its foundation. See the [migration guide](https://www.github.com/rlvtapp/shinauth/docs/plugins/oauth-provider#from-oidc-provider-plugin) for upgrading from the OIDC Provider plugin.
-
+Use the OAuth 2.1 Provider for OAuth and OpenID Connect authorization-server integrations. MCP integrations use the same provider foundation.
 
 ***
 
@@ -133,7 +131,7 @@ Key features:
 
 Full desktop authentication support for Electron apps. The plugin handles the complete OAuth flow — opening the system browser, exchanging authorization codes via custom protocol, and managing cookies securely.
 
-[👉 Read more about Electron integration](https://www.github.com/rlvtapp/shinauth/docs/integrations/electron)
+[👉 Read more about Electron integration](https://www.shinauth.com/docs/integrations/electron)
 
 ```tsx
 import { shinAuth } from "shinauth";
@@ -166,7 +164,7 @@ await client.requestAuth();
 
 The new i18n plugin provides type-safe error message translations with automatic locale detection from headers, cookies, or sessions.
 
-[👉 Read more about i18n](https://www.github.com/rlvtapp/shinauth/docs/plugins/i18n)
+[👉 Read more about i18n](https://www.shinauth.com/docs/plugins/i18n)
 
 ```tsx
 import { shinAuth } from "shinauth";
@@ -231,7 +229,7 @@ As part of our new Infrastructure product, the SSO plugin is now accompanied by 
 The dashboard is available at:
 
 ```
-https://dash.github.com/rlvtapp/shinauth/[project]/organization/[orgId]/enterprise
+https://dash.shinauth.com/[project]/organization/[orgId]/enterprise
 ```
 
 From there, you can generate onboarding links, monitor SSO connection status, and manage provider configurations for each organization.
@@ -389,7 +387,7 @@ hooks: {
 
 Shinauth can now resolve the base URL dynamically from incoming requests, making it work seamlessly with Vercel preview deployments, multi-domain setups, and reverse proxies.
 
-[👉 Read more about dynamic base URL](https://www.github.com/rlvtapp/shinauth/docs/guides/dynamic-base-url)
+[👉 Read more about dynamic base URL](https://www.shinauth.com/docs/guides/dynamic-base-url)
 
 ```tsx
 import { shinAuth } from "shinauth";
@@ -531,7 +529,7 @@ The plugin also adds support for usage-based billing via `lineItems`, subscripti
 
 A new `testUtils` plugin provides factories, database helpers, and auth utilities for integration and E2E testing.
 
-[👉 Read more about test utilities](https://www.github.com/rlvtapp/shinauth/docs/plugins/test-utils)
+[👉 Read more about test utilities](https://www.shinauth.com/docs/plugins/test-utils)
 
 ```tsx
 import { shinAuth } from "shinauth";
@@ -581,8 +579,8 @@ This is useful when you have additional session fields that need to change witho
 
 Database adapters have been extracted into their own packages. This is a major architectural change that reduces bundle size and allows adapters to be versioned independently.
 
-| Package                        | Description         |
-| ------------------------------ | ------------------- |
+| Package                     | Description         |
+| --------------------------- | ------------------- |
 | `@shinauth/drizzle-adapter` | Drizzle ORM adapter |
 | `@shinauth/prisma-adapter`  | Prisma adapter      |
 | `@shinauth/kysely-adapter`  | Kysely adapter      |
@@ -632,7 +630,7 @@ The built-in D1 dialect handles query execution, batch operations, and introspec
 * **`deferSessionRefresh`**: Support for read-replica database setups.
 * **Awaitable social provider config**: Provider configuration can now be async.
 * **Limit enumeration on sign-up**: When email verification is required, sign-up no longer reveals existing accounts.
-* **`customSyntheticUser` option**: Support plugin fields in enumeration-protected responses ([#8097](https://github.com/shinauth/shinauth/pull/8097)).
+* **`customSyntheticUser` option**: Support plugin fields in enumeration-protected responses ([#8097](https://github.com/rlvtapp/shinauth/pull/8097)).
 * **Form data support for email sign-in/sign-up**: In addition to JSON bodies.
 * **Automatic base URL detection from `VERCEL_URL` and `NEXTAUTH_URL`**: The client now falls back to `VERCEL_URL` and `NEXTAUTH_URL` environment variables when no explicit `baseURL` is configured, making server-side rendering on Vercel work out of the box.
 
@@ -692,7 +690,7 @@ The built-in D1 dialect handles query execution, batch operations, and introspec
 
 * **Prevent OTP reuse via race condition**: Atomically invalidate OTPs on use.
 * **Prevent user enumeration**: In email-otp when sign-up is disabled, and on sign-up with required email verification.
-* **Prevent email enumeration on `/change-email`**: Always returns `{ status: true }` and simulates token generation for timing safety ([#8097](https://github.com/shinauth/shinauth/pull/8097)).
+* **Prevent email enumeration on `/change-email`**: Always returns `{ status: true }` and simulates token generation for timing safety ([#8097](https://github.com/rlvtapp/shinauth/pull/8097)).
 * **Stricter default rate limits**: For password reset and phone number verification endpoints.
 * **Separate CSRF and origin checks**: More granular request validation.
 * **Prevent trial abuse**: Check all user subscriptions before granting a free trial.
@@ -777,18 +775,18 @@ If you are building a plugin on top of Shinauth, there are a few things you shou
 
 All previously deprecated APIs have been removed. This includes deprecated adapter types, client types, helper types, and plugin options. If you were relying on any `@deprecated` methods or options, you'll need to migrate to their replacements:
 
-| Removed                                                         | Replacement                              |
-| --------------------------------------------------------------- | ---------------------------------------- |
-| `Adapter`                                                       | `DBAdapter`                              |
-| `TransactionAdapter`                                            | `DBTransactionAdapter`                   |
-| `Store` (client)                                                | `ClientStore`                            |
-| `AtomListener` (client)                                         | `ClientAtomListener`                     |
-| `ClientOptions`                                                 | `BetterAuthClientOptions`                |
-| `LiteralUnion`, `DeepPartial` (from `shinauth/types/helper`) | Import from `@shinauth/core`          |
-| `onEmailVerification`                                           | `afterEmailVerification`                 |
-| `sendChangeEmailVerification`                                   | `sendChangeEmailConfirmation`            |
-| `advanced.database.useNumberId`                                 | `advanced.database.generateId: "serial"` |
-| Organization `permission` field                                 | `permissions` (plural)                   |
+| Removed                                                      | Replacement                              |
+| ------------------------------------------------------------ | ---------------------------------------- |
+| `Adapter`                                                    | `DBAdapter`                              |
+| `TransactionAdapter`                                         | `DBTransactionAdapter`                   |
+| `Store` (client)                                             | `ClientStore`                            |
+| `AtomListener` (client)                                      | `ClientAtomListener`                     |
+| `ClientOptions`                                              | `BetterAuthClientOptions`                |
+| `LiteralUnion`, `DeepPartial` (from `shinauth/types/helper`) | Import from `@shinauth/core`             |
+| `onEmailVerification`                                        | `afterEmailVerification`                 |
+| `sendChangeEmailVerification`                                | `sendChangeEmailConfirmation`            |
+| `advanced.database.useNumberId`                              | `advanced.database.generateId: "serial"` |
+| Organization `permission` field                              | `permissions` (plural)                   |
 
 ### `@shinauth/core/utils` Barrel Export Removed
 
@@ -903,7 +901,7 @@ This release includes over 220 bug fixes addressing issues across all areas:
 ***
 
 A lot of refinements to make everything smoother, faster, and more reliable.
-👉 [Check the full changelog](https://github.com/shinauth/shinauth/releases/tag/v1.5.0)
+👉 [Check the full changelog](https://github.com/rlvtapp/shinauth/releases/tag/v1.5.0)
 
 ## ❤️ Contributors
 

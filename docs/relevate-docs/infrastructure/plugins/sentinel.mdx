@@ -25,7 +25,7 @@ export const auth = shinAuth({
 
 | Option       | Type              | Description                                                           |
 | ------------ | ----------------- | --------------------------------------------------------------------- |
-| `apiUrl`     | `string`          | Shinauth Infrastructure API URL                                    |
+| `apiUrl`     | `string`          | Shinauth Infrastructure API URL                                       |
 | `kvUrl`      | `string`          | KV store URL for rate limiting data                                   |
 | `apiKey`     | `string`          | Your API key for authentication                                       |
 | `apiTimeout` | `number`          | Timeout in ms for Infra API HTTP requests (`apiUrl`). Default: `3000` |
@@ -389,11 +389,9 @@ export const authClient = createAuthClient({
 
 For **Expo** apps, install the packages below for richer native identity payloads.
 
-
 **Note:**
 
-  **Expo:** Follow the [Expo integration](/integrations/expo) before adding infrastructure plugins.
-
+**Expo:** Follow the [Expo integration](/integrations/expo) before adding infrastructure plugins.
 
 ```bash
 expo-constants expo-device expo-crypto
@@ -425,15 +423,15 @@ export const authClient = createAuthClient({
 
 #### `sentinelNativeClient` options
 
-| Option                | Type                            | Default                                                 | Description                                                                 |
-| --------------------- | ------------------------------- | ------------------------------------------------------- | --------------------------------------------------------------------------- |
-| `identifyUrl`         | `string`                        | `BETTER_AUTH_KV_URL`, then `https://kv.github.com/rlvtapp/shinauth` | KV identify endpoint base URL                                               |
-| `kvTimeout`           | `number`                        | `1000`                                                  | Timeout in ms for KV identify and related HTTP requests                     |
-| `autoSolveChallenge`  | `boolean`                       | `true`                                                  | On `423` with `X-PoW-Challenge`, solve and retry once with `X-PoW-Solution` |
-| `onChallengeReceived` | `(reason: string) => void`      | —                                                       | Called when a PoW challenge is received                                     |
-| `onChallengeSolved`   | `(solveTimeMs: number) => void` | —                                                       | Called after a successful solve                                             |
-| `onChallengeFailed`   | `(error: Error) => void`        | —                                                       | Called if solving fails                                                     |
-| `storage`             | `{ getItem, setItem }`          | Async Storage when installed                            | Persistent async storage for a stable per-install visitor ID                |
+| Option                | Type                            | Default                                              | Description                                                                 |
+| --------------------- | ------------------------------- | ---------------------------------------------------- | --------------------------------------------------------------------------- |
+| `identifyUrl`         | `string`                        | `BETTER_AUTH_KV_URL`, then `https://kv.shinauth.com` | KV identify endpoint base URL                                               |
+| `kvTimeout`           | `number`                        | `1000`                                               | Timeout in ms for KV identify and related HTTP requests                     |
+| `autoSolveChallenge`  | `boolean`                       | `true`                                               | On `423` with `X-PoW-Challenge`, solve and retry once with `X-PoW-Solution` |
+| `onChallengeReceived` | `(reason: string) => void`      | —                                                    | Called when a PoW challenge is received                                     |
+| `onChallengeSolved`   | `(solveTimeMs: number) => void` | —                                                    | Called after a successful solve                                             |
+| `onChallengeFailed`   | `(error: Error) => void`        | —                                                    | Called if solving fails                                                     |
+| `storage`             | `{ getItem, setItem }`          | Async Storage when installed                         | Persistent async storage for a stable per-install visitor ID                |
 
 ## Security Events
 

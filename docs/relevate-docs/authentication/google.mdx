@@ -4,70 +4,62 @@ title: "Google"
 
 ### Get your Google credentials
 
-    To use Google as a social provider, you need to get your Google credentials. You can get them by creating a new project in the [Google Cloud Console](https://console.cloud.google.com/apis/dashboard).
+To use Google as a social provider, you need to get your Google credentials. You can get them by creating a new project in the [Google Cloud Console](https://console.cloud.google.com/apis/dashboard).
 
-    In the Google Cloud Console > Credentials > Authorized redirect URIs, make sure to set the redirect URL to `http://localhost:3000/api/auth/callback/google` for local development. For production, make sure to set the redirect URL as your application domain, e.g. `https://example.com/api/auth/callback/google`. If you change the base path of the auth routes, you should update the redirect URL accordingly.
-
+In the Google Cloud Console > Credentials > Authorized redirect URIs, make sure to set the redirect URL to `http://localhost:3000/api/auth/callback/google` for local development. For production, make sure to set the redirect URL as your application domain, e.g. `https://example.com/api/auth/callback/google`. If you change the base path of the auth routes, you should update the redirect URL accordingly.
 
 **Note:**
 
-      **Creating Your Google OAuth Credentials**
+**Creating Your Google OAuth Credentials**
 
-      If you haven't created OAuth credentials yet, follow these step-by-step instructions:
+If you haven't created OAuth credentials yet, follow these step-by-step instructions:
 
-      1. Open **Google Cloud Console** → **APIs & Services** → **Credentials**
-      2. Click **Create Credentials** → **OAuth client ID**
-      3. Choose **Web application**
-      4. Add your redirect URIs:
-         * `http://localhost:3000/api/auth/callback/google` (for local development)
-         * `https://your-domain.com/api/auth/callback/google` (for production)
-      5. Copy the **Client ID** and **Client Secret** into your environment variables
+1. Open **Google Cloud Console** → **APIs & Services** → **Credentials**
+2. Click **Create Credentials** → **OAuth client ID**
+3. Choose **Web application**
+4. Add your redirect URIs:
+   * `http://localhost:3000/api/auth/callback/google` (for local development)
+   * `https://your-domain.com/api/auth/callback/google` (for production)
+5. Copy the **Client ID** and **Client Secret** into your environment variables
 
-      These steps avoid common issues such as `redirect_uri_mismatch`.
+These steps avoid common issues such as `redirect_uri_mismatch`.
 
+### Configure the provider
 
+To configure the provider, you need to pass the `clientId` and `clientSecret` to `socialProviders.google` in your auth configuration.
 
+```ts title="auth.ts"
+import { shinAuth } from "shinauth"
 
-    ### Configure the provider
-
-    To configure the provider, you need to pass the `clientId` and `clientSecret` to `socialProviders.google` in your auth configuration.
-
-    ```ts title="auth.ts"
-    import { shinAuth } from "shinauth"
-
-    export const auth = shinAuth({
-        baseURL: process.env.BETTER_AUTH_URL,
-        socialProviders: {
-            google: {
-                clientId: process.env.GOOGLE_CLIENT_ID as string,
-                clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-            },
+export const auth = shinAuth({
+    baseURL: process.env.BETTER_AUTH_URL,
+    socialProviders: {
+        google: {
+            clientId: process.env.GOOGLE_CLIENT_ID as string,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
         },
-    })
-    ```
-
+    },
+})
+```
 
 **Warning:**
 
-      **Important: Set Your Base URL**
+**Important: Set Your Base URL**
 
-      You must configure the `baseURL` to avoid `redirect_uri_mismatch` errors. Shinauth uses this to construct the OAuth callback URL sent to Google.
+You must configure the `baseURL` to avoid `redirect_uri_mismatch` errors. Shinauth uses this to construct the OAuth callback URL sent to Google.
 
-      **Option 1: Environment Variable (Recommended)**
+**Option 1: Environment Variable (Recommended)**
 
-      Add to your `.env` file:
+Add to your `.env` file:
 
-      ```dotenv
-      BETTER_AUTH_URL=https://your-domain.com
-      ```
+```dotenv
+BETTER_AUTH_URL=https://your-domain.com
+```
 
-      **Option 2: Explicit Configuration**
+**Option 2: Explicit Configuration**
 
-      Pass `baseURL` directly in the auth config as shown above.
-      Without this, the callback URL may default to `localhost`, causing Google OAuth to fail in production.
-
-
-
+Pass `baseURL` directly in the auth config as shown above.
+Without this, the callback URL may default to `localhost`, causing Google OAuth to fail in production.
 
 ## Usage
 
@@ -94,12 +86,10 @@ To sign in with Google using the ID Token, you can use the `signIn.social` funct
 
 This is useful when you have the ID Token from Google on the client-side and want to use it to sign in on the server.
 
-
 **Note:**
 
-  If ID token is provided no redirection will happen, and the user will be
-  signed in directly.
-
+If ID token is provided no redirection will happen, and the user will be
+signed in directly.
 
 ```ts title="auth-client.ts"
 const data = await authClient.signIn.social({
@@ -111,12 +101,10 @@ const data = await authClient.signIn.social({
 })
 ```
 
-
 **Note:**
 
-  If you want to use google one tap, you can use the [One Tap
-  Plugin](/plugins/one-tap) guide.
-
+If you want to use google one tap, you can use the [One Tap
+Plugin](/plugins/one-tap) guide.
 
 ### Cross-Platform Sign In (Web, iOS, Android)
 
@@ -146,11 +134,9 @@ await authClient.signIn.social({
 });
 ```
 
-
 **Note:**
 
-  The array only expands ID token audience verification. The authorization code flow still uses the first entry paired with the single `clientSecret` and `redirectURI`, so those cannot vary per platform within one provider block.
-
+The array only expands ID token audience verification. The authorization code flow still uses the first entry paired with the single `clientSecret` and `redirectURI`, so those cannot vary per platform within one provider block.
 
 ### Restrict Sign-In to Google Workspace
 
@@ -204,13 +190,29 @@ return (
 
 This will trigger a new OAuth flow that requests the additional scopes. After completion, your account will have the new scope in the database, and the access token will give you access to the requested Google APIs.
 
-
 **Note:**
 
-  Ensure you're using Shinauth version 1.2.7 or later to avoid "Social
-  account already linked" errors when requesting additional scopes from the same
-  provider.
+Ensure you're using Shinauth version 1.2.7 or later to avoid "Social
+account already linked" errors when requesting additional scopes from the same
+provider.
 
+### Disable incremental authorization
+
+By default, Shinauth sends `include_granted_scopes=true` to Google's authorization endpoint so newly issued access tokens cover scopes from prior grants in addition to the ones requested for the current flow. Set `includeGrantedScopes: false` if each OAuth flow should request only its own scopes.
+
+```ts
+socialProviders: {
+    google: {
+        clientId: process.env.GOOGLE_CLIENT_ID as string,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+        includeGrantedScopes: false,
+    },
+}
+```
+
+Call-time `additionalParams.include_granted_scopes` still follows the general OAuth parameter precedence rules and can override this provider default for a single flow.
+
+See Google's [Incremental authorization](https://developers.google.com/identity/protocols/oauth2/web-server#incrementalAuth) docs for the underlying parameter behavior.
 
 ### Always get refresh token
 
@@ -230,9 +232,24 @@ socialProviders: {
 }
 ```
 
-
 **Note:**
 
-  **Revoking Access:** If you want to get a new refresh token for a user who has
-  already authorized your app, you must have them revoke your app's access in
-  their Google account settings, then re-authorize.
+**Revoking Access:** If you want to get a new refresh token for a user who has
+already authorized your app, you must have them revoke your app's access in
+their Google account settings, then re-authorize.
+
+### Restricting to a Google Workspace domain
+
+To limit sign-in to accounts in a specific Google Workspace domain, forward the
+`hd` parameter on the call. This mirrors Google's `hd` authorization-URL
+parameter and is resolved per request:
+
+```ts
+await authClient.signIn.social({
+  provider: "google",
+  additionalParams: { hd: "example.com" },
+});
+```
+
+You can also set `hd` at the provider config level if the restriction is static
+for your application.

@@ -8,43 +8,149 @@ Shinauth already provides English error messages by default, so you only need to
 
 ## Installation
 
+### Install the plugin
 
+```bash
+pnpm add @shinauth/i18n
+```
 
-    ### Install the plugin
+### Add the plugin to your **auth** config
 
-    ```bash
-    @shinauth/i18n
-    ```
+```ts title="auth.ts"
+import { shinAuth } from "shinauth"
+import { i18n } from "@shinauth/i18n"
 
-
-
-    ### Add the plugin to your **auth** config
-
-    ```ts title="auth.ts"
-    import { shinAuth } from "shinauth"
-    import { i18n } from "@shinauth/i18n"
-
-    export const auth = shinAuth({
-        plugins: [
-            i18n({
-                translations: {
-                    fr: {
-                        USER_NOT_FOUND: "Utilisateur non trouvé",
-                        INVALID_EMAIL_OR_PASSWORD: "Email ou mot de passe invalide",
-                        INVALID_PASSWORD: "Mot de passe invalide",
-                    },
-                    de: {
-                        USER_NOT_FOUND: "Benutzer nicht gefunden",
-                        INVALID_EMAIL_OR_PASSWORD: "Ungültige E-Mail oder Passwort",
-                        INVALID_PASSWORD: "Ungültiges Passwort",
-                    },
+export const auth = shinAuth({
+    plugins: [
+        i18n({
+            translations: {
+                fr: {
+                    USER_NOT_FOUND: "Utilisateur non trouvé",
+                    INVALID_EMAIL_OR_PASSWORD: "Email ou mot de passe invalide",
+                    INVALID_PASSWORD: "Mot de passe invalide",
                 },
-            }),
-        ],
-    })
-    ```
+                de: {
+                    USER_NOT_FOUND: "Benutzer nicht gefunden",
+                    INVALID_EMAIL_OR_PASSWORD: "Ungültige E-Mail oder Passwort",
+                    INVALID_PASSWORD: "Ungültiges Passwort",
+                },
+            },
+        }),
+    ],
+})
+```
 
+## Built-in Translations
 
+The package ships with ready-to-use translations for 22 languages, so you don't need to write translations from scratch. Import `locales` from `@shinauth/i18n` to use them.
+
+| Code | Language             |
+| ---- | -------------------- |
+| `ar` | Arabic               |
+| `bn` | Bengali              |
+| `de` | German               |
+| `en` | English              |
+| `es` | Spanish              |
+| `fa` | Persian (Farsi)      |
+| `fr` | French               |
+| `hi` | Hindi                |
+| `id` | Indonesian           |
+| `it` | Italian              |
+| `ja` | Japanese             |
+| `ko` | Korean               |
+| `nl` | Dutch                |
+| `pl` | Polish               |
+| `pt` | Portuguese           |
+| `ru` | Russian              |
+| `sv` | Swedish              |
+| `th` | Thai                 |
+| `tr` | Turkish              |
+| `uk` | Ukrainian            |
+| `vi` | Vietnamese           |
+| `zh` | Chinese (Simplified) |
+
+### Use all built-in locales
+
+```ts title="auth.ts"
+import { shinAuth } from "shinauth"
+import { i18n, locales } from "@shinauth/i18n"
+
+export const auth = shinAuth({
+    plugins: [
+        i18n({ translations: locales }),
+    ],
+})
+```
+
+### Use a subset of locales
+
+To keep your bundle lean, you can import only the locales you need:
+
+```ts title="auth.ts"
+import { shinAuth } from "shinauth"
+import { i18n, locales } from "@shinauth/i18n"
+
+export const auth = shinAuth({
+    plugins: [
+        i18n({
+            translations: {
+                en: locales.en,
+                fr: locales.fr,
+            },
+        }),
+    ],
+})
+```
+
+### Override specific messages
+
+You can spread a built-in locale and override only the messages you want to customize:
+
+```ts title="auth.ts"
+import { shinAuth } from "shinauth"
+import { i18n, locales } from "@shinauth/i18n"
+
+export const auth = shinAuth({
+    plugins: [
+        i18n({
+            translations: {
+                ...locales,
+                fr: {
+                    ...locales.fr,
+                    USER_NOT_FOUND: "Membre introuvable",
+                },
+            },
+        }),
+    ],
+})
+```
+
+### Add a custom locale
+
+You can mix built-in locales with your own custom ones:
+
+```ts title="auth.ts"
+import { shinAuth } from "shinauth"
+import { i18n, locales } from "@shinauth/i18n"
+import type { TranslationDictionary } from "@shinauth/i18n"
+
+const myLocale: TranslationDictionary = {
+    USER_NOT_FOUND: "...",
+    INVALID_EMAIL_OR_PASSWORD: "...",
+    // ... other error codes
+}
+
+export const auth = shinAuth({
+    plugins: [
+        i18n({
+            translations: {
+                ...locales,
+                xx: myLocale,
+            },
+        }),
+    ],
+})
+```
 
 ## Usage
 
@@ -212,11 +318,9 @@ The field name on the user object that stores their locale preference when using
 
 A custom function to detect the locale when using the `"callback"` detection strategy. Receives the full endpoint context. Returns the locale code or `null`.
 
-
 **Note:**
 
-  `ctx.request` could be undefined for non-HTTP calls.
-
+`ctx.request` could be undefined for non-HTTP calls.
 
 ## Fallback Behavior
 

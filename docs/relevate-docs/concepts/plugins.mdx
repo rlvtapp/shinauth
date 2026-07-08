@@ -37,24 +37,14 @@ const authClient = createAuthClient({
 
 We recommend keeping the auth-client and your normal auth instance in separate files.
 
-
-
-
-
-
-
-
-
 ## Creating a Plugin
 
 To get started, you'll need a server plugin.
 Server plugins are the backbone of all plugins, and client plugins are there to provide an interface with frontend APIs to easily work with your server plugins.
 
-
 **Note:**
 
-  If your server plugins have endpoints that need to be called from the client, you'll also need to create a client plugin.
-
+If your server plugins have endpoints that need to be called from the client, you'll also need to create a client plugin.
 
 ### What can a plugin do?
 
@@ -82,11 +72,9 @@ export const myPlugin = () => {
 }
 ```
 
-
 **Note:**
 
-  You don't have to make the plugin a function, but it's recommended to do so. This way, you can pass options to the plugin and it's consistent with the built-in plugins.
-
+You don't have to make the plugin a function, but it's recommended to do so. This way, you can pass options to the plugin and it's consistent with the built-in plugins.
 
 ### Endpoints
 
@@ -135,7 +123,7 @@ Create Auth endpoints wraps around `createEndpoint` from Better Call. Inside the
 * `trustedOrigins`: This is the list of trusted origins that you specified via `options.trustedOrigins`.
 * `isTrustedOrigin`: This is a helper function that allows you to quickly check whether a given url or path is trusted based on the trusted origins configuration.
 
-For other properties, you can check the [Better Call](https://github.com/bekacru/better-call) documentation and the [source code](https://github.com/shinauth/shinauth/blob/main/packages/shinauth/src/context/create-context.ts).
+For other properties, you can check the [Better Call](https://github.com/bekacru/better-call) documentation and the [source code](https://github.com/rlvtapp/shinauth/blob/main/packages/shinauth/src/context/create-context.ts).
 
 **Rules for Endpoints**
 
@@ -235,11 +223,9 @@ const myPlugin = () => {
 
 This will add an `age` field to the `user` table and all `user` returning endpoints will include the `age` field and it'll be inferred properly by typescript.
 
-
 **Warning:**
 
-  Don't store sensitive information in the `user` or `session` table. Create a new table if you need to store sensitive information.
-
+Don't store sensitive information in the `user` or `session` table. Create a new table if you need to store sensitive information.
 
 ### Hooks
 
@@ -621,13 +607,11 @@ const myPluginClient = {
 } satisfies BetterAuthClientPlugin
 ```
 
-
 **Note:**
 
-  As a general guideline, ensure that each function accepts only one argument, with an optional second argument for fetchOptions to allow users to pass additional options to the fetch call. The function should return an object containing data and error keys.
+As a general guideline, ensure that each function accepts only one argument, with an optional second argument for fetchOptions to allow users to pass additional options to the fetch call. The function should return an object containing data and error keys.
 
-  If your use case involves actions beyond API calls, feel free to deviate from this rule.
-
+If your use case involves actions beyond API calls, feel free to deviate from this rule.
 
 ### Get Atoms
 

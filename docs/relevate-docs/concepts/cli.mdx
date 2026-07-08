@@ -2,7 +2,7 @@
 title: "CLI"
 ---
 
-Shinauth comes with a built-in CLI to help you manage the database schemas, initialize your project, generate a secret key for your application, and gather diagnostic information about your setup.
+Shinauth comes with a built-in CLI to help you manage the database schemas, create initial admin users, initialize your project, generate a secret key for your application, and gather diagnostic information about your setup.
 
 ## Generate
 
@@ -31,13 +31,33 @@ pnpm dlx @shinauth/cli migrate
 * `--config` - The path to your Shinauth config file. By default, the CLI will search for an auth.ts file in **./**, **./utils**, **./lib**, or any of these directories under the `src` directory.
 * `--yes` - Skip the confirmation prompt and apply the schema directly.
 
-
 **Note:**
 
-  **Using PostgreSQL with a non-default schema?**
+**Using PostgreSQL with a non-default schema?**
 
-  The migrate command automatically detects your configured `search_path` and creates tables in the correct schema. See the [PostgreSQL adapter documentation](/adapters/postgresql#use-a-non-default-schema) for configuration details.
+The migrate command automatically detects your configured `search_path` and creates tables in the correct schema. See the [PostgreSQL adapter documentation](/adapters/postgresql#use-a-non-default-schema) for configuration details.
 
+## Create Admin
+
+The `create-admin` command creates an initial admin user through your configured Shinauth instance. It requires the Admin plugin and a persistent database, and it uses the same server-side `auth.api.createUser` path as the Admin plugin so passwords are hashed and database hooks still run.
+
+```bash title="Terminal"
+pnpm dlx @shinauth/cli create-admin --email admin@example.com --name "Admin" --role admin
+```
+
+If users already exist, the command asks for confirmation. Use `--force` or `--yes` to skip that prompt.
+
+### Options
+
+* `--email` - The email address for the admin user.
+* `--password` - The password for the admin user. If omitted, the CLI will prompt for it.
+* `--name` - The name for the admin user. Defaults to `Admin`.
+* `--role` - The role to assign. Defaults to `admin`.
+* `--data` - Additional user fields as a JSON object.
+* `--no-email-verified` - Create the admin user with an unverified email. By default, the CLI marks the admin email as verified.
+* `--config` - The path to your Shinauth config file.
+* `--force` - Create the admin user even when users already exist.
+* `--yes` - Skip the existing-users confirmation prompt.
 
 ## Init
 

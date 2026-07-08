@@ -4,7 +4,7 @@ title: "MCP"
 
 Shinauth hosts a **remote MCP server** that exposes documentation search, examples, and setup help to any MCP-capable client (Cursor, Claude Code, Open Code, and others).
 
-**Endpoint:** `https://mcp.github.com/rlvtapp/shinauth/mcp`
+**Endpoint:** `https://mcp.shinauth.com/mcp`
 
 This is separate from the [MCP plugin](/plugins/mcp), which adds MCP *provider authentication* to your app. The server above is for **consuming** Shinauth docs inside your editor or agent.
 
@@ -18,58 +18,48 @@ pnpm dlx @shinauth/cli mcp
 
 With no flags, the command lists supported targets. You can pass a target directly:
 
-
-
 #### Cursor
 
-    ```bash title="terminal"
-    pnpm dlx @shinauth/cli mcp --cursor
-    ```
+```bash title="terminal"
+pnpm dlx @shinauth/cli mcp --cursor
+```
 
-    This opens Cursor with a deeplink so the server is added to your MCP configuration.
+This opens Cursor with a deeplink so the server is added to your MCP configuration.
 
-    You can also use the one-click control on this site:
-
-
-
-
+You can also use the one-click control on this site:
 
 #### Claude Code
 
-    ```bash title="terminal"
-    pnpm dlx @shinauth/cli mcp --claude-code
-    ```
+```bash title="terminal"
+pnpm dlx @shinauth/cli mcp --claude-code
+```
 
-    This runs `claude mcp add` with the Shinauth URL. If that fails, the CLI prints the exact command to run yourself.
-
-
+This runs `claude mcp add` with the Shinauth URL. If that fails, the CLI prints the exact command to run yourself.
 
 #### Open Code
 
-    ```bash title="terminal"
-    pnpm dlx @shinauth/cli mcp --open-code
-    ```
+```bash title="terminal"
+pnpm dlx @shinauth/cli mcp --open-code
+```
 
-    This merges a `shinauth` entry into `opencode.json` in the current directory (remote transport, URL above).
-
-
+This merges a `shinauth` entry into `opencode.json` in the current directory (remote transport, URL above).
 
 #### Manual
 
-    ```bash title="terminal"
-    pnpm dlx @shinauth/cli mcp --manual
-    ```
+```bash title="terminal"
+pnpm dlx @shinauth/cli mcp --manual
+```
 
-    Writes or merges `mcp.json` in the current working directory with:
+Writes or merges `mcp.json` in the current working directory with:
 
-    ```json
-    {
-      "shinauth": {
-        "url": "https://mcp.github.com/rlvtapp/shinauth/mcp"
-      }
-    }
-    ```
+```json
+{
+  "shinauth": {
+    "url": "https://mcp.shinauth.com/mcp"
+  }
+}
+```
 
-    For **Cursor**, you can add the same `shinauth` entry to MCP config—commonly `~/.cursor/mcp.json` (user) or `.cursor/mcp.json` (project)—using the shape your Cursor version expects for HTTP servers (`url` for remote MCP).
+For **Cursor**, you can add the same `shinauth` entry to MCP config—commonly `~/.cursor/mcp.json` (user) or `.cursor/mcp.json` (project)—using the shape your Cursor version expects for HTTP servers (`url` for remote MCP).
 
-    Restart or reload MCP in your client after changes.
+Restart or reload MCP in your client after changes.

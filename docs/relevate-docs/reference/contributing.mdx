@@ -8,112 +8,93 @@ Thank you for your interest in contributing to Shinauth! This guide is a concise
 
 Before diving in, here are a few important resources:
 
-* Take a look at our existing [issues](https://github.com/shinauth/shinauth/issues) and [pull requests](https://github.com/shinauth/shinauth/pulls)
+* Take a look at our existing [issues](https://github.com/rlvtapp/shinauth/issues) and [pull requests](https://github.com/rlvtapp/shinauth/pulls)
 * Join our community discussions in [Discord](https://discord.gg/shinauth)
 
 ## Development Setup
 
 To get started with development:
 
-
 **Warning:**
 
-  Make sure you have [Node.JS](https://nodejs.org/en/download){" "}
-  installed, preferably on LTS.
+Make sure you have [Node.JS](https://nodejs.org/en/download){" "}
+installed, preferably on LTS.
 
+### 1. Fork the repository
 
+Visit [https://github.com/rlvtapp/shinauth](https://github.com/rlvtapp/shinauth)
 
-    ### 1. Fork the repository
+Click the "Fork" button in the top right.
 
-    Visit [https://github.com/shinauth/shinauth](https://github.com/shinauth/shinauth)
+### 2. Clone your fork
 
-    Click the "Fork" button in the top right.
+```bash
+# Replace YOUR-USERNAME with your GitHub username
+git clone https://github.com/YOUR-USERNAME/shinauth.git
+cd shinauth
+```
 
+### 3. Install dependencies
 
+Make sure you have [pnpm](https://pnpm.io/installation) installed!
 
-    ### 2. Clone your fork
+```bash
+pnpm install
+```
 
-    ```bash
-    # Replace YOUR-USERNAME with your GitHub username
-    git clone https://github.com/YOUR-USERNAME/shinauth.git
-    cd shinauth
-    ```
+### 4. Prepare ENV files
 
+Copy the example env file to create your new `.env` file.
 
-
-    ### 3. Install dependencies
-
-    Make sure you have [pnpm](https://pnpm.io/installation) installed!
-
-    ```bash
-    pnpm install
-    ```
-
-
-
-    ### 4. Prepare ENV files
-
-    Copy the example env file to create your new `.env` file.
-
-    ```bash
-    cp -n ./docs/.env.example ./docs/.env
-    ```
-
-
+```bash
+cp -n ./docs/.env.example ./docs/.env
+```
 
 ## Making changes
 
 Once you have an idea of what you want to contribute, you can start making changes. Here are some steps to get started:
 
+### 1. Create a new branch
 
+```bash
+# Add upstream remote (if not already added)
+git remote add upstream https://github.com/rlvtapp/shinauth.git
 
-    ### 1. Create a new branch
+# Make sure you're on main
+git checkout main
 
-    ```bash
-    # Add upstream remote (if not already added)
-    git remote add upstream https://github.com/shinauth/shinauth.git
+# Pull latest changes
+git pull upstream main
 
-    # Make sure you're on main
-    git checkout main
+# Create and switch to a new branch
+git checkout -b feature/your-feature-name
+```
 
-    # Pull latest changes
-    git pull upstream main
+### 2. Start development server
 
-    # Create and switch to a new branch
-    git checkout -b feature/your-feature-name
-    ```
+Start the development server:
 
+```bash
+pnpm dev
+```
 
+To start the docs server:
 
-    ### 2. Start development server
+```bash
+pnpm -F docs dev
+```
 
-    Start the development server:
+### 3. Make Your Changes
 
-    ```bash
-    pnpm dev
-    ```
+* Make your changes to the codebase.
 
-    To start the docs server:
+* Write tests if needed. (Read more about [testing](/reference/contributing#testing))
 
-    ```bash
-    pnpm -F docs dev
-    ```
-
-
-
-    ### 3. Make Your Changes
-
-    * Make your changes to the codebase.
-
-    * Write tests if needed. (Read more about [testing](/reference/contributing#testing))
-
-    * Update documentation. (Read more about [documenting](/reference/contributing#documentation))
-
-
+* Update documentation. (Read more about [documenting](/reference/contributing#documentation))
 
 ### Issues and Bug Fixes
 
-* Check our [GitHub issues](https://github.com/shinauth/shinauth/issues) for tasks labeled `good first issue`
+* Check our [GitHub issues](https://github.com/rlvtapp/shinauth/issues) for tasks labeled `good first issue`
 * When reporting bugs, include steps to reproduce and expected behavior
 * Comment on issues you'd like to work on to avoid duplicate efforts
 
@@ -187,7 +168,7 @@ await runWithDefaultUser(async (headers) => {
 
 Don't hesitate to ask for help! You can:
 
-* Open an [issue](https://github.com/shinauth/shinauth/issues) with questions
+* Open an [issue](https://github.com/rlvtapp/shinauth/issues) with questions
 * Join our [community discussions](https://discord.gg/shinauth)
 * Reach out to project maintainers
 

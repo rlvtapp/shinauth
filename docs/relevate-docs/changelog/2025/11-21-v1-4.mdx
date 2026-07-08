@@ -126,11 +126,9 @@ export const auth = shinAuth({
 });
 ```
 
-
 **Note:**
 
-  Although joins are experimental, they are supported by all adapters and will be enabled by default in the next release.
-
+Although joins are experimental, they are supported by all adapters and will be enabled by default in the next release.
 
 ***
 
@@ -152,44 +150,40 @@ export const auth = shinAuth({
 });
 ```
 
+1. Start with `fallbackToDatabase` enabled and `storage` set to `"secondary-storage"`:
 
+```ts
+import { apiKey } from "@shinauth/api-key";
+import { shinAuth } from "shinauth";
 
-    1. Start with `fallbackToDatabase` enabled and `storage` set to `"secondary-storage"`:
+export const auth = shinAuth({
+    secondaryStorage: {
+        //...
+    },
+    plugins: [apiKey({ storage: "secondary-storage", fallbackToDatabase: true })],
+});
+```
 
-    ```ts
-    import { apiKey } from "@shinauth/api-key";
-    import { shinAuth } from "shinauth";
+This allows existing keys in the database to be accessible while new keys are stored in the secondary storage.
 
-    export const auth = shinAuth({
-        secondaryStorage: {
-            //...
-        },
-        plugins: [apiKey({ storage: "secondary-storage", fallbackToDatabase: true })],
-    });
-    ```
+2. **Migrate existing keys** (optional): For faster initial cache population, you can write a migration script
+   to copy all keys from the database to the secondary storage. However, this is optional since the cache will warm up automatically as keys are accessed.
 
-    This allows existing keys in the database to be accessible while new keys are stored in the secondary storage.
+3. **Disable fallback**: Once all keys are migrated or when you're confident the cache is sufficiently populated:
 
-    2. **Migrate existing keys** (optional): For faster initial cache population, you can write a migration script
-       to copy all keys from the database to the secondary storage. However, this is optional since the cache will warm up automatically as keys are accessed.
+```ts
+import { apiKey } from "@shinauth/api-key";
+import { shinAuth } from "shinauth";
 
-    3. **Disable fallback**: Once all keys are migrated or when you're confident the cache is sufficiently populated:
-
-    ```ts
-    import { apiKey } from "@shinauth/api-key";
-    import { shinAuth } from "shinauth";
-
-    export const auth = shinAuth({
-        plugins: [
-            apiKey({
-                storage: "secondary-storage",
-                fallbackToDatabase: false // omit, false or undefined
-            })
-        ],
-    });
-    ```
-
-
+export const auth = shinAuth({
+    plugins: [
+        apiKey({
+            storage: "secondary-storage",
+            fallbackToDatabase: false // omit, false or undefined
+        })
+    ],
+});
+```
 
 ***
 
@@ -522,7 +516,7 @@ This release includes over 250+ bug fixes addressing issues across all areas:
 ***
 
 A lot of refinements to make everything smoother, faster, and more reliable.
-👉 [Check the full changelog](https://github.com/shinauth/shinauth/releases/tag/v1.4.0)
+👉 [Check the full changelog](https://github.com/rlvtapp/shinauth/releases/tag/v1.4.0)
 
 ## ❤️ Contributors
 
@@ -613,6 +607,5 @@ export const releaseContributorUsernames = [
 	"yutaka5",
 	// cspell:enable
 ];
-
 
 ***

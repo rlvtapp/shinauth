@@ -8,281 +8,247 @@ Shinauth can be integrated into Electron apps to provide secure authentication f
 
 ## Installation
 
+### Configure a Shinauth front- & back-end
 
+Before integrating with Electron, ensure you have a Shinauth server and client set up.
 
-    ### Configure a Shinauth front- & back-end
+To get started, check out our [installation](/installation) guide for setting up Shinauth.
 
-    Before integrating with Electron, ensure you have a Shinauth server and client set up.
+### Install the required packages
 
-    To get started, check out our [installation](/installation) guide for setting up Shinauth.
+Install the Shinauth server package and the Electron integration package in your server, Electron app, and web client projects.
 
+**In each project, run:**
 
-
-    ### Install the required packages
-
-    Install the Shinauth server package and the Electron integration package in your server, Electron app, and web client projects.
-
-    **In each project, run:**
-
-    ```bash
-    shinauth @shinauth/electron
-    ```
-
+```bash
+shinauth @shinauth/electron
+```
 
 **Note:**
 
-      We support two major versions behind the latest stable major release of Electron.
-      This keeps you on versions that receive security updates and aligns with [Electron's version support policy](https://www.electronjs.org/docs/latest/tutorial/electron-timelines#breaking-api-changes).
+We support two major versions behind the latest stable major release of Electron.
+This keeps you on versions that receive security updates and aligns with [Electron's version support policy](https://www.electronjs.org/docs/latest/tutorial/electron-timelines#breaking-api-changes).
 
+### Add the Electron plugin to your Shinauth server
 
+Add the Electron plugin to your Shinauth server.
 
+```ts title="web/lib/auth.ts"
+import { shinAuth } from "shinauth";
+import { electron } from "@shinauth/electron";
 
-    ### Add the Electron plugin to your Shinauth server
+export const auth = shinAuth({
+  plugins: [electron()],
+  emailAndPassword: {
+    enabled: true,
+  },
+  social: {
+    google: {
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    },
+  },
+});
+```
 
-    Add the Electron plugin to your Shinauth server.
+### Add the proxy plugin to your web client
 
-    ```ts title="web/lib/auth.ts"
-    import { shinAuth } from "shinauth";
-    import { electron } from "@shinauth/electron";
+On your frontend, add the proxy plugin to handle redirects back into the Electron app.
 
-    export const auth = shinAuth({
-      plugins: [electron()],
-      emailAndPassword: {
-        enabled: true,
+```ts title="web/lib/auth-client.ts"
+import { createAuthClient } from "shinauth/client";
+import { electronProxyClient } from "@shinauth/electron/proxy";
+
+export const authClient = createAuthClient({
+  baseURL: "http://localhost:8081",
+  plugins: [
+    electronProxyClient({
+      protocol: {
+        scheme: "com.example.app"
       },
-      social: {
-        google: {
-          clientId: process.env.GOOGLE_CLIENT_ID!,
-          clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
+  ],
+});
+```
+
+### Initialize the Electron client
+
+```ts title="electron/lib/auth-client.ts"
+import { createAuthClient } from "shinauth/client";
+import { electronClient } from "@shinauth/electron/client";
+
+export const authClient = createAuthClient({
+  baseURL: "http://localhost:8081", // Base URL of your Shinauth frontend
+  plugins: [
+    electronClient({
+      signInURL: "https://app.example.com/sign-in", // The URL to redirect to for authentication
+      protocol: {
+        scheme: "com.example.app" // The custom protocol scheme registered by your Electron app
+      },
+      storage: {
+        getItem: async (key) => {
+          // retrieve entry from storage
+        },
+        setItem: async (key, value) => {
+          // set entry in storage
         },
       },
-    });
-    ```
+    }),
+  ],
+});
+```
 
+If you'd rather not implement your own storage solution, we offer a default option:
 
+1. Make sure to install the `conf` package:
 
-    ### Add the proxy plugin to your web client
+```bash
+pnpm add conf
+```
 
-    On your frontend, add the proxy plugin to handle redirects back into the Electron app.
+2. Then, you can use it as follows:
 
-    ```ts title="web/lib/auth-client.ts"
-    import { createAuthClient } from "shinauth/client";
-    import { electronProxyClient } from "@shinauth/electron/proxy";
+```ts title="electron/lib/auth-client.ts"
+import { storage } from "@shinauth/electron/storage";
 
-    export const authClient = createAuthClient({
-      baseURL: "http://localhost:8081",
-      plugins: [
-        electronProxyClient({
-          protocol: {
-            scheme: "com.example.app"
-          },
-        }),
-      ],
-    });
-    ```
-
-
-
-    ### Initialize the Electron client
-
-    ```ts title="electron/lib/auth-client.ts"
-    import { createAuthClient } from "shinauth/client";
-    import { electronClient } from "@shinauth/electron/client";
-
-    export const authClient = createAuthClient({
-      baseURL: "http://localhost:8081", // Base URL of your Shinauth frontend
-      plugins: [
-        electronClient({
-          signInURL: "https://app.example.com/sign-in", // The URL to redirect to for authentication
-          protocol: {
-            scheme: "com.example.app" // The custom protocol scheme registered by your Electron app
-          },
-          storage: {
-            getItem: async (key) => {
-              // retrieve entry from storage
-            },
-            setItem: async (key, value) => {
-              // set entry in storage
-            },
-          },
-        }),
-      ],
-    });
-    ```
-
-    If you'd rather not implement your own storage solution, we offer a default option:
-
-    1. Make sure to install the `conf` package:
-
-    ```bash
-    conf
-    ```
-
-    2. Then, you can use it as follows:
-
-    ```ts title="electron/lib/auth-client.ts"
-    import { storage } from "@shinauth/electron/storage";
-
-    electronClient({
-      storage: storage(),
-    });
-    ```
-
+electronClient({
+  storage: storage(),
+});
+```
 
 **Warning:**
 
-      You should never expose the authClient directly
-      to the renderer process. Instead, [create an IPC bridge](#creating-ipc-bridges) to securely communicate between the main and renderer processes.
+You should never expose the authClient directly
+to the renderer process. Instead, [create an IPC bridge](#creating-ipc-bridges) to securely communicate between the main and renderer processes.
 
-      Also make sure not to expose any sensitive data like tokens or cookies to the renderer process to mitigate injection attacks.
+Also make sure not to expose any sensitive data like tokens or cookies to the renderer process to mitigate injection attacks.
 
+### Scheme and Trusted Origins
 
+The Electron plugin uses deep links to redirect users back to your app after authentication.
+To enable this, you need to add your app's protocol scheme to the `trustedOrigins` on your **Shinauth server**.
 
-
-    ### Scheme and Trusted Origins
-
-    The Electron plugin uses deep links to redirect users back to your app after authentication.
-    To enable this, you need to add your app's protocol scheme to the `trustedOrigins` on your **Shinauth server**.
-
-    First, make sure you have a custom protocol scheme registered in your build configuration.
-
-
+First, make sure you have a custom protocol scheme registered in your build configuration.
 
 #### electron-forge
 
-        ```ts title="forge.config.js"
-        module.exports = {
-          packagerConfig: {
-            protocols: [{
-              name: "MyApp Protocol",
-              schemes: ["com.example.app"],
-            }],
-          },
-          // ...other config options
-        };
-        ```
-
-
+```ts title="forge.config.js"
+module.exports = {
+  packagerConfig: {
+    protocols: [{
+      name: "MyApp Protocol",
+      schemes: ["com.example.app"],
+    }],
+  },
+  // ...other config options
+};
+```
 
 #### electron-builder
 
-        ```ts title="electron-builder.json5"
-        {
-          "protocols": [
-            {
-              "name": "MyApp Protocol",
-              "schemes": ["com.example.app"]
-            }
-          ],
-          // ...other config options
-        }
-        ```
+```ts title="electron-builder.json5"
+{
+  "protocols": [
+    {
+      "name": "MyApp Protocol",
+      "schemes": ["com.example.app"]
+    }
+  ],
+  // ...other config options
+}
+```
 
+Then, update your Shinauth config to include the scheme in `trustedOrigins`:
 
+```ts title="web/lib/auth.ts"
+export const auth = shinAuth({
+  trustedOrigins: ["com.example.app:/"],
+});
+```
 
-    Then, update your Shinauth config to include the scheme in `trustedOrigins`:
+### Configure the BrowserWindow
 
-    ```ts title="web/lib/auth.ts"
-    export const auth = shinAuth({
-      trustedOrigins: ["com.example.app:/"],
-    });
-    ```
+Ensure that your `BrowserWindow` is configured with `nodeIntegration` set to `false` and `contextIsolation` set to `true`, to ensure NodeJS APIs aren't exposed to any JavaScript process running in the browser.
 
+```ts title="electron/main.ts"
+import { BrowserWindow } from "electron";
+import { join } from "node:path";
 
-
-    ### Configure the BrowserWindow
-
-    Ensure that your `BrowserWindow` is configured with `nodeIntegration` set to `false` and `contextIsolation` set to `true`, to ensure NodeJS APIs aren't exposed to any JavaScript process running in the browser.
-
-    ```ts title="electron/main.ts"
-    import { BrowserWindow } from "electron";
-    import { join } from "node:path";
-
-    const win = new BrowserWindow({
-      webPreferences: {
-        preload: join(__dirname, "preload.mjs"),
-        nodeIntegration: false,
-        contextIsolation: true,
-      },
-    });
-    ```
-
+const win = new BrowserWindow({
+  webPreferences: {
+    preload: join(__dirname, "preload.mjs"),
+    nodeIntegration: false,
+    contextIsolation: true,
+  },
+});
+```
 
 **Warning:**
 
-      To run your process in `sandbox` mode, you need to ensure that `@shinauth/electron` is bundled into the preload script.
-      Import only `@shinauth/electron/preload` inside the preload script with tree-shaking enabled, to avoid bundling unwanted dependencies.
+To run your process in `sandbox` mode, you need to ensure that `@shinauth/electron` is bundled into the preload script.
+Import only `@shinauth/electron/preload` inside the preload script with tree-shaking enabled, to avoid bundling unwanted dependencies.
 
-      The following example uses electron-vite, but the concept applies to any bundler:
+The following example uses electron-vite, but the concept applies to any bundler:
 
-      ```ts title="electron.vite.config.ts"
-      import { defineConfig } from "electron-vite";
+```ts title="electron.vite.config.ts"
+import { defineConfig } from "electron-vite";
 
-      export default defineConfig({
-        preload: {
-          build: {
-            externalizeDeps: {
-              exclude: ["@shinauth/electron"],
-            },
-          },
-        },
-      });
-      ```
+export default defineConfig({
+  preload: {
+    build: {
+      externalizeDeps: {
+        exclude: ["@shinauth/electron"],
+      },
+    },
+  },
+});
+```
 
-      If your config uses a list of externals instead, do **not** add `@shinauth/electron` to that list so it gets bundled.
+If your config uses a list of externals instead, do **not** add `@shinauth/electron` to that list so it gets bundled.
 
+### Setup the Main Process
 
+In your Electron main process, use the `setupMain()` method from the Electron auth client to handle necessary configurations.
 
+This will:
 
-    ### Setup the Main Process
+* Register the protocol handler for deep links.
+* Register the [user image proxy](#user-image-proxy) protocol.
+* Set up content security policies.
+* Set up IPC bridges for communication between main and renderer processes.
 
-    In your Electron main process, use the `setupMain()` method from the Electron auth client to handle necessary configurations.
+```ts title="electron/main.ts"
+import { authClient } from "./lib/auth-client";
 
-    This will:
+authClient.setupMain();
+```
 
-    * Register the protocol handler for deep links.
-    * Register the [user image proxy](#user-image-proxy) protocol.
-    * Set up content security policies.
-    * Set up IPC bridges for communication between main and renderer processes.
+Note that this must be called before the app is ready.
 
-    ```ts title="electron/main.ts"
-    import { authClient } from "./lib/auth-client";
+### Setup the Renderer Process
 
-    authClient.setupMain();
-    ```
+In your preload script, use the `setupRenderer()` method from the Electron auth client to expose safe IPC bridges to the renderer process.
 
-    Note that this must be called before the app is ready.
+```ts title="electron/preload.ts"
+import { setupRenderer } from "@shinauth/electron/preload";
 
+setupRenderer();
+```
 
-
-    ### Setup the Renderer Process
-
-    In your preload script, use the `setupRenderer()` method from the Electron auth client to expose safe IPC bridges to the renderer process.
-
-    ```ts title="electron/preload.ts"
-    import { setupRenderer } from "@shinauth/electron/preload";
-
-    setupRenderer();
-    ```
-
-    Note that this must also be called before the app is ready.
-
+Note that this must also be called before the app is ready.
 
 **Note:**
 
-      To infer the types of the exposed bridges, you can use `authClient.$Infer.Bridges` to extend the `Window` interface.
+To infer the types of the exposed bridges, you can use `authClient.$Infer.Bridges` to extend the `Window` interface.
 
-      ```ts title="electron/preload.d.ts"
-      import type { authClient } from "./lib/auth-client";
+```ts title="electron/preload.d.ts"
+import type { authClient } from "./lib/auth-client";
 
-      declare global {
-        type Bridges = typeof authClient.$Infer.Bridges;
-        interface Window extends Bridges {}
-      }
-      ```
-
-
-
+declare global {
+  type Bridges = typeof authClient.$Infer.Bridges;
+  interface Window extends Bridges {}
+}
+```
 
 ## Usage
 
@@ -303,7 +269,6 @@ function SignIn({
     client_id?: string | undefined;
     state?: string | undefined;
     code_challenge?: string | undefined;
-    code_challenge_method?: string | undefined;
   }>;
 }) {
   const query = use(searchParams);
@@ -330,7 +295,7 @@ function SignIn({
 }
 ```
 
-To handle already signed-in users, you can use the `electron.transferUser` method on the client and `electronTransferUser` on the server to transfer the user to the Electron app. [See Example](https://github.com/shinauth/shinauth/blob/main/demo/nextjs/app/\(auth\)/sign-in/_components/electron.tsx)
+To handle already signed-in users, you can use the `electron.transferUser` method on the client and `electronTransferUser` on the server to transfer the user to the Electron app. [See Example](https://github.com/rlvtapp/shinauth/blob/main/demo/nextjs/app/\(auth\)/sign-in/_components/electron.tsx)
 
 ### Handling Authentication in Electron
 
@@ -479,11 +444,9 @@ function ManualCodeEntry() {
 
 The `authenticate` bridge sends the authorization code to the main process, which exchanges it for a session using the stored PKCE code verifier and state. On success, the `onAuthenticated` bridge is triggered.
 
-
 **Note:**
 
-  The authorization code is a short-lived 32-character string. A `requestAuth()` call must have been made before `authenticate()` can be used, as it relies on the code verifier and state generated during the initial request.
-
+The authorization code is a short-lived 32-character string. A `requestAuth()` call must have been made before `authenticate()` can be used, as it relies on the code verifier and state generated during the initial request.
 
 ### User Image Proxy
 
@@ -498,11 +461,9 @@ You can use the image URL directly in your renderer:
 
 To configure or disable the proxy, see the [`userImageProxy`](#userimageproxy) option.
 
-
 **Warning:**
 
-  To access avatars for users other than the current one, you need to enable the [Admin](/plugins/admin) plugin.
-
+To access avatars for users other than the current one, you need to enable the [Admin](/plugins/admin) plugin.
 
 ### Creating IPC bridges
 
@@ -535,22 +496,20 @@ contextBridge.exposeInMainWorld("myBridge", (data: Record<string, any>) => {
 });
 ```
 
-
 **Note:**
 
-  To infer the types of your bridge, extend the `Window` interface:
+To infer the types of your bridge, extend the `Window` interface:
 
-  ```ts title="electron/preload.d.ts"
-  import type { authClient } from "./lib/auth-client";
+```ts title="electron/preload.d.ts"
+import type { authClient } from "./lib/auth-client";
 
-  declare global {
-    type Bridges = typeof authClient.$Infer.Bridges;
-    interface Window extends Bridges {
-      myBridge: (data: Record<string, any>) => Promise<any>;
-    }
+declare global {
+  type Bridges = typeof authClient.$Infer.Bridges;
+  interface Window extends Bridges {
+    myBridge: (data: Record<string, any>) => Promise<any>;
   }
-  ```
-
+}
+```
 
 Now you can call your custom bridge from anywhere in the renderer process:
 
@@ -615,18 +574,6 @@ Make sure this matches the clientID provided to both the proxy and electron clie
 ```ts title="web/auth.ts"
 electron({
   clientID: "electron",
-});
-```
-
-#### `disableOriginOverride?`
-
-Override the origin for Electron API routes. (defaults to `false`)
-
-Enable this if you're facing cors origin issues with Electron API routes.
-
-```ts title="web/auth.ts"
-electron({
-  disableOriginOverride: true,
 });
 ```
 

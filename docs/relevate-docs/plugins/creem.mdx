@@ -4,15 +4,12 @@ title: "Creem"
 
 [Creem](https://creem.io) is a financial OS that enables teams and individuals selling software globally to split revenue and collaborate on financial workflows without any tax compliance headaches. This plugin integrates Creem with Shinauth, bringing payment processing and subscription management directly into your authentication layer.
 
-
 **Note:**
 
-  This plugin is maintained by the Creem team. For bugs, issues or feature requests,
-  please visit the [Creem GitHub repo](https://github.com/armitage-labs/creem-betterauth).
+This plugin is maintained by the Creem team. For bugs, issues or feature requests,
+please visit the [Creem GitHub repo](https://github.com/armitage-labs/creem-betterauth).
 
-
-  Need help? Reach out to our team anytime on Discord.
-
+Need help? Reach out to our team anytime on Discord.
 
 ## Features
 
@@ -29,38 +26,28 @@ title: "Creem"
 
 ## Installation
 
+### Install the plugin
 
-
-    ### Install the plugin
-
-    ```bash
-    @creem_io/shinauth
-    ```
-
+```bash
+pnpm add @creem_io/shinauth
+```
 
 **Note:**
 
-      If you're using a separate client and server setup, make sure to install the plugin in both parts of your project.
+If you're using a separate client and server setup, make sure to install the plugin in both parts of your project.
 
+### Get your API Key
 
+Get your Creem API Key from the [Creem dashboard](https://creem.io/dashboard/developers), under the 'Developers' menu and add it to your environment variables:
 
-
-    ### Get your API Key
-
-    Get your Creem API Key from the [Creem dashboard](https://creem.io/dashboard/developers), under the 'Developers' menu and add it to your environment variables:
-
-    ```bash
-    # .env
-    CREEM_API_KEY=your_api_key_here
-    ```
-
+```bash
+# .env
+CREEM_API_KEY=your_api_key_here
+```
 
 **Warning:**
 
-      Test Mode and Production have different API keys. Make sure you're using the correct one for your environment.
-
-
-
+Test Mode and Production have different API keys. Make sure you're using the correct one for your environment.
 
 ## Configuration
 
@@ -119,92 +106,73 @@ export const authClient = createCreemAuthClient({
 });
 ```
 
-
 **Note:**
 
-  The `createCreemAuthClient` wrapper provides enhanced TypeScript support and cleaner parameter types. It's optimized for use with the Creem plugin.
-
+The `createCreemAuthClient` wrapper provides enhanced TypeScript support and cleaner parameter types. It's optimized for use with the Creem plugin.
 
 ### Database Migration
 
 If you're using database persistence (`persistSubscriptions: true`), generate and run the database schema:
 
-
-
 #### migrate
 
-    ```bash
-    pnpm dlx @shinauth/cli migrate
-    ```
-
-
+```bash
+pnpm dlx @shinauth/cli migrate
+```
 
 #### generate
 
-    ```bash
-    pnpm dlx @shinauth/cli generate
-    ```
-
-
+```bash
+pnpm dlx @shinauth/cli generate
+```
 
 **Note:**
 
-  Depending on your database adapter, additional setup steps may be required. Refer to the [Shinauth adapter documentation](https://www.github.com/rlvtapp/shinauth/docs/adapters/mysql) for details.
-
+Depending on your database adapter, additional setup steps may be required. Refer to the [Shinauth adapter documentation](https://www.shinauth.com/docs/adapters/mysql) for details.
 
 ### Webhook Setup
 
+### Create Webhook Endpoint
 
+In your [Creem dashboard](https://creem.io/dashboard/developers/webhooks), create a webhook endpoint pointing to your local or production server pointing to:
 
-    ### Create Webhook Endpoint
+```text
+https://your-domain.com/api/auth/creem/webhook
+```
 
-    In your [Creem dashboard](https://creem.io/dashboard/developers/webhooks), create a webhook endpoint pointing to your local or production server pointing to:
-
-    ```text
-    https://your-domain.com/api/auth/creem/webhook
-    ```
-
-    (`/api/auth` is the default Shinauth server path)
-
+(`/api/auth` is the default Shinauth server path)
 
 **Note:**
 
-      Check step 3 if local development.
+Check step 3 if local development.
 
+### Configure Webhook Secret
 
+Copy the webhook signing secret from Creem and add it to your environment:
 
+```bash
+CREEM_WEBHOOK_SECRET=your_webhook_secret_here
+```
 
-    ### Configure Webhook Secret
+Update your server configuration:
 
-    Copy the webhook signing secret from Creem and add it to your environment:
+```typescript
+creem({
+  apiKey: process.env.CREEM_API_KEY!,
+  webhookSecret: process.env.CREEM_WEBHOOK_SECRET,
+  testMode: true,
+})
+```
 
-    ```bash
-    CREEM_WEBHOOK_SECRET=your_webhook_secret_here
-    ```
+### Local Development (Optional)
 
-    Update your server configuration:
+For local testing, use a tool like [ngrok](https://ngrok.com) to expose your local server:
 
-    ```typescript
-    creem({
-      apiKey: process.env.CREEM_API_KEY!,
-      webhookSecret: process.env.CREEM_WEBHOOK_SECRET,
-      testMode: true,
-    })
-    ```
+```bash
+ngrok http 3000
+```
 
-
-
-    ### Local Development (Optional)
-
-    For local testing, use a tool like [ngrok](https://ngrok.com) to expose your local server:
-
-    ```bash
-    ngrok http 3000
-    ```
-
-    Add the ngrok URL to your Creem webhook settings.
-
-
+Add the ngrok URL to your Creem webhook settings.
 
 ## Database Schema
 
@@ -336,11 +304,9 @@ if (data?.hasAccess) {
 }
 ```
 
-
 **Note:**
 
-  This function checks if the user has access for the current billing period. For example, if a user purchases a yearly plan and cancels after one month, they still have access until the year ends.
-
+This function checks if the user has access for the current billing period. For example, if a user purchases a yearly plan and cancels after one month, they still have access until the year ends.
 
 ### Transaction History
 
@@ -759,11 +725,9 @@ creem({
 })
 ```
 
-
 **Warning:**
 
-  In API mode, functions like `checkSubscriptionAccess` and `hasAccessGranted` have limited functionality and may require custom implementation using the Creem SDK directly.
-
+In API mode, functions like `checkSubscriptionAccess` and `hasAccessGranted` have limited functionality and may require custom implementation using the Creem SDK directly.
 
 ## Type Exports
 
@@ -858,7 +822,7 @@ To use these features, either enable database mode or implement custom logic usi
 
 * [Creem Documentation](https://docs.creem.io)
 * [Creem Dashboard](https://creem.io/dashboard)
-* [Shinauth Documentation](https://github.com/rlvtapp/shinauth)
+* [Shinauth Documentation](https://shinauth.com)
 * [Plugin GitHub Repository Additional Documentation](https://github.com/armitage-labs/creem-betterauth)
 
 ## Support

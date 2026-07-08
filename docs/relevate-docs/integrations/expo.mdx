@@ -4,225 +4,201 @@ title: "Expo Integration"
 
 Expo is a popular framework for building cross-platform apps with React Native. Shinauth supports both Expo native and web apps.
 
-
 **Note:**
 
-  This guide is written for **Expo SDK 55** (React Native 0.83, React 19.2). SDK 55 requires the [New Architecture](https://docs.expo.dev/guides/new-architecture/) — the Legacy Architecture is no longer supported. If you're upgrading from an older SDK, see the [Expo SDK 55 upgrade guide](https://expo.dev/blog/upgrading-to-sdk-55).
-
+This guide is written for **Expo SDK 55** (React Native 0.83, React 19.2). SDK 55 requires the [New Architecture](https://docs.expo.dev/guides/new-architecture/) — the Legacy Architecture is no longer supported. If you're upgrading from an older SDK, see the [Expo SDK 55 upgrade guide](https://expo.dev/blog/upgrading-to-sdk-55).
 
 ## Installation
 
+## Configure A Shinauth Backend
 
+Before using Shinauth with Expo, make sure you have a Shinauth backend set up. You can either use a separate server or leverage Expo's new [API Routes](https://docs.expo.dev/router/reference/api-routes) feature to host your Shinauth instance.
 
-    ## Configure A Shinauth Backend
+To get started, check out our [installation](/installation) guide for setting up Shinauth on your server. If you prefer, check out the [full example](https://github.com/shinauth/examples/tree/main/expo-example).
 
-    Before using Shinauth with Expo, make sure you have a Shinauth backend set up. You can either use a separate server or leverage Expo's new [API Routes](https://docs.expo.dev/router/reference/api-routes) feature to host your Shinauth instance.
+To use the new API routes feature in Expo to host your Shinauth instance you can create a new API route in your Expo app and mount the Shinauth handler.
 
-    To get started, check out our [installation](/installation) guide for setting up Shinauth on your server. If you prefer, check out the [full example](https://github.com/shinauth/examples/tree/main/expo-example).
+```ts title="app/api/auth/[...auth]+api.ts"
+import { auth } from "@/lib/auth"; // import Shinauth handler
 
-    To use the new API routes feature in Expo to host your Shinauth instance you can create a new API route in your Expo app and mount the Shinauth handler.
+const handler = auth.handler;
+export { handler as GET, handler as POST }; // export handler for both GET and POST requests
+```
 
-    ```ts title="app/api/auth/[...auth]+api.ts"
-    import { auth } from "@/lib/auth"; // import Shinauth handler
+## Install Server Dependencies
 
-    const handler = auth.handler;
-    export { handler as GET, handler as POST }; // export handler for both GET and POST requests
-    ```
+Install both the Shinauth package and Expo plugin into your server application.
 
-
-
-    ## Install Server Dependencies
-
-    Install both the Shinauth package and Expo plugin into your server application.
-
-    ```bash
-    shinauth @shinauth/expo
-    ```
-
+```bash
+shinauth @shinauth/expo
+```
 
 **Note:**
 
-      If you're using Expo's API Routes, you can follow the step below instead.
+If you're using Expo's API Routes, you can follow the step below instead.
 
+## Install Client Dependencies
 
+* You also need to install both the Shinauth package and Expo plugin into your Expo application.
 
+```bash
+shinauth @shinauth/expo
+```
 
-    ## Install Client Dependencies
+* And you need to install `expo-network` for network state detection.
 
-    * You also need to install both the Shinauth package and Expo plugin into your Expo application.
+```bash
+pnpm add expo-network
+```
 
-    ```bash
-    shinauth @shinauth/expo
-    ```
+* <small className="text-xs">(Optional)</small> If you're using the default Expo template, these dependencies are already included, so you can skip this step. Otherwise, if you plan to use our social providers (e.g. Google, Apple), your Expo app requires a few additional dependencies.
 
-    * And you need to install `expo-network` for network state detection.
+```bash
+expo-linking expo-web-browser expo-constants
 
-    ```bash
-    expo-network
-    ```
+```
 
-    * <small className="text-xs">(Optional)</small> If you're using the default Expo template, these dependencies are already included, so you can skip this step. Otherwise, if you plan to use our social providers (e.g. Google, Apple), your Expo app requires a few additional dependencies.
+## Add the Expo Plugin on Your Server
 
-    ```bash
-    expo-linking expo-web-browser expo-constants
+Add the Expo plugin to your Shinauth server.
 
-    ```
+```ts title="lib/auth.ts"
+import { shinAuth } from "shinauth";
+import { expo } from "@shinauth/expo";
 
+export const auth = shinAuth({
+    plugins: [expo()],
+    emailAndPassword: {
+        enabled: true, // Enable authentication using email and password.
+      },
+});
+```
 
+## Initialize Shinauth Client
 
-    ## Add the Expo Plugin on Your Server
+To initialize Shinauth in your Expo app, you need to call `createAuthClient` with the base URL of your Shinauth backend. Make sure to import the client from `/react`.
 
-    Add the Expo plugin to your Shinauth server.
+Make sure you install the `expo-secure-store` package into your Expo app. This is used to store the session data and cookies securely.
 
-    ```ts title="lib/auth.ts"
-    import { shinAuth } from "shinauth";
-    import { expo } from "@shinauth/expo";
+```bash
+pnpm add expo-secure-store
+```
 
-    export const auth = shinAuth({
-        plugins: [expo()],
-        emailAndPassword: {
-            enabled: true, // Enable authentication using email and password.
-          },
-    });
-    ```
+You need to also import client plugin from `@shinauth/expo/client` and pass it to the `plugins` array when initializing the auth client.
 
+This is important because:
 
+* **Social Authentication Support:** enables social auth flows by handling authorization URLs and callbacks within the Expo web browser.
+* **Secure Cookie Management:** stores cookies securely and automatically adds them to the headers of your auth requests.
 
-    ## Initialize Shinauth Client
+```ts title="lib/auth-client.ts"
+import { createAuthClient } from "shinauth/react";
+import { expoClient } from "@shinauth/expo/client";
+import * as SecureStore from "expo-secure-store";
 
-    To initialize Shinauth in your Expo app, you need to call `createAuthClient` with the base URL of your Shinauth backend. Make sure to import the client from `/react`.
-
-    Make sure you install the `expo-secure-store` package into your Expo app. This is used to store the session data and cookies securely.
-
-    ```bash
-    expo-secure-store
-    ```
-
-    You need to also import client plugin from `@shinauth/expo/client` and pass it to the `plugins` array when initializing the auth client.
-
-    This is important because:
-
-    * **Social Authentication Support:** enables social auth flows by handling authorization URLs and callbacks within the Expo web browser.
-    * **Secure Cookie Management:** stores cookies securely and automatically adds them to the headers of your auth requests.
-
-    ```ts title="lib/auth-client.ts"
-    import { createAuthClient } from "shinauth/react";
-    import { expoClient } from "@shinauth/expo/client";
-    import * as SecureStore from "expo-secure-store";
-
-    export const authClient = createAuthClient({
-        baseURL: "http://localhost:8081", // Base URL of your Shinauth backend.
-        plugins: [
-            expoClient({
-                scheme: "myapp",
-                storagePrefix: "myapp",
-                storage: SecureStore,
-            })
-        ]
-    });
-    ```
-
+export const authClient = createAuthClient({
+    baseURL: "http://localhost:8081", // Base URL of your Shinauth backend.
+    plugins: [
+        expoClient({
+            scheme: "myapp",
+            storagePrefix: "myapp",
+            storage: SecureStore,
+        })
+    ]
+});
+```
 
 **Note:**
 
-      Be sure to include the full URL, including the path, if you've changed the default path from `/api/auth`.
+Be sure to include the full URL, including the path, if you've changed the default path from `/api/auth`.
 
+## Scheme and Trusted Origins
 
+Shinauth uses deep links to redirect users back to your app after authentication. To enable this, you need to add your app's scheme to the `trustedOrigins` list in your Shinauth config.
 
+First, make sure you have a scheme defined in your `app.json` file.
 
-    ## Scheme and Trusted Origins
-
-    Shinauth uses deep links to redirect users back to your app after authentication. To enable this, you need to add your app's scheme to the `trustedOrigins` list in your Shinauth config.
-
-    First, make sure you have a scheme defined in your `app.json` file.
-
-    ```json title="app.json"
-    {
-        "expo": {
-            "scheme": "myapp"
-        }
+```json title="app.json"
+{
+    "expo": {
+        "scheme": "myapp"
     }
-    ```
+}
+```
 
-    Then, update your Shinauth config to include the scheme in the `trustedOrigins` list.
+Then, update your Shinauth config to include the scheme in the `trustedOrigins` list.
 
-    ```ts title="auth.ts"
-    export const auth = shinAuth({
-        trustedOrigins: ["myapp://"]
-    })
-    ```
+```ts title="auth.ts"
+export const auth = shinAuth({
+    trustedOrigins: ["myapp://"]
+})
+```
 
-    If you have multiple schemes or need to support deep linking with various paths, you can use specific patterns or wildcards:
+If you have multiple schemes or need to support deep linking with various paths, you can use specific patterns or wildcards:
 
-    ```ts title="auth.ts"
-    export const auth = shinAuth({
-        trustedOrigins: [
-            // Basic scheme
-            "myapp://",
+```ts title="auth.ts"
+export const auth = shinAuth({
+    trustedOrigins: [
+        // Basic scheme
+        "myapp://",
 
-            // Production & staging schemes
-            "myapp-prod://",
-            "myapp-staging://",
+        // Production & staging schemes
+        "myapp-prod://",
+        "myapp-staging://",
 
-            // Wildcard support for all paths following the scheme
-            "myapp://*"
-        ]
-    })
-    ```
+        // Wildcard support for all paths following the scheme
+        "myapp://*"
+    ]
+})
+```
 
-    ### Development Mode
+### Development Mode
 
-    During development, Expo uses the `exp://` scheme with your device's local IP address. To support this, you can use wildcards to match common local IP ranges:
+During development, Expo uses the `exp://` scheme with your device's local IP address. To support this, you can use wildcards to match common local IP ranges:
 
-    ```ts title="auth.ts"
-    export const auth = shinAuth({
-        trustedOrigins: [
-            "myapp://",
+```ts title="auth.ts"
+export const auth = shinAuth({
+    trustedOrigins: [
+        "myapp://",
 
-            // Development mode - Expo's exp:// scheme with local IP ranges
-            ...(process.env.NODE_ENV === "development" ? [
-                "exp://",                      // Trust all Expo URLs (prefix matching)
-                "exp://**",                    // Trust all Expo URLs (wildcard matching)
-                "exp://192.168.*.*:*/**",      // Trust 192.168.x.x IP range with any port and path
-            ] : [])
-        ]
-    })
-    ```
+        // Development mode - Expo's exp:// scheme with local IP ranges
+        ...(process.env.NODE_ENV === "development" ? [
+            "exp://",                      // Trust any host of the exp:// scheme
+            "exp://**",                    // Trust all Expo URLs (wildcard matching)
+            "exp://192.168.*.*:*/**",      // Trust 192.168.x.x IP range with any port and path
+        ] : [])
+    ]
+})
+```
 
-    For more information about trusted origins, see the [trusted origins documentation](/reference/options#trustedorigins).
-
+For more information about trusted origins, see the [trusted origins documentation](/reference/options#trustedorigins).
 
 **Warning:**
 
-      The wildcard patterns for `exp://` should only be used in development. In production, use your app's specific scheme (e.g., `myapp://`).
+The wildcard patterns for `exp://` should only be used in development. In production, use your app's specific scheme (e.g., `myapp://`).
 
+## Configure Metro Bundler
 
+Shinauth relies on `package.json` exports to resolve its modules. Starting with **Expo SDK 53+** (including SDK 55), package exports support is enabled by default in Metro, so **no extra Metro configuration is needed**.
 
+If you have a custom `metro.config.js`, make sure you're not disabling package exports:
 
-    ## Configure Metro Bundler
+```js title="metro.config.js"
+const { getDefaultConfig } = require("expo/metro-config");
 
-    Shinauth relies on `package.json` exports to resolve its modules. Starting with **Expo SDK 53+** (including SDK 55), package exports support is enabled by default in Metro, so **no extra Metro configuration is needed**.
+const config = getDefaultConfig(__dirname);
 
-    If you have a custom `metro.config.js`, make sure you're not disabling package exports:
+// Do NOT set this to false — Shinauth requires package exports
+// config.resolver.unstable_enablePackageExports = false;
 
-    ```js title="metro.config.js"
-    const { getDefaultConfig } = require("expo/metro-config");
+module.exports = config;
+```
 
-    const config = getDefaultConfig(__dirname);
+Don't forget to clear the cache after making changes to your Metro config.
 
-    // Do NOT set this to false — Shinauth requires package exports
-    // config.resolver.unstable_enablePackageExports = false;
-
-    module.exports = config;
-    ```
-
-    Don't forget to clear the cache after making changes to your Metro config.
-
-    ```bash
-    npx expo start --clear
-    ```
-
-
+```bash
+npx expo start --clear
+```
 
 ## Usage
 
@@ -230,90 +206,84 @@ Expo is a popular framework for building cross-platform apps with React Native. 
 
 With Shinauth initialized, you can now use the `authClient` to authenticate users in your Expo app.
 
-
-
 #### sign-in
 
-    ```tsx title="app/sign-in.tsx"
-    import { useState } from "react";
-    import { View, TextInput, Button } from "react-native";
-    import { authClient } from "@/lib/auth-client";
+```tsx title="app/sign-in.tsx"
+import { useState } from "react";
+import { View, TextInput, Button } from "react-native";
+import { authClient } from "@/lib/auth-client";
 
-    export default function SignIn() {
-        const [email, setEmail] = useState("");
-        const [password, setPassword] = useState("");
+export default function SignIn() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-        const handleLogin = async () => {
-            await authClient.signIn.email({
-                email,
-                password,
-            })
-        };
+    const handleLogin = async () => {
+        await authClient.signIn.email({
+            email,
+            password,
+        })
+    };
 
-        return (
-            <View>
-                <TextInput
-                    placeholder="Email"
-                    value={email}
-                    onChangeText={setEmail}
-                />
-                <TextInput
-                    placeholder="Password"
-                    value={password}
-                    onChangeText={setPassword}
-                />
-                <Button title="Login" onPress={handleLogin} />
-            </View>
-        );
-    }
-    ```
-
-
+    return (
+        <View>
+            <TextInput
+                placeholder="Email"
+                value={email}
+                onChangeText={setEmail}
+            />
+            <TextInput
+                placeholder="Password"
+                value={password}
+                onChangeText={setPassword}
+            />
+            <Button title="Login" onPress={handleLogin} />
+        </View>
+    );
+}
+```
 
 #### sign-up
 
-    ```tsx title="app/sign-up.tsx"
-    import { useState } from "react";
-    import { View, TextInput, Button } from "react-native";
-    import { authClient } from "@/lib/auth-client";
+```tsx title="app/sign-up.tsx"
+import { useState } from "react";
+import { View, TextInput, Button } from "react-native";
+import { authClient } from "@/lib/auth-client";
 
-    export default function SignUp() {
-        const [email, setEmail] = useState("");
-        const [name, setName] = useState("");
-        const [password, setPassword] = useState("");
+export default function SignUp() {
+    const [email, setEmail] = useState("");
+    const [name, setName] = useState("");
+    const [password, setPassword] = useState("");
 
-        const handleLogin = async () => {
-            await authClient.signUp.email({
-                    email,
-                    password,
-                    name
-            })
-        };
+    const handleLogin = async () => {
+        await authClient.signUp.email({
+                email,
+                password,
+                name
+        })
+    };
 
-        return (
-            <View>
-                <TextInput
-                    placeholder="Name"
-                    value={name}
-                    onChangeText={setName}
-                />
-                <TextInput
-                    placeholder="Email"
-                    value={email}
-                    onChangeText={setEmail}
-                />
-                <TextInput
-                    placeholder="Password"
-                    value={password}
-                    onChangeText={setPassword}
-                />
-                <Button title="Login" onPress={handleLogin} />
-            </View>
-        );
-    }
-    ```
-
-
+    return (
+        <View>
+            <TextInput
+                placeholder="Name"
+                value={name}
+                onChangeText={setName}
+            />
+            <TextInput
+                placeholder="Email"
+                value={email}
+                onChangeText={setEmail}
+            />
+            <TextInput
+                placeholder="Password"
+                value={password}
+                onChangeText={setPassword}
+            />
+            <Button title="Login" onPress={handleLogin} />
+        </View>
+    );
+}
+```
 
 #### Social Sign-In
 
@@ -340,11 +310,9 @@ export default function SocialSignIn() {
 }
 ```
 
-
 **Note:**
 
-  On native (iOS/Android), `signIn.social` does not navigate automatically. Handle navigation yourself after it resolves. Note that the [underlying browser behavior differs by platform](https://docs.expo.dev/versions/latest/sdk/webbrowser/#webbrowseropenauthsessionasyncurl-redirecturl-options).
-
+On native (iOS/Android), `signIn.social` does not navigate automatically. Handle navigation yourself after it resolves. Note that the [underlying browser behavior differs by platform](https://docs.expo.dev/versions/latest/sdk/webbrowser/#webbrowseropenauthsessionasyncurl-redirecturl-options).
 
 #### IdToken Sign-In
 
@@ -368,52 +336,48 @@ export default function SocialSignIn() {
 }
 ```
 
+This example shows how to implement Google Sign-In using an idToken. No additional configuration is needed in Shinauth. However, since this approach uses native code, you'll need to configure Expo to obtain the idToken.
 
+Follow the [Expo Google authentication guide](https://docs.expo.dev/guides/google-authentication/) to set up `@react-native-google-signin/google-signin`, then pass the idToken to Shinauth:
 
-    This example shows how to implement Google Sign-In using an idToken. No additional configuration is needed in Shinauth. However, since this approach uses native code, you'll need to configure Expo to obtain the idToken.
+```tsx title="app/sign-in.tsx"
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  isSuccessResponse,
+} from "@react-native-google-signin/google-signin";
+import { View } from "react-native";
+import { router } from "expo-router";
+import { authClient } from "@/lib/auth-client";
 
-    Follow the [Expo Google authentication guide](https://docs.expo.dev/guides/google-authentication/) to set up `@react-native-google-signin/google-signin`, then pass the idToken to Shinauth:
+GoogleSignin.configure({
+  webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
+  iosClientId: process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID,
+});
 
-    ```tsx title="app/sign-in.tsx"
-    import {
-      GoogleSignin,
-      GoogleSigninButton,
-      isSuccessResponse,
-    } from "@react-native-google-signin/google-signin";
-    import { View } from "react-native";
-    import { router } from "expo-router";
-    import { authClient } from "@/lib/auth-client";
+export default function GoogleSignIn() {
+  const handleGoogle = async () => {
+    await GoogleSignin.hasPlayServices();
+    const response = await GoogleSignin.signIn();
 
-    GoogleSignin.configure({
-      webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
-      iosClientId: process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID,
-    });
-
-    export default function GoogleSignIn() {
-      const handleGoogle = async () => {
-        await GoogleSignin.hasPlayServices();
-        const response = await GoogleSignin.signIn();
-
-        if (isSuccessResponse(response) && response.data.idToken) {
-          const { error } = await authClient.signIn.social({
-            provider: "google",
-            idToken: { token: response.data.idToken },
-          });
-          if (!error) {
-            router.replace("/dashboard");
-          }
-        }
-      };
-
-      return (
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-          <GoogleSigninButton onPress={handleGoogle} />
-        </View>
-      );
+    if (isSuccessResponse(response) && response.data.idToken) {
+      const { error } = await authClient.signIn.social({
+        provider: "google",
+        idToken: { token: response.data.idToken },
+      });
+      if (!error) {
+        router.replace("/dashboard");
+      }
     }
-    ```
+  };
 
-
+  return (
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <GoogleSigninButton onPress={handleGoogle} />
+    </View>
+  );
+}
+```
 
 ### Session
 
@@ -582,11 +546,9 @@ const authClient = createAuthClient({
 });
 ```
 
-
 **Note:**
 
-  **Important:** If you're using plugins like passkey with a custom `webAuthnChallengeCookie` option, make sure to include the cookie prefix in the `cookiePrefix` array. For example, if you set `webAuthnChallengeCookie: "my-app-passkey"`, include `"my-app"` in your `cookiePrefix`. See the [Passkey plugin documentation](/plugins/passkey#expo-integration) for more details.
-
+**Important:** If you're using plugins like passkey with a custom `webAuthnChallengeCookie` option, make sure to include the cookie prefix in the `cookiePrefix` array. For example, if you set `webAuthnChallengeCookie: "my-app-passkey"`, include `"my-app"` in your `cookiePrefix`. See the [Passkey plugin documentation](/plugins/passkey#expo-integration) for more details.
 
 ### Expo Servers
 

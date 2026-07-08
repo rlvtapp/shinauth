@@ -2,7 +2,7 @@
 title: "Options"
 ---
 
-List of all the available options for configuring Shinauth. See [Shinauth Options](https://github.com/shinauth/shinauth/blob/main/packages/core/src/types/init-options.ts).
+List of all the available options for configuring Shinauth. See [Shinauth Options](https://github.com/rlvtapp/shinauth/blob/main/packages/core/src/types/init-options.ts).
 
 ## `appName`
 
@@ -35,11 +35,9 @@ export const auth = shinAuth({
 
 If not explicitly set, the system will check for the environment variable `BETTER_AUTH_URL`. If that's also not set, it will be inferred from the incoming request.
 
-
 **Warning:**
 
-  Relying on request inference is not recommended. For security and stability, always set `baseURL` explicitly in your config or via the `BETTER_AUTH_URL` environment variable.
-
+Relying on request inference is not recommended. For security and stability, always set `baseURL` explicitly in your config or via the `BETTER_AUTH_URL` environment variable.
 
 ### Dynamic Base URL
 
@@ -65,11 +63,9 @@ export const auth = shinAuth({
 * `protocol`: Protocol for URL construction. `"http"`, `"https"`, or `"auto"` (default). `"auto"` derives from `x-forwarded-proto`, then request URL, then defaults to HTTPS. Also affects the cookie `Secure` flag: `"https"` → secure, `"http"` → not secure, `"auto"` or unset → `NODE_ENV === "production"`. Override with `advanced.useSecureCookies`
 * `fallback`: URL to use when the incoming host does not match. Without it, unknown hosts throw. Its origin is also added to `trustedOrigins`
 
-
 **Warning:**
 
-  Use `fallback` carefully. It can hide deployment or proxy misconfiguration that would otherwise fail loudly.
-
+Use `fallback` carefully. It can hide deployment or proxy misconfiguration that would otherwise fail loudly.
 
 When `crossSubDomainCookies` is enabled, the cookie domain is derived from the resolved request host unless you set `domain` explicitly.
 
@@ -120,11 +116,9 @@ export const auth = shinAuth({
 })
 ```
 
-
 **Note:**
 
-  The `request` parameter is `undefined` during initialization and when calling `auth.api` directly. Make sure to handle this case by returning default trusted origins.
-
+The `request` parameter is `undefined` during initialization and when calling `auth.api` directly. Make sure to handle this case by returning default trusted origins.
 
 ### Wildcard Support
 
@@ -157,15 +151,13 @@ export const auth = shinAuth({
 | `exp://192.168.*.*:*/**` | `exp://192.168.1.100:8081/path`<br />`exp://192.168.50.200:19000/auth/callback`          | `exp://10.0.0.29:8081/path`                         |
 | `myapp://`               | All URLs starting with `myapp://`                                                        | -                                                   |
 
-
 **Note:**
 
-  **Notes**
+**Notes**
 
-  * For `http://` and `https://` URLs, patterns match the full origin. Paths and query strings are ignored.
-  * For custom schemes (like `exp://` or `myapp://`), patterns match against the full URL including paths when wildcards are present, or use prefix matching when no wildcards exist.
-  * The separator is `/` (forward slash). This means `http://*.example.com` matches both `http://api.example.com` and `http://api.app.example.com`.
-
+* For `http://` and `https://` URLs, patterns match the full origin. Paths and query strings are ignored.
+* For custom schemes (like `exp://` or `myapp://`), wildcard patterns match against the full URL including paths. A non-wildcard pattern matches by scheme and authority: a host-less entry such as `myapp://` or `exp://` trusts every host of that scheme, while a host-bearing entry such as `myapp://callback` must match that host exactly (so it is not satisfied by `myapp://callback.attacker.tld`).
+* The separator is `/` (forward slash). This means `http://*.example.com` matches both `http://api.example.com` and `http://api.app.example.com`.
 
 ## `secret`
 
@@ -354,6 +346,7 @@ export const auth = shinAuth({
 * `disableSignUp`: Disable sign up for new users (optional)
 * `disableImplicitSignUp`: Disable implicit sign up for new users (optional)
 * `overrideUserInfoOnSignIn`: Override user info with provider user info on sign in (optional)
+* `requireEmailVerification`: Require this provider's email to be verified before a session is created. Opt-in per provider and independent of `emailAndPassword.requireEmailVerification`. Only enable it for providers that report a trustworthy `email_verified` signal (optional)
 * `prompt`: The prompt to use for the authorization code request (`"select_account"`, `"consent"`, `"login"`, `"none"`, `"select_account consent"`) (optional)
 * `responseMode`: The response mode to use (`"query"`, `"form_post"`) (optional)
 * `getUserInfo`: Custom function to get user info from the provider (optional)
@@ -453,9 +446,13 @@ export const auth = shinAuth({
 		preserveSessionInDatabase: false, // Preserve session records in database when deleted from secondary storage (default: `false`)
 		cookieCache: {
 			enabled: true, // Enable caching session in cookie (default: `false`)
-			maxAge: 300 // 5 minutes
-		}
-	},
+				maxAge: 300, // 5 minutes
+				strategy: "jwt",
+				jwt: {
+					signingKey: "jwt-plugin" // or "secret" (default for JWT strategy)
+				}
+			}
+		},
 })
 ```
 
@@ -467,6 +464,7 @@ export const auth = shinAuth({
 * `storeSessionInDatabase`: Store session in database when secondary storage is provided (default: `false`)
 * `preserveSessionInDatabase`: Preserve session records in database when deleted from secondary storage (default: `false`)
 * `cookieCache`: Enable caching session in cookie
+* `cookieCache.jwt.signingKey`: For `strategy: "jwt"`, choose `"secret"` (HS256, default) or `"jwt-plugin"` (asymmetric JWTs backed by the `jwt()` plugin)
 
 ## `account`
 
@@ -679,7 +677,7 @@ export const auth = shinAuth({
 
 Set custom strategies for ID generation and findMany queries.
 
-* `generateId`: Controls how record IDs are generated. Accepts a custom function, `false`, `"serial"`, or `"uuid"` (default: [random base62 string](https://github.com/shinauth/shinauth/blob/main/packages/core/src/utils/id.ts)). See the [Database documentation](/concepts/database#id-generation) for more info.
+* `generateId`: Controls how record IDs are generated. Accepts a custom function, `false`, `"serial"`, or `"uuid"` (default: [random base62 string](https://github.com/rlvtapp/shinauth/blob/main/packages/core/src/utils/id.ts)). See the [Database documentation](/concepts/database#id-generation) for more info.
 * `defaultFindManyLimit`: The default maximum number of records returned by the `findMany` adapter method. (default: `100`)
 
 ```ts
@@ -701,50 +699,43 @@ Configure background task handling for deferred operations. Background tasks all
 
 Some examples are: `waitUntil` from `@vercel/functions` on Vercel, or `ctx.waitUntil` on Cloudflare Workers. See the examples below for more details.
 
-
 **Warning:**
 
-  Enabling this introduces eventual consistency where the response returns optimistic data before the database is updated. Only enable if your application can tolerate this trade-off for improved latency.
-
-
+Enabling this introduces eventual consistency where the response returns optimistic data before the database is updated. Only enable if your application can tolerate this trade-off for improved latency.
 
 #### Vercel
 
-    ```ts
-    import { shinAuth } from "shinauth";
-    import { waitUntil } from "@vercel/functions";
+```ts
+import { shinAuth } from "shinauth";
+import { waitUntil } from "@vercel/functions";
 
-    export const auth = shinAuth({
-      advanced: {
-        backgroundTasks: {
-          handler: waitUntil,
-        },
-      },
-    });
-    ```
-
-
+export const auth = shinAuth({
+  advanced: {
+    backgroundTasks: {
+      handler: waitUntil,
+    },
+  },
+});
+```
 
 #### Cloudflare Workers
 
-    ```ts
-    import { shinAuth } from "shinauth";
-    import { AsyncLocalStorage } from "node:async_hooks";
+```ts
+import { shinAuth } from "shinauth";
+import { AsyncLocalStorage } from "node:async_hooks";
 
-    const execCtxStorage = new AsyncLocalStorage<ExecutionContext>();
+const execCtxStorage = new AsyncLocalStorage<ExecutionContext>();
 
-    export const auth = shinAuth({
-      advanced: {
-        backgroundTasks: {
-          handler: (p) => execCtxStorage.getStore()?.waitUntil(p),
-        },
-      },
-    });
+export const auth = shinAuth({
+  advanced: {
+    backgroundTasks: {
+      handler: (p) => execCtxStorage.getStore()?.waitUntil(p),
+    },
+  },
+});
 
-    // In your request handler, wrap with execCtxStorage.run(ctx, ...)
-    ```
-
-
+// In your request handler, wrap with execCtxStorage.run(ctx, ...)
+```
 
 ## `logger`
 

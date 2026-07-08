@@ -7,55 +7,51 @@ provides a simple way to integrate One Tap into your application, handling the c
 
 ## Installation
 
+### Add the Server Plugin
 
+Add the One Tap plugin to your auth configuration:
 
-    ### Add the Server Plugin
+```ts title="auth.ts"
+import { shinAuth } from "shinauth";
+import { oneTap } from "shinauth/plugins";
 
-    Add the One Tap plugin to your auth configuration:
+export const auth = shinAuth({
+    plugins: [
+        oneTap({
+          clientId: process.env.GOOGLE_CLIENT_ID as string,
+        }),
+    ]
+});
+```
 
-    ```ts title="auth.ts"
-    import { shinAuth } from "shinauth";
-    import { oneTap } from "shinauth/plugins";
+### Add the Client Plugin
 
-    export const auth = shinAuth({
-        plugins: [
-            oneTap(), // Add the One Tap server plugin
-        ]
-    });
-    ```
+Add the client plugin and specify where the user should be redirected after sign-in or if additional verification (like 2FA) is needed.
 
+```ts
+import { createAuthClient } from "shinauth/client";
+import { oneTapClient } from "shinauth/client/plugins";
 
-
-    ### Add the Client Plugin
-
-    Add the client plugin and specify where the user should be redirected after sign-in or if additional verification (like 2FA) is needed.
-
-    ```ts
-    import { createAuthClient } from "shinauth/client";
-    import { oneTapClient } from "shinauth/client/plugins";
-
-    export const authClient = createAuthClient({
-      plugins: [
-        oneTapClient({
-          clientId: "YOUR_CLIENT_ID",
-          // Optional client configuration:
-          autoSelect: false,
-          cancelOnTapOutside: true,
-          context: "signin",
-          additionalOptions: {
-            // Any extra options for the Google initialize method
-          },
-          // Configure prompt behavior and exponential backoff:
-          promptOptions: {
-            baseDelay: 1000,   // Base delay in ms (default: 1000)
-            maxAttempts: 5     // Maximum number of attempts before triggering onPromptNotification (default: 5)
-          }
-        })
-      ]
-    });
-    ```
-
-
+export const authClient = createAuthClient({
+  plugins: [
+    oneTapClient({
+      clientId: "YOUR_CLIENT_ID",
+      // Optional client configuration:
+      autoSelect: false,
+      cancelOnTapOutside: true,
+      context: "signin",
+      additionalOptions: {
+        // Any extra options for the Google initialize method
+      },
+      // Configure prompt behavior and exponential backoff:
+      promptOptions: {
+        baseDelay: 1000,   // Base delay in ms (default: 1000)
+        maxAttempts: 5     // Maximum number of attempts before triggering onPromptNotification (default: 5)
+      }
+    })
+  ]
+});
+```
 
 ### Usage
 
@@ -73,57 +69,51 @@ await authClient.oneTap();
 
 To render a "Sign In with Google" button instead of showing the automatic prompt, use the `button` option:
 
-
-
 #### Vanilla JS
 
-    ```tsx
-    // In your component
-    <div id="google-signin-button"></div>
+```tsx
+// In your component
+<div id="google-signin-button"></div>
 
-    // Call oneTap with button configuration
-    await authClient.oneTap({
-      button: {
-        container: "#google-signin-button", // CSS selector or HTMLElement
-        config: {
-          theme: "outline",
-          size: "large",
-          type: "standard",
-          text: "signin_with"
-        }
-      }
-    });
-    ```
-
-
+// Call oneTap with button configuration
+await authClient.oneTap({
+  button: {
+    container: "#google-signin-button", // CSS selector or HTMLElement
+    config: {
+      theme: "outline",
+      size: "large",
+      type: "standard",
+      text: "signin_with"
+    }
+  }
+});
+```
 
 #### React Ref
 
-    ```tsx
-    import { useEffect, useRef } from "react";
+```tsx
+import { useEffect, useRef } from "react";
 
-    function SignInButton() {
-      const buttonRef = useRef<HTMLDivElement>(null);
+function SignInButton() {
+  const buttonRef = useRef<HTMLDivElement>(null);
 
-      useEffect(() => {
-        if (buttonRef.current) {
-          authClient.oneTap({
-            button: {
-              container: buttonRef.current,
-              config: {
-                theme: "filled_blue",
-                size: "large"
-              }
-            }
-          });
+  useEffect(() => {
+    if (buttonRef.current) {
+      authClient.oneTap({
+        button: {
+          container: buttonRef.current,
+          config: {
+            theme: "filled_blue",
+            size: "large"
+          }
         }
-      }, []);
-
-      return <div ref={buttonRef}></div>;
+      });
     }
-    ```
+  }, []);
 
-
+  return <div ref={buttonRef}></div>;
+}
+```
 
 ### Customizing Redirect Behavior
 
@@ -206,25 +196,23 @@ When using button mode, pass a `button` object to the `oneTap` action with the f
 ### Server Options
 
 * `disableSignUp`: Disable the sign-up option, allowing only existing users to sign in. Default is false.
-* `clientId`: Optionally, pass a client ID here if it is not provided in your social provider configuration.
-
+* `clientId`: Google client ID for ID token audience verification. Required unless `socialProviders.google.clientId` is configured.
 
 **Note:**
 
-  **Restricting to a Google Workspace domain (`hd`)**
+**Restricting to a Google Workspace domain (`hd`)**
 
-  The One Tap callback applies the hosted-domain restriction from
-  `socialProviders.google.hd`, matching the standard Google sign-in flow:
-  when `hd` is set to a domain, a token whose `hd` claim is missing or does
-  not match is rejected. Set `hd: "*"` to allow any Google Workspace hosted
-  domain while still rejecting tokens with no `hd` claim.
+The One Tap callback applies the hosted-domain restriction from
+`socialProviders.google.hd`, matching the standard Google sign-in flow:
+when `hd` is set to a domain, a token whose `hd` claim is missing or does
+not match is rejected. Set `hd: "*"` to allow any Google Workspace hosted
+domain while still rejecting tokens with no `hd` claim.
 
-  This value is read from `socialProviders.google`, so the restriction only
-  applies when you configure the Google provider. If you set up One Tap with
-  only `oneTap({ clientId })` and no `socialProviders.google`, no
-  hosted-domain restriction is applied. To restrict One Tap sign-in to a
-  Workspace domain, configure `socialProviders.google` with `hd`.
-
+This value is read from `socialProviders.google`, so the restriction only
+applies when you configure the Google provider. If you set up One Tap with
+only `oneTap({ clientId })` and no `socialProviders.google`, no
+hosted-domain restriction is applied. To restrict One Tap sign-in to a
+Workspace domain, configure `socialProviders.google` with `hd`.
 
 ### Authorized JavaScript origins
 

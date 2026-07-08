@@ -35,21 +35,17 @@ A custom function to generate the API key.
 
 Customize the starting characters configuration.
 
+`shouldStore` <span className="opacity-70">`boolean`</span>
 
+Whether to store the starting characters in the database.
+If false, we will set `start` to `null`.
+Default is `true`.
 
-    `shouldStore` <span className="opacity-70">`boolean`</span>
+`charactersLength` <span className="opacity-70">`number`</span>
 
-    Whether to store the starting characters in the database.
-    If false, we will set `start` to `null`.
-    Default is `true`.
-
-    `charactersLength` <span className="opacity-70">`number`</span>
-
-    The length of the starting characters to store in the database.
-    This includes the prefix length.
-    Default is `6`.
-
-
+The length of the starting characters to store in the database.
+This includes the prefix length.
+Default is `6`.
 
 `defaultKeyLength` <span className="opacity-70">`number`</span>
 
@@ -89,53 +85,45 @@ Whether to enable metadata for an API key.
 
 Customize the key expiration.
 
+`defaultExpiresIn` <span className="opacity-70">`number | null`</span>
 
+The default expires time in milliseconds.
+If `null`, then there will be no expiration time.
+Default is `null`.
 
-    `defaultExpiresIn` <span className="opacity-70">`number | null`</span>
+`disableCustomExpiresTime` <span className="opacity-70">`boolean`</span>
 
-    The default expires time in milliseconds.
-    If `null`, then there will be no expiration time.
-    Default is `null`.
+Whether to disable the expires time passed from the client.
+If `true`, the expires time will be based on the default values.
+Default is `false`.
 
-    `disableCustomExpiresTime` <span className="opacity-70">`boolean`</span>
+`minExpiresIn` <span className="opacity-70">`number`</span>
 
-    Whether to disable the expires time passed from the client.
-    If `true`, the expires time will be based on the default values.
-    Default is `false`.
+The minimum expiresIn value allowed to be set from the client. in days.
+Default is `1`.
 
-    `minExpiresIn` <span className="opacity-70">`number`</span>
+`maxExpiresIn` <span className="opacity-70">`number`</span>
 
-    The minimum expiresIn value allowed to be set from the client. in days.
-    Default is `1`.
-
-    `maxExpiresIn` <span className="opacity-70">`number`</span>
-
-    The maximum expiresIn value allowed to be set from the client. in days.
-    Default is `365`.
-
-
+The maximum expiresIn value allowed to be set from the client. in days.
+Default is `365`.
 
 `rateLimit` <span className="opacity-70">`{ enabled?: boolean; timeWindow?: number; maxRequests?: number; }`</span>
 
 Customize the rate-limiting.
 
+`enabled` <span className="opacity-70">`boolean`</span>
 
+Whether to enable rate limiting. (Default true)
 
-    `enabled` <span className="opacity-70">`boolean`</span>
+`timeWindow` <span className="opacity-70">`number`</span>
 
-    Whether to enable rate limiting. (Default true)
+The duration in milliseconds where each request is counted.
+Once the `maxRequests` is reached, the request will be rejected until the `timeWindow` has passed, at which point the `timeWindow` will be reset.
 
-    `timeWindow` <span className="opacity-70">`number`</span>
+`maxRequests` <span className="opacity-70">`number`</span>
 
-    The duration in milliseconds where each request is counted.
-    Once the `maxRequests` is reached, the request will be rejected until the `timeWindow` has passed, at which point the `timeWindow` will be reset.
-
-    `maxRequests` <span className="opacity-70">`number`</span>
-
-    Maximum amount of requests allowed within a window.
-    Once the `maxRequests` is reached, the request will be rejected until the `timeWindow` has passed, at which point the `timeWindow` will be reset.
-
-
+Maximum amount of requests allowed within a window.
+Once the `maxRequests` is reached, the request will be rejected until the `timeWindow` has passed, at which point the `timeWindow` will be reset.
 
 `schema` <span className="opacity-70">`InferOptionSchema<ReturnType<typeof apiKeySchema>>`</span>
 
@@ -157,17 +145,15 @@ Storage backend for API keys. Default is `"database"`.
 When `storage` is `"secondary-storage"`, enable fallback to database if key is not found in secondary storage.
 Default is `false`.
 
-
 **Note:**
 
-  When `storage` is set to `"secondary-storage"`, you must configure `secondaryStorage` in your Shinauth options. API keys will be stored using key-value patterns:
+When `storage` is set to `"secondary-storage"`, you must configure `secondaryStorage` in your Shinauth options. API keys will be stored using key-value patterns:
 
-  * `api-key:${hashedKey}` - Primary lookup by hashed key
-  * `api-key:by-id:${id}` - Lookup by ID
-  * `api-key:by-ref:${referenceId}` - Reference's API key list (user or organization)
+* `api-key:${hashedKey}` - Primary lookup by hashed key
+* `api-key:by-id:${id}` - Lookup by ID
+* `api-key:by-ref:${referenceId}` - Reference's API key list (user or organization)
 
-  If an API key has an expiration date (`expiresAt`), a TTL will be automatically set in secondary storage to ensure automatic cleanup.
-
+If an API key has an expiration date (`expiresAt`), a TTL will be automatically set in secondary storage to ensure automatic cleanup.
 
 ```ts title="auth.ts"
 import { shinAuth } from "shinauth";
@@ -194,11 +180,11 @@ export const auth = shinAuth({
 });
 ```
 
-`customStorage` <span className="opacity-70">`{ get: (key: string) => Promise<unknown> | unknown; set: (key: string, value: string, ttl?: number) => Promise<void | null | unknown> | void; delete: (key: string) => Promise<void | null | string> | void; }`</span>
+`customStorage` <span className="opacity-70">`SecondaryStorage`</span>
 
-Custom storage methods for API keys. If provided, these methods will be used instead of `ctx.context.secondaryStorage`. Custom methods take precedence over global secondary storage.
+Custom secondary storage for API keys. If provided, it is used instead of `ctx.context.secondaryStorage`. Custom storage takes precedence over global secondary storage.
 
-Useful when you want to use a different storage backend specifically for API keys, or when you need custom logic for storage operations.
+Useful when you want to use a different storage backend specifically for API keys, or when you need custom logic for storage operations. It must implement the full secondary-storage contract, including `getAndDelete` and `increment`.
 
 ```ts title="auth.ts"
 import { shinAuth } from "shinauth";
@@ -210,6 +196,8 @@ export const auth = shinAuth({
       storage: "secondary-storage",
       customStorage: {
         get: async (key) => await customStorage.get(key),
+        getAndDelete: async (key) => await customStorage.getAndDelete(key),
+        increment: async (key, ttl) => await customStorage.increment(key, ttl),
         set: async (key, value, ttl) => await customStorage.set(key, value, ttl),
         delete: async (key) => await customStorage.delete(key),
       },
@@ -224,58 +212,51 @@ Defer non-critical updates (rate limiting counters, timestamps, remaining count)
 
 Requires `backgroundTasks.handler` to be configured in the main auth options.
 
-
 **Warning:**
 
-  Enabling this introduces eventual consistency where the response returns optimistic data before the database is updated. Only enable if your application can tolerate this trade-off for improved latency.
-
-
+Enabling this introduces eventual consistency where the response returns optimistic data before the database is updated. Only enable if your application can tolerate this trade-off for improved latency.
 
 #### Vercel
 
-    ```ts
-    import { waitUntil } from "@vercel/functions";
+```ts
+import { waitUntil } from "@vercel/functions";
 
-    export const auth = shinAuth({
-      advanced: {
-          backgroundTasks: {
-             handler: waitUntil,
-          },
-      }
-      plugins: [
-        apiKey({
-          deferUpdates: true,
-        }),
-      ],
-    });
-    ```
-
-
+export const auth = shinAuth({
+  advanced: {
+      backgroundTasks: {
+         handler: waitUntil,
+      },
+  }
+  plugins: [
+    apiKey({
+      deferUpdates: true,
+    }),
+  ],
+});
+```
 
 #### Cloudflare Workers
 
-    ```ts
-    import { AsyncLocalStorage } from "node:async_hooks";
+```ts
+import { AsyncLocalStorage } from "node:async_hooks";
 
-    const execCtxStorage = new AsyncLocalStorage<ExecutionContext>();
+const execCtxStorage = new AsyncLocalStorage<ExecutionContext>();
 
-    export const auth = shinAuth({
-      advanced: {
-          backgroundTasks: {
-             handler: waitUntil,
-          },
-      }
-      plugins: [
-        apiKey({
-          deferUpdates: true,
-        }),
-      ],
-    });
+export const auth = shinAuth({
+  advanced: {
+      backgroundTasks: {
+         handler: waitUntil,
+      },
+  }
+  plugins: [
+    apiKey({
+      deferUpdates: true,
+    }),
+  ],
+});
 
-    // In your request handler, wrap with execCtxStorage.run(ctx, ...)
-    ```
-
-
+// In your request handler, wrap with execCtxStorage.run(ctx, ...)
+```
 
 `permissions` <span className="opacity-70">`{ defaultPermissions?: Statements | ((referenceId: string, ctx: GenericEndpointContext) => Statements | Promise<Statements>) }`</span>
 
@@ -283,24 +264,18 @@ Permissions for the API key.
 
 Read more about permissions [below](#permissions).
 
+`defaultPermissions` <span className="opacity-70">`Statements | ((referenceId: string, ctx: GenericEndpointContext) => Statements | Promise<Statements>)`</span>
 
-
-    `defaultPermissions` <span className="opacity-70">`Statements | ((referenceId: string, ctx: GenericEndpointContext) => Statements | Promise<Statements>)`</span>
-
-    The default permissions for the API key. The `referenceId` is either the user ID or organization ID depending on the `references` setting.
-
-
+The default permissions for the API key. The `referenceId` is either the user ID or organization ID depending on the `references` setting.
 
 `disableKeyHashing` <span className="opacity-70">`boolean`</span>
 
 Disable hashing of the API key.
 
-
 **Warning:**
 
-  Security Warning: It's strongly recommended to not disable hashing.
-  Storing API keys in plaintext makes them vulnerable to database breaches, potentially exposing all your users' API keys.
-
+Security Warning: It's strongly recommended to not disable hashing.
+Storing API keys in plaintext makes them vulnerable to database breaches, potentially exposing all your users' API keys.
 
 ***
 
@@ -438,9 +413,7 @@ When verifying an API key, all required permissions must be present in the API k
 
 Table: `apikey`
 
-
 See the generated schema for the complete table definition.
-
 
 ### Migration from Previous Versions
 
@@ -463,7 +436,6 @@ CREATE INDEX idx_apikey_config_id ON apikey(config_id);
 -- ALTER TABLE apikey DROP COLUMN user_id;
 ```
 
-
 **Warning:**
 
-  **Breaking Change**: The `userId` field has been replaced with `referenceId`. API responses now return `referenceId` instead of `userId`. The owner type (user vs organization) is determined by the configuration's `references` setting, not stored on each key.
+**Breaking Change**: The `userId` field has been replaced with `referenceId`. API responses now return `referenceId` instead of `userId`. The owner type (user vs organization) is determined by the configuration's `references` setting, not stored on each key.

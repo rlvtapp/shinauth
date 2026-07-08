@@ -1,14 +1,12 @@
 ---
-title: "Better Auth Fastify Integration Guide"
+title: "Shinauth Fastify Integration Guide"
 ---
 
 This guide provides step-by-step instructions for configuring both essential handlers and CORS settings.
 
-
 **Note:**
 
-  A configured Shinauth instance is required before proceeding. If you haven't set this up yet, please consult our [Installation Guide](/installation).
-
+A configured Shinauth instance is required before proceeding. If you haven't set this up yet, please consult our [Installation Guide](/installation).
 
 ### Prerequisites
 
@@ -23,9 +21,8 @@ Verify the following requirements before integration:
   fastify @fastify/cors
   ```
 
-
 **Note:**
- For TypeScript: Ensure your `tsconfig.json` includes `"esModuleInterop": true` for optimal compatibility.
+For TypeScript: Ensure your `tsconfig.json` includes `"esModuleInterop": true` for optimal compatibility.
 
 ### Authentication Handler Setup
 
@@ -118,9 +115,8 @@ fastify.register(fastifyCors, {
 // (Use previous handler configuration here)
 ```
 
-
 **Warning:**
- Always restrict CORS origins in production environments. Use environment variables for dynamic configuration.
+Always restrict CORS origins in production environments. Use environment variables for dynamic configuration.
 
 ### Getting the User Session
 

@@ -4,11 +4,9 @@ title: "Hooks"
 
 Hooks in Shinauth let you "hook into" the lifecycle and execute custom logic. They provide a way to customize Shinauth's behavior without writing a full plugin.
 
-
 **Note:**
 
-  We highly recommend using hooks if you need to make custom adjustments to an endpoint rather than making another endpoint outside of Shinauth.
-
+We highly recommend using hooks if you need to make custom adjustments to an endpoint rather than making another endpoint outside of Shinauth.
 
 ## Before Hooks
 
@@ -118,11 +116,9 @@ export const auth = shinAuth({
 });
 ```
 
-
 **Note:**
 
 Each hook (`before` / `after`) takes a single middleware function, not an array. To run logic for different endpoints, branch on `ctx.path` inside that single function.
-
 
 ## Ctx
 

@@ -6,66 +6,52 @@ The username plugin is a lightweight plugin that adds username support to the em
 
 ## Installation
 
+### Add Plugin to the server
 
+```ts title="auth.ts"
+import { shinAuth } from "shinauth"
+import { username } from "shinauth/plugins"
 
-    ### Add Plugin to the server
+export const auth = shinAuth({
+    emailAndPassword: {
+        enabled: true,
+    },
+    plugins: [
+        username()
+    ]
+})
+```
 
-    ```ts title="auth.ts"
-    import { shinAuth } from "shinauth"
-    import { username } from "shinauth/plugins"
+### Migrate the database
 
-    export const auth = shinAuth({
-        emailAndPassword: {
-            enabled: true,
-        },
-        plugins: [
-            username()
-        ]
-    })
-    ```
-
-
-
-    ### Migrate the database
-
-    Run the migration or generate the schema to add the necessary fields and tables to the database.
-
-
+Run the migration or generate the schema to add the necessary fields and tables to the database.
 
 #### migrate
 
-        ```bash
-        pnpm dlx @shinauth/cli migrate
-        ```
-
-
+```bash
+pnpm dlx @shinauth/cli migrate
+```
 
 #### generate
 
-        ```bash
-        pnpm dlx @shinauth/cli generate
-        ```
+```bash
+pnpm dlx @shinauth/cli generate
+```
 
+See the [Schema](#schema) section to add the fields manually.
 
+### Add the client plugin
 
-    See the [Schema](#schema) section to add the fields manually.
+```ts title="auth-client.ts"
+import { createAuthClient } from "shinauth/client"
+import { usernameClient } from "shinauth/client/plugins"
 
-
-
-    ### Add the client plugin
-
-    ```ts title="auth-client.ts"
-    import { createAuthClient } from "shinauth/client"
-    import { usernameClient } from "shinauth/client/plugins"
-
-    export const authClient = createAuthClient({
-        plugins: [
-            usernameClient()
-        ]
-    })
-    ```
-
-
+export const authClient = createAuthClient({
+    plugins: [
+        usernameClient()
+    ]
+})
+```
 
 ## Usage
 
@@ -74,100 +60,95 @@ The username plugin is a lightweight plugin that adds username support to the em
 To sign up a user with username, you can use the existing `signUp.email` function provided by the client.
 The `signUp` function should take a new `username` property in the object.
 
-
 ### POST /sign-up/email
 
-  ```ts
-  type signUpEmail = {
-      /**
-       * The email of the user.
-      */
-      email: string = "email@domain.com"
-      /**
-       * The name of the user.
-      */
-      name: string = "Test User"
-      /**
-       * The password of the user.
-      */
-      password: string = "password1234"
-      /**
-       * The username of the user.
-      */
-      username?: string = "test"
-      /**
-       * An optional display username of the user.
-      */
-      displayUsername?: string = "Test User123"
-  }
-  ```
-
+```ts
+type signUpEmail = {
+    /**
+     * The email of the user.
+    */
+    email: string = "email@domain.com"
+    /**
+     * The name of the user.
+    */
+    name: string = "Test User"
+    /**
+     * The password of the user.
+    */
+    password: string = "password1234"
+    /**
+     * The username of the user.
+    */
+    username?: string = "test"
+    /**
+     * An optional display username of the user.
+    */
+    displayUsername?: string = "Test User123"
+}
+```
 
 **Note:**
 
-  If only `username` is provided, the `displayUsername` will be set to the pre normalized version of the `username`. You can see the [Username Normalization](#username-normalization) and [Display Username Normalization](#display-username-normalization) sections for more details.
-
+If only `username` is provided, the `displayUsername` will be set to the pre normalized version of the `username`. You can see the [Username Normalization](#username-normalization) and [Display Username Normalization](#display-username-normalization) sections for more details.
 
 ### Sign in
 
 To sign in a user with username, you can use the `signIn.username` function provided by the client.
 
-
 ### POST /sign-in/username
 
-  ```ts
-  type signInUsername = {
-      /**
-       * The username of the user.
-      */
-      username: string = "test"
-      /**
-       * The password of the user.
-      */
-      password: string = "password1234"
-  }
-  ```
-
+```ts
+type signInUsername = {
+    /**
+     * The username of the user.
+    */
+    username: string = "test"
+    /**
+     * The password of the user.
+    */
+    password: string = "password1234"
+}
+```
 
 ### Update username
 
 To update the username of a user, you can use the `updateUser` function provided by the client.
 
+**Note:**
+
+If `immutableUsername` is enabled, users can set their username during sign-up or later if they do not already have a username, but they cannot change it after it has been set.
 
 ### POST /update-user
 
-  ```ts
-  type updateUser = {
-      /**
-       * The username to update.
-      */
-      username?: string = "new-username"
-  }
-  ```
-
+```ts
+type updateUser = {
+    /**
+     * The username to update.
+    */
+    username?: string = "new-username"
+}
+```
 
 ### Check if username is available
 
 To check if a username is available, you can use the `isUsernameAvailable` function provided by the client.
 
-
 ### POST /is-username-available
 
-  ```ts
-  type isUsernameAvailable = {
-      /**
-       * The username to check.
-      */
-      username: string = "new-username"
-  }
+```ts
+type isUsernameAvailable = {
+    /**
+     * The username to check.
+    */
+    username: string = "new-username"
+}
 
-  if (response?.available) {
-      console.log("Username is available");
-  } else {
-      console.log("Username is not available");
-  }
-  ```
-
+if (response?.available) {
+    console.log("Username is available");
+} else {
+    console.log("Username is not available");
+}
+```
 
 ## Options
 
@@ -331,6 +312,28 @@ const auth = shinAuth({
 })
 ```
 
+### Immutable Username
+
+By default, users can update their username. Set `immutableUsername` to `true` to prevent users from changing their username after it has been set.
+
+Users can still set a username during sign-up, or on a later profile update if they haven't already picked a username. Updating other profile fields remains allowed.
+
+```ts title="auth.ts"
+import { shinAuth } from "shinauth"
+import { username } from "shinauth/plugins"
+
+const auth = shinAuth({
+    emailAndPassword: {
+        enabled: true,
+    },
+    plugins: [
+        username({
+            immutableUsername: true
+        })
+    ]
+})
+```
+
 ### Disable Is Username Available
 
 By default, the plugin exposes an endpoint `/is-username-available` to check if a username is available. You can disable this endpoint by providing `disabledPaths` option to the shinauth configuration. This is useful if you want to protect usernames from being enumerated.
@@ -353,6 +356,5 @@ const auth = shinAuth({
 ## Schema
 
 The plugin requires 2 fields to be added to the user table:
-
 
 See the generated schema for the complete table definition.

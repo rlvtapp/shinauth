@@ -12,100 +12,90 @@ All you need to do is provide the database logic, and the `createAdapterFactory`
 
 ## Quick Start
 
+### Get things ready
 
+1. Import `createAdapterFactory`.
+2. Create `CustomAdapterConfig` interface that represents your adapter config options.
+3. Create the adapter!
 
-    ### Get things ready
+```ts
+import { createAdapterFactory, type DBAdapterDebugLogOption } from "shinauth/adapters";
 
-    1. Import `createAdapterFactory`.
-    2. Create `CustomAdapterConfig` interface that represents your adapter config options.
-    3. Create the adapter!
+// Your custom adapter config options
+interface CustomAdapterConfig {
+  /**
+   * Helps you debug issues with the adapter.
+   */
+  debugLogs?: DBAdapterDebugLogOption;
+  /**
+   * If the table names in the schema are plural.
+   */
+  usePlural?: boolean;
+}
 
-    ```ts
-    import { createAdapterFactory, type DBAdapterDebugLogOption } from "shinauth/adapters";
-
-    // Your custom adapter config options
-    interface CustomAdapterConfig {
-      /**
-       * Helps you debug issues with the adapter.
-       */
-      debugLogs?: DBAdapterDebugLogOption;
-      /**
-       * If the table names in the schema are plural.
-       */
-      usePlural?: boolean;
-    }
-
-    export const myAdapter = (config: CustomAdapterConfig = {}) =>
-      createAdapterFactory({
-        // ...
-      });
-    ```
-
-
-
-    ### Configure the adapter
-
-    The `config` object is mostly used to provide information about the adapter to Better-Auth.
-    We try to minimize the amount of code you need to write in your adapter functions, and these `config` options are used to help us do that.
-
-    ```ts
+export const myAdapter = (config: CustomAdapterConfig = {}) =>
+  createAdapterFactory({
     // ...
-    export const myAdapter = (config: CustomAdapterConfig = {}) =>
-      createAdapterFactory({
-        config: {
-          adapterId: "custom-adapter", // A unique identifier for the adapter.
-          adapterName: "Custom Adapter", // The name of the adapter.
-          usePlural: config.usePlural ?? false, // Whether the table names in the schema are plural.
-          debugLogs: config.debugLogs ?? false, // Whether to enable debug logs.
-          supportsJSON: false, // Whether the database supports JSON. (Default: false)
-          supportsDates: true, // Whether the database supports dates. (Default: true)
-          supportsBooleans: true, // Whether the database supports booleans. (Default: true)
-          supportsNumericIds: true, // Whether the database supports auto-incrementing numeric IDs. (Default: true)
-        },
-        // ...
-      });
-    ```
+  });
+```
 
+### Configure the adapter
 
+The `config` object is mostly used to provide information about the adapter to Better-Auth.
+We try to minimize the amount of code you need to write in your adapter functions, and these `config` options are used to help us do that.
 
-    ### Create the adapter
-
-    The `adapter` function is where you write the code that interacts with your database.
-
-    ```ts
+```ts
+// ...
+export const myAdapter = (config: CustomAdapterConfig = {}) =>
+  createAdapterFactory({
+    config: {
+      adapterId: "custom-adapter", // A unique identifier for the adapter.
+      adapterName: "Custom Adapter", // The name of the adapter.
+      usePlural: config.usePlural ?? false, // Whether the table names in the schema are plural.
+      debugLogs: config.debugLogs ?? false, // Whether to enable debug logs.
+      supportsJSON: false, // Whether the database supports JSON. (Default: false)
+      supportsDates: true, // Whether the database supports dates. (Default: true)
+      supportsBooleans: true, // Whether the database supports booleans. (Default: true)
+      supportsNumericIds: true, // Whether the database supports auto-incrementing numeric IDs. (Default: true)
+    },
     // ...
-    export const myAdapter = (config: CustomAdapterConfig = {}) =>
-      createAdapterFactory({
-        config: {
+  });
+```
+
+### Create the adapter
+
+The `adapter` function is where you write the code that interacts with your database.
+
+```ts
+// ...
+export const myAdapter = (config: CustomAdapterConfig = {}) =>
+  createAdapterFactory({
+    config: {
+      // ...
+    },
+    adapter: ({}) => {
+      return {
+        create: async ({ data, model, select }) => {
           // ...
         },
-        adapter: ({}) => {
-          return {
-            create: async ({ data, model, select }) => {
-              // ...
-            },
-            update: async ({ model, where, update }) => {
-              // ...
-            },
-            updateMany: async ({ model, where, update }) => {
-              // ...
-            },
-            delete: async ({ model, where }) => {
-              // ...
-            },
-            // ...
-          };
+        update: async ({ model, where, update }) => {
+          // ...
         },
-      });
-    ```
-
+        updateMany: async ({ model, where, update }) => {
+          // ...
+        },
+        delete: async ({ model, where }) => {
+          // ...
+        },
+        // ...
+      };
+    },
+  });
+```
 
 **Note:**
 
-      Learn more about [database adapters](/concepts/database#adapters).
-
-
-
+Learn more about [database adapters](/concepts/database#adapters).
 
 ## Adapter
 
@@ -158,12 +148,10 @@ adapter: ({
 
 The `create` method is used to create a new record in the database.
 
-
 **Note:**
 
-  It's possible to pass `forceAllowId` as a parameter to the `create` method, which allows `id` to be provided in the `data` object.
-  We handle `forceAllowId` internally, so you don't need to worry about it.
-
+It's possible to pass `forceAllowId` as a parameter to the `create` method, which allows `id` to be provided in the `data` object.
+We handle `forceAllowId` internally, so you don't need to worry about it.
 
 parameters:
 
@@ -254,9 +242,9 @@ deleteMany: async ({ model, where }) => {
 };
 ```
 
-### `consumeOne` method (optional)
+### `consumeOne` method
 
-The `consumeOne` method atomically deletes a single matching record and returns it, so that two concurrent requests cannot both consume the same row. It powers single-use credentials such as one-time verification challenges. Implementing it is optional: when omitted, the adapter factory falls back to wrapping `findMany` + `deleteMany` in a `transaction`, using the deleted-row count as the race gate.
+The `consumeOne` method atomically deletes a single matching record and returns it, so that two concurrent requests cannot both consume the same row. It powers single-use credentials such as one-time verification challenges.
 
 parameters:
 
@@ -273,11 +261,40 @@ consumeOne: async ({ model, where }) => {
 };
 ```
 
+**Warning:**
 
-**Note:**
+`consumeOne` is required. Shinauth does not provide a `findMany` plus `deleteMany` fallback because that shape cannot guarantee single-use semantics across adapters without a native atomic delete-and-return operation.
 
-  Although the factory provides a fallback, implementing `consumeOne` natively is recommended: the fallback is race-safe only under a real `transaction` with an accurate delete count. Stores without multi-document transactions therefore need a native atomic delete-and-return (`DELETE ... RETURNING`, `findOneAndDelete`, or a revision-conditional delete).
+### `incrementOne` method
 
+The `incrementOne` method atomically updates one matching record by applying numeric deltas and optional set values, then returns the updated row. It powers guarded counters such as rate limits, quotas, and one-winner state transitions.
+
+parameters:
+
+* `model`: The model/table name to update.
+* `where`: The `where` clause that must still match for the increment to apply.
+* `increment`: Numeric deltas to apply, such as `{ count: 1 }` or `{ remaining: -1 }`.
+* `set`: Optional fields to set in the same atomic operation.
+
+**Returns** `Promise<T | null>`: the updated record, or `null` if no row matched. Implementations must update at most one matching row.
+
+```ts title="Example"
+incrementOne: async ({ model, where, increment, set }) => {
+  const [row] = await db
+    .update(model)
+    .set({
+      ...set,
+      count: sql`${model.count} + ${increment.count ?? 0}`,
+    })
+    .where(where)
+    .returning();
+  return row ?? null;
+};
+```
+
+**Warning:**
+
+`incrementOne` is required. Shinauth uses it as a compare-and-swap primitive: the `where` clause is part of the guard, so concurrent requests cannot all update a stale snapshot.
 
 ### `findOne` method
 
@@ -421,11 +438,9 @@ execute();
 
 The `testAdapter` function handles the test lifecycle for you, including running migrations before tests and cleaning up all tables after tests complete.
 
-
 **Note:**
 
-  In v1.4, adapter tests used `runAdapterTest` and `runNumberIdAdapterTest` from `shinauth/adapters/test`. That export has been removed in v1.5. Use `@shinauth/test-utils/adapter` instead.
-
+In v1.4, adapter tests used `runAdapterTest` and `runNumberIdAdapterTest` from `shinauth/adapters/test`. That export has been removed in v1.5. Use `@shinauth/test-utils/adapter` instead.
 
 ## Config
 
@@ -485,17 +500,15 @@ const adapter = myAdapter({
 
 Whether the adapter supports transactions. If `false`, operations run sequentially; otherwise provide a function that executes a callback with a `TransactionAdapter`.
 
-
 **Warning:**
 
-  If your database does not support transactions, the error handling and rollback
-  will not be as robust. We recommend using a database that supports transactions
-  for better data integrity.
-
+If your database does not support transactions, the error handling and rollback
+will not be as robust. We recommend using a database that supports transactions
+for better data integrity.
 
 ### `debugLogs`
 
-Used to enable debug logs for the adapter. You can pass in a boolean, or an object with the following keys: `create`, `update`, `updateMany`, `findOne`, `findMany`, `delete`, `deleteMany`, `count`.
+Used to enable debug logs for the adapter. You can pass in a boolean, or an object with the following keys: `create`, `update`, `updateMany`, `findOne`, `findMany`, `delete`, `deleteMany`, `consumeOne`, `incrementOne`, `count`.
 If any of the keys are `true`, the debug logs will be enabled for that method.
 
 ```ts title="Example"
@@ -559,13 +572,11 @@ mapKeysTransformOutput: {
 
 If you need to transform the input data before it is saved to the database, you can use this option to transform the data.
 
-
 **Warning:**
 
-  If you're using `supportsJSON`, `supportsDates`, or `supportsBooleans`, then
-  the transformations will be applied before your `customTransformInput`
-  function is called.
-
+If you're using `supportsJSON`, `supportsDates`, or `supportsBooleans`, then
+the transformations will be applied before your `customTransformInput`
+function is called.
 
 The `customTransformInput` function receives the following arguments:
 
@@ -620,27 +631,22 @@ console.log(some_data.name);
 
 Whether to disable input transformation. This should only be used if you know what you're doing and are manually handling all transformations.
 
-
 **Warning:**
 
-  Disabling input transformation can break important adapter functionality like ID generation, boolean/date/JSON conversion, and key mapping.
-
+Disabling input transformation can break important adapter functionality like ID generation, boolean/date/JSON conversion, and key mapping.
 
 ### `disableTransformOutput`
 
 Whether to disable output transformation. This should only be used if you know what you're doing and are manually handling all transformations.
 
-
 **Warning:**
 
-  Disabling output transformation can break important adapter functionality like boolean/date/JSON parsing and key mapping.
-
+Disabling output transformation can break important adapter functionality like boolean/date/JSON parsing and key mapping.
 
 ### `disableTransformJoin`
 
 Whether to disable join transformation. This should only be used if you know what you're doing and are manually handling joins.
 
-
 **Warning:**
 
-  Disabling join transformation can break join functionality.
+Disabling join transformation can break join functionality.

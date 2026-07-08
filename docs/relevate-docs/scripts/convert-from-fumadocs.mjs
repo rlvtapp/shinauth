@@ -1,4 +1,5 @@
-import { mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
+// cspell:words relevate rlvtapp bbeter
+import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const repoRoot = path.resolve(import.meta.dirname, "../../..");
@@ -7,25 +8,11 @@ const changelogRoot = path.join(repoRoot, "docs/content/changelogs");
 const blogRoot = path.join(repoRoot, "docs/content/blogs");
 const targetRoot = path.join(repoRoot, "docs/relevate-docs");
 
-const sectionOrder = [
-	{
-		title: "Get Started",
-		pages: ["index", "installation", "basic-usage", "comparison"],
-	},
-	{ title: "AI Resources", prefix: "ai-resources" },
-	{ title: "Concepts", prefix: "concepts" },
-	{ title: "Authentication", prefix: "authentication" },
-	{ title: "Adapters", prefix: "adapters" },
-	{ title: "Integrations", prefix: "integrations" },
-	{ title: "Infrastructure", prefix: "infrastructure" },
-	{ title: "Plugins", prefix: "plugins" },
-	{ title: "Guides", prefix: "guides" },
-	{ title: "Reference", prefix: "reference" },
-	{ title: "Examples", prefix: "examples" },
-];
-
-const preferredOrder = new Map([
-	["ai-resources", ["ai-resources/index", "ai-resources/mcp", "ai-resources/skills"]],
+const _preferredOrder = new Map([
+	[
+		"ai-resources",
+		["ai-resources/index", "ai-resources/mcp", "ai-resources/skills"],
+	],
 	[
 		"concepts",
 		[
@@ -158,8 +145,8 @@ const preferredOrder = new Map([
 			"plugins/api-key/reference",
 			"plugins/mcp",
 			"plugins/organization",
-			"plugins/oidc-provider",
 			"plugins/oauth-provider",
+			"plugins/cimd",
 			"plugins/sso",
 			"plugins/scim",
 			"plugins/bearer",
@@ -285,7 +272,7 @@ function splitFrontmatter(source) {
 }
 
 function getFrontmatterTitle(frontmatter, fallback) {
-	return getFrontmatterValue(frontmatter, "title") || titleize(fallback);
+	return getFrontmatterValue(frontmatter, "title") || titleCase(fallback);
 }
 
 function getFrontmatterValue(frontmatter, key) {
@@ -294,7 +281,7 @@ function getFrontmatterValue(frontmatter, key) {
 	return match[1].trim().replace(/^["']|["']$/g, "");
 }
 
-function titleize(value) {
+function titleCase(value) {
 	return value
 		.split("/")
 		.at(-1)
@@ -303,7 +290,9 @@ function titleize(value) {
 }
 
 function targetSlugFor(sourcePath) {
-	const relative = path.relative(sourceRoot, sourcePath).replaceAll(path.sep, "/");
+	const relative = path
+		.relative(sourceRoot, sourcePath)
+		.replaceAll(path.sep, "/");
 	const slug = relative.replace(/\.mdx$/, "");
 	if (slug === "introduction") return "index";
 	return slug;
@@ -325,26 +314,45 @@ function rewriteBrands(source) {
 }
 
 function rewriteLinks(source) {
-	let output = source.replace(/\[([^\]]+)\]\(\/docs\/([^)#]+)(#[^)]+)?\)/g, (_, label, href, hash = "") => {
-		return `[${label}](/${href}${hash})`;
-	});
+	let output = source.replace(
+		/\[([^\]]+)\]\(\/docs\/([^)#]+)(#[^)]+)?\)/g,
+		(_, label, href, hash = "") => {
+			return `[${label}](/${href}${hash})`;
+		},
+	);
 
 	output = output.replace(
 		/(!\[[^\]]*\]\()\/open-api-reference\.png(\))/g,
 		"$1/public/open-api-reference.png$2",
 	);
 
-	output = output.replace(/<Link\s+href="([^"]+)">([\s\S]*?)<\/Link>/g, (_, href, label) => {
-		const cleanHref = href.startsWith("/docs/") ? `/${href.slice(6)}` : href;
-		return `[${label.trim()}](${cleanHref})`;
-	});
+	output = output.replace(
+		/<Link\s+href="([^"]+)">([\s\S]*?)<\/Link>/g,
+		(_, href, label) => {
+			const cleanHref = href.startsWith("/docs/") ? `/${href.slice(6)}` : href;
+			return `[${label.trim()}](${cleanHref})`;
+		},
+	);
 
 	return output;
 }
 
 function rewriteCodeFenceMeta(source) {
 	return source
-		.replace(/```package-install/g, "```bash")
+		.replace(
+			/(^[ \t]*)```package-install([^\n]*)\n([\s\S]*?)^\1```/gm,
+			(_, indent, meta, body) => {
+				const lines = body.split("\n");
+				const content = lines.map((line) => line.trim()).filter(Boolean);
+				const isBarePackageList =
+					content.length > 0 &&
+					content.every((line) => /^(?:@[\w.-]+\/[\w.-]+|[\w.-]+)$/.test(line));
+				const nextBody = isBarePackageList
+					? `${indent}pnpm add ${content.join(" ")}\n`
+					: body;
+				return `${indent}\`\`\`bash${meta}\n${nextBody}${indent}\`\`\``;
+			},
+		)
 		.replace(/```ts twoslash/g, "```ts")
 		.replace(/```tsx twoslash/g, "```tsx")
 		.replace(/```json title="/g, '```json title="')
@@ -367,8 +375,10 @@ function stripEsmOutsideCode(source) {
 		}
 
 		if (!inFence && skippingExport) {
-			exportDepth += countChars(line, "{") + countChars(line, "[") + countChars(line, "(");
-			exportDepth -= countChars(line, "}") + countChars(line, "]") + countChars(line, ")");
+			exportDepth +=
+				countChars(line, "{") + countChars(line, "[") + countChars(line, "(");
+			exportDepth -=
+				countChars(line, "}") + countChars(line, "]") + countChars(line, ")");
 			if (exportDepth <= 0 && /;?\s*$/.test(line)) {
 				skippingExport = false;
 			}
@@ -379,7 +389,10 @@ function stripEsmOutsideCode(source) {
 			continue;
 		}
 
-		if (!inFence && /^\s*export\s+(const|let|var|type|interface)\s+/.test(line)) {
+		if (
+			!inFence &&
+			/^\s*export\s+(const|let|var|type|interface)\s+/.test(line)
+		) {
 			exportDepth =
 				countChars(line, "{") +
 				countChars(line, "[") +
@@ -452,7 +465,9 @@ function rewriteMdxComponents(source) {
 		const title = attrs.match(/title="([^"]+)"/)?.[1] ?? "Related page";
 		const href = attrs.match(/href="([^"]+)"/)?.[1];
 		const description = attrs.match(/description="([^"]+)"/)?.[1];
-		const normalizedHref = href?.startsWith("/docs/") ? `/${href.slice(6)}` : href;
+		const normalizedHref = href?.startsWith("/docs/")
+			? `/${href.slice(6)}`
+			: href;
 		return normalizedHref
 			? `- [${title}](${normalizedHref})${description ? ` - ${description}` : ""}`
 			: `- ${title}${description ? ` - ${description}` : ""}`;
@@ -467,15 +482,27 @@ function rewriteMdxComponents(source) {
 	output = output.replace(/<File\b[^>]*>/g, "");
 	output = output.replace(/<\/File>/g, "");
 
-	output = output.replace(/<TypeTable\b[^>]*\/>/g, "\nSee the source types for the complete option reference.\n");
-	output = output.replace(/<DatabaseTable\b[^>]*\/>/g, "\nSee the generated schema for the complete table definition.\n");
+	output = output.replace(
+		/<TypeTable\b[^>]*\/>/g,
+		"\nSee the source types for the complete option reference.\n",
+	);
+	output = output.replace(
+		/<DatabaseTable\b[^>]*\/>/g,
+		"\nSee the generated schema for the complete table definition.\n",
+	);
 	output = output.replace(/<Endpoint\b[^>]*\/>/g, "");
 	output = output.replace(/<GenerateSecret\s*\/>/g, "");
-	output = output.replace(/<Features\s*\/>/g, "- Email and password authentication\n- Social sign-on\n- Sessions\n- Plugins\n- Framework integrations");
+	output = output.replace(
+		/<Features\s*\/>/g,
+		"- Email and password authentication\n- Social sign-on\n- Sessions\n- Plugins\n- Framework integrations",
+	);
 	output = output.replace(/<ForkButton\b[^>]*\/>/g, "");
 	output = output.replace(/<AddToCursor\s*\/>/g, "");
 	output = output.replace(/<DividerText\b[^>]*\/>/g, "");
-	output = output.replace(/<HeaderLabel\b[^>]*>([\s\S]*?)<\/HeaderLabel>/g, "**$1**");
+	output = output.replace(
+		/<HeaderLabel\b[^>]*>([\s\S]*?)<\/HeaderLabel>/g,
+		"**$1**",
+	);
 	output = output.replace(/<img\b[^>]*src="([^"]+)"[^>]*\/?>/g, (_, src) => {
 		if (src === "/extension-id.png") {
 			return "Find the extension ID on the extension card in `chrome://extensions`.";
@@ -549,7 +576,10 @@ function changelogSlugFor(sourcePath, date) {
 
 function convertChangelogPage(source, slug, label) {
 	const { frontmatter, body } = splitFrontmatter(source);
-	const title = getFrontmatterTitle(frontmatter, slug).replace("Better Auth", "Shinauth");
+	const title = getFrontmatterTitle(frontmatter, slug).replace(
+		"Better Auth",
+		"Shinauth",
+	);
 	const description = getFrontmatterValue(frontmatter, "description").replace(
 		"Better Auth",
 		"Shinauth",
@@ -574,17 +604,6 @@ async function writePage(slug, content) {
 	const targetPath = path.join(targetRoot, `${slug}.mdx`);
 	await mkdir(path.dirname(targetPath), { recursive: true });
 	await writeFile(targetPath, content);
-}
-
-function sortKnown(prefix, pages) {
-	const order = preferredOrder.get(prefix) ?? [];
-	const orderIndex = new Map(order.map((page, index) => [page, index]));
-	return [...pages].sort((a, b) => {
-		const ai = orderIndex.has(a) ? orderIndex.get(a) : Number.MAX_SAFE_INTEGER;
-		const bi = orderIndex.has(b) ? orderIndex.get(b) : Number.MAX_SAFE_INTEGER;
-		if (ai !== bi) return ai - bi;
-		return a.localeCompare(b);
-	});
 }
 
 function buildNavigation(allPages) {
@@ -618,7 +637,10 @@ function buildNavigation(allPages) {
 		},
 		{
 			title: "Authentication: Core",
-			pages: ["authentication/email-password", "authentication/other-social-providers"],
+			pages: [
+				"authentication/email-password",
+				"authentication/other-social-providers",
+			],
 		},
 		{
 			title: "Authentication: Social Providers",
@@ -760,8 +782,8 @@ function buildNavigation(allPages) {
 				"plugins/generic-oauth",
 				"plugins/mcp",
 				"plugins/organization",
-				"plugins/oidc-provider",
 				"plugins/oauth-provider",
+				"plugins/cimd",
 				"plugins/oauth-proxy",
 				"plugins/sso",
 				"plugins/scim",
@@ -867,7 +889,9 @@ function buildNavigation(allPages) {
 		.map((group) => ({ ...group, pages: filterNavNodes(group.pages, pageSet) }))
 		.filter((group) => group.pages.length > 0);
 
-	const assigned = new Set(content.flatMap((section) => flattenNavNodes(section.pages)));
+	const assigned = new Set(
+		content.flatMap((section) => flattenNavNodes(section.pages)),
+	);
 	const remaining = allPages.filter((page) => !assigned.has(page)).sort();
 	if (remaining.length > 0) {
 		content.push({ title: "Other", pages: remaining });
@@ -1007,7 +1031,10 @@ for (const sourcePath of [...changelogFiles, ...releaseBlogFiles]) {
 	const label = versionLabelFor(sourcePath);
 	const release = {
 		slug,
-		title: getFrontmatterTitle(frontmatter, slug).replace("Better Auth", "Shinauth"),
+		title: getFrontmatterTitle(frontmatter, slug).replace(
+			"Better Auth",
+			"Shinauth",
+		),
 		description: getFrontmatterValue(frontmatter, "description").replace(
 			"Better Auth",
 			"Shinauth",

@@ -65,7 +65,7 @@ Both OIDC and MCP plugins are production‑ready.
 * Trusted clients
 * Encrypted & hashed client secrets
 
-👉 [Read OIDC docs](/plugins/oidc-provider)
+👉 [Read OAuth Provider docs](/plugins/oauth-provider)
 👉 [Read MCP docs](/plugins/mcp)
 
 ```ts title="auth.ts"
@@ -142,11 +142,9 @@ export const auth = shinAuth({
 
 Utilities for handling cookies in SvelteKit server actions.
 
-
 **Warning:**
 
-  Breaking change: `building` and `getRequestEvent` must now be passed in as props.
-
+Breaking change: `building` and `getRequestEvent` must now be passed in as props.
 
 ```ts title="auth.ts"
 import { shinAuth } from "shinauth";
@@ -339,6 +337,6 @@ export const auth = shinAuth({
 ***
 
 A lot of refinements to make everything smoother, faster, and more reliable.
-👉 [Check the full changelog](https://github.com/shinauth/shinauth/releases/tag/v1.3.0)
+👉 [Check the full changelog](https://github.com/rlvtapp/shinauth/releases/tag/v1.3.0)
 
 ***

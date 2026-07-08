@@ -8,11 +8,9 @@ Shinauth connects to a database to store data. The database will be used to stor
 
 You can pass a database connection to Shinauth by passing a supported database instance in the database options. You can learn more about supported database adapters in the [Other relational databases](/adapters/other-relational-databases) documentation.
 
-
 **Note:**
 
-  Shinauth also works without any database. For more details, see [Stateless Session Management](/concepts/session-management#stateless-session-management).
-
+Shinauth also works without any database. For more details, see [Stateless Session Management](/concepts/session-management#stateless-session-management).
 
 ## CLI
 
@@ -26,11 +24,9 @@ The cli checks your database and prompts you to add missing tables or update exi
 pnpm dlx @shinauth/cli migrate
 ```
 
-
 **Note:**
 
-  For PostgreSQL users: The migrate command supports non-default schemas. It automatically detects your `search_path` configuration and creates tables in the correct schema. See [PostgreSQL adapter](/adapters/postgresql#use-a-non-default-schema) for details.
-
+For PostgreSQL users: The migrate command supports non-default schemas. It automatically detects your `search_path` configuration and creates tables in the correct schema. See [PostgreSQL adapter](/adapters/postgresql#use-a-non-default-schema) for details.
 
 ### Generating Schema
 
@@ -42,13 +38,11 @@ pnpm dlx @shinauth/cli generate
 
 See the [CLI](/concepts/cli) documentation for more information on the CLI.
 
-
 **Note:**
 
-  If you prefer adding tables manually, you can do that as well. The core schema
-  required by Shinauth is described below and you can find additional schema
-  required by plugins in the plugin documentation.
-
+If you prefer adding tables manually, you can do that as well. The core schema
+required by Shinauth is described below and you can find additional schema
+required by plugins in the plugin documentation.
 
 ### Programmatic Migrations
 
@@ -63,72 +57,65 @@ const { toBeCreated, toBeAdded, runMigrations } = await getMigrations(auth.optio
 await runMigrations();
 ```
 
-
 **Warning:**
 
-  `getMigrations` only works with the built-in Kysely adapter (SQLite/D1, PostgreSQL, MySQL, MSSQL). It does **not** work with Prisma or Drizzle ORM adapters — use CLI migrations with those ORMs instead.
+`getMigrations` only works with the built-in Kysely adapter (SQLite/D1, PostgreSQL, MySQL, MSSQL). It does **not** work with Prisma or Drizzle ORM adapters — use CLI migrations with those ORMs instead.
 
+[Cloudflare D1](https://developers.cloudflare.com/d1/) can only be queried through a Cloudflare Worker, so the CLI cannot access it directly. Instead, you can run programmatic migrations through an endpoint:
 
+```typescript title="auth.ts"
+import { env } from "cloudflare:workers";
+import { shinAuth } from "shinauth";
 
-    [Cloudflare D1](https://developers.cloudflare.com/d1/) can only be queried through a Cloudflare Worker, so the CLI cannot access it directly. Instead, you can run programmatic migrations through an endpoint:
+export const auth = shinAuth({
+  database: env.DB,
+  // ... rest of config
+});
+```
 
-    ```typescript title="auth.ts"
-    import { env } from "cloudflare:workers";
-    import { shinAuth } from "shinauth";
+```typescript title="src/index.ts"
+import { Hono } from "hono";
+import { auth } from "./auth";
+import { getMigrations } from "shinauth/db/migration";
 
-    export const auth = shinAuth({
-      database: env.DB,
-      // ... rest of config
+const app = new Hono();
+
+// Protect or remove this endpoint in production
+app.post("/migrate", async (c) => {
+  try {
+    const { toBeCreated, toBeAdded, runMigrations } = await getMigrations(auth.options);
+
+    if (toBeCreated.length === 0 && toBeAdded.length === 0) {
+      return c.json({ message: "No migrations needed" });
+    }
+
+    await runMigrations();
+    return c.json({
+      message: "Migrations completed successfully",
+      created: toBeCreated.map((t) => t.table),
+      added: toBeAdded.map((t) => t.table),
     });
-    ```
+  } catch (error) {
+    return c.json(
+      { error: error instanceof Error ? error.message : "Migration failed" },
+      500,
+    );
+  }
+});
 
-    ```typescript title="src/index.ts"
-    import { Hono } from "hono";
-    import { auth } from "./auth";
-    import { getMigrations } from "shinauth/db/migration";
+app.on(["POST", "GET"], "/api/auth/*", (c) => {
+  return auth.handler(c.req.raw);
+});
 
-    const app = new Hono();
-
-    // Protect or remove this endpoint in production
-    app.post("/migrate", async (c) => {
-      try {
-        const { toBeCreated, toBeAdded, runMigrations } = await getMigrations(auth.options);
-
-        if (toBeCreated.length === 0 && toBeAdded.length === 0) {
-          return c.json({ message: "No migrations needed" });
-        }
-
-        await runMigrations();
-        return c.json({
-          message: "Migrations completed successfully",
-          created: toBeCreated.map((t) => t.table),
-          added: toBeAdded.map((t) => t.table),
-        });
-      } catch (error) {
-        return c.json(
-          { error: error instanceof Error ? error.message : "Migration failed" },
-          500,
-        );
-      }
-    });
-
-    app.on(["POST", "GET"], "/api/auth/*", (c) => {
-      return auth.handler(c.req.raw);
-    });
-
-    export default app;
-    ```
-
+export default app;
+```
 
 **Note:**
 
-      If you're using Cloudflare D1 with Drizzle or Prisma, use [`cloudflare:workers`](https://developers.cloudflare.com/workers/runtime-apis/bindings/) to access `env` and follow the guides below:
+If you're using Cloudflare D1 with Drizzle or Prisma, use [`cloudflare:workers`](https://developers.cloudflare.com/workers/runtime-apis/bindings/) to access `env` and follow the guides below:
 
-      * [Drizzle with Cloudflare D1 guide](https://orm.drizzle.team/docs/guides/d1-http-with-drizzle-kit)
-      * [Prisma with Cloudflare D1 guide](https://www.prisma.io/docs/guides/cloudflare-d1)
-
-
-
+* [Drizzle with Cloudflare D1 guide](https://orm.drizzle.team/docs/guides/d1-http-with-drizzle-kit)
+* [Prisma with Cloudflare D1 guide](https://www.prisma.io/docs/guides/cloudflare-d1)
 
 ## Secondary Storage
 
@@ -141,6 +128,8 @@ To use secondary storage, implement the `SecondaryStorage` interface:
 ```typescript
 interface SecondaryStorage {
   get: (key: string) => Promise<unknown>;
+  getAndDelete: (key: string) => Promise<unknown>;
+  increment: (key: string, ttl: number) => Promise<number>;
   set: (key: string, value: string, ttl?: number) => Promise<void>;
   delete: (key: string) => Promise<void>;
 }
@@ -203,11 +192,29 @@ import { shinAuth } from "shinauth";
 const redis = createClient();
 await redis.connect();
 
+const incrementScript = `
+local value = redis.call("INCR", KEYS[1])
+if value == 1 then
+  redis.call("EXPIRE", KEYS[1], ARGV[1])
+end
+return value
+`;
+
 export const auth = shinAuth({
 	// ... other options
 	secondaryStorage: {
 		get: async (key) => {
 			return await redis.get(key);
+		},
+		getAndDelete: async (key) => {
+			return await redis.getDel(key);
+		},
+		increment: async (key, ttl) => {
+			const value = await redis.eval(incrementScript, {
+				keys: [key],
+				arguments: [String(ttl)],
+			});
+			return Number(value);
 		},
 		set: async (key, value, ttl) => {
 			if (ttl) await redis.set(key, value, { EX: ttl });
@@ -328,33 +335,25 @@ Shinauth requires the following tables to be present in the database. The types 
 
 Table Name: `user`
 
-
 See the generated schema for the complete table definition.
-
 
 ### Session
 
 Table Name: `session`
 
-
 See the generated schema for the complete table definition.
-
 
 ### Account
 
 Table Name: `account`
 
-
 See the generated schema for the complete table definition.
-
 
 ### Verification
 
 Table Name: `verification`
 
-
 See the generated schema for the complete table definition.
-
 
 ## Custom Tables
 
@@ -382,12 +381,10 @@ export const auth = shinAuth({
 });
 ```
 
-
 **Note:**
 
-  Type inference in your code will still use the original field names (e.g.,
-  `user.name`, not `user.full_name`).
-
+Type inference in your code will still use the original field names (e.g.,
+`user.name`, not `user.full_name`).
 
 To customize table names and column name for plugins, you can use the `schema` property in the plugin config:
 
@@ -464,14 +461,12 @@ res.user.role; // > "admin"
 res.user.lang; // > "fr"
 ```
 
-
 **Note:**
 
-  See the
-  [TypeScript](/concepts/typescript#inferring-additional-fields-on-client)
-  documentation for more information on how to infer additional fields on the
-  client side.
-
+See the
+[TypeScript](/concepts/typescript#inferring-additional-fields-on-client)
+documentation for more information on how to infer additional fields on the
+client side.
 
 If you're using social / OAuth providers, you may want to provide `mapProfileToUser` to map the profile data to the user object. This can populate additional fields from the provider's profile when those fields allow input.
 
@@ -556,11 +551,9 @@ export const auth = shinAuth({
 });
 ```
 
-
 **Note:**
 
-  **Important**: Returning `false` or `undefined` from the `generateId` function lets the database handle ID generation for that specific model. Setting `generateId: false` (without a function) disables ID generation for **all** tables.
-
+**Important**: Returning `false` or `undefined` from the `generateId` function lets the database handle ID generation for that specific model. Setting `generateId: false` (without a function) disables ID generation for **all** tables.
 
 #### Option 3: Consistent Custom ID Generator
 
@@ -603,15 +596,13 @@ export const auth = shinAuth({
 });
 ```
 
-
 **Note:**
 
-  Better-Auth will continue to infer the type of the `id` field as a `string` for the database, but will
-  automatically convert it to a numeric type when fetching or inserting data from the database.
+Better-Auth will continue to infer the type of the `id` field as a `string` for the database, but will
+automatically convert it to a numeric type when fetching or inserting data from the database.
 
-  It's likely when grabbing `id` values returned from Better-Auth that you'll receive a string version of a number,
-  this is normal. It's also expected that all id values passed to Better-Auth (eg via an endpoint body) is expected to be a string.
-
+It's likely when grabbing `id` values returned from Better-Auth that you'll receive a string version of a number,
+this is normal. It's also expected that all id values passed to Better-Auth (eg via an endpoint body) is expected to be a string.
 
 ### UUIDs
 
@@ -658,22 +649,18 @@ This configuration allows you to:
 * Generate UUIDs for all other tables (session, account, verification)
 * Maintain compatibility with existing schemas that use different ID types
 
-
 **Note:**
 
-  **Use Case**: This is particularly useful when migrating from other authentication providers (like Clerk) where you have existing users with integer IDs but want UUID strings for new tables.
-
+**Use Case**: This is particularly useful when migrating from other authentication providers (like Clerk) where you have existing users with integer IDs but want UUID strings for new tables.
 
 ### Database Hooks
 
 Database hooks allow you to define custom logic that can be executed during the lifecycle of core database operations in Shinauth. You can create hooks for the following models: **user**, **session**, and **account**.
 
-
 **Warning:**
 
-  Additional fields are supported, however full type inference for these fields isn't yet supported.
-  Improved type support is planned.
-
+Additional fields are supported, however full type inference for these fields isn't yet supported.
+Improved type support is planned.
 
 There are two types of hooks you can define:
 

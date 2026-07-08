@@ -8,47 +8,39 @@ This plugins allows you to track leads when a user signs up using a Dub link. It
 
 ## Installation
 
+### Install the plugin
 
+First, install the plugin:
 
-    ### Install the plugin
+```bash
+pnpm add @dub/shinauth
+```
 
-    First, install the plugin:
+### Install the Dub SDK
 
-    ```bash
-    @dub/shinauth
-    ```
+Next, install the Dub SDK on your server:
 
+```bash
+pnpm add dub
+```
 
+### Configure the plugin
 
-    ### Install the Dub SDK
+Add the plugin to your auth config:
 
-    Next, install the Dub SDK on your server:
+```ts title="auth.ts"
+import { shinAuth } from "shinauth"
+import { dubAnalytics } from "@dub/shinauth"
+import { dub } from "dub"
 
-    ```bash
-    dub
-    ```
-
-
-
-    ### Configure the plugin
-
-    Add the plugin to your auth config:
-
-    ```ts title="auth.ts"
-    import { shinAuth } from "shinauth"
-    import { dubAnalytics } from "@dub/shinauth"
-    import { dub } from "dub"
-
-    export const auth = shinAuth({
-        plugins: [
-            dubAnalytics({
-                dubClient: new Dub()
-            })
-        ]
-    })
-    ```
-
-
+export const auth = shinAuth({
+    plugins: [
+        dubAnalytics({
+            dubClient: new Dub()
+        })
+    ]
+})
+```
 
 ## Usage
 
@@ -104,19 +96,17 @@ const authClient = createAuthClient({
 
 To link account with Dub, you need to use the `dub.link`.
 
-
 ### POST /dub/link
 
-  ```ts
-  type dubLink = {
-    /**
-     * URL to redirect to after linking
-     * @clientOnly
-    */
-    callbackURL: string = "/dashboard"
-  }
-  ```
-
+```ts
+type dubLink = {
+  /**
+   * URL to redirect to after linking
+   * @clientOnly
+  */
+  callbackURL: string = "/dashboard"
+}
+```
 
 ## Options
 

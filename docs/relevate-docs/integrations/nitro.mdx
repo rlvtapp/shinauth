@@ -18,18 +18,16 @@ This will create the `nitro-app` directory and install all the dependencies. You
 
 ### Prisma Adapter Setup
 
-
 **Note:**
 
-  This guide assumes that you have a basic understanding of Prisma. If you are new to Prisma, you can check out the [Prisma documentation](https://www.prisma.io/docs/getting-started).
+This guide assumes that you have a basic understanding of Prisma. If you are new to Prisma, you can check out the [Prisma documentation](https://www.prisma.io/docs/getting-started).
 
-  The `sqlite` database used in this guide will not work in a production environment. You should replace it with a production-ready database like `PostgreSQL`.
-
+The `sqlite` database used in this guide will not work in a production environment. You should replace it with a production-ready database like `PostgreSQL`.
 
 For this guide, we will be using the Prisma adapter. You can install prisma client by running the following command:
 
 ```bash
-@prisma/client
+pnpm add @prisma/client
 ```
 
 `prisma` can be installed as a dev dependency using the following command:
@@ -101,11 +99,9 @@ Use the Shinauth CLI to update your Prisma schema with the required models by ru
 pnpm dlx @shinauth/cli generate --config server/utils/auth.ts
 ```
 
-
 **Note:**
 
-  The `--config` flag is used to specify the path to the file where you have created your Shinauth instance.
-
+The `--config` flag is used to specify the path to the file where you have created your Shinauth instance.
 
 Head over to the `prisma/schema.prisma` file & save the file to trigger the format on save.
 
@@ -121,11 +117,9 @@ export default defineEventHandler((event) => {
 });
 ```
 
-
 **Note:**
 
-  This is a [catch-all](https://nitro.build/guide/routing#catch-all-route) route that will handle all requests to `/api/auth/*`.
-
+This is a [catch-all](https://nitro.build/guide/routing#catch-all-route) route that will handle all requests to `/api/auth/*`.
 
 ### CORS
 
@@ -134,7 +128,7 @@ You can configure CORS for your Nitro app by creating a plugin.
 Start by installing the cors package:
 
 ```bash
-cors
+pnpm add cors
 ```
 
 You can now create a new file `server/plugins/cors.ts` and add the following code:
@@ -152,11 +146,9 @@ export default defineNitroPlugin((plugin) => {
 });
 ```
 
-
 **Note:**
 
-  This will enable CORS for all routes. You can customize the `origin` property to allow requests from specific domains. Ensure that the config is in sync with your frontend application.
-
+This will enable CORS for all routes. You can customize the `origin` property to allow requests from specific domains. Ensure that the config is in sync with your frontend application.
 
 ### Auth Guard/Middleware
 
