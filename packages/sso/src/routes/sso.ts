@@ -1,5 +1,8 @@
 import { runWithTransaction } from "@shinauth/core/context";
 import { isAPIError } from "@shinauth/core/utils/is-api-error";
+import { decodeJwt } from "jose";
+import type { BindingContext } from "samlify/types/src/entity";
+import type { RequestInfo } from "samlify/types/src/types";
 import type {
 	PrivateKeyJwtSigningAlgorithm,
 	TokenEndpointAuth,
@@ -27,9 +30,6 @@ import {
 	additionalAuthorizationParamsSchema,
 	handleOAuthUserInfo,
 } from "shinauth/oauth2";
-import { decodeJwt } from "jose";
-import type { BindingContext } from "samlify/types/src/entity";
-import type { RequestInfo } from "samlify/types/src/types";
 import * as z from "zod";
 import * as constants from "../constants";
 import { assignOrganizationFromProvider } from "../linking";
@@ -703,6 +703,14 @@ export const registerSSOProvider = <O extends SSOOptions>(options: O) => {
 							})
 						: null,
 					organizationId: body.organizationId,
+					...(options?.orgAccess?.enabled
+						? {
+								requireSsoForOrgAccess:
+									body.requireSsoForOrgAccess ??
+									options.orgAccess.requireSsoByDefault ??
+									false,
+							}
+						: {}),
 					userId: ctx.context.session.user.id,
 					providerId: body.providerId,
 				},
@@ -1690,7 +1698,15 @@ async function handleOIDCCallback(
 		const sep = baseURL.includes("?") ? "&" : "?";
 		throw ctx.redirect(`${baseURL}${sep}${params.toString()}`);
 	}
-	const { session, user } = linked.data!;
+	let { session, user } = linked.data!;
+	const ssoSessionFields = {
+		authSource: "sso-oidc",
+		authProviderId: provider.providerId,
+	};
+	session = (await ctx.context.internalAdapter.updateSession(
+		session.token,
+		ssoSessionFields,
+	)) ?? { ...session, ...ssoSessionFields };
 
 	if (
 		options?.provisionUser &&

@@ -1,8 +1,5 @@
 import { createAuthEndpoint } from "@shinauth/core/api";
-import {
-	getCurrentAdapter,
-	runWithTransaction,
-} from "@shinauth/core/context";
+import { getCurrentAdapter, runWithTransaction } from "@shinauth/core/context";
 import { APIError } from "@shinauth/core/error";
 import * as z from "zod";
 import { getSessionFromCtx } from "../../../api";
@@ -14,6 +11,10 @@ import { getOrgAdapter } from "../adapter";
 import { orgMiddleware, orgSessionMiddleware } from "../call";
 import { ORGANIZATION_ERROR_CODES } from "../error-codes";
 import { hasPermission } from "../has-permission";
+import {
+	assertOrganizationVisibleForSession,
+	filterOrganizationsVisibleForSession,
+} from "../org-access";
 import type { TeamMember } from "../schema";
 import { teamSchema } from "../schema";
 import type { OrganizationOptions } from "../types";
@@ -492,6 +493,7 @@ export const updateTeam = <O extends OrganizationOptions>(options: O) => {
 					ORGANIZATION_ERROR_CODES.NO_ACTIVE_ORGANIZATION,
 				);
 			}
+			await assertOrganizationVisibleForSession(ctx, organizationId);
 			const adapter = getOrgAdapter<O>(ctx.context, options);
 			const member = await adapter.findMemberByOrgId({
 				userId: session.user.id,
@@ -784,6 +786,7 @@ export const setActiveTeam = <O extends OrganizationOptions>(options: O) =>
 					ORGANIZATION_ERROR_CODES.NO_ACTIVE_ORGANIZATION,
 				);
 			}
+			await assertOrganizationVisibleForSession(ctx, activeOrganizationId);
 
 			const team = await adapter.findTeamById({
 				teamId,
@@ -885,6 +888,7 @@ export const listUserTeams = <O extends OrganizationOptions>(options: O) =>
 						ORGANIZATION_ERROR_CODES.NO_ACTIVE_ORGANIZATION,
 					);
 				}
+				await assertOrganizationVisibleForSession(ctx, organizationId);
 
 				const requesterMember = await adapter.findMemberByOrgId({
 					userId: session.user.id,
@@ -945,6 +949,7 @@ export const listUserTeams = <O extends OrganizationOptions>(options: O) =>
 			// Without an explicit org, return all of the caller's teams across
 			// every organization (preserves original behavior).
 			if (isExplicitOrg && organizationId) {
+				await assertOrganizationVisibleForSession(ctx, organizationId);
 				const requesterMember = await adapter.findMemberByOrgId({
 					userId: session.user.id,
 					organizationId,
@@ -986,9 +991,21 @@ export const listUserTeams = <O extends OrganizationOptions>(options: O) =>
 			const memberOrgIds = new Set(
 				orgIds.filter((_, index) => memberships[index]),
 			);
+			const visibleOrgIds = new Set(
+				(
+					await filterOrganizationsVisibleForSession(
+						ctx,
+						orgIds.map((id) => ({ id })),
+					)
+				).map((org) => org.id),
+			);
 
 			return ctx.json(
-				teams.filter((team) => memberOrgIds.has(team.organizationId)),
+				teams.filter(
+					(team) =>
+						memberOrgIds.has(team.organizationId) &&
+						visibleOrgIds.has(team.organizationId),
+				),
 			);
 		},
 	);
@@ -1077,6 +1094,7 @@ export const listTeamMembers = <O extends OrganizationOptions>(options: O) =>
 					ORGANIZATION_ERROR_CODES.TEAM_NOT_FOUND,
 				);
 			}
+			await assertOrganizationVisibleForSession(ctx, team.organizationId);
 			const isOrgMember = await adapter.checkMembership({
 				userId: session.user.id,
 				organizationId: team.organizationId,

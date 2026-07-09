@@ -201,6 +201,7 @@ type BaseSSOProvider = {
 	userId: string;
 	providerId: string;
 	organizationId?: string | undefined;
+	requireSsoForOrgAccess?: boolean | null | undefined;
 	domain: string;
 };
 
@@ -292,6 +293,27 @@ export interface SSOOptions {
 	 */
 	provisionUserOnEveryLogin?: boolean;
 	/**
+	 * Configure SSO-based organization access controls.
+	 */
+	orgAccess?:
+		| {
+				/**
+				 * Allow SSO providers to require an SSO-authenticated session to
+				 * access their linked organization.
+				 *
+				 * @default false
+				 */
+				enabled?: boolean | undefined;
+				/**
+				 * Default value for provider-level `requireSsoForOrgAccess` when a
+				 * provider does not set it explicitly.
+				 *
+				 * @default false
+				 */
+				requireSsoByDefault?: boolean | undefined;
+		  }
+		| undefined;
+	/**
 	 * Organization provisioning options
 	 */
 	organizationProvisioning?:
@@ -382,6 +404,7 @@ export interface SSOOptions {
 		userId?: string | undefined;
 		providerId?: string | undefined;
 		organizationId?: string | undefined;
+		requireSsoForOrgAccess?: string | undefined;
 		domain?: string | undefined;
 	};
 	/**
@@ -398,6 +421,7 @@ export interface SSOOptions {
 						userId?: string | undefined;
 						providerId?: string | undefined;
 						organizationId?: string | undefined;
+						requireSsoForOrgAccess?: string | undefined;
 						domain?: string | undefined;
 						domainVerified?: string | undefined;
 					};

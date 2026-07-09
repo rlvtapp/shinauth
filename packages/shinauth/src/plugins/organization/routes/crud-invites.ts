@@ -13,6 +13,7 @@ import { getOrgAdapter } from "../adapter";
 import { orgMiddleware, orgSessionMiddleware } from "../call";
 import { ORGANIZATION_ERROR_CODES } from "../error-codes";
 import { hasPermission } from "../has-permission";
+import { assertOrganizationVisibleForSession } from "../org-access";
 import { parseRoles } from "../organization";
 import type {
 	InferInvitation,
@@ -243,6 +244,7 @@ export const createInvitation = <O extends OrganizationOptions>(option: O) => {
 					ORGANIZATION_ERROR_CODES.ORGANIZATION_NOT_FOUND,
 				);
 			}
+			await assertOrganizationVisibleForSession(ctx, organizationId);
 
 			const email = ctx.body.email.toLowerCase();
 			const isValidEmail = z.email().safeParse(email);
@@ -1277,6 +1279,7 @@ export const listInvitations = <O extends OrganizationOptions>(options: O) =>
 					message: "Organization ID is required",
 				});
 			}
+			await assertOrganizationVisibleForSession(ctx, orgId);
 			const adapter = getOrgAdapter<O>(ctx.context, options);
 			const isMember = await adapter.findMemberByOrgId({
 				userId: session.user.id,

@@ -288,6 +288,17 @@ const registerSSOProviderBodySchema = z.object({
 
 export function getRegisterSSOProviderBodySchema(options?: SSOOptions) {
 	return registerSSOProviderBodySchema.extend({
+		...(options?.orgAccess?.enabled
+			? {
+					requireSsoForOrgAccess: z
+						.boolean()
+						.meta({
+							description:
+								"Require an SSO-authenticated session to access the linked organization",
+						})
+						.optional(),
+				}
+			: {}),
 		...getSSOProviderAdditionalFieldsSchema(options).shape,
 	});
 }
@@ -302,6 +313,9 @@ const updateSSOProviderBodySchema = z.object({
 export function getUpdateSSOProviderBodySchema(options?: SSOOptions) {
 	return updateSSOProviderBodySchema.extend({
 		providerId: z.string(),
+		...(options?.orgAccess?.enabled
+			? { requireSsoForOrgAccess: z.boolean().optional() }
+			: {}),
 		...getSSOProviderAdditionalFieldsSchema(options).partial().shape,
 	});
 }

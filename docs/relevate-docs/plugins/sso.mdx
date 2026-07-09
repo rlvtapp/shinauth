@@ -6,10 +6,6 @@ title: "Single Sign-On (SSO)"
 
 Single Sign-On (SSO) allows users to authenticate with multiple applications using a single set of credentials. This plugin supports OpenID Connect (OIDC), OAuth2 providers, and SAML 2.0.
 
-**Note:**
-
-Need self-service SSO where your customers can configure their own SSO connections? [Contact us for enterprise](/enterprise).
-
 ## Installation
 
 ### Install the plugin
@@ -181,6 +177,15 @@ type registerSSOProvider = {
      * Bare email domain, or comma-separated bare email domains, for this provider
      */
     domain: string = "yourcompany.com"
+    /**
+     * Link this provider to an organization. Requires the organization plugin.
+     */
+    organizationId?: string = "org_acme_corp_id"
+    /**
+     * When orgAccess is enabled, require users to access the linked organization
+     * from an SSO-authenticated session.
+     */
+    requireSsoForOrgAccess?: boolean = true
     /**
      * OIDC configuration (most fields are auto-discovered)
      */
@@ -768,6 +773,7 @@ await auth.api.registerSSOProvider({
         issuer: "https://acme-corp.okta.com",
         domain: "acmecorp.com",
         organizationId: "org_acme_corp_id", // Link to organization
+        requireSsoForOrgAccess: true, // Require SSO for this organization
         samlConfig: {
             // SAML configuration...
         },
@@ -778,23 +784,52 @@ await auth.api.registerSSOProvider({
 
 Now when users from `acmecorp.com` sign in through this provider, they'll automatically be added to the "Acme Corp" organization with the appropriate role.
 
-#### Self-Service SSO Dashboard
+#### Requiring SSO for Organization Access
 
-If you're using [Shinauth Infrastructure](https://dash.shinauth.com/sign-in), you get access to a self-service SSO dashboard that simplifies onboarding enterprise customers. Instead of manually exchanging SAML metadata and certificates, organization admins can generate a shareable onboarding link that guides enterprise IT teams through configuring their identity provider.
+You can require members to access an organization through one of its linked SSO providers. This is useful when an organization wants its IdP policies, such as MFA, device checks, and offboarding, to control access to that organization.
 
-The dashboard is available at:
+First enable SSO-based organization access on the plugin:
 
+```ts title="auth.ts"
+import { shinAuth } from "shinauth"
+import { organization } from "shinauth/plugins"
+import { sso } from "@shinauth/sso"
+
+export const auth = shinAuth({
+    plugins: [
+        organization(),
+        sso({
+            orgAccess: {
+                enabled: true,
+                requireSsoByDefault: false,
+            },
+        }),
+    ],
+})
 ```
-https://dash.shinauth.com/[project]/organization/[orgId]/enterprise
+
+Then opt in per provider:
+
+```ts
+await auth.api.registerSSOProvider({
+    body: {
+        providerId: "acme-okta",
+        issuer: "https://acme.okta.com",
+        domain: "acme.com",
+        organizationId: "org_acme_id",
+        requireSsoForOrgAccess: true,
+        oidcConfig: {
+            clientId: "client-id",
+            clientSecret: "client-secret",
+        },
+    },
+    headers,
+});
 ```
 
-From the dashboard you can:
+When this is enabled, non-SSO sessions cannot access the linked organization through organization-scoped endpoints, and the organization is filtered from organization lists. A session created by signing in through any SSO provider linked to that organization can access it.
 
-* **Generate onboarding links** for enterprise customers to self-configure their SAML provider
-* **Monitor SSO connection status** for each organization
-* **Manage provider configurations** without writing code
-
-This eliminates the back-and-forth typically required when setting up enterprise SSO, reducing onboarding time from days to minutes.
+Set `orgAccess.requireSsoByDefault` to `true` if every linked SSO provider should require SSO unless the provider explicitly sets `requireSsoForOrgAccess: false`.
 
 #### Multiple Organizations Example
 
@@ -1491,6 +1526,8 @@ The plugin requires additional fields in the `ssoProvider` table to store the pr
 
 See the generated schema for the complete table definition.
 
+When `orgAccess.enabled` is `true`, the `ssoProvider` table also includes `requireSsoForOrgAccess`, and the session schema includes `authSource` and `authProviderId` so Shinauth can tell which provider created the current session.
+
 ### If you have enabled domain verification:
 
 The `ssoProvider` schema is extended as follows:
@@ -1533,6 +1570,8 @@ For a detailed guide on setting up SAML SSO with examples for Okta and testing w
 **provisionUserOnEveryLogin**: If `true`, the `provisionUser` callback runs on every login, not just on registration. Defaults to `false`.
 
 **organizationProvisioning**: Options for provisioning users to an organization.
+
+**orgAccess**: Enables SSO-based organization access controls. Set `orgAccess.enabled` to `true` to allow linked SSO providers to require SSO-authenticated sessions for organization access. Set `orgAccess.requireSsoByDefault` to make newly registered linked providers require SSO unless they explicitly opt out.
 
 **defaultOverrideUserInfo**: Override user info with the provider info by default.
 

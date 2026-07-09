@@ -1,6 +1,6 @@
+import { XMLValidator } from "fast-xml-parser";
 import type { BetterAuthPlugin } from "shinauth";
 import { createAuthMiddleware, getSessionFromCtx } from "shinauth/api";
-import { XMLValidator } from "fast-xml-parser";
 import { SAML_SESSION_BY_ID_PREFIX } from "./constants";
 import { assignOrganizationByDomain } from "./linking";
 import {
@@ -147,6 +147,7 @@ const SSO_PROVIDER_BUILT_IN_FIELD_KEYS = [
 	"userId",
 	"providerId",
 	"organizationId",
+	"requireSsoForOrgAccess",
 	"domain",
 	"domainVerified",
 ] as const;
@@ -342,6 +343,20 @@ export function sso<O extends SSOOptions>(
 			],
 		},
 		schema: {
+			session: {
+				fields: {
+					authSource: {
+						type: "string",
+						required: false,
+						input: false,
+					},
+					authProviderId: {
+						type: "string",
+						required: false,
+						input: false,
+					},
+				},
+			},
 			ssoProvider: {
 				modelName:
 					options?.modelName ??
@@ -400,6 +415,19 @@ export function sso<O extends SSOOptions>(
 							options?.schema?.ssoProvider?.fields?.organizationId ??
 							"organizationId",
 					},
+					...(options?.orgAccess?.enabled
+						? {
+								requireSsoForOrgAccess: {
+									type: "boolean",
+									required: false,
+									fieldName:
+										options?.fields?.requireSsoForOrgAccess ??
+										options?.schema?.ssoProvider?.fields
+											?.requireSsoForOrgAccess ??
+										"requireSsoForOrgAccess",
+								},
+							}
+						: {}),
 					domain: {
 						type: "string",
 						required: true,

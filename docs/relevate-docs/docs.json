@@ -162,34 +162,6 @@
             ]
           },
           {
-            "title": "Infrastructure",
-            "pages": [
-              {
-                "title": "Overview",
-                "pages": [
-                  "infrastructure/introduction",
-                  "infrastructure/getting-started"
-                ]
-              },
-              {
-                "title": "Plugins",
-                "pages": [
-                  "infrastructure/plugins/dashboard",
-                  "infrastructure/plugins/audit-logs",
-                  "infrastructure/plugins/sentinel",
-                  "infrastructure/plugins/dash"
-                ]
-              },
-              {
-                "title": "Services",
-                "pages": [
-                  "infrastructure/services/email",
-                  "infrastructure/services/sms"
-                ]
-              }
-            ]
-          },
-          {
             "title": "Plugins",
             "pages": [
               {
@@ -199,6 +171,7 @@
                   "plugins/2fa",
                   "plugins/username",
                   "plugins/anonymous",
+                  "plugins/account-merge",
                   "plugins/phone-number",
                   "plugins/magic-link",
                   "plugins/email-otp",

@@ -1,10 +1,10 @@
-import { APIError } from "@shinauth/core/error";
 import { betterFetch } from "@better-fetch/fetch";
+import { APIError } from "@shinauth/core/error";
+import { createLocalJWKSet, exportJWK, generateKeyPair, jwtVerify } from "jose";
+import { OAuth2Server } from "oauth2-mock-server";
 import { createAuthClient } from "shinauth/client";
 import { organization } from "shinauth/plugins";
 import { getTestInstance } from "shinauth/test";
-import { createLocalJWKSet, exportJWK, generateKeyPair, jwtVerify } from "jose";
-import { OAuth2Server } from "oauth2-mock-server";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { sso } from ".";
 import { ssoClient } from "./client";
@@ -84,6 +84,237 @@ describe("SSO", async () => {
 
 		return { callbackURL, headers: newHeaders };
 	}
+
+	describe("organization visibility restricted to SSO sessions", async () => {
+		const { auth, signInWithTestUser } = await getTestInstance({
+			trustedOrigins: ["http://localhost:8080"],
+			plugins: [sso({ orgAccess: { enabled: true } }), organization()],
+		});
+
+		async function createSsoOrganization(
+			requireSsoForOrgAccess: boolean | undefined = true,
+		) {
+			const owner = await signInWithTestUser();
+			const providerId = `restricted-provider-${crypto.randomUUID()}`;
+			const organization = await auth.api.createOrganization({
+				body: {
+					name: "SSO Restricted Org",
+					slug: `sso-restricted-${crypto.randomUUID()}`,
+				},
+				headers: owner.headers,
+			});
+			expect(organization?.id).toBeDefined();
+			const issuer = server.issuer.url!;
+			await auth.api.registerSSOProvider({
+				body: {
+					issuer,
+					domain: "example.com",
+					oidcConfig: {
+						clientId: "client-id",
+						clientSecret: "client-secret",
+						authorizationEndpoint: `${issuer}/authorize`,
+						tokenEndpoint: `${issuer}/token`,
+						jwksEndpoint: `${issuer}/jwks`,
+						discoveryEndpoint: `${issuer}/.well-known/openid-configuration`,
+					},
+					providerId,
+					organizationId: organization!.id,
+					...(requireSsoForOrgAccess === undefined
+						? {}
+						: { requireSsoForOrgAccess }),
+				},
+				headers: owner.headers,
+			});
+			return { owner, organization: organization!, providerId };
+		}
+
+		it("hides SSO-restricted organizations from non-SSO sessions", async () => {
+			const { owner, organization } = await createSsoOrganization(true);
+
+			const organizations = await auth.api.listOrganizations({
+				headers: owner.headers,
+			});
+			expect(organizations.some((org) => org.id === organization.id)).toBe(
+				false,
+			);
+			await expect(
+				auth.api.listMembers({
+					query: { organizationId: organization.id },
+					headers: owner.headers,
+				}),
+			).rejects.toMatchObject({ status: "FORBIDDEN" });
+			await expect(
+				auth.api.listInvitations({
+					query: { organizationId: organization.id },
+					headers: owner.headers,
+				}),
+			).rejects.toMatchObject({ status: "FORBIDDEN" });
+			await expect(
+				auth.api.updateOrganization({
+					body: {
+						organizationId: organization.id,
+						data: { name: "Blocked update" },
+					},
+					headers: owner.headers,
+				}),
+			).rejects.toMatchObject({ status: "FORBIDDEN" });
+
+			await expect(
+				auth.api.getFullOrganization({
+					query: { organizationId: organization.id },
+					headers: owner.headers,
+				}),
+			).rejects.toMatchObject({ status: "FORBIDDEN" });
+			await expect(
+				auth.api.setActiveOrganization({
+					body: { organizationId: organization.id },
+					headers: owner.headers,
+				}),
+			).rejects.toMatchObject({ status: "FORBIDDEN" });
+		});
+
+		it("shows SSO-restricted organizations for matching SSO sessions", async () => {
+			const { owner, organization, providerId } =
+				await createSsoOrganization(true);
+			const session = await auth.api.getSession({ headers: owner.headers });
+			expect(session?.session.token).toBeDefined();
+			await (await auth.$context).internalAdapter.updateSession(
+				session!.session.token,
+				{
+					authSource: "sso-oidc",
+					authProviderId: providerId,
+				},
+			);
+
+			const organizations = await auth.api.listOrganizations({
+				headers: owner.headers,
+			});
+			expect(organizations.some((org) => org.id === organization.id)).toBe(
+				true,
+			);
+			const fullOrganization = await auth.api.getFullOrganization({
+				query: { organizationId: organization.id },
+				headers: owner.headers,
+			});
+			expect(fullOrganization?.id).toBe(organization.id);
+			const members = await auth.api.listMembers({
+				headers: owner.headers,
+			});
+			expect(members.total).toBeGreaterThan(0);
+			const activeOrganization = await auth.api.setActiveOrganization({
+				body: { organizationId: organization.id },
+				headers: owner.headers,
+			});
+			expect(activeOrganization?.id).toBe(organization.id);
+		});
+
+		it("shows SSO-restricted organizations for any matching required provider", async () => {
+			const { owner, organization } = await createSsoOrganization(true);
+			const secondProviderId = `restricted-provider-${crypto.randomUUID()}`;
+			const issuer = server.issuer.url!;
+			await auth.api.registerSSOProvider({
+				body: {
+					issuer,
+					domain: "example.org",
+					oidcConfig: {
+						clientId: "client-id",
+						clientSecret: "client-secret",
+						authorizationEndpoint: `${issuer}/authorize`,
+						tokenEndpoint: `${issuer}/token`,
+						jwksEndpoint: `${issuer}/jwks`,
+						discoveryEndpoint: `${issuer}/.well-known/openid-configuration`,
+					},
+					providerId: secondProviderId,
+					organizationId: organization.id,
+					requireSsoForOrgAccess: true,
+				},
+				headers: owner.headers,
+			});
+			const session = await auth.api.getSession({ headers: owner.headers });
+			await (await auth.$context).internalAdapter.updateSession(
+				session!.session.token,
+				{
+					authSource: "sso-oidc",
+					authProviderId: secondProviderId,
+				},
+			);
+
+			const organizations = await auth.api.listOrganizations({
+				headers: owner.headers,
+			});
+			expect(organizations.some((org) => org.id === organization.id)).toBe(
+				true,
+			);
+		});
+
+		it("does not restrict organizations when the provider setting is false", async () => {
+			const { owner, organization } = await createSsoOrganization(false);
+
+			const organizations = await auth.api.listOrganizations({
+				headers: owner.headers,
+			});
+			expect(organizations.some((org) => org.id === organization.id)).toBe(
+				true,
+			);
+			const fullOrganization = await auth.api.getFullOrganization({
+				query: { organizationId: organization.id },
+				headers: owner.headers,
+			});
+			expect(fullOrganization?.id).toBe(organization.id);
+			const activeOrganization = await auth.api.setActiveOrganization({
+				body: { organizationId: organization.id },
+				headers: owner.headers,
+			});
+			expect(activeOrganization?.id).toBe(organization.id);
+		});
+	});
+
+	describe("organization access defaults", async () => {
+		const { auth, signInWithTestUser } = await getTestInstance({
+			trustedOrigins: ["http://localhost:8080"],
+			plugins: [
+				sso({ orgAccess: { enabled: true, requireSsoByDefault: true } }),
+				organization(),
+			],
+		});
+
+		it("uses the plugin default when a provider does not set org access", async () => {
+			const owner = await signInWithTestUser();
+			const organization = await auth.api.createOrganization({
+				body: {
+					name: "Default SSO Restricted Org",
+					slug: `default-sso-restricted-${crypto.randomUUID()}`,
+				},
+				headers: owner.headers,
+			});
+			expect(organization?.id).toBeDefined();
+			const issuer = server.issuer.url!;
+			await auth.api.registerSSOProvider({
+				body: {
+					issuer,
+					domain: "example.com",
+					oidcConfig: {
+						clientId: "client-id",
+						clientSecret: "client-secret",
+						authorizationEndpoint: `${issuer}/authorize`,
+						tokenEndpoint: `${issuer}/token`,
+						jwksEndpoint: `${issuer}/jwks`,
+						discoveryEndpoint: `${issuer}/.well-known/openid-configuration`,
+					},
+					providerId: `default-restricted-provider-${crypto.randomUUID()}`,
+					organizationId: organization!.id,
+				},
+				headers: owner.headers,
+			});
+
+			const organizations = await auth.api.listOrganizations({
+				headers: owner.headers,
+			});
+			expect(organizations.some((org) => org.id === organization!.id)).toBe(
+				false,
+			);
+		});
+	});
 
 	it("should register a new SSO provider", async () => {
 		const { headers } = await signInWithTestUser();
@@ -820,6 +1051,7 @@ describe("provisioning", async (ctx) => {
 		token.payload.name = "Test User";
 		token.payload.picture = "https://test.com/picture.png";
 	});
+
 	it("should provision user", async () => {
 		const { headers } = await signInWithTestUser();
 		const organization = await auth.api.createOrganization({

@@ -11,6 +11,7 @@ import { getOrgAdapter } from "../adapter";
 import { orgMiddleware, orgSessionMiddleware } from "../call";
 import { ORGANIZATION_ERROR_CODES } from "../error-codes";
 import { hasPermission } from "../has-permission";
+import { assertOrganizationVisibleForSession } from "../org-access";
 import { parseRoles } from "../organization";
 import type {
 	InferMember,
@@ -91,6 +92,7 @@ export const addMember = <O extends OrganizationOptions>(option: O) => {
 					ORGANIZATION_ERROR_CODES.NO_ACTIVE_ORGANIZATION,
 				);
 			}
+			await assertOrganizationVisibleForSession(ctx, orgId);
 
 			const teamId =
 				"teamId" in ctx.body ? (ctx.body.teamId as string) : undefined;
@@ -334,6 +336,7 @@ export const removeMember = <O extends OrganizationOptions>(options: O) =>
 					ORGANIZATION_ERROR_CODES.NO_ACTIVE_ORGANIZATION,
 				);
 			}
+			await assertOrganizationVisibleForSession(ctx, organizationId);
 			const adapter = getOrgAdapter<O>(ctx.context, options);
 			const member = await adapter.findMemberByOrgId({
 				userId: session.user.id,
@@ -568,6 +571,7 @@ export const updateMemberRole = <O extends OrganizationOptions>(option: O) =>
 					ORGANIZATION_ERROR_CODES.NO_ACTIVE_ORGANIZATION,
 				);
 			}
+			await assertOrganizationVisibleForSession(ctx, organizationId);
 
 			const adapter = getOrgAdapter(ctx.context, ctx.context.orgOptions);
 			const roleToSet: string[] = (
@@ -846,6 +850,7 @@ export const getActiveMember = <O extends OrganizationOptions>(options: O) =>
 					ORGANIZATION_ERROR_CODES.NO_ACTIVE_ORGANIZATION,
 				);
 			}
+			await assertOrganizationVisibleForSession(ctx, organizationId);
 			const adapter = getOrgAdapter<O>(ctx.context, options);
 			const member = await adapter.findMemberByOrgId({
 				userId: session.user.id,
@@ -880,6 +885,7 @@ export const leaveOrganization = <O extends OrganizationOptions>(options: O) =>
 		async (ctx) => {
 			const session = ctx.context.session;
 			const adapter = getOrgAdapter<O>(ctx.context, options);
+			await assertOrganizationVisibleForSession(ctx, ctx.body.organizationId);
 			const member = await adapter.findMemberByOrgId({
 				userId: session.user.id,
 				organizationId: ctx.body.organizationId,
@@ -1022,6 +1028,7 @@ export const listMembers = <O extends OrganizationOptions>(options: O) =>
 					ORGANIZATION_ERROR_CODES.NO_ACTIVE_ORGANIZATION,
 				);
 			}
+			await assertOrganizationVisibleForSession(ctx, organizationId);
 
 			const isMember = await adapter.findMemberByOrgId({
 				userId: session.user.id,
@@ -1114,6 +1121,7 @@ export const getActiveMemberRole = <O extends OrganizationOptions>(
 					ORGANIZATION_ERROR_CODES.NO_ACTIVE_ORGANIZATION,
 				);
 			}
+			await assertOrganizationVisibleForSession(ctx, organizationId);
 			const isMember = await adapter.findMemberByOrgId({
 				userId: session.user.id,
 				organizationId,

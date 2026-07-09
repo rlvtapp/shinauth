@@ -206,6 +206,11 @@
       "types": "./dist/plugins/access/index.d.mts",
       "default": "./dist/plugins/access/index.mjs"
     },
+    "./plugins/account-merge": {
+      "dev-source": "./src/plugins/account-merge/index.ts",
+      "types": "./dist/plugins/account-merge/index.d.mts",
+      "default": "./dist/plugins/account-merge/index.mjs"
+    },
     "./plugins/admin": {
       "dev-source": "./src/plugins/admin/index.ts",
       "types": "./dist/plugins/admin/index.d.mts",
@@ -404,6 +409,9 @@
       ],
       "plugins/access": [
         "./dist/plugins/access/index.d.mts"
+      ],
+      "plugins/account-merge": [
+        "./dist/plugins/account-merge/index.d.mts"
       ],
       "plugins/admin": [
         "./dist/plugins/admin/index.d.mts"

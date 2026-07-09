@@ -5,8 +5,10 @@ export type {
 	RemoveFieldsWithReturnedFalse,
 } from "../../db/field";
 export type * from "../../types/helper";
+
 //#endregion
 
+export * from "../../plugins/account-merge/client";
 export * from "../../plugins/additional-fields/client";
 export * from "../../plugins/admin/client";
 export * from "../../plugins/anonymous/client";

@@ -9,6 +9,10 @@ import { getOrgAdapter } from "../adapter";
 import { orgMiddleware, orgSessionMiddleware } from "../call";
 import { ORGANIZATION_ERROR_CODES } from "../error-codes";
 import { hasPermission } from "../has-permission";
+import {
+	filterOrganizationsVisibleForSession,
+	isOrganizationVisibleForSession,
+} from "../org-access";
 import type {
 	InferInvitation,
 	InferMember,
@@ -714,6 +718,13 @@ export const getFullOrganization = <O extends OrganizationOptions>(
 					ORGANIZATION_ERROR_CODES.USER_IS_NOT_A_MEMBER_OF_THE_ORGANIZATION,
 				);
 			}
+			if (!(await isOrganizationVisibleForSession(ctx, organization.id))) {
+				await adapter.setActiveOrganization(session.session.token, null, ctx);
+				throw APIError.from(
+					"FORBIDDEN",
+					ORGANIZATION_ERROR_CODES.USER_IS_NOT_A_MEMBER_OF_THE_ORGANIZATION,
+				);
+			}
 
 			type OrganizationReturn = O["teams"] extends { enabled: true }
 				? {
@@ -839,6 +850,13 @@ export const setActiveOrganization = <O extends OrganizationOptions>(
 					ORGANIZATION_ERROR_CODES.USER_IS_NOT_A_MEMBER_OF_THE_ORGANIZATION,
 				);
 			}
+			if (!(await isOrganizationVisibleForSession(ctx, organizationId))) {
+				await adapter.setActiveOrganization(session.session.token, null, ctx);
+				throw APIError.from(
+					"FORBIDDEN",
+					ORGANIZATION_ERROR_CODES.USER_IS_NOT_A_MEMBER_OF_THE_ORGANIZATION,
+				);
+			}
 
 			const organization = await adapter.findOrganizationById(organizationId);
 			if (!organization) {
@@ -904,6 +922,10 @@ export const listOrganizations = <O extends OrganizationOptions>(options: O) =>
 			const organizations = await adapter.listOrganizations(
 				ctx.context.session.user.id,
 			);
-			return ctx.json(organizations);
+			const visibleOrganizations = await filterOrganizationsVisibleForSession(
+				ctx,
+				organizations,
+			);
+			return ctx.json(visibleOrganizations);
 		},
 	);

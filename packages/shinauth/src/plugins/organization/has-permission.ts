@@ -3,6 +3,7 @@ import * as z from "zod";
 import { APIError } from "../../api";
 import type { Role } from "../access";
 import { defaultRoles } from "./access";
+import { assertOrganizationVisibleForSession } from "./org-access";
 import type { HasPermissionBaseInput } from "./permission";
 import { cacheAllRoles, hasPermissionFn } from "./permission";
 import type { OrganizationRole } from "./schema";
@@ -21,6 +22,8 @@ export const hasPermission = async (
 	} & HasPermissionBaseInput,
 	ctx: GenericEndpointContext,
 ) => {
+	await assertOrganizationVisibleForSession(ctx, input.organizationId);
+
 	let acRoles: {
 		[x: string]: Role<any> | undefined;
 	} = { ...(input.options.roles || defaultRoles) };

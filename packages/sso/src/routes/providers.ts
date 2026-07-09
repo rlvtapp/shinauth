@@ -1,15 +1,8 @@
-import {
-	getCurrentAdapter,
-	runWithTransaction,
-} from "@shinauth/core/context";
+import { getCurrentAdapter, runWithTransaction } from "@shinauth/core/context";
 import type { DBFieldAttribute } from "@shinauth/core/db";
 import { filterOutputFields } from "@shinauth/core/utils/db";
 import type { AuthContext } from "shinauth";
-import {
-	APIError,
-	createAuthEndpoint,
-	sessionMiddleware,
-} from "shinauth/api";
+import { APIError, createAuthEndpoint, sessionMiddleware } from "shinauth/api";
 import * as z from "zod";
 import { DEFAULT_MAX_SAML_METADATA_SIZE } from "../constants";
 import {
@@ -36,6 +29,7 @@ interface SSOProviderRecord {
 	issuer: string;
 	domain: string;
 	organizationId?: string | null;
+	requireSsoForOrgAccess?: boolean | null;
 	domainVerified?: boolean;
 	userId: string;
 	oidcConfig?: string | null;
@@ -336,6 +330,7 @@ function sanitizeProvider(
 		issuer: string;
 		domain: string;
 		organizationId?: string | null;
+		requireSsoForOrgAccess?: boolean | null;
 		domainVerified?: boolean;
 		oidcConfig?: string | OIDCConfig | null;
 		samlConfig?: string | SAMLConfig | null;
@@ -371,6 +366,7 @@ function sanitizeProvider(
 		issuer: provider.issuer,
 		domain: provider.domain,
 		organizationId: provider.organizationId || null,
+		requireSsoForOrgAccess: provider.requireSsoForOrgAccess ?? null,
 		domainVerified: provider.domainVerified ?? false,
 		oidcConfig: oidcConfig
 			? {
@@ -671,7 +667,12 @@ export const updateSSOProvider = (options: SSOOptions) => {
 		async (ctx) => {
 			const { providerId, ...body } = ctx.body;
 
-			const { issuer, domain, samlConfig, oidcConfig } = body;
+			const { issuer, domain, samlConfig, oidcConfig, requireSsoForOrgAccess } =
+				body;
+			const requireSsoForOrgAccessUpdate =
+				typeof requireSsoForOrgAccess === "boolean"
+					? requireSsoForOrgAccess
+					: undefined;
 			const additionalFields = parseSSOProviderAdditionalFields(
 				options,
 				body,
@@ -682,6 +683,7 @@ export const updateSSOProvider = (options: SSOOptions) => {
 				!domain &&
 				!samlConfig &&
 				!oidcConfig &&
+				requireSsoForOrgAccessUpdate === undefined &&
 				Object.keys(additionalFields).length === 0
 			) {
 				throw new APIError("BAD_REQUEST", {
@@ -721,6 +723,10 @@ export const updateSSOProvider = (options: SSOOptions) => {
 						if (body.domain !== existingProvider.domain) {
 							updateData.domainVerified = false;
 						}
+					}
+
+					if (requireSsoForOrgAccessUpdate !== undefined) {
+						updateData.requireSsoForOrgAccess = requireSsoForOrgAccessUpdate;
 					}
 
 					if (body.samlConfig) {

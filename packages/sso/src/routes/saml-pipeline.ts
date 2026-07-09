@@ -1,11 +1,11 @@
 import { runWithTransaction } from "@shinauth/core/context";
 import { isAPIError } from "@shinauth/core/utils/is-api-error";
+import { XMLParser } from "fast-xml-parser";
+import type { FlowResult } from "samlify/types/src/flow";
 import type { User } from "shinauth";
 import { APIError } from "shinauth/api";
 import { setSessionCookie } from "shinauth/cookies";
 import { handleOAuthUserInfo } from "shinauth/oauth2";
-import { XMLParser } from "fast-xml-parser";
-import type { FlowResult } from "samlify/types/src/flow";
 
 import * as constants from "../constants";
 import { assignOrganizationFromProvider } from "../linking";
@@ -579,7 +579,15 @@ export async function processSAMLResponse(
 		);
 	}
 
-	const { session, user } = result.data!;
+	let { session, user } = result.data!;
+	const ssoSessionFields = {
+		authSource: "sso-saml",
+		authProviderId: providerId,
+	};
+	session = (await ctx.context.internalAdapter.updateSession(
+		session.token,
+		ssoSessionFields,
+	)) ?? { ...session, ...ssoSessionFields };
 
 	// 17. Provision user
 	if (
