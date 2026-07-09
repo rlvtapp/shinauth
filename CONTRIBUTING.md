@@ -114,13 +114,7 @@ it("should handle the previously broken behavior", async () => {
 
 ## Documentation
 
-The documentation site lives in `docs/` and content is organized under `docs/content/docs/` by topic.
-
-To run the docs locally:
-
-```bash
-pnpm -F docs dev
-```
+The Relevate documentation content lives in `docs/` and is organized by topic.
 
 When making changes to public APIs, please update the relevant documentation.
 

@@ -1,0 +1,96 @@
+---
+title: "Prisma"
+description: Integrate Shinauth with Prisma.
+---
+
+Prisma ORM is an open-source database toolkit that simplifies database access and management in applications by providing a type-safe query builder and an intuitive data modeling interface.
+
+Before getting started, make sure you have Prisma installed and configured. For more information, see [Prisma Documentation](https://www.prisma.io/docs/)
+
+## Installation
+
+To use the Prisma adapter, you need to install the `@shinauth/prisma-adapter` package:
+
+```bash
+pnpm add @shinauth/prisma-adapter
+```
+
+## Example Usage
+
+You can use the Prisma adapter to connect to your database as follows.
+
+```ts title="auth.ts"
+import { shinAuth } from "shinauth";
+import { prismaAdapter } from "shinauth/adapters/prisma";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
+export const auth = shinAuth({
+  database: prismaAdapter(prisma, {
+    provider: "sqlite",
+  }),
+});
+```
+
+**Warning:**
+
+Starting from Prisma 7, the `output` path field is required. If you have configured a custom output path in your `schema.prisma` file (e.g., `output = "../src/generated/prisma"`), make sure to [import the Prisma client from that location](https://www.prisma.io/docs/orm/prisma-client/setup-and-configuration/generating-prisma-client#the-location-of-prisma-client) instead of `@prisma/client`.
+
+## Schema generation & migration
+
+The [Shinauth CLI](/concepts/cli) allows you to generate or migrate
+your database schema based on your Shinauth configuration and plugins.
+
+<table>
+  <thead>
+    <tr className="border-b">
+      <th>
+        <p className="font-bold text-[16px] mb-1">Prisma Schema Generation</p>
+      </th>
+
+      <th>
+        <p className="font-bold text-[16px] mb-1">Prisma Schema Migration</p>
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr className="h-10">
+      <td>✅ Supported</td>
+      <td>❌ Not Supported</td>
+    </tr>
+  </tbody>
+</table>
+
+```bash title="Schema Generation"
+pnpm dlx @shinauth/cli generate
+```
+
+## Joins (Experimental)
+
+Database joins is useful when Better-Auth needs to fetch related data from multiple tables in a single query.
+Endpoints like `/get-session`, `/get-full-organization` and many others benefit greatly from this feature,
+seeing upwards of 2x to 3x performance improvements depending on database latency.
+
+The Prisma adapter supports joins out of the box since version `1.4.0`.
+To enable this feature, you need to set the `experimental.joins` option to `true` in your auth configuration.
+
+```ts title="auth.ts"
+import { shinAuth } from "shinauth";
+
+export const auth = shinAuth({
+  experimental: { joins: true }
+});
+```
+
+**Warning:**
+
+Please make sure that your Prisma schema has the necessary relations defined.
+If you do not see any relations in your Prisma schema, you can manually add them using the `@relation` directive
+or run our latest CLI version `pnpm dlx @shinauth/cli generate` to generate a new Prisma schema with the relations.
+
+## Additional Information
+
+* If you're looking for performance improvements or tips, take a look at our guide to [performance optimizations](/guides/optimizing-for-performance).
+* [How to use Prisma ORM with Shinauth and Next.js](https://www.prisma.io/docs/guides/betterauth-nextjs)

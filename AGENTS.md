@@ -8,7 +8,7 @@ This is the Shinauth repository - a comprehensive authentication framework for T
 - `packages/core` - Shared core types and utilities
 - `packages/cli` - CLI tool
 - `packages/*` - Database adapters, plugins, integrations
-- `docs/` - Documentation site (Next.js + Fumadocs), content in `docs/content/docs/`
+- `docs/` - Relevate documentation content, config, and public assets
 - `test/` - Shared test workspace
 - `e2e/` - End-to-end tests (smoke, adapter, integration)
 - `demo/` - Example apps
@@ -64,7 +64,7 @@ This is the Shinauth repository - a comprehensive authentication framework for T
 
 - Bug fixes and new features MUST include tests
   - For bug fixes: after confirming the reproducible behavior violates the intended contract, write a failing test first, then implement the fix
-- Update docs (`docs/content/docs/`) when changing public API
+- Update docs (`docs/`) when changing public API
 - Ensure `pnpm typecheck` passes before finishing
 - DO NOT COMMIT unless the user explicitly asks
 - Conventional Commits: `feat(scope):`, `fix(scope):`, `docs:`, `chore:`. Use `!` for breaking changes (e.g. `feat(auth)!:`)
